@@ -15,11 +15,18 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	@IBOutlet var routeListTableView: UITableView!
 	@IBOutlet var currentStationLabel: UILabel!
 	@IBOutlet var currentStationBearingLabel: UILabel!
+	@IBOutlet var updateLocationButton: UIButton!
+	@IBOutlet var activityIndicator: UIActivityIndicatorView!
+	
+	// TODO: always update location but not refreshing stations
+	// TODO: add substops
+	// TODO: bus destination
 	
 	var busQuery = BusQuery()
-	var currentLocation = CLLocation()
+	var locationWhenPinned = CLLocation()
+	var locationHasUpdated: Bool = false
 	
-	let greedyStations = ["1000523", "1991", "1000441"]
+	let greedyStations = ["1000441", "1991", "1000523"]
 	var greedyIsUsed: Bool = false
 	
 	var currentStationNumber = 0 {
@@ -70,7 +77,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		routeListTableView.dataSource = self
 		
 		checkLocationServicePermission()
-		locationManager.startUpdatingLocation()
 		
 		_ = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(autoRefresh), userInfo: nil, repeats: true)
 		
@@ -89,22 +95,37 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 					address = address + (placemark.subAdministrativeArea ?? "")
 					address = address + (placemark.locality ?? "")
 					
-					print(address)
-					self.locationManager.stopUpdatingLocation()
+					print("\(self.locationHasUpdated)\t\(address)")
 					
-					self.currentLocation = userLocation
-					self.queryNearbyStations(location: self.currentLocation)
+					if(!self.locationHasUpdated)  {
+						self.locationHasUpdated = true
+						self.locationWhenPinned = userLocation
+						self.updateLocationButton.tintColor = .blue
+						self.queryNearbyStations(location: self.locationWhenPinned)
+					}
+					else {
+						// check if current location is deviated from locationWhenPinned over 30m
+						// if so, then dim the location button
+						if(userLocation.distance(from: self.locationWhenPinned) > 50.0) {
+							self.updateLocationButton.tintColor = .lightGray
+						}
+					}
 				}
 			}
 		}
 	}
 	
 	@IBAction func updateLocationButtonPressed(_ sender: Any) {
+		updateLocationAndStations()
+	}
+	
+	func updateLocationAndStations() {
 		locationManager.startUpdatingLocation()
+		locationHasUpdated = false
 	}
 	
 	@objc func autoRefresh() {
-		queryNearbyStations(location: currentLocation)
+		queryBusArrivals()
 	}
 	
 	func updatePanel() {
@@ -127,8 +148,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 				self.greedyCheck()
 				self.updatePanel()
 				
-				let autoscroll = IndexPath(item: self.currentStationNumber, section: 0)
-				self.stationListCollectionView.scrollToItem(at: autoscroll, at: .centeredHorizontally, animated: true)
 				self.queryBusArrivals()
 			}
 		}
@@ -151,7 +170,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 			(locationManager.authorizationStatus == .authorizedAlways ||
 				locationManager.authorizationStatus == .authorizedWhenInUse)){
 			
-			locationManager.startUpdatingLocation()
+			updateLocationAndStations()
 		}
 		else {
 			//locationButton.tintColor = .gray
@@ -187,11 +206,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 				for i in 0..<stationList.count {
 					if(greedy == stationList[i].stationId) {
 						currentStationNumber = i
-						break
+						greedyIsUsed = true
+						return
 					}
 				}
 			}
-			greedyIsUsed = true
 		}
 	}
 }

@@ -42,16 +42,13 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="23"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="keyPath" value="YES"/>
-                                                    </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TQO-1c-f2q">
                                                     <rect key="frame" x="17" y="6" width="88" height="38"/>
                                                     <color key="backgroundColor" red="0.32549019610000002" green="0.72549019609999998" blue="0.76078431369999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                            <integer key="value" value="9"/>
+                                                            <integer key="value" value="12"/>
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
@@ -135,11 +132,16 @@
                                     <constraint firstAttribute="width" constant="25" id="qEa-e9-EDD"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" image="location.fill" catalog="system"/>
                                 <connections>
                                     <action selector="updateLocationButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cDq-R6-kWR"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="q40-ga-30g">
+                                <rect key="frame" x="384" y="18" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -162,10 +164,12 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="q40-ga-30g" id="Rld-vd-28b"/>
                         <outlet property="currentStationBearingLabel" destination="jvc-Vv-Whj" id="6X1-aW-ohL"/>
                         <outlet property="currentStationLabel" destination="wkw-Pp-9Mn" id="aCj-4w-VLP"/>
                         <outlet property="routeListTableView" destination="e1C-eT-M2p" id="04w-Ow-vNn"/>
                         <outlet property="stationListCollectionView" destination="KmK-Jy-1Yr" id="jyI-if-LZ1"/>
+                        <outlet property="updateLocationButton" destination="Tmq-tj-XKk" id="oa2-fk-ZU9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

@@ -111,7 +111,6 @@ class BusQuery {
 					if(response.statusCode == 200) {
 						let rawReturned = try? (JSONSerialization.jsonObject(with: data, options: []) as! [[String: Any]])
 						for station in rawReturned! {
-							print(station)
 							stationDict[station["StationID"] as! String]?.bearing = (station["Bearing"] ?? "") as! String	// Some station has no bearing
 						}
 					}
