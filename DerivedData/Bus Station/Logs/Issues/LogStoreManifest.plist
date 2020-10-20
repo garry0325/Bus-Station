@@ -6,7 +6,7 @@
 	<integer>10</integer>
 	<key>logs</key>
 	<dict>
-		<key>F1052E6F-AE1E-40F7-935C-2A080E2C700F</key>
+		<key>3F72EBA0-8885-4999-A273-B56BCBA30905</key>
 		<dict>
 			<key>className</key>
 			<string>IDEActivityLogMajorGroupSection</string>
@@ -15,7 +15,7 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.target.product-type.application</string>
 			<key>fileName</key>
-			<string>F1052E6F-AE1E-40F7-935C-2A080E2C700F.xcactivitylog</string>
+			<string>3F72EBA0-8885-4999-A273-B56BCBA30905.xcactivitylog</string>
 			<key>hasPrimaryLog</key>
 			<true/>
 			<key>primaryObservable</key>
@@ -26,13 +26,13 @@
 			<key>signature</key>
 			<string>Bus_Station-aezfbisvhkatsrdvgflxteszofku</string>
 			<key>timeStartedRecording</key>
-			<real>624886403.48235798</real>
+			<real>624901386.49403501</real>
 			<key>timeStoppedRecording</key>
-			<real>624886407.38578606</real>
+			<real>624901387.85110998</real>
 			<key>title</key>
 			<string>Build target Bus Station</string>
 			<key>uniqueIdentifier</key>
-			<string>F1052E6F-AE1E-40F7-935C-2A080E2C700F</string>
+			<string>3F72EBA0-8885-4999-A273-B56BCBA30905</string>
 		</dict>
 	</dict>
 	<key>preserveOldLogs</key>

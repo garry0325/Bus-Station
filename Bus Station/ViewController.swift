@@ -14,6 +14,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	
 	var locationManager = CLLocationManager()
 	@IBOutlet var stationListCollectionView: UICollectionView!
+	@IBOutlet var bearingListCollectionView: UICollectionView!
 	@IBOutlet var routeListTableView: UITableView!
 	@IBOutlet var currentStationLabel: UILabel!
 	@IBOutlet var currentStationBearingLabel: UILabel!
@@ -29,44 +30,26 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	var locationHasUpdated: Bool = false
 	var autoRefreshTimer = Timer()
 	
-	let greedyStations = ["1000441", "1991", "1000523"]
-	var greedyIsUsed: Bool = false
+	let greedyStations = ["1000441", "1991", "1000523", "1000769"]
 	
 	var currentStationNumber = 0 {
 		didSet {
 			if(stationList.count > 0) {
 				currentStationLabel.text = stationListNames[currentStationNumber]
-				currentStationBearing = stationList[currentStationNumber].bearing
 			}
 		}
 	}
 	var stationListNames = [String]()
-	var stationList = [BusStation]()
-	var routeList = [BusStop]()
-	var currentStationBearing = "" {
+	var stationList: Array<Array<BusStation>> = []
+	var currentBearingNumber = 0 {
 		didSet {
-			switch currentStationBearing {
-			case "E":
-				currentStationBearingLabel.text = "往東"
-			case "W":
-				currentStationBearingLabel.text = "往西"
-			case "S":
-				currentStationBearingLabel.text = "往南"
-			case "N":
-				currentStationBearingLabel.text = "往北"
-			case "SE":
-				currentStationBearingLabel.text = "往東南"
-			case "NE":
-				currentStationBearingLabel.text = "往東北"
-			case "SW":
-				currentStationBearingLabel.text = "往西南"
-			case "NW":
-				currentStationBearingLabel.text = "往西北"
-			default:
-				currentStationBearingLabel.text = ""
-			}
+			currentStationBearingLabel.text = bearingListNames[currentStationNumber][currentBearingNumber]
 		}
 	}
+	var bearingListNames: Array<Array<String>> = []
+	
+	var routeList = [BusStop]()
+	var currentStationBearing = ""
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -78,6 +61,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		
 		stationListCollectionView.delegate = self
 		stationListCollectionView.dataSource = self
+		bearingListCollectionView.delegate = self
+		bearingListCollectionView.dataSource = self
 		routeListTableView.delegate = self
 		routeListTableView.dataSource = self
 		
@@ -138,6 +123,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	
 	func updatePanel() {
 		stationListCollectionView.reloadData()
+		bearingListCollectionView.reloadData()
 		routeListTableView.reloadData()
 		dismissActivityIndicator()
 	}
@@ -145,24 +131,76 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	func queryNearbyStations(location: CLLocation) {
 		presentActivityIndicator()
 		DispatchQueue.global(qos: .background).async {
-			self.stationList = self.busQuery.queryNearbyStations(location: location)
+			let unorganizedStationList = self.busQuery.queryNearbyStations(location: location)
 			var stationTemp = [String]()
-			for station in self.stationList {
+			for station in unorganizedStationList {
 				stationTemp.append(station.stationName)
 			}
 			self.stationListNames = stationTemp
 			
-			if(self.stationList.count == 0) {
+			if(unorganizedStationList.count == 0) {
 				DispatchQueue.main.async {
 					self.currentStationLabel.text = "附近沒有公車站"
 					self.currentStationBearing = ""
+					self.bearingListNames = []
 					self.routeList = []
 					self.updatePanel()
 				}
 			}
 			else {
+				var duplicates = Dictionary(grouping: unorganizedStationList, by: {$0.stationName})
+				self.stationList = []
+				self.stationListNames = []
+				self.bearingListNames = []
+				for i in 0..<unorganizedStationList.count {
+					if let exist = duplicates[unorganizedStationList[i].stationName] {
+						var stationTemp = [BusStation]()
+						var bearingTemp = [String]()
+						for station in exist {
+							stationTemp.append(station)
+							bearingTemp.append(station.bearing)
+						}
+						for j in 0..<bearingTemp.count {
+							switch bearingTemp[j] {
+							case "E":
+								bearingTemp[j] = "往東"
+							case "W":
+								bearingTemp[j] = "往西"
+							case "S":
+								bearingTemp[j] = "往南"
+							case "N":
+								bearingTemp[j] = "往北"
+							case "SE":
+								bearingTemp[j] = "往東南"
+							case "NE":
+								bearingTemp[j] = "往東北"
+							case "SW":
+								bearingTemp[j] = "往西南"
+							case "NW":
+								bearingTemp[j] = "往西北"
+							default:
+								bearingTemp[j] = ""
+							}
+						}
+						if(bearingTemp.count > 2) {
+							var dir = ["往東": 0, "往西": 0, "往南": 0, "往北": 0, "往東南": 0, "往東北": 0, "往西南": 0, "往西北": 0, "": 0]
+							for j in 0..<bearingTemp.count {
+								let temp = bearingTemp[j]
+								bearingTemp[j] = bearingTemp[j] + String(Character(UnicodeScalar(dir[bearingTemp[j]]! + 65)!))
+								dir[temp] = dir[temp]! + 1
+							}
+						}
+						self.stationList.append(stationTemp)
+						self.bearingListNames.append(bearingTemp)
+						self.stationListNames.append(unorganizedStationList[i].stationName)
+						
+						duplicates.removeValue(forKey: unorganizedStationList[i].stationName)
+					}
+				}
+				
 				DispatchQueue.main.async {
 					self.currentStationNumber = 0
+					self.currentBearingNumber = 0
 					self.greedyCheck()
 					self.updatePanel()
 					
@@ -177,8 +215,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	
 	func queryBusArrivals() {
 		presentActivityIndicator()
+		print(stationList[currentStationNumber][currentBearingNumber].stationId)
 		DispatchQueue.global(qos: .background).async {
-			self.routeList = self.busQuery.queryBusArrivals(station: self.stationList[self.currentStationNumber])
+			self.routeList = self.busQuery.queryBusArrivals(station: self.stationList[self.currentStationNumber][self.currentBearingNumber])
 			
 			DispatchQueue.main.async {
 				self.updatePanel()
@@ -233,12 +272,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	}
 	
 	func greedyCheck() {
-		if(!greedyIsUsed) {
-			for greedy in greedyStations {
-				for i in 0..<stationList.count {
-					if(greedy == stationList[i].stationId) {
+		for greedy in greedyStations {
+			for i in 0..<stationList.count {
+				for j in 0..<stationList[i].count {
+					if(greedy == stationList[i][j].stationId) {
 						currentStationNumber = i
-						greedyIsUsed = true
+						currentBearingNumber = j
 						return
 					}
 				}
@@ -249,41 +288,87 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 
 extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return stationListNames.count
+		if(collectionView == stationListCollectionView) {
+			return stationListNames.count
+		}
+		else {
+			if(bearingListNames.count == 0) {
+				return 0
+			}
+			else {
+				return bearingListNames[currentStationNumber].count
+			}
+		}
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "StationCell", for: indexPath) as! StationListCollectionViewCell
-		
-		if(currentStationNumber == indexPath.item) {
-			cell.backgroundColor = UIColor(white: 0.45, alpha: 1.0)
-			cell.stationLabel.textColor = UIColor(white: 1.0, alpha: 1.0)
+		if(collectionView == stationListCollectionView) {
+			let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "StationCell", for: indexPath) as! StationListCollectionViewCell
+			
+			if(currentStationNumber == indexPath.item) {
+				cell.backgroundColor = UIColor(white: 0.45, alpha: 1.0)
+				cell.stationLabel.textColor = UIColor(white: 1.0, alpha: 1.0)
+			}
+			else {
+				cell.backgroundColor = UIColor(white: 0.95, alpha: 1.0)
+				cell.stationLabel.textColor = UIColor(white: 0.0, alpha: 1.0)
+			}
+			cell.clipsToBounds = true
+			cell.layer.cornerRadius = cell.frame.height / 2
+			
+			cell.stationName = stationListNames[indexPath.item]
+			
+			return cell
 		}
 		else {
-			cell.backgroundColor = UIColor(white: 0.95, alpha: 1.0)
-			cell.stationLabel.textColor = UIColor(white: 0.0, alpha: 1.0)
+			let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BearingCell", for: indexPath) as! BearingListCollectionViewCell
+			
+			if(currentBearingNumber == indexPath.item) {
+				cell.backgroundColor = UIColor(white: 0.45, alpha: 1.0)
+				cell.bearingLabel.textColor = UIColor(white: 1.0, alpha: 1.0)
+			}
+			else {
+				cell.backgroundColor = UIColor(white: 0.95, alpha: 1.0)
+				cell.bearingLabel.textColor = UIColor(white: 0.0, alpha: 1.0)
+			}
+			cell.clipsToBounds = true
+			cell.layer.cornerRadius = 7.0
+			
+			cell.bearingName = bearingListNames[currentStationNumber][indexPath.item]
+			
+			return cell
 		}
-		cell.clipsToBounds = true
-		cell.layer.cornerRadius = cell.frame.height / 2
-		
-		cell.stationName = stationListNames[indexPath.item]
-		
-		return cell
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		currentStationNumber = indexPath.item
-		collectionView.reloadData()
-		queryBusArrivals()
+		if(collectionView == stationListCollectionView) {
+			currentStationNumber = indexPath.item
+			currentBearingNumber = 0
+			collectionView.reloadData()
+			queryBusArrivals()
+		}
+		else {
+			currentBearingNumber = indexPath.item
+			collectionView.reloadData()
+			queryBusArrivals()
+		}
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 		
-		let height = stationListCollectionView.frame.height
 		
-		let size = NSString(string: stationListNames[indexPath.item]).boundingRect(with: CGSize(width: 1500.0, height: height), options: [.usesLineFragmentOrigin], attributes: [NSAttributedString.Key.font :UIFont.systemFont(ofSize: 15)], context: nil)
-		
-		return CGSize(width: size.size.width + 20.0, height: height)
+		if(collectionView == stationListCollectionView) {
+			let height = stationListCollectionView.frame.height
+			let size = NSString(string: stationListNames[indexPath.item]).boundingRect(with: CGSize(width: 1500.0, height: height), options: [.usesLineFragmentOrigin], attributes: [NSAttributedString.Key.font :UIFont.systemFont(ofSize: 15)], context: nil)
+			
+			return CGSize(width: size.size.width + 20.0, height: height)
+		}
+		else {
+			let height = bearingListCollectionView.frame.height
+			let size = NSString(string: bearingListNames[currentStationNumber][indexPath.item]).boundingRect(with: CGSize(width: 500.0, height: height), options: [.usesLineFragmentOrigin], attributes: [NSAttributedString.Key.font :UIFont.systemFont(ofSize: 15)], context: nil)
+			
+			return CGSize(width: size.size.width + 20.0, height: height)
+		}
 	}
 }
 

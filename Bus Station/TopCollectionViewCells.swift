@@ -15,3 +15,12 @@ class StationListCollectionViewCell: UICollectionViewCell {
 		}
 	}
 }
+
+class BearingListCollectionViewCell: UICollectionViewCell {
+	@IBOutlet var bearingLabel: UILabel!
+	var bearingName: String = "" {
+		didSet {
+			bearingLabel.text = bearingName
+		}
+	}
+}

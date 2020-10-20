@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="e1C-eT-M2p">
-                                <rect key="frame" x="0.0" y="87" width="414" height="649"/>
+                                <rect key="frame" x="0.0" y="121" width="414" height="615"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="RouteCell" rowHeight="50" id="HZh-Ri-qGV" customClass="RouteTableViewCell" customModule="Bus_Station" customModuleProvider="target">
@@ -145,11 +145,52 @@
                                     <constraint firstAttribute="width" constant="20" id="xqv-si-r7B"/>
                                 </constraints>
                             </activityIndicatorView>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="s4M-qc-5T1">
+                                <rect key="frame" x="0.0" y="92" width="414" height="24"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="24" id="njh-Hm-sEE"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="5" minimumInteritemSpacing="0.0" id="sxL-8v-PgC">
+                                    <size key="itemSize" width="135" height="62"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="BearingCell" id="tUs-rj-9d8" customClass="BearingListCollectionViewCell" customModule="Bus_Station" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="-19" width="135" height="62"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="R4b-e0-lrb">
+                                            <rect key="frame" x="0.0" y="0.0" width="135" height="62"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="捷運公館站" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CHu-3T-7e4">
+                                                    <rect key="frame" x="21" y="19.666666666666629" width="92" height="22"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="CHu-3T-7e4" firstAttribute="centerY" secondItem="R4b-e0-lrb" secondAttribute="centerY" id="B52-yA-OP0"/>
+                                                <constraint firstItem="CHu-3T-7e4" firstAttribute="centerX" secondItem="R4b-e0-lrb" secondAttribute="centerX" id="n2S-Oz-OcK"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <color key="backgroundColor" red="0.32549019610000002" green="0.72549019609999998" blue="0.76078431369999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <outlet property="bearingLabel" destination="CHu-3T-7e4" id="u9L-2x-vOI"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="KmK-Jy-1Yr" secondAttribute="trailing" id="3Qj-1q-ZVk"/>
+                            <constraint firstItem="s4M-qc-5T1" firstAttribute="top" secondItem="KmK-Jy-1Yr" secondAttribute="bottom" constant="5" id="6n0-kR-wsW"/>
+                            <constraint firstItem="s4M-qc-5T1" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="AnF-JO-MVm"/>
                             <constraint firstItem="KmK-Jy-1Yr" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="57" id="C4e-WF-G6t"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="q40-ga-30g" secondAttribute="trailing" constant="16" id="Enp-ia-QIx"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="wkw-Pp-9Mn" secondAttribute="trailing" constant="10" id="Fre-rM-VlC"/>
@@ -161,8 +202,9 @@
                             <constraint firstItem="e1C-eT-M2p" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="aLj-Fg-9TH"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="e1C-eT-M2p" secondAttribute="bottom" id="dFa-Wa-o1G"/>
                             <constraint firstItem="jvc-Vv-Whj" firstAttribute="leading" secondItem="wkw-Pp-9Mn" secondAttribute="leading" id="jMh-c7-5XU"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="s4M-qc-5T1" secondAttribute="trailing" id="lAc-tq-Gxl"/>
                             <constraint firstItem="wkw-Pp-9Mn" firstAttribute="leading" secondItem="Tmq-tj-XKk" secondAttribute="trailing" constant="7.5" id="lDv-qf-2oo"/>
-                            <constraint firstItem="e1C-eT-M2p" firstAttribute="top" secondItem="KmK-Jy-1Yr" secondAttribute="bottom" id="mgh-0v-Xww"/>
+                            <constraint firstItem="e1C-eT-M2p" firstAttribute="top" secondItem="s4M-qc-5T1" secondAttribute="bottom" constant="5" id="o0i-vf-eUS"/>
                             <constraint firstItem="q40-ga-30g" firstAttribute="centerY" secondItem="wkw-Pp-9Mn" secondAttribute="centerY" id="vst-Td-eh1"/>
                             <constraint firstItem="Tmq-tj-XKk" firstAttribute="centerY" secondItem="wkw-Pp-9Mn" secondAttribute="centerY" id="xBf-L5-fWF"/>
                             <constraint firstItem="KmK-Jy-1Yr" firstAttribute="top" secondItem="wkw-Pp-9Mn" secondAttribute="centerY" multiplier="1.5" constant="15" id="xr0-Nf-2L5"/>
@@ -170,6 +212,7 @@
                     </view>
                     <connections>
                         <outlet property="activityIndicator" destination="q40-ga-30g" id="Rld-vd-28b"/>
+                        <outlet property="bearingListCollectionView" destination="s4M-qc-5T1" id="b41-zI-ewp"/>
                         <outlet property="currentStationBearingLabel" destination="jvc-Vv-Whj" id="6X1-aW-ohL"/>
                         <outlet property="currentStationLabel" destination="wkw-Pp-9Mn" id="aCj-4w-VLP"/>
                         <outlet property="routeListTableView" destination="e1C-eT-M2p" id="04w-Ow-vNn"/>
