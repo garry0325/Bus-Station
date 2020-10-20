@@ -10,6 +10,8 @@ import CoreLocation
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
 	
+	let locationDeviateThreshold = 40.0
+	
 	var locationManager = CLLocationManager()
 	@IBOutlet var stationListCollectionView: UICollectionView!
 	@IBOutlet var routeListTableView: UITableView!
@@ -31,8 +33,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	
 	var currentStationNumber = 0 {
 		didSet {
-			currentStationLabel.text = stationListNames[currentStationNumber]
-			currentStationBearing = stationList[currentStationNumber].bearing
+			if(stationList.count > 0) {
+				currentStationLabel.text = stationListNames[currentStationNumber]
+				currentStationBearing = stationList[currentStationNumber].bearing
+			}
 		}
 	}
 	var stationListNames = [String]()
@@ -106,7 +110,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 					else {
 						// check if current location is deviated from locationWhenPinned over 30m
 						// if so, then dim the location button
-						if(userLocation.distance(from: self.locationWhenPinned) > 50.0) {
+						if(userLocation.distance(from: self.locationWhenPinned) > self.locationDeviateThreshold) {
 							self.updateLocationButton.tintColor = .lightGray
 						}
 					}
@@ -121,6 +125,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	
 	func updateLocationAndStations() {
 		locationManager.startUpdatingLocation()
+		currentStationNumber = 0
 		locationHasUpdated = false
 	}
 	
@@ -131,9 +136,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	func updatePanel() {
 		stationListCollectionView.reloadData()
 		routeListTableView.reloadData()
+		dismissActivityIndicator()
 	}
 	
 	func queryNearbyStations(location: CLLocation) {
+		presentActivityIndicator()
 		DispatchQueue.global(qos: .background).async {
 			self.stationList = self.busQuery.queryNearbyStations(location: location)
 			var stationTemp = [String]()
@@ -154,6 +161,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	}
 	
 	func queryBusArrivals() {
+		presentActivityIndicator()
 		DispatchQueue.global(qos: .background).async {
 			self.routeList = self.busQuery.queryBusArrivals(station: self.stationList[self.currentStationNumber])
 			
@@ -198,6 +206,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		locationServiceAlert.addAction(cancelAction)
 		
 		present(locationServiceAlert, animated: true, completion: nil)
+	}
+	
+	func presentActivityIndicator() {
+		activityIndicator.isHidden = false
+		activityIndicator.startAnimating()
+	}
+	func dismissActivityIndicator() {
+		activityIndicator.isHidden = true
+		activityIndicator.stopAnimating()
 	}
 	
 	func greedyCheck() {

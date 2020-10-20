@@ -138,9 +138,12 @@
                                     <action selector="updateLocationButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cDq-R6-kWR"/>
                                 </connections>
                             </button>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="q40-ga-30g">
-                                <rect key="frame" x="384" y="18" width="20" height="20"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="q40-ga-30g">
+                                <rect key="frame" x="378" y="18" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="R38-4L-BVg"/>
+                                    <constraint firstAttribute="width" constant="20" id="xqv-si-r7B"/>
+                                </constraints>
                             </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -148,6 +151,7 @@
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="KmK-Jy-1Yr" secondAttribute="trailing" id="3Qj-1q-ZVk"/>
                             <constraint firstItem="KmK-Jy-1Yr" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="57" id="C4e-WF-G6t"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="q40-ga-30g" secondAttribute="trailing" constant="16" id="Enp-ia-QIx"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="wkw-Pp-9Mn" secondAttribute="trailing" constant="10" id="Fre-rM-VlC"/>
                             <constraint firstItem="KmK-Jy-1Yr" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="LeJ-0R-PEs"/>
                             <constraint firstItem="Tmq-tj-XKk" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="Mqa-z3-emi"/>
@@ -159,6 +163,7 @@
                             <constraint firstItem="jvc-Vv-Whj" firstAttribute="leading" secondItem="wkw-Pp-9Mn" secondAttribute="leading" id="jMh-c7-5XU"/>
                             <constraint firstItem="wkw-Pp-9Mn" firstAttribute="leading" secondItem="Tmq-tj-XKk" secondAttribute="trailing" constant="7.5" id="lDv-qf-2oo"/>
                             <constraint firstItem="e1C-eT-M2p" firstAttribute="top" secondItem="KmK-Jy-1Yr" secondAttribute="bottom" id="mgh-0v-Xww"/>
+                            <constraint firstItem="q40-ga-30g" firstAttribute="centerY" secondItem="wkw-Pp-9Mn" secondAttribute="centerY" id="vst-Td-eh1"/>
                             <constraint firstItem="Tmq-tj-XKk" firstAttribute="centerY" secondItem="wkw-Pp-9Mn" secondAttribute="centerY" id="xBf-L5-fWF"/>
                             <constraint firstItem="KmK-Jy-1Yr" firstAttribute="top" secondItem="wkw-Pp-9Mn" secondAttribute="centerY" multiplier="1.5" constant="15" id="xr0-Nf-2L5"/>
                         </constraints>
