@@ -27,6 +27,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	var busQuery = BusQuery()
 	var locationWhenPinned = CLLocation()
 	var locationHasUpdated: Bool = false
+	var autoRefreshTimer = Timer()
 	
 	let greedyStations = ["1000441", "1991", "1000523"]
 	var greedyIsUsed: Bool = false
@@ -80,9 +81,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		routeListTableView.delegate = self
 		routeListTableView.dataSource = self
 		
-		checkLocationServicePermission()
+		updateLocationAndStations()
 		
-		_ = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(autoRefresh), userInfo: nil, repeats: true)
+		autoRefreshTimer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(autoRefresh), userInfo: nil, repeats: true)
 		
 		// Do any additional setup after loading the view.
 	}
@@ -120,17 +121,19 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	}
 	
 	@IBAction func updateLocationButtonPressed(_ sender: Any) {
+		presentActivityIndicator()
 		updateLocationAndStations()
 	}
 	
 	func updateLocationAndStations() {
-		locationManager.startUpdatingLocation()
-		currentStationNumber = 0
+		checkLocationServicePermissionAndStartUpdating()
 		locationHasUpdated = false
 	}
 	
 	@objc func autoRefresh() {
-		queryBusArrivals()
+		if(stationList.count > 0) {
+			queryBusArrivals()
+		}
 	}
 	
 	func updatePanel() {
@@ -149,13 +152,25 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 			}
 			self.stationListNames = stationTemp
 			
-			DispatchQueue.main.async {
-				let temp = self.currentStationNumber
-				self.currentStationNumber = temp
-				self.greedyCheck()
-				self.updatePanel()
-				
-				self.queryBusArrivals()
+			if(self.stationList.count == 0) {
+				DispatchQueue.main.async {
+					self.currentStationLabel.text = "附近沒有公車站"
+					self.currentStationBearing = ""
+					self.routeList = []
+					self.updatePanel()
+				}
+			}
+			else {
+				DispatchQueue.main.async {
+					self.currentStationNumber = 0
+					self.greedyCheck()
+					self.updatePanel()
+					
+					self.queryBusArrivals()
+					
+					let autoscroll = IndexPath(item: self.currentStationNumber, section: 0)
+					self.stationListCollectionView.scrollToItem(at: autoscroll, at: .centeredHorizontally, animated: true)
+				}
 			}
 		}
 	}
@@ -171,17 +186,17 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		}
 	}
 	
-	func checkLocationServicePermission() {
+	func checkLocationServicePermissionAndStartUpdating() {
 		locationManager.requestWhenInUseAuthorization()
 		
 		if(CLLocationManager.locationServicesEnabled() &&
 			(locationManager.authorizationStatus == .authorizedAlways ||
 				locationManager.authorizationStatus == .authorizedWhenInUse)){
 			
-			updateLocationAndStations()
+			locationManager.startUpdatingLocation()
 		}
 		else {
-			//locationButton.tintColor = .gray
+			updateLocationButton.tintColor = .lightGray
 			print("Location permission not granted")
 			promptLocationServicePermission()
 		}
@@ -288,7 +303,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 			cell.informationBackgroundView.backgroundColor = UIColor(red: 255/255, green: 96/255, blue: 99/255, alpha: 1.0)
 		case "2分", "3分", "4分":
 			cell.informationBackgroundView.backgroundColor = UIColor(red: 255/255, green: 164/255, blue: 89/255, alpha: 1.0)
-		case "尚未發車", "末班車已過":
+		case "尚未發車", "末班車已過", "今日未營運", "交管不停靠":
 			cell.informationBackgroundView.backgroundColor = UIColor(white: 0.75, alpha: 1.0)
 		default:
 			cell.informationBackgroundView.backgroundColor = UIColor(red: 89/255, green: 206/255, blue: 88/255, alpha: 1.0)
