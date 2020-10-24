@@ -66,6 +66,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		routeListTableView.delegate = self
 		routeListTableView.dataSource = self
 		
+		stationListCollectionView.contentInset.right = 100
+		
 		updateLocationAndStations()
 		
 		autoRefreshTimer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(autoRefresh), userInfo: nil, repeats: true)
@@ -224,7 +226,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	
 	func queryBusArrivals() {
 		presentActivityIndicator()
-		print(stationList[currentStationNumber][currentBearingNumber].stationId)
+		//print(stationList[currentStationNumber][currentBearingNumber].stationId)
 		DispatchQueue.global(qos: .background).async {
 			self.routeList = self.busQuery.queryBusArrivals(station: self.stationList[self.currentStationNumber][self.currentBearingNumber])
 			
@@ -341,7 +343,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
 				cell.bearingLabel.textColor = UIColor(white: 0.0, alpha: 1.0)
 			}
 			cell.clipsToBounds = true
-			cell.layer.cornerRadius = 7.0
+			cell.layer.cornerRadius = 5.0
 			
 			cell.bearingName = bearingListNames[currentStationNumber][indexPath.item]
 			
@@ -365,7 +367,6 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
 	
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 		
-		
 		if(collectionView == stationListCollectionView) {
 			let height = stationListCollectionView.frame.height
 			let size = NSString(string: stationListNames[indexPath.item]).boundingRect(with: CGSize(width: 1500.0, height: height), options: [.usesLineFragmentOrigin], attributes: [NSAttributedString.Key.font :UIFont.systemFont(ofSize: 15)], context: nil)
@@ -378,6 +379,10 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
 			
 			return CGSize(width: size.size.width + 20.0, height: height)
 		}
+	}
+	
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+		return UIEdgeInsets(top: 0, left: 7.0, bottom: 0, right: 5.0)
 	}
 }
 
