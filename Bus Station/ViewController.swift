@@ -21,9 +21,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	@IBOutlet var updateLocationButton: UIButton!
 	@IBOutlet var activityIndicator: UIActivityIndicatorView!
 	
-	// TODO: always update location but not refreshing stations
 	// TODO: add substops
 	// TODO: bus destination
+	// TODO: station collectionview has bug in length
 	
 	var busQuery = BusQuery()
 	var locationWhenPinned = CLLocation()
@@ -188,6 +188,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 								let temp = bearingTemp[j]
 								bearingTemp[j] = bearingTemp[j] + String(Character(UnicodeScalar(dir[bearingTemp[j]]! + 65)!))
 								dir[temp] = dir[temp]! + 1
+							}
+						}
+						else {	// check if there are stations that do not provide bearing
+							var dir = 0
+							for j in 0..<bearingTemp.count {
+								if(bearingTemp[j] == "") {
+									bearingTemp[j] = String(Character(UnicodeScalar(dir + 65)!))
+									dir = dir + 1
+								}
 							}
 						}
 						self.stationList.append(stationTemp)
