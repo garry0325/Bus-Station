@@ -26,8 +26,10 @@ class BusStation {
 class BusStop {
 	let stopId: String
 	let city: String
+	let routeId: String
 	let routeName: String
 	var direction: Int = -1
+	var destination: String = ""
 	var estimatedArrival: Int = -1
 	var stopStatus: Int = -1 {
 		didSet {
@@ -62,9 +64,10 @@ class BusStop {
 	}
 	var information: String = ""
 	
-	init(stopId: String, city: String, routeName: String) {
+	init(stopId: String, city: String, routeId: String, routeName: String) {
 		self.stopId = stopId
 		self.city = city
+		self.routeId = routeId
 		self.routeName = routeName
 	}
 }

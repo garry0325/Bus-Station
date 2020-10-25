@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="e1C-eT-M2p">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="e1C-eT-M2p">
                                 <rect key="frame" x="0.0" y="121" width="414" height="615"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
@@ -29,8 +29,8 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="綠2左" textAlignment="natural" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u2w-It-BaM">
-                                                    <rect key="frame" x="122" y="11.999999999999998" width="272" height="26.333333333333329"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                                    <rect key="frame" x="122" y="4.6666666666666679" width="272" height="23"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -52,20 +52,31 @@
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="往台北車站" textAlignment="natural" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y8b-HS-tBn">
+                                                    <rect key="frame" x="122" y="27" width="272" height="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <color key="textColor" white="0.54430650680000003" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="apd-qk-1wX" firstAttribute="leading" secondItem="dUb-Uc-jOQ" secondAttribute="leading" constant="20" symbolic="YES" id="7A5-gP-Uot"/>
+                                                <constraint firstItem="y8b-HS-tBn" firstAttribute="leading" secondItem="u2w-It-BaM" secondAttribute="leading" id="7vk-79-HTu"/>
+                                                <constraint firstItem="y8b-HS-tBn" firstAttribute="centerY" secondItem="dUb-Uc-jOQ" secondAttribute="centerY" multiplier="1.4" id="GSX-7R-ekH"/>
                                                 <constraint firstItem="TQO-1c-f2q" firstAttribute="width" secondItem="apd-qk-1wX" secondAttribute="width" multiplier="1.07317" id="Hly-DU-12z"/>
                                                 <constraint firstItem="TQO-1c-f2q" firstAttribute="centerX" secondItem="apd-qk-1wX" secondAttribute="centerX" id="JhP-Zj-pjB"/>
                                                 <constraint firstItem="TQO-1c-f2q" firstAttribute="height" secondItem="apd-qk-1wX" secondAttribute="height" multiplier="1.37349" id="Kxd-Ip-oS1"/>
                                                 <constraint firstAttribute="trailing" secondItem="u2w-It-BaM" secondAttribute="trailing" constant="20" symbolic="YES" id="ZAv-7h-JlJ"/>
+                                                <constraint firstItem="y8b-HS-tBn" firstAttribute="leading" secondItem="apd-qk-1wX" secondAttribute="trailing" constant="20" id="ew0-P9-pVQ"/>
                                                 <constraint firstItem="u2w-It-BaM" firstAttribute="leading" secondItem="apd-qk-1wX" secondAttribute="trailing" constant="20" id="gH0-QA-iYb"/>
-                                                <constraint firstItem="u2w-It-BaM" firstAttribute="centerY" secondItem="dUb-Uc-jOQ" secondAttribute="centerY" id="gdK-q3-WNZ"/>
+                                                <constraint firstItem="u2w-It-BaM" firstAttribute="centerY" secondItem="dUb-Uc-jOQ" secondAttribute="centerY" multiplier="0.65" id="gdK-q3-WNZ"/>
                                                 <constraint firstItem="apd-qk-1wX" firstAttribute="centerY" secondItem="dUb-Uc-jOQ" secondAttribute="centerY" id="hJU-tF-Yx3"/>
+                                                <constraint firstAttribute="trailing" secondItem="y8b-HS-tBn" secondAttribute="trailing" constant="20" symbolic="YES" id="klw-wy-IND"/>
                                                 <constraint firstItem="TQO-1c-f2q" firstAttribute="centerY" secondItem="apd-qk-1wX" secondAttribute="centerY" id="ra8-tz-MGB"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="destinationLabel" destination="y8b-HS-tBn" id="sDh-bj-BQ0"/>
                                             <outlet property="informationBackgroundView" destination="TQO-1c-f2q" id="d0i-oB-E4l"/>
                                             <outlet property="informationLabel" destination="apd-qk-1wX" id="eU2-RP-rMn"/>
                                             <outlet property="routeNameLabel" destination="u2w-It-BaM" id="8sr-hL-Fji"/>
@@ -200,7 +211,7 @@
                             <constraint firstItem="jvc-Vv-Whj" firstAttribute="trailing" secondItem="wkw-Pp-9Mn" secondAttribute="trailing" id="RCA-B1-QC3"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="e1C-eT-M2p" secondAttribute="trailing" id="TAY-w7-c0L"/>
                             <constraint firstItem="e1C-eT-M2p" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="aLj-Fg-9TH"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="e1C-eT-M2p" secondAttribute="bottom" id="dFa-Wa-o1G"/>
+                            <constraint firstAttribute="bottom" secondItem="e1C-eT-M2p" secondAttribute="bottom" id="dFa-Wa-o1G"/>
                             <constraint firstItem="jvc-Vv-Whj" firstAttribute="leading" secondItem="wkw-Pp-9Mn" secondAttribute="leading" id="jMh-c7-5XU"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="s4M-qc-5T1" secondAttribute="trailing" id="lAc-tq-Gxl"/>
                             <constraint firstItem="wkw-Pp-9Mn" firstAttribute="leading" secondItem="Tmq-tj-XKk" secondAttribute="trailing" constant="7.5" id="lDv-qf-2oo"/>

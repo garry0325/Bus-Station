@@ -12,6 +12,7 @@ class RouteTableViewCell: UITableViewCell {
 	@IBOutlet var routeNameLabel: UILabel!
 	@IBOutlet var informationLabel: UILabel!
 	@IBOutlet var informationBackgroundView: UIView!
+	@IBOutlet var destinationLabel: UILabel!
 	
 	var routeName = "" {
 		didSet {
@@ -23,6 +24,12 @@ class RouteTableViewCell: UITableViewCell {
 			informationLabel.text = information
 		}
 	}
+	var destination = "" {
+		didSet {
+			destinationLabel.text = destination
+		}
+	}
+	
 	override func awakeFromNib() {
         super.awakeFromNib()
 		

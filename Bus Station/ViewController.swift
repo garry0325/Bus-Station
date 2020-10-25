@@ -24,6 +24,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	// TODO: add substops
 	// TODO: bus destination
 	// TODO: station collectionview has bug in length
+	// TODO: remove greedy algorithm
 	
 	var busQuery = BusQuery()
 	var locationWhenPinned = CLLocation()
@@ -396,6 +397,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 		
 		cell.routeName = routeList[indexPath.row].routeName
 		cell.information = routeList[indexPath.row].information
+		cell.destination = routeList[indexPath.row].destination
 		
 		switch cell.information {
 		case "進站中", "將到站":
@@ -412,6 +414,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 	}
 	
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		return 50.0
+		return 55.0
 	}
 }
