@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="e1C-eT-M2p">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="e1C-eT-M2p">
                                 <rect key="frame" x="0.0" y="121" width="414" height="615"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
@@ -164,13 +164,13 @@
                                 </cells>
                             </collectionView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="尋找車站中..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wkw-Pp-9Mn">
-                                <rect key="frame" x="48.666666666666657" y="13.666666666666664" width="355.33333333333337" height="29"/>
+                                <rect key="frame" x="48.666666666666657" y="13.666666666666664" width="277.33333333333337" height="29"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jvc-Vv-Whj">
-                                <rect key="frame" x="48.666666666666657" y="42.666666666666664" width="355.33333333333337" height="0.0"/>
+                                <rect key="frame" x="48.666666666666657" y="42.666666666666664" width="277.33333333333337" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" white="0.54430650680000003" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -195,22 +195,36 @@
                                     <constraint firstAttribute="width" constant="20" id="xqv-si-r7B"/>
                                 </constraints>
                             </activityIndicatorView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YEz-21-DiZ">
+                                <rect key="frame" x="336" y="17" width="22" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="22" id="2m7-TZ-7NT"/>
+                                    <constraint firstAttribute="width" constant="22" id="3rz-Tn-Pep"/>
+                                </constraints>
+                                <color key="tintColor" systemColor="systemGrayColor"/>
+                                <state key="normal" image="star" catalog="system"/>
+                                <connections>
+                                    <action selector="starButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nZ2-In-Ttx"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="KmK-Jy-1Yr" secondAttribute="trailing" id="3Qj-1q-ZVk"/>
                             <constraint firstItem="s4M-qc-5T1" firstAttribute="top" secondItem="KmK-Jy-1Yr" secondAttribute="bottom" constant="5" id="6n0-kR-wsW"/>
+                            <constraint firstItem="q40-ga-30g" firstAttribute="leading" secondItem="YEz-21-DiZ" secondAttribute="trailing" constant="20" id="7oV-iq-J9g"/>
                             <constraint firstItem="s4M-qc-5T1" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="AnF-JO-MVm"/>
                             <constraint firstItem="KmK-Jy-1Yr" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="57" id="C4e-WF-G6t"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="q40-ga-30g" secondAttribute="trailing" constant="16" id="Enp-ia-QIx"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="wkw-Pp-9Mn" secondAttribute="trailing" constant="10" id="Fre-rM-VlC"/>
                             <constraint firstItem="KmK-Jy-1Yr" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="LeJ-0R-PEs"/>
                             <constraint firstItem="Tmq-tj-XKk" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="Mqa-z3-emi"/>
                             <constraint firstItem="jvc-Vv-Whj" firstAttribute="top" secondItem="wkw-Pp-9Mn" secondAttribute="bottom" id="QPo-Yy-OBy"/>
                             <constraint firstItem="jvc-Vv-Whj" firstAttribute="trailing" secondItem="wkw-Pp-9Mn" secondAttribute="trailing" id="RCA-B1-QC3"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="e1C-eT-M2p" secondAttribute="trailing" id="TAY-w7-c0L"/>
                             <constraint firstItem="e1C-eT-M2p" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="aLj-Fg-9TH"/>
+                            <constraint firstItem="YEz-21-DiZ" firstAttribute="centerY" secondItem="q40-ga-30g" secondAttribute="centerY" id="cQo-jL-omA"/>
+                            <constraint firstItem="YEz-21-DiZ" firstAttribute="leading" secondItem="wkw-Pp-9Mn" secondAttribute="trailing" constant="10" id="d1F-5n-o9c"/>
                             <constraint firstAttribute="bottom" secondItem="e1C-eT-M2p" secondAttribute="bottom" id="dFa-Wa-o1G"/>
                             <constraint firstItem="jvc-Vv-Whj" firstAttribute="leading" secondItem="wkw-Pp-9Mn" secondAttribute="leading" id="jMh-c7-5XU"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="s4M-qc-5T1" secondAttribute="trailing" id="lAc-tq-Gxl"/>
@@ -227,6 +241,7 @@
                         <outlet property="currentStationBearingLabel" destination="jvc-Vv-Whj" id="6X1-aW-ohL"/>
                         <outlet property="currentStationLabel" destination="wkw-Pp-9Mn" id="aCj-4w-VLP"/>
                         <outlet property="routeListTableView" destination="e1C-eT-M2p" id="04w-Ow-vNn"/>
+                        <outlet property="starButton" destination="YEz-21-DiZ" id="dme-Ik-qi1"/>
                         <outlet property="stationListCollectionView" destination="KmK-Jy-1Yr" id="jyI-if-LZ1"/>
                         <outlet property="updateLocationButton" destination="Tmq-tj-XKk" id="oa2-fk-ZU9"/>
                     </connections>
@@ -238,8 +253,12 @@
     </scenes>
     <resources>
         <image name="location.fill" catalog="system" width="128" height="121"/>
+        <image name="star" catalog="system" width="128" height="116"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGrayColor">
+            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

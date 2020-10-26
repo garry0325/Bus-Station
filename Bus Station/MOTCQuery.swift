@@ -228,7 +228,7 @@ class BusQuery {
 		}
 		/*
 		for stop in stopsList {
-			print("\(stop.routeName)\t\(stop.information)")
+			print("\(stop.routeId)\t\(stop.routeName)\t\(stop.information)")
 		}
 		*/
 		return stopsList
