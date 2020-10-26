@@ -141,7 +141,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 			starButton.setImage(UIImage(systemName: "star"), for: .normal)
 			starButton.tintColor = .systemGray
 			
-			for i in 0..<starredStops.count {		// TODO: MAYBE CHANGE NOTATION
+			for i in 0..<starredStops.count {
 				if(starredStops[i].stationID == checkStarredStationId) {
 					self.context.delete(starredStops[i])
 					do {
@@ -179,6 +179,18 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		}
 		
 		return false
+	}
+	
+	func findStarredBearingStation() {	// TODO: IMPROVE ALGORITHM
+		for i in 0..<starredStops.count {
+			for j in 0..<stationList[currentStationNumber].count {
+				if(starredStops[i].stationID == stationList[currentStationNumber][j].stationId) {
+					currentBearingNumber = j
+					return
+				}
+			}
+		}
+		currentBearingNumber = 0
 	}
 	
 	func updateLocationAndStations() {
@@ -437,7 +449,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		if(collectionView == stationListCollectionView) {
 			currentStationNumber = indexPath.item
-			currentBearingNumber = 0
+			findStarredBearingStation()
 			print("\(currentStationNumber)/\(currentBearingNumber)")
 			collectionView.reloadData()
 			queryBusArrivals()
