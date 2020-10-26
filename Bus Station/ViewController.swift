@@ -14,7 +14,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	let locationDeviateThreshold = 40.0
 	
 	let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-	var starredStops: Array<StarredStation> = []
+	var starredStations: Array<StarredStation> = []
 	
 	var locationManager = CLLocationManager()
 	@IBOutlet var stationListCollectionView: UICollectionView!
@@ -35,7 +35,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	var locationHasUpdated: Bool = false
 	var autoRefreshTimer = Timer()
 	
-	let greedyStations = ["1000441", "1991", "1000523", "1000769"]
+	let greedyStations = ["1000441", "1991", "1000523", "1000769"]	// TODO: TO BE REMOVED
 	
 	var currentStationNumber = 0 {
 		didSet {
@@ -125,14 +125,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		let checkStarredStationId = stationList[currentStationNumber][currentBearingNumber].stationId
 		if(!stationIsStarred(stationID: checkStarredStationId)) {
 			starButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
-			starButton.tintColor = .yellow
+			starButton.tintColor = .systemYellow
 			
 			let starred = StarredStation(context: self.context)
 			starred.stationID = checkStarredStationId
-			starredStops.append(starred)
+			starredStations.append(starred)
 			do {
 				try self.context.save()
-				print("Starred \(checkStarredStationId)")
 			} catch {
 				print("Error saving starred station")
 			}
@@ -141,56 +140,19 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 			starButton.setImage(UIImage(systemName: "star"), for: .normal)
 			starButton.tintColor = .systemGray
 			
-			for i in 0..<starredStops.count {
-				if(starredStops[i].stationID == checkStarredStationId) {
-					self.context.delete(starredStops[i])
+			for i in 0..<starredStations.count {
+				if(starredStations[i].stationID == checkStarredStationId) {
+					self.context.delete(starredStations[i])
 					do {
 						try self.context.save()
 					} catch {
 						print("Error saving unstarred station")
 					}
-					starredStops.remove(at: i)
+					starredStations.remove(at: i)
 					break
 				}
 			}
 		}
-	}
-	
-	func updateStarredButton() {
-		print("Updating starred button \(stationList[currentStationNumber][currentBearingNumber].stationId)")
-		if(stationIsStarred(stationID: stationList[currentStationNumber][currentBearingNumber].stationId)) {
-			print("star fill")
-			starButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
-			starButton.tintColor = .yellow
-		}
-		else {
-			print("star unfill")
-			starButton.setImage(UIImage(systemName: "star"), for: .normal)
-			starButton.tintColor = .systemGray
-		}
-	}
-	
-	func stationIsStarred(stationID: String) -> Bool{
-		for i in 0..<starredStops.count {
-			if(starredStops[i].stationID == stationList[currentStationNumber][currentBearingNumber].stationId) {
-				print("starred stationID \(starredStops[i].stationID)")
-				return true
-			}
-		}
-		
-		return false
-	}
-	
-	func findStarredBearingStation() {	// TODO: IMPROVE ALGORITHM
-		for i in 0..<starredStops.count {
-			for j in 0..<stationList[currentStationNumber].count {
-				if(starredStops[i].stationID == stationList[currentStationNumber][j].stationId) {
-					currentBearingNumber = j
-					return
-				}
-			}
-		}
-		currentBearingNumber = 0
 	}
 	
 	func updateLocationAndStations() {
@@ -292,8 +254,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 				
 				DispatchQueue.main.async {
 					self.currentStationNumber = 0
-					self.currentBearingNumber = 0
-					self.greedyCheck()
+					self.findStarredBearingStation()
 					self.updatePanel()
 					
 					self.queryBusArrivals()
@@ -358,14 +319,44 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	
 	func fetchStarredStops() {
 		do {
-			starredStops = try (context.fetch(StarredStation.fetchRequest()) as? [StarredStation])!
+			starredStations = try (context.fetch(StarredStation.fetchRequest()) as? [StarredStation])!
+			print("\(starredStations.count) starred stations")
 		} catch {
-			print("Error fetching starredStops")
+			print("Error fetching starredStations")
 		}
 	}
 	
-	func updateFetchStarredStops() {
+	func updateStarredButton() {
+		if(stationIsStarred(stationID: stationList[currentStationNumber][currentBearingNumber].stationId)) {
+			starButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
+			starButton.tintColor = .systemYellow
+		}
+		else {
+			starButton.setImage(UIImage(systemName: "star"), for: .normal)
+			starButton.tintColor = .systemGray
+		}
+	}
+	
+	func stationIsStarred(stationID: String) -> Bool{
+		for i in 0..<starredStations.count {
+			if(starredStations[i].stationID == stationList[currentStationNumber][currentBearingNumber].stationId) {
+				return true
+			}
+		}
 		
+		return false
+	}
+	
+	func findStarredBearingStation() {	// TODO: IMPROVE ALGORITHM
+		for i in 0..<starredStations.count {
+			for j in 0..<stationList[currentStationNumber].count {
+				if(starredStations[i].stationID == stationList[currentStationNumber][j].stationId) {
+					currentBearingNumber = j
+					return
+				}
+			}
+		}
+		currentBearingNumber = 0
 	}
 	
 	func presentActivityIndicator() {
@@ -377,17 +368,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		activityIndicator.stopAnimating()
 	}
 	
-	func greedyCheck() {
-		for greedy in greedyStations {
-			for i in 0..<stationList.count {
-				for j in 0..<stationList[i].count {
-					if(greedy == stationList[i][j].stationId) {
-						currentStationNumber = i
-						currentBearingNumber = j
-						return
-					}
-				}
-			}
+	func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+		if(CLLocationManager.locationServicesEnabled() &&
+			(locationManager.authorizationStatus == .authorizedAlways ||
+				locationManager.authorizationStatus == .authorizedWhenInUse)){
+			
+			locationManager.startUpdatingLocation()
 		}
 	}
 }
@@ -450,13 +436,11 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
 		if(collectionView == stationListCollectionView) {
 			currentStationNumber = indexPath.item
 			findStarredBearingStation()
-			print("\(currentStationNumber)/\(currentBearingNumber)")
 			collectionView.reloadData()
 			queryBusArrivals()
 		}
 		else {
 			currentBearingNumber = indexPath.item
-			print("\(currentStationNumber)/\(currentBearingNumber)")
 			collectionView.reloadData()
 			queryBusArrivals()
 		}

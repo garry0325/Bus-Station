@@ -164,13 +164,13 @@
                                 </cells>
                             </collectionView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="尋找車站中..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wkw-Pp-9Mn">
-                                <rect key="frame" x="48.666666666666657" y="13.666666666666664" width="277.33333333333337" height="29"/>
+                                <rect key="frame" x="48.666666666666657" y="13.666666666666664" width="285.33333333333337" height="29"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jvc-Vv-Whj">
-                                <rect key="frame" x="48.666666666666657" y="42.666666666666664" width="277.33333333333337" height="0.0"/>
+                                <rect key="frame" x="48.666666666666657" y="42.666666666666664" width="285.33333333333337" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" white="0.54430650680000003" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -189,20 +189,22 @@
                                 </connections>
                             </button>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="q40-ga-30g">
-                                <rect key="frame" x="378" y="18" width="20" height="20"/>
+                                <rect key="frame" x="339" y="18" width="20" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="R38-4L-BVg"/>
                                     <constraint firstAttribute="width" constant="20" id="xqv-si-r7B"/>
                                 </constraints>
                             </activityIndicatorView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YEz-21-DiZ">
-                                <rect key="frame" x="336" y="17" width="22" height="22"/>
+                                <rect key="frame" x="369" y="13" width="30" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="22" id="2m7-TZ-7NT"/>
-                                    <constraint firstAttribute="width" constant="22" id="3rz-Tn-Pep"/>
+                                    <constraint firstAttribute="height" constant="30" id="2m7-TZ-7NT"/>
+                                    <constraint firstAttribute="width" constant="30" id="3rz-Tn-Pep"/>
                                 </constraints>
                                 <color key="tintColor" systemColor="systemGrayColor"/>
-                                <state key="normal" image="star" catalog="system"/>
+                                <state key="normal" image="star" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="25"/>
+                                </state>
                                 <connections>
                                     <action selector="starButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nZ2-In-Ttx"/>
                                 </connections>
@@ -213,18 +215,18 @@
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="KmK-Jy-1Yr" secondAttribute="trailing" id="3Qj-1q-ZVk"/>
                             <constraint firstItem="s4M-qc-5T1" firstAttribute="top" secondItem="KmK-Jy-1Yr" secondAttribute="bottom" constant="5" id="6n0-kR-wsW"/>
-                            <constraint firstItem="q40-ga-30g" firstAttribute="leading" secondItem="YEz-21-DiZ" secondAttribute="trailing" constant="20" id="7oV-iq-J9g"/>
                             <constraint firstItem="s4M-qc-5T1" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="AnF-JO-MVm"/>
                             <constraint firstItem="KmK-Jy-1Yr" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="57" id="C4e-WF-G6t"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="q40-ga-30g" secondAttribute="trailing" constant="16" id="Enp-ia-QIx"/>
+                            <constraint firstItem="q40-ga-30g" firstAttribute="leading" secondItem="wkw-Pp-9Mn" secondAttribute="trailing" constant="5" id="DfN-4J-epc"/>
+                            <constraint firstItem="q40-ga-30g" firstAttribute="trailing" secondItem="YEz-21-DiZ" secondAttribute="leading" constant="-10" id="FZx-bp-mwA"/>
                             <constraint firstItem="KmK-Jy-1Yr" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="LeJ-0R-PEs"/>
                             <constraint firstItem="Tmq-tj-XKk" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="Mqa-z3-emi"/>
                             <constraint firstItem="jvc-Vv-Whj" firstAttribute="top" secondItem="wkw-Pp-9Mn" secondAttribute="bottom" id="QPo-Yy-OBy"/>
                             <constraint firstItem="jvc-Vv-Whj" firstAttribute="trailing" secondItem="wkw-Pp-9Mn" secondAttribute="trailing" id="RCA-B1-QC3"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="e1C-eT-M2p" secondAttribute="trailing" id="TAY-w7-c0L"/>
                             <constraint firstItem="e1C-eT-M2p" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="aLj-Fg-9TH"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="YEz-21-DiZ" secondAttribute="trailing" constant="15" id="b9b-MB-Kkp"/>
                             <constraint firstItem="YEz-21-DiZ" firstAttribute="centerY" secondItem="q40-ga-30g" secondAttribute="centerY" id="cQo-jL-omA"/>
-                            <constraint firstItem="YEz-21-DiZ" firstAttribute="leading" secondItem="wkw-Pp-9Mn" secondAttribute="trailing" constant="10" id="d1F-5n-o9c"/>
                             <constraint firstAttribute="bottom" secondItem="e1C-eT-M2p" secondAttribute="bottom" id="dFa-Wa-o1G"/>
                             <constraint firstItem="jvc-Vv-Whj" firstAttribute="leading" secondItem="wkw-Pp-9Mn" secondAttribute="leading" id="jMh-c7-5XU"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="s4M-qc-5T1" secondAttribute="trailing" id="lAc-tq-Gxl"/>
