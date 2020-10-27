@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="e1C-eT-M2p">
-                                <rect key="frame" x="0.0" y="121" width="414" height="615"/>
+                                <rect key="frame" x="0.0" y="123" width="414" height="613"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="RouteCell" rowHeight="50" id="HZh-Ri-qGV" customClass="RouteTableViewCell" customModule="Bus_Station" customModuleProvider="target">
@@ -49,6 +49,15 @@
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                             <integer key="value" value="12"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowOpacity">
+                                                            <real key="value" value="0.5"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowRadius">
+                                                            <integer key="value" value="4"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="size" keyPath="layer.shadowOffset">
+                                                            <size key="value" width="0.0" height="0.0"/>
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
@@ -85,11 +94,11 @@
                                 </prototypes>
                                 <sections/>
                             </tableView>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="s4M-qc-5T1">
-                                <rect key="frame" x="0.0" y="92" width="414" height="24"/>
+                            <collectionView multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="s4M-qc-5T1">
+                                <rect key="frame" x="0.0" y="93" width="414" height="30"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="24" id="njh-Hm-sEE"/>
+                                    <constraint firstAttribute="height" constant="30" id="njh-Hm-sEE"/>
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="5" minimumInteritemSpacing="0.0" id="sxL-8v-PgC">
                                     <size key="itemSize" width="135" height="62"/>
@@ -99,7 +108,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="BearingCell" id="tUs-rj-9d8" customClass="BearingListCollectionViewCell" customModule="Bus_Station" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="-19" width="135" height="62"/>
+                                        <rect key="frame" x="0.0" y="-16" width="135" height="62"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="R4b-e0-lrb">
                                             <rect key="frame" x="0.0" y="0.0" width="135" height="62"/>
@@ -123,12 +132,23 @@
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowOpacity">
+                                        <real key="value" value="0.40000000000000002"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="size" keyPath="layer.shadowOffset">
+                                        <size key="value" width="0.0" height="3"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </collectionView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="KmK-Jy-1Yr">
-                                <rect key="frame" x="0.0" y="57" width="414" height="30"/>
+                                <rect key="frame" x="0.0" y="57" width="414" height="36"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="X9S-2p-yTK"/>
+                                    <constraint firstAttribute="height" constant="36" id="X9S-2p-yTK"/>
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="5" minimumInteritemSpacing="0.0" id="M3P-zf-Bd2">
                                     <size key="itemSize" width="135" height="62"/>
@@ -138,7 +158,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="StationCell" id="yTH-fh-1v2" customClass="StationListCollectionViewCell" customModule="Bus_Station" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="-16" width="135" height="62"/>
+                                        <rect key="frame" x="0.0" y="-13" width="135" height="62"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="rkH-We-qGe">
                                             <rect key="frame" x="0.0" y="0.0" width="135" height="62"/>
@@ -214,7 +234,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="KmK-Jy-1Yr" secondAttribute="trailing" id="3Qj-1q-ZVk"/>
-                            <constraint firstItem="s4M-qc-5T1" firstAttribute="top" secondItem="KmK-Jy-1Yr" secondAttribute="bottom" constant="5" id="6n0-kR-wsW"/>
+                            <constraint firstItem="s4M-qc-5T1" firstAttribute="top" secondItem="KmK-Jy-1Yr" secondAttribute="bottom" id="6n0-kR-wsW"/>
                             <constraint firstItem="s4M-qc-5T1" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="AnF-JO-MVm"/>
                             <constraint firstItem="KmK-Jy-1Yr" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="57" id="C4e-WF-G6t"/>
                             <constraint firstItem="q40-ga-30g" firstAttribute="leading" secondItem="wkw-Pp-9Mn" secondAttribute="trailing" constant="5" id="DfN-4J-epc"/>
@@ -231,7 +251,7 @@
                             <constraint firstItem="jvc-Vv-Whj" firstAttribute="leading" secondItem="wkw-Pp-9Mn" secondAttribute="leading" id="jMh-c7-5XU"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="s4M-qc-5T1" secondAttribute="trailing" id="lAc-tq-Gxl"/>
                             <constraint firstItem="wkw-Pp-9Mn" firstAttribute="leading" secondItem="Tmq-tj-XKk" secondAttribute="trailing" constant="7.5" id="lDv-qf-2oo"/>
-                            <constraint firstItem="e1C-eT-M2p" firstAttribute="top" secondItem="s4M-qc-5T1" secondAttribute="bottom" constant="5" id="o0i-vf-eUS"/>
+                            <constraint firstItem="e1C-eT-M2p" firstAttribute="top" secondItem="s4M-qc-5T1" secondAttribute="bottom" id="o0i-vf-eUS"/>
                             <constraint firstItem="q40-ga-30g" firstAttribute="centerY" secondItem="wkw-Pp-9Mn" secondAttribute="centerY" id="vst-Td-eh1"/>
                             <constraint firstItem="Tmq-tj-XKk" firstAttribute="centerY" secondItem="wkw-Pp-9Mn" secondAttribute="centerY" id="xBf-L5-fWF"/>
                             <constraint firstItem="KmK-Jy-1Yr" firstAttribute="top" secondItem="wkw-Pp-9Mn" secondAttribute="centerY" multiplier="1.5" constant="15" id="xr0-Nf-2L5"/>

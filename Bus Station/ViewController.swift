@@ -28,14 +28,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	
 	// TODO: add substops
 	// TODO: station collectionview has bug in length
-	// TODO: remove greedy algorithm
+	// TODO: combine buses from other cities
 	
 	var busQuery = BusQuery()
 	var locationWhenPinned = CLLocation()
 	var locationHasUpdated: Bool = false
 	var autoRefreshTimer = Timer()
-	
-	let greedyStations = ["1000441", "1991", "1000523", "1000769"]	// TODO: TO BE REMOVED
 	
 	var currentStationNumber = 0 {
 		didSet {
@@ -73,7 +71,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		routeListTableView.delegate = self
 		routeListTableView.dataSource = self
 		
-		stationListCollectionView.contentInset.right = 100
+		routeListTableView.contentInset = UIEdgeInsets(top: 7.0, left: 0.0, bottom: 0.0, right: 0.0)
+		stationListCollectionView.contentInset.right = 100	// compensate for the bug that the last cell will be covered due to not enough scrollable length
 		
 		fetchStarredStops()
 		
@@ -452,13 +451,13 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
 			let height = stationListCollectionView.frame.height
 			let size = NSString(string: stationListNames[indexPath.item]).boundingRect(with: CGSize(width: 1500.0, height: height), options: [.usesLineFragmentOrigin], attributes: [NSAttributedString.Key.font :UIFont.systemFont(ofSize: 15)], context: nil)
 			
-			return CGSize(width: size.size.width + 20.0, height: height)
+			return CGSize(width: size.size.width + 20.0, height: height - 6.0)
 		}
 		else {
 			let height = bearingListCollectionView.frame.height
 			let size = NSString(string: bearingListNames[currentStationNumber][indexPath.item]).boundingRect(with: CGSize(width: 500.0, height: height), options: [.usesLineFragmentOrigin], attributes: [NSAttributedString.Key.font :UIFont.systemFont(ofSize: 15)], context: nil)
 			
-			return CGSize(width: size.size.width + 20.0, height: height)
+			return CGSize(width: size.size.width + 20.0, height: height - 6.0)
 		}
 	}
 	
