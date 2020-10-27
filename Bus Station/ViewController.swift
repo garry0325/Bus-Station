@@ -404,7 +404,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
 				cell.backgroundColor = UIColor(white: 0.95, alpha: 1.0)
 				cell.stationLabel.textColor = UIColor(white: 0.0, alpha: 1.0)
 			}
-			cell.clipsToBounds = true
+			//cell.clipsToBounds = true
 			cell.layer.cornerRadius = cell.frame.height / 2
 			
 			cell.stationName = stationListNames[indexPath.item]
@@ -422,7 +422,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
 				cell.backgroundColor = UIColor(white: 0.95, alpha: 1.0)
 				cell.bearingLabel.textColor = UIColor(white: 0.0, alpha: 1.0)
 			}
-			cell.clipsToBounds = true
+			//cell.clipsToBounds = true
 			cell.layer.cornerRadius = 5.0
 			
 			cell.bearingName = bearingListNames[currentStationNumber][indexPath.item]
@@ -457,7 +457,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
 			let height = bearingListCollectionView.frame.height
 			let size = NSString(string: bearingListNames[currentStationNumber][indexPath.item]).boundingRect(with: CGSize(width: 500.0, height: height), options: [.usesLineFragmentOrigin], attributes: [NSAttributedString.Key.font :UIFont.systemFont(ofSize: 15)], context: nil)
 			
-			return CGSize(width: size.size.width + 20.0, height: height - 6.0)
+			return CGSize(width: size.size.width + 20.0, height: height - 12.0)
 		}
 	}
 	
