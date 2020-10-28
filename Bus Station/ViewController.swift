@@ -78,6 +78,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		
 		updateLocationAndStations()
 		
+		// Because when app is reopen from background, the animation stops
+		NotificationCenter.default.addObserver(self, selector: #selector(backFromBackground), name: UIApplication.didBecomeActiveNotification, object: nil)
 		autoRefreshTimer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(autoRefresh), userInfo: nil, repeats: true)
 		
 		// Do any additional setup after loading the view.
@@ -358,6 +360,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		currentBearingNumber = 0
 	}
 	
+	@objc func backFromBackground() {
+		autoRefresh()
+	}
+	
 	func presentActivityIndicator() {
 		activityIndicator.isHidden = false
 		activityIndicator.startAnimating()
@@ -478,18 +484,38 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 		cell.information = routeList[indexPath.row].information
 		cell.destination = routeList[indexPath.row].destination
 		
-		switch cell.information {
-		case "進站中", "將到站":
-			cell.informationBackgroundView.backgroundColor = UIColor(red: 255/255, green: 96/255, blue: 99/255, alpha: 1.0)
-		case "2分", "3分", "4分":
-			cell.informationBackgroundView.backgroundColor = UIColor(red: 255/255, green: 164/255, blue: 89/255, alpha: 1.0)
-		case "尚未發車", "末班車已過", "今日未營運", "交管不停靠":
-			cell.informationBackgroundView.backgroundColor = UIColor(white: 0.75, alpha: 1.0)
+		return cell
+	}
+	
+	func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+		let tempCell = cell as! RouteTableViewCell
+		var colorOriginal: UIColor?
+		var colorAnimating: UIColor?
+		var animateDuration: TimeInterval?
+		
+		switch tempCell.labelColor {
+		case RouteLabelColors.red:
+			colorOriginal = RouteLabelColors.red
+			colorAnimating = RouteLabelColors.redAnimating
+			animateDuration = 0.3
+		case RouteLabelColors.orange:
+			colorOriginal = RouteLabelColors.orange
+			colorAnimating = RouteLabelColors.orangeAnimating
+			animateDuration = 0.8
+		case RouteLabelColors.green:
+			colorOriginal = RouteLabelColors.green
+			colorAnimating = RouteLabelColors.greenAnimating
+			animateDuration = 1.5
 		default:
-			cell.informationBackgroundView.backgroundColor = UIColor(red: 89/255, green: 206/255, blue: 88/255, alpha: 1.0)
+			colorOriginal = RouteLabelColors.gray
+			colorAnimating = RouteLabelColors.gray
+			animateDuration = 1
 		}
 		
-		return cell
+		tempCell.informationBackgroundView.backgroundColor = colorOriginal
+		UIView.animate(withDuration: animateDuration!, delay: 0, options: [.autoreverse, .repeat], animations: {
+				tempCell.informationBackgroundView.backgroundColor = colorAnimating
+		}, completion: nil)
 	}
 	
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

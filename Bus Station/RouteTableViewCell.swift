@@ -22,6 +22,17 @@ class RouteTableViewCell: UITableViewCell {
 	var information = "" {
 		didSet {
 			informationLabel.text = information
+			
+			switch information {
+			case "進站中", "將到站":
+				labelColor = RouteLabelColors.red
+			case "2分", "3分", "4分":
+				labelColor = RouteLabelColors.orange
+			case "尚未發車", "末班車已過", "今日未營運", "交管不停靠":
+				labelColor = RouteLabelColors.gray
+			default:
+				labelColor = RouteLabelColors.green
+			}
 		}
 	}
 	var destination = "" {
@@ -29,6 +40,7 @@ class RouteTableViewCell: UITableViewCell {
 			destinationLabel.text = destination
 		}
 	}
+	var labelColor: UIColor = RouteLabelColors.gray
 	
 	override func awakeFromNib() {
         super.awakeFromNib()
