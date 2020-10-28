@@ -43,18 +43,19 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 			}
 		}
 	}
-	var stationListNames = [String]()
-	var stationList: Array<Array<BusStation>> = []
 	var currentBearingNumber = 0 {
 		didSet {
 			currentStationBearingLabel.text = bearingListNames[currentStationNumber][currentBearingNumber]
 			updateStarredButton()
 		}
 	}
+	var stationList: Array<Array<BusStation>> = []
+	var stationListNames = [String]()
 	var bearingListNames: Array<Array<String>> = []
 	
-	var routeList = [BusStop]()
-	var currentStationBearing = ""
+	var routeList: Array<Array<Array<BusStop>>> = []
+	//var routeList = [BusStop]()
+	var currentStationBearing = ""	// TODO: REMOVE THIS VARIABLE
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -175,6 +176,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	}
 	
 	func queryNearbyStations(location: CLLocation) {
+		print("querying nearby station")
 		presentActivityIndicator()
 		DispatchQueue.global(qos: .background).async {
 			let unorganizedStationList = self.busQuery.queryNearbyStations(location: location)
@@ -194,17 +196,22 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 				}
 			}
 			else {
+				print("parsing station")
 				var duplicates = Dictionary(grouping: unorganizedStationList, by: {$0.stationName})
 				self.stationList = []
+				self.routeList = []
 				self.stationListNames = []
 				self.bearingListNames = []
 				for i in 0..<unorganizedStationList.count {
 					if let exist = duplicates[unorganizedStationList[i].stationName] {
 						var stationTemp = [BusStation]()
 						var bearingTemp = [String]()
+						var routeTemp: Array<Array<BusStop>> = []
 						for station in exist {
 							stationTemp.append(station)
 							bearingTemp.append(station.bearing)
+							let routeTempTemp = [BusStop]()
+							routeTemp.append(routeTempTemp)
 						}
 						for j in 0..<bearingTemp.count {
 							switch bearingTemp[j] {
@@ -248,6 +255,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 						self.stationList.append(stationTemp)
 						self.bearingListNames.append(bearingTemp)
 						self.stationListNames.append(unorganizedStationList[i].stationName)
+						self.routeList.append(routeTemp)
 						
 						duplicates.removeValue(forKey: unorganizedStationList[i].stationName)
 					}
@@ -261,7 +269,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 					self.queryBusArrivals()
 					
 					self.stationListCollectionView.scrollToItem(at: IndexPath(item: self.currentStationNumber, section: 0), at: .centeredHorizontally, animated: true)
-					if(self.routeList.count > 0) {
+					if(self.routeList[self.currentStationNumber][self.currentBearingNumber].count > 0) {
 						self.routeListTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
 					}
 				}
@@ -273,7 +281,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		presentActivityIndicator()
 		//print(stationList[currentStationNumber][currentBearingNumber].stationId)
 		DispatchQueue.global(qos: .background).async {
-			self.routeList = self.busQuery.queryBusArrivals(station: self.stationList[self.currentStationNumber][self.currentBearingNumber])
+			self.routeList[self.currentStationNumber][self.currentBearingNumber] = self.busQuery.queryBusArrivals(station: self.stationList[self.currentStationNumber][self.currentBearingNumber])
 			
 			DispatchQueue.main.async {
 				self.updatePanel()
@@ -474,15 +482,20 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return routeList.count
+		if(routeList.count > 0 && routeList[currentStationNumber].count > 0 && routeList[currentStationNumber][currentBearingNumber].count > 0) {
+			return routeList[currentStationNumber][currentBearingNumber].count
+		}
+		else {
+			return 0
+		}
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: "RouteCell") as! RouteTableViewCell
 		
-		cell.routeName = routeList[indexPath.row].routeName
-		cell.information = routeList[indexPath.row].information
-		cell.destination = routeList[indexPath.row].destination
+		cell.routeName = routeList[currentStationNumber][currentBearingNumber][indexPath.row].routeName
+		cell.information = routeList[currentStationNumber][currentBearingNumber][indexPath.row].information
+		cell.destination = routeList[currentStationNumber][currentBearingNumber][indexPath.row].destination
 		
 		return cell
 	}
