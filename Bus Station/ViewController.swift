@@ -22,7 +22,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	@IBOutlet var stationListCollectionView: UICollectionView!
 	@IBOutlet var bearingListCollectionView: UICollectionView!
 	@IBOutlet var routeCollectionView: UICollectionView!
-	//@IBOutlet var routeListTableView: UITableView!
 	@IBOutlet var currentStationLabel: UILabel!
 	@IBOutlet var currentStationBearingLabel: UILabel!
 	@IBOutlet var updateLocationButton: UIButton!
@@ -43,9 +42,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		didSet {
 			if(stationList.count > 0 && currentStationNumber < bearingListNames.count && currentBearingNumber < bearingListNames[currentStationNumber].count) {
 				currentStationLabel.text = stationListNames[currentStationNumber]
+				currentStationBearingLabel.text = bearingListNames[currentStationNumber][currentBearingNumber]
 				
-				let count = bearingIndexToItem[currentStationNumber][currentBearingNumber]
-				routeCollectionView.scrollToItem(at: IndexPath(item: count, section: 0), at: .centeredHorizontally, animated: true)
+				let item = bearingIndexToItem[currentStationNumber][currentBearingNumber]
+				routeCollectionView.scrollToItem(at: IndexPath(item: item, section: 0), at: .centeredHorizontally, animated: true)
 				
 				updateStarredButton()
 			}
@@ -55,10 +55,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		didSet {
 			if(currentStationNumber < bearingListNames.count && currentBearingNumber < bearingListNames[currentStationNumber].count) {
 				
+				currentStationLabel.text = stationListNames[currentStationNumber]
 				currentStationBearingLabel.text = bearingListNames[currentStationNumber][currentBearingNumber]
 				
-				let count = bearingIndexToItem[currentStationNumber][currentBearingNumber]
-				routeCollectionView.scrollToItem(at: IndexPath(item: count, section: 0), at: .centeredHorizontally, animated: true)
+				let item = bearingIndexToItem[currentStationNumber][currentBearingNumber]
+				routeCollectionView.scrollToItem(at: IndexPath(item: item, section: 0), at: .centeredHorizontally, animated: true)
 				
 				updateStarredButton()
 			}
@@ -69,8 +70,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	var bearingListNames: Array<Array<String>> = []
 	
 	static var routeList: Array<Array<Array<BusStop>>> = []
-	//var routeList = [BusStop]()
-	var currentStationBearing = ""	// TODO: REMOVE THIS VARIABLE
 	var bearingStationDict = [Int:Int]()
 	var bearingIndexToItem: Array<Array<Int>> = []
 	static var bearingItemToIndex: Array<Array<Int>> = []
@@ -91,10 +90,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		bearingListCollectionView.dataSource = self
 		routeCollectionView.delegate = self
 		routeCollectionView.dataSource = self
-		//routeListTableView.delegate = self
-		//routeListTableView.dataSource = self
 		
-		//routeListTableView.contentInset = UIEdgeInsets(top: 7.0, left: 0.0, bottom: 0.0, right: 0.0)
 		stationListCollectionView.contentInset.right = 100	// compensate for the bug that the last cell will be covered due to not enough scrollable length
 		
 		fetchStarredStops()
@@ -196,7 +192,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		stationListCollectionView.reloadData()
 		bearingListCollectionView.reloadData()
 		routeCollectionView.reloadData()
-		//routeListTableView.reloadData()
 		dismissActivityIndicator()
 	}
 	
@@ -213,7 +208,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 			if(unorganizedStationList.count == 0) {
 				DispatchQueue.main.async {
 					self.currentStationLabel.text = "附近沒有公車站"
-					self.currentStationBearing = ""
+					self.currentStationBearingLabel.text = ""
 					self.bearingListNames = []	// TODO: CHECK far away location
 					ViewController.routeList = []
 					self.bearingStationDict = [Int:Int]()
@@ -298,6 +293,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 						self.bearingStationDict[countForStation] = countForBearingOfEachStation
 						self.bearingIndexToItem.append(countForIndexToItemOfEachStation)
 						countForStation = countForStation + 1
+						
 						duplicates.removeValue(forKey: unorganizedStationList[i].stationName)
 					}
 				}
@@ -310,9 +306,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 					self.queryBusArrivals()
 					
 					self.stationListCollectionView.scrollToItem(at: IndexPath(item: self.currentStationNumber, section: 0), at: .centeredHorizontally, animated: true)
-					if(ViewController.routeList[self.currentStationNumber][self.currentBearingNumber].count > 0) {
-						//self.routeListTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
-					}
 				}
 			}
 		}
