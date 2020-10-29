@@ -209,12 +209,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 				DispatchQueue.main.async {
 					self.currentStationLabel.text = "附近沒有公車站"
 					self.currentStationBearingLabel.text = ""
-					self.bearingListNames = []	// TODO: CHECK far away location
+					self.stationList = []
 					ViewController.routeList = []
+					self.stationListNames = []
+					self.bearingListNames = []	// TODO: CHECK far away location
+					self.bearingStationsCount = 0
 					self.bearingStationDict = [Int:Int]()
 					self.bearingIndexToItem = []
 					ViewController.bearingItemToIndex = []
-					self.bearingStationsCount = 0
 					self.updatePanel()
 				}
 			}
