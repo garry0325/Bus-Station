@@ -13,13 +13,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	
 	let locationDeviateThreshold = 40.0
 	
+	static let shared = ViewController()
+	
 	let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 	var starredStations: Array<StarredStation> = []
 	
 	var locationManager = CLLocationManager()
 	@IBOutlet var stationListCollectionView: UICollectionView!
 	@IBOutlet var bearingListCollectionView: UICollectionView!
-	@IBOutlet var routeListTableView: UITableView!
+	@IBOutlet var routeCollectionView: UICollectionView!
+	//@IBOutlet var routeListTableView: UITableView!
 	@IBOutlet var currentStationLabel: UILabel!
 	@IBOutlet var currentStationBearingLabel: UILabel!
 	@IBOutlet var updateLocationButton: UIButton!
@@ -29,6 +32,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	// TODO: add substops
 	// TODO: station collectionview has bug in length
 	// TODO: combine buses from other cities
+	// TODO: add queryBusesArrivals() on adjacent pages
 	
 	var busQuery = BusQuery()
 	var locationWhenPinned = CLLocation()
@@ -37,25 +41,41 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	
 	var currentStationNumber = 0 {
 		didSet {
-			if(stationList.count > 0) {
+			if(stationList.count > 0 && currentStationNumber < bearingListNames.count && currentBearingNumber < bearingListNames[currentStationNumber].count) {
 				currentStationLabel.text = stationListNames[currentStationNumber]
+				
+				let count = bearingIndexToItem[currentStationNumber][currentBearingNumber]
+				routeCollectionView.scrollToItem(at: IndexPath(item: count, section: 0), at: .centeredHorizontally, animated: true)
+				
 				updateStarredButton()
 			}
 		}
 	}
 	var currentBearingNumber = 0 {
 		didSet {
-			currentStationBearingLabel.text = bearingListNames[currentStationNumber][currentBearingNumber]
-			updateStarredButton()
+			if(currentStationNumber < bearingListNames.count && currentBearingNumber < bearingListNames[currentStationNumber].count) {
+				
+				currentStationBearingLabel.text = bearingListNames[currentStationNumber][currentBearingNumber]
+				
+				let count = bearingIndexToItem[currentStationNumber][currentBearingNumber]
+				routeCollectionView.scrollToItem(at: IndexPath(item: count, section: 0), at: .centeredHorizontally, animated: true)
+				
+				updateStarredButton()
+			}
 		}
 	}
 	var stationList: Array<Array<BusStation>> = []
 	var stationListNames = [String]()
 	var bearingListNames: Array<Array<String>> = []
 	
-	var routeList: Array<Array<Array<BusStop>>> = []
+	static var routeList: Array<Array<Array<BusStop>>> = []
 	//var routeList = [BusStop]()
 	var currentStationBearing = ""	// TODO: REMOVE THIS VARIABLE
+	var bearingStationDict = [Int:Int]()
+	var bearingIndexToItem: Array<Array<Int>> = []
+	static var bearingItemToIndex: Array<Array<Int>> = []
+	var bearingStationsCount = 0
+	
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -69,10 +89,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		stationListCollectionView.dataSource = self
 		bearingListCollectionView.delegate = self
 		bearingListCollectionView.dataSource = self
-		routeListTableView.delegate = self
-		routeListTableView.dataSource = self
+		routeCollectionView.delegate = self
+		routeCollectionView.dataSource = self
+		//routeListTableView.delegate = self
+		//routeListTableView.dataSource = self
 		
-		routeListTableView.contentInset = UIEdgeInsets(top: 7.0, left: 0.0, bottom: 0.0, right: 0.0)
+		//routeListTableView.contentInset = UIEdgeInsets(top: 7.0, left: 0.0, bottom: 0.0, right: 0.0)
 		stationListCollectionView.contentInset.right = 100	// compensate for the bug that the last cell will be covered due to not enough scrollable length
 		
 		fetchStarredStops()
@@ -101,12 +123,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 					print("\(self.locationHasUpdated)\t\(address)")
 					
 					if(!self.locationHasUpdated)  {
+						print("location has not updated")
 						self.locationHasUpdated = true
 						self.locationWhenPinned = userLocation
 						self.updateLocationButton.tintColor = .blue
 						self.queryNearbyStations(location: self.locationWhenPinned)
 					}
 					else {
+						print("lcoation has updated")
 						// check if current location is deviated from locationWhenPinned over 30m
 						// if so, then dim the location button
 						if(userLocation.distance(from: self.locationWhenPinned) > self.locationDeviateThreshold) {
@@ -171,12 +195,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	func updatePanel() {
 		stationListCollectionView.reloadData()
 		bearingListCollectionView.reloadData()
-		routeListTableView.reloadData()
+		routeCollectionView.reloadData()
+		//routeListTableView.reloadData()
 		dismissActivityIndicator()
 	}
 	
 	func queryNearbyStations(location: CLLocation) {
-		print("querying nearby station")
 		presentActivityIndicator()
 		DispatchQueue.global(qos: .background).async {
 			let unorganizedStationList = self.busQuery.queryNearbyStations(location: location)
@@ -190,28 +214,43 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 				DispatchQueue.main.async {
 					self.currentStationLabel.text = "附近沒有公車站"
 					self.currentStationBearing = ""
-					self.bearingListNames = []
-					self.routeList = []
+					self.bearingListNames = []	// TODO: CHECK far away location
+					ViewController.routeList = []
+					self.bearingStationDict = [Int:Int]()
+					self.bearingIndexToItem = []
+					ViewController.bearingItemToIndex = []
+					self.bearingStationsCount = 0
 					self.updatePanel()
 				}
 			}
 			else {
-				print("parsing station")
 				var duplicates = Dictionary(grouping: unorganizedStationList, by: {$0.stationName})
 				self.stationList = []
-				self.routeList = []
+				ViewController.routeList = []
 				self.stationListNames = []
 				self.bearingListNames = []
+				self.bearingStationsCount = unorganizedStationList.count
+				self.bearingStationDict = [Int:Int]()
+				self.bearingIndexToItem = []
+				ViewController.bearingItemToIndex = []
+				var countForStation = 0
+				var countForBearing = 0
 				for i in 0..<unorganizedStationList.count {
 					if let exist = duplicates[unorganizedStationList[i].stationName] {
 						var stationTemp = [BusStation]()
 						var bearingTemp = [String]()
 						var routeTemp: Array<Array<BusStop>> = []
+						var countForBearingOfEachStation = 0
+						var countForIndexToItemOfEachStation = [Int]()
 						for station in exist {
 							stationTemp.append(station)
 							bearingTemp.append(station.bearing)
 							let routeTempTemp = [BusStop]()
 							routeTemp.append(routeTempTemp)
+							countForIndexToItemOfEachStation.append(countForBearing)
+							countForBearing = countForBearing + 1
+							ViewController.bearingItemToIndex.append([countForStation, countForBearingOfEachStation])
+							countForBearingOfEachStation = countForBearingOfEachStation + 1
 						}
 						for j in 0..<bearingTemp.count {
 							switch bearingTemp[j] {
@@ -255,13 +294,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 						self.stationList.append(stationTemp)
 						self.bearingListNames.append(bearingTemp)
 						self.stationListNames.append(unorganizedStationList[i].stationName)
-						self.routeList.append(routeTemp)
-						
+						ViewController.routeList.append(routeTemp)
+						self.bearingStationDict[countForStation] = countForBearingOfEachStation
+						self.bearingIndexToItem.append(countForIndexToItemOfEachStation)
+						countForStation = countForStation + 1
 						duplicates.removeValue(forKey: unorganizedStationList[i].stationName)
 					}
 				}
-				
 				DispatchQueue.main.async {
+					self.routeCollectionView.reloadData()	// not sure why this, but otherwise first load will not make routeCollectionView autoscroll
 					self.currentStationNumber = 0
 					self.findStarredBearingStation()
 					self.updatePanel()
@@ -269,8 +310,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 					self.queryBusArrivals()
 					
 					self.stationListCollectionView.scrollToItem(at: IndexPath(item: self.currentStationNumber, section: 0), at: .centeredHorizontally, animated: true)
-					if(self.routeList[self.currentStationNumber][self.currentBearingNumber].count > 0) {
-						self.routeListTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+					if(ViewController.routeList[self.currentStationNumber][self.currentBearingNumber].count > 0) {
+						//self.routeListTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
 					}
 				}
 			}
@@ -281,7 +322,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		presentActivityIndicator()
 		//print(stationList[currentStationNumber][currentBearingNumber].stationId)
 		DispatchQueue.global(qos: .background).async {
-			self.routeList[self.currentStationNumber][self.currentBearingNumber] = self.busQuery.queryBusArrivals(station: self.stationList[self.currentStationNumber][self.currentBearingNumber])
+			ViewController.routeList[self.currentStationNumber][self.currentBearingNumber] = self.busQuery.queryBusArrivals(station: self.stationList[self.currentStationNumber][self.currentBearingNumber])
 			
 			DispatchQueue.main.async {
 				self.updatePanel()
@@ -396,13 +437,16 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
 		if(collectionView == stationListCollectionView) {
 			return stationListNames.count
 		}
-		else {
+		else if(collectionView == bearingListCollectionView) {
 			if(bearingListNames.count == 0) {
 				return 0
 			}
 			else {
 				return bearingListNames[currentStationNumber].count
 			}
+		}
+		else {
+			return bearingStationsCount
 		}
 	}
 	
@@ -425,7 +469,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
 			
 			return cell
 		}
-		else {
+		else if(collectionView == bearingListCollectionView) {
 			let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BearingCell", for: indexPath) as! BearingListCollectionViewCell
 			
 			if(currentBearingNumber == indexPath.item) {
@@ -443,6 +487,14 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
 			
 			return cell
 		}
+		else {
+			let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RouteCollectionCell", for: indexPath) as! RouteCollectionViewCell
+			
+			cell.routeListTableView.tag = indexPath.item
+			cell.routeListTableView.reloadData()
+			
+			return cell
+		}
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -452,10 +504,24 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
 			collectionView.reloadData()
 			queryBusArrivals()
 		}
-		else {
+		else if(collectionView == bearingListCollectionView) {
 			currentBearingNumber = indexPath.item
 			collectionView.reloadData()
 			queryBusArrivals()
+		}
+	}
+	
+	func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+		
+		let x = targetContentOffset.pointee.x
+		
+		if(scrollView == routeCollectionView.self) {
+			let page = Int(x/routeCollectionView.frame.width)
+			currentBearingNumber = ViewController.bearingItemToIndex[page][1]
+			currentStationNumber = ViewController.bearingItemToIndex[page][0]
+			queryBusArrivals()
+			stationListCollectionView.reloadData()
+			bearingListCollectionView.reloadData()
 		}
 	}
 	
@@ -467,35 +533,42 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
 			
 			return CGSize(width: size.size.width + 20.0, height: height - 6.0)
 		}
-		else {
+		else if(collectionView == bearingListCollectionView) {
 			let height = bearingListCollectionView.frame.height
 			let size = NSString(string: bearingListNames[currentStationNumber][indexPath.item]).boundingRect(with: CGSize(width: 500.0, height: height), options: [.usesLineFragmentOrigin], attributes: [NSAttributedString.Key.font :UIFont.systemFont(ofSize: 15)], context: nil)
 			
 			return CGSize(width: size.size.width + 20.0, height: height - 12.0)
 		}
+		else {
+			return CGSize(width: routeCollectionView.frame.width, height: routeCollectionView.frame.height)
+		}
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-		return UIEdgeInsets(top: 0, left: 7.0, bottom: 0, right: 5.0)
+		if(collectionView == stationListCollectionView || collectionView == bearingListCollectionView) {
+			return UIEdgeInsets(top: 0.0, left: 7.0, bottom: 0.0, right: 5.0)
+		}
+		else {
+			return UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
+		}
 	}
 }
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
+	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		if(routeList.count > 0 && routeList[currentStationNumber].count > 0 && routeList[currentStationNumber][currentBearingNumber].count > 0) {
-			return routeList[currentStationNumber][currentBearingNumber].count
-		}
-		else {
-			return 0
-		}
+		
+		return ViewController.routeList[ViewController.bearingItemToIndex[tableView.tag][0]][ViewController.bearingItemToIndex[tableView.tag][1]].count
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: "RouteCell") as! RouteTableViewCell
+		let stationNumber = ViewController.bearingItemToIndex[tableView.tag][0]
+		let bearingNumber = ViewController.bearingItemToIndex[tableView.tag][1]
 		
-		cell.routeName = routeList[currentStationNumber][currentBearingNumber][indexPath.row].routeName
-		cell.information = routeList[currentStationNumber][currentBearingNumber][indexPath.row].information
-		cell.destination = routeList[currentStationNumber][currentBearingNumber][indexPath.row].destination
+		cell.routeName = ViewController.routeList[stationNumber][bearingNumber][indexPath.row].routeName
+		cell.information = ViewController.routeList[stationNumber][bearingNumber][indexPath.row].information
+		cell.destination = ViewController.routeList[stationNumber][bearingNumber][indexPath.row].destination
 		
 		return cell
 	}
@@ -527,7 +600,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 		
 		tempCell.informationBackgroundView.backgroundColor = colorOriginal
 		UIView.animate(withDuration: animateDuration!, delay: 0, options: [.autoreverse, .repeat], animations: {
-				tempCell.informationBackgroundView.backgroundColor = colorAnimating
+			tempCell.informationBackgroundView.backgroundColor = colorAnimating
 		}, completion: nil)
 	}
 	
