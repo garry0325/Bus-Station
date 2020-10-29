@@ -17,6 +17,114 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="joa-bs-tEY">
+                                <rect key="frame" x="0.0" y="128" width="414" height="608"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="YPd-nK-dKr">
+                                    <size key="itemSize" width="414" height="608"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="RouteCollectionCell" id="2iF-xP-jdQ" customClass="RouteCollectionViewCell" customModule="Bus_Station" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="608"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Cr0-F0-7XM">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="608"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tlI-rR-QIu">
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="608"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                    <prototypes>
+                                                        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="RouteCell" rowHeight="50" id="Xp6-zH-SVq" customClass="RouteTableViewCell" customModule="Bus_Station" customModuleProvider="target">
+                                                            <rect key="frame" x="0.0" y="28" width="414" height="50"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Xp6-zH-SVq" id="sD2-I8-Ocb">
+                                                                <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                                <subviews>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="綠2左" textAlignment="natural" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0yz-40-u5K">
+                                                                        <rect key="frame" x="122" y="4.6666666666666679" width="272" height="23"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                                                        <nil key="textColor"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="212分" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="wmq-H9-HNF">
+                                                                        <rect key="frame" x="20" y="11.333333333333334" width="82" height="27.666666666666664"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="width" constant="82" id="K3X-mC-LNP"/>
+                                                                        </constraints>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FcM-Ap-brQ">
+                                                                        <rect key="frame" x="17" y="6" width="88" height="38"/>
+                                                                        <color key="backgroundColor" red="0.32549019610000002" green="0.72549019609999998" blue="0.76078431369999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        <userDefinedRuntimeAttributes>
+                                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                                <integer key="value" value="12"/>
+                                                                            </userDefinedRuntimeAttribute>
+                                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowOpacity">
+                                                                                <real key="value" value="0.40000000000000002"/>
+                                                                            </userDefinedRuntimeAttribute>
+                                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowRadius">
+                                                                                <integer key="value" value="4"/>
+                                                                            </userDefinedRuntimeAttribute>
+                                                                            <userDefinedRuntimeAttribute type="size" keyPath="layer.shadowOffset">
+                                                                                <size key="value" width="0.0" height="0.0"/>
+                                                                            </userDefinedRuntimeAttribute>
+                                                                        </userDefinedRuntimeAttributes>
+                                                                    </view>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="往台北車站" textAlignment="natural" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PgV-cC-3Sl">
+                                                                        <rect key="frame" x="122" y="27" width="272" height="16"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                                        <color key="textColor" white="0.54430650680000003" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                </subviews>
+                                                                <constraints>
+                                                                    <constraint firstItem="FcM-Ap-brQ" firstAttribute="width" secondItem="wmq-H9-HNF" secondAttribute="width" multiplier="1.07317" id="2QB-s3-wL9"/>
+                                                                    <constraint firstItem="FcM-Ap-brQ" firstAttribute="centerY" secondItem="wmq-H9-HNF" secondAttribute="centerY" id="4Kf-di-k6b"/>
+                                                                    <constraint firstItem="PgV-cC-3Sl" firstAttribute="leading" secondItem="0yz-40-u5K" secondAttribute="leading" id="4fW-rP-3SI"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="0yz-40-u5K" secondAttribute="trailing" constant="20" symbolic="YES" id="6Ay-SH-O1u"/>
+                                                                    <constraint firstItem="FcM-Ap-brQ" firstAttribute="height" secondItem="wmq-H9-HNF" secondAttribute="height" multiplier="1.37349" id="CWs-fU-1DV"/>
+                                                                    <constraint firstItem="FcM-Ap-brQ" firstAttribute="centerX" secondItem="wmq-H9-HNF" secondAttribute="centerX" id="FG5-mX-sHZ"/>
+                                                                    <constraint firstItem="PgV-cC-3Sl" firstAttribute="leading" secondItem="wmq-H9-HNF" secondAttribute="trailing" constant="20" id="FTX-vo-t2t"/>
+                                                                    <constraint firstItem="0yz-40-u5K" firstAttribute="centerY" secondItem="sD2-I8-Ocb" secondAttribute="centerY" multiplier="0.65" id="G2m-ao-hEK"/>
+                                                                    <constraint firstItem="PgV-cC-3Sl" firstAttribute="centerY" secondItem="sD2-I8-Ocb" secondAttribute="centerY" multiplier="1.4" id="N8v-Sz-9eg"/>
+                                                                    <constraint firstItem="0yz-40-u5K" firstAttribute="leading" secondItem="wmq-H9-HNF" secondAttribute="trailing" constant="20" id="PIl-g4-EKA"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="PgV-cC-3Sl" secondAttribute="trailing" constant="20" symbolic="YES" id="Tbj-6r-Kpq"/>
+                                                                    <constraint firstItem="wmq-H9-HNF" firstAttribute="leading" secondItem="sD2-I8-Ocb" secondAttribute="leading" constant="20" symbolic="YES" id="hzh-42-seV"/>
+                                                                    <constraint firstItem="wmq-H9-HNF" firstAttribute="centerY" secondItem="sD2-I8-Ocb" secondAttribute="centerY" id="nkY-JV-PYD"/>
+                                                                </constraints>
+                                                            </tableViewCellContentView>
+                                                            <connections>
+                                                                <outlet property="destinationLabel" destination="PgV-cC-3Sl" id="Ow9-be-zaU"/>
+                                                                <outlet property="informationBackgroundView" destination="FcM-Ap-brQ" id="JOB-cW-84U"/>
+                                                                <outlet property="informationLabel" destination="wmq-H9-HNF" id="gz9-jw-ebB"/>
+                                                                <outlet property="routeNameLabel" destination="0yz-40-u5K" id="s9Z-Th-Ydd"/>
+                                                            </connections>
+                                                        </tableViewCell>
+                                                    </prototypes>
+                                                </tableView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="tlI-rR-QIu" secondAttribute="bottom" id="8dw-HV-84K"/>
+                                                <constraint firstItem="tlI-rR-QIu" firstAttribute="top" secondItem="Cr0-F0-7XM" secondAttribute="top" id="KCy-fe-v1T"/>
+                                                <constraint firstItem="tlI-rR-QIu" firstAttribute="leading" secondItem="Cr0-F0-7XM" secondAttribute="leading" id="TV6-RT-yja"/>
+                                                <constraint firstAttribute="trailing" secondItem="tlI-rR-QIu" secondAttribute="trailing" id="wua-uB-z7D"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="414" height="608"/>
+                                        <connections>
+                                            <outlet property="routeListTableView" destination="tlI-rR-QIu" id="mzv-qu-sg8"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
                             <collectionView multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="s4M-qc-5T1">
                                 <rect key="frame" x="0.0" y="93" width="414" height="35"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -124,114 +232,6 @@
                                         </userDefinedRuntimeAttributes>
                                         <connections>
                                             <outlet property="stationLabel" destination="Hz4-sQ-Vb7" id="14m-yQ-fgb"/>
-                                        </connections>
-                                    </collectionViewCell>
-                                </cells>
-                            </collectionView>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="joa-bs-tEY">
-                                <rect key="frame" x="0.0" y="128" width="414" height="608"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="YPd-nK-dKr">
-                                    <size key="itemSize" width="414" height="608"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="RouteCollectionCell" id="2iF-xP-jdQ" customClass="RouteCollectionViewCell" customModule="Bus_Station" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="608"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Cr0-F0-7XM">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="608"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tlI-rR-QIu">
-                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="608"/>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                    <prototypes>
-                                                        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="RouteCell" rowHeight="50" id="Xp6-zH-SVq" customClass="RouteTableViewCell" customModule="Bus_Station" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="28" width="414" height="50"/>
-                                                            <autoresizingMask key="autoresizingMask"/>
-                                                            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Xp6-zH-SVq" id="sD2-I8-Ocb">
-                                                                <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
-                                                                <autoresizingMask key="autoresizingMask"/>
-                                                                <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="綠2左" textAlignment="natural" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0yz-40-u5K">
-                                                                        <rect key="frame" x="122" y="4.6666666666666679" width="272" height="23"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                                                        <nil key="textColor"/>
-                                                                        <nil key="highlightedColor"/>
-                                                                    </label>
-                                                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="212分" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="wmq-H9-HNF">
-                                                                        <rect key="frame" x="20" y="11.333333333333334" width="82" height="27.666666666666664"/>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="width" constant="82" id="K3X-mC-LNP"/>
-                                                                        </constraints>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="23"/>
-                                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                        <nil key="highlightedColor"/>
-                                                                    </label>
-                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FcM-Ap-brQ">
-                                                                        <rect key="frame" x="17" y="6" width="88" height="38"/>
-                                                                        <color key="backgroundColor" red="0.32549019610000002" green="0.72549019609999998" blue="0.76078431369999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                        <userDefinedRuntimeAttributes>
-                                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                                                <integer key="value" value="12"/>
-                                                                            </userDefinedRuntimeAttribute>
-                                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowOpacity">
-                                                                                <real key="value" value="0.40000000000000002"/>
-                                                                            </userDefinedRuntimeAttribute>
-                                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowRadius">
-                                                                                <integer key="value" value="4"/>
-                                                                            </userDefinedRuntimeAttribute>
-                                                                            <userDefinedRuntimeAttribute type="size" keyPath="layer.shadowOffset">
-                                                                                <size key="value" width="0.0" height="0.0"/>
-                                                                            </userDefinedRuntimeAttribute>
-                                                                        </userDefinedRuntimeAttributes>
-                                                                    </view>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="往台北車站" textAlignment="natural" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PgV-cC-3Sl">
-                                                                        <rect key="frame" x="122" y="27" width="272" height="16"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                                        <color key="textColor" white="0.54430650680000003" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                        <nil key="highlightedColor"/>
-                                                                    </label>
-                                                                </subviews>
-                                                                <constraints>
-                                                                    <constraint firstItem="FcM-Ap-brQ" firstAttribute="width" secondItem="wmq-H9-HNF" secondAttribute="width" multiplier="1.07317" id="2QB-s3-wL9"/>
-                                                                    <constraint firstItem="FcM-Ap-brQ" firstAttribute="centerY" secondItem="wmq-H9-HNF" secondAttribute="centerY" id="4Kf-di-k6b"/>
-                                                                    <constraint firstItem="PgV-cC-3Sl" firstAttribute="leading" secondItem="0yz-40-u5K" secondAttribute="leading" id="4fW-rP-3SI"/>
-                                                                    <constraint firstAttribute="trailing" secondItem="0yz-40-u5K" secondAttribute="trailing" constant="20" symbolic="YES" id="6Ay-SH-O1u"/>
-                                                                    <constraint firstItem="FcM-Ap-brQ" firstAttribute="height" secondItem="wmq-H9-HNF" secondAttribute="height" multiplier="1.37349" id="CWs-fU-1DV"/>
-                                                                    <constraint firstItem="FcM-Ap-brQ" firstAttribute="centerX" secondItem="wmq-H9-HNF" secondAttribute="centerX" id="FG5-mX-sHZ"/>
-                                                                    <constraint firstItem="PgV-cC-3Sl" firstAttribute="leading" secondItem="wmq-H9-HNF" secondAttribute="trailing" constant="20" id="FTX-vo-t2t"/>
-                                                                    <constraint firstItem="0yz-40-u5K" firstAttribute="centerY" secondItem="sD2-I8-Ocb" secondAttribute="centerY" multiplier="0.65" id="G2m-ao-hEK"/>
-                                                                    <constraint firstItem="PgV-cC-3Sl" firstAttribute="centerY" secondItem="sD2-I8-Ocb" secondAttribute="centerY" multiplier="1.4" id="N8v-Sz-9eg"/>
-                                                                    <constraint firstItem="0yz-40-u5K" firstAttribute="leading" secondItem="wmq-H9-HNF" secondAttribute="trailing" constant="20" id="PIl-g4-EKA"/>
-                                                                    <constraint firstAttribute="trailing" secondItem="PgV-cC-3Sl" secondAttribute="trailing" constant="20" symbolic="YES" id="Tbj-6r-Kpq"/>
-                                                                    <constraint firstItem="wmq-H9-HNF" firstAttribute="leading" secondItem="sD2-I8-Ocb" secondAttribute="leading" constant="20" symbolic="YES" id="hzh-42-seV"/>
-                                                                    <constraint firstItem="wmq-H9-HNF" firstAttribute="centerY" secondItem="sD2-I8-Ocb" secondAttribute="centerY" id="nkY-JV-PYD"/>
-                                                                </constraints>
-                                                            </tableViewCellContentView>
-                                                            <connections>
-                                                                <outlet property="destinationLabel" destination="PgV-cC-3Sl" id="Ow9-be-zaU"/>
-                                                                <outlet property="informationBackgroundView" destination="FcM-Ap-brQ" id="JOB-cW-84U"/>
-                                                                <outlet property="informationLabel" destination="wmq-H9-HNF" id="gz9-jw-ebB"/>
-                                                                <outlet property="routeNameLabel" destination="0yz-40-u5K" id="s9Z-Th-Ydd"/>
-                                                            </connections>
-                                                        </tableViewCell>
-                                                    </prototypes>
-                                                </tableView>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="tlI-rR-QIu" secondAttribute="bottom" id="8dw-HV-84K"/>
-                                                <constraint firstItem="tlI-rR-QIu" firstAttribute="top" secondItem="Cr0-F0-7XM" secondAttribute="top" id="KCy-fe-v1T"/>
-                                                <constraint firstItem="tlI-rR-QIu" firstAttribute="leading" secondItem="Cr0-F0-7XM" secondAttribute="leading" id="TV6-RT-yja"/>
-                                                <constraint firstAttribute="trailing" secondItem="tlI-rR-QIu" secondAttribute="trailing" id="wua-uB-z7D"/>
-                                            </constraints>
-                                        </collectionViewCellContentView>
-                                        <size key="customSize" width="414" height="608"/>
-                                        <connections>
-                                            <outlet property="routeListTableView" destination="tlI-rR-QIu" id="mzv-qu-sg8"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

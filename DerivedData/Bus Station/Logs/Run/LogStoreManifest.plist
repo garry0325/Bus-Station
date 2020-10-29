@@ -482,6 +482,40 @@
 			<key>uniqueIdentifier</key>
 			<string>2D6E22C9-7F28-4406-8C65-7233403398FB</string>
 		</dict>
+		<key>35A40E15-EE85-4E0B-9604-84B85250DDAD</key>
+		<dict>
+			<key>className</key>
+			<string>DBGConsoleLog</string>
+			<key>documentTypeString</key>
+			<string>com.apple.dt.IDE.DebuggerLogContentType</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
+			<key>fileName</key>
+			<string>35A40E15-EE85-4E0B-9604-84B85250DDAD.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Bus Station project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Bus Station</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Run Bus Station</string>
+			<key>timeStartedRecording</key>
+			<real>625641187.86524498</real>
+			<key>timeStoppedRecording</key>
+			<real>625641270.76735795</real>
+			<key>title</key>
+			<string>Run Bus Station</string>
+			<key>uniqueIdentifier</key>
+			<string>35A40E15-EE85-4E0B-9604-84B85250DDAD</string>
+		</dict>
 		<key>39F3DACD-B57A-4BE1-B5A1-F744A58E124C</key>
 		<dict>
 			<key>className</key>
@@ -583,6 +617,40 @@
 			<string>Run Bus Station</string>
 			<key>uniqueIdentifier</key>
 			<string>46B70DD0-9B79-43BB-8024-2C5BB3B16914</string>
+		</dict>
+		<key>499D91F6-0967-49A7-A6C5-40046E184557</key>
+		<dict>
+			<key>className</key>
+			<string>DBGConsoleLog</string>
+			<key>documentTypeString</key>
+			<string>com.apple.dt.IDE.DebuggerLogContentType</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
+			<key>fileName</key>
+			<string>499D91F6-0967-49A7-A6C5-40046E184557.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Bus Station project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Bus Station</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Run Bus Station</string>
+			<key>timeStartedRecording</key>
+			<real>625641148.92824399</real>
+			<key>timeStoppedRecording</key>
+			<real>625641184.61540306</real>
+			<key>title</key>
+			<string>Run Bus Station</string>
+			<key>uniqueIdentifier</key>
+			<string>499D91F6-0967-49A7-A6C5-40046E184557</string>
 		</dict>
 		<key>4BA4E7C1-409F-4C5E-A8A9-98D84E1D02FA</key>
 		<dict>
