@@ -586,6 +586,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: "RouteCell") as! RouteTableViewCell
+		cell.selectionStyle = .none
 		let stationNumber = ViewController.bearingItemToIndex[tableView.tag][0]
 		let bearingNumber = ViewController.bearingItemToIndex[tableView.tag][1]
 		

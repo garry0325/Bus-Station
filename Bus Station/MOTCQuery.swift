@@ -257,7 +257,7 @@ class BusQuery {
 					var rawStops = try? (JSONSerialization.jsonObject(with: data, options: []) as! [[String: Any]])[0]["Stops"] as? [[String: Any]]
 					rawStops!.sort(by: { ($0["StopSequence"] as! Int) < ($1["StopSequence"] as! Int) })
 					
-					for stop in rawStops! {
+					for stop in rawStops! {	// MAYBE USE .map
 						print("\((stop["StopName"] as! [String: String])["Zh_tw"]!)")
 						stopsLabels.append((stop["StopName"] as! [String: String])["Zh_tw"]!)
 					}
