@@ -13,7 +13,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	
 	let locationDeviateThreshold = 40.0
 	
-	static let shared = ViewController()
+	static let shared = ViewController()	// TODO: REMOVE
 	
 	let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 	var starredStations: Array<StarredStation> = []
@@ -32,6 +32,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	// TODO: station collectionview has bug in length
 	// TODO: combine buses from other cities
 	// TODO: add queryBusesArrivals() on adjacent pages
+	// TODO: haptic feedback when location is updated
 	
 	var busQuery = BusQuery()
 	var locationWhenPinned = CLLocation()
@@ -99,16 +100,41 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		
 		// Because when app is reopen from background, the animation stops
 		NotificationCenter.default.addObserver(self, selector: #selector(backFromBackground), name: UIApplication.didBecomeActiveNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(showRouteDetailVC), name: NSNotification.Name("Detail"), object: nil)
 		autoRefreshTimer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(autoRefresh), userInfo: nil, repeats: true)
 		
+		
 		// Do any additional setup after loading the view.
+	}
+	deinit {
+		NotificationCenter.default.removeObserver(self)
+	}
+	
+	@objc func showRouteDetailVC(notification: Notification) {
+		
+		self.performSegue(withIdentifier: "RouteDetail", sender: notification.object)
+		
+		/*
+		let routeDetailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RouteDetailStoryboard") as! RouteDetailViewController
+		routeDetailVC.modalPresentationStyle = .popover
+		
+		let popover = routeDetailVC.popoverPresentationController
+		popover?.delegate = self
+		popover?.sourceView =  routeCollectionView.cellForItem(at: IndexPath(item: 0, section: 0))
+		popover?.sourceRect = routeCollectionView.cellForItem(at: IndexPath(item: 0, section: 0))!.bounds
+		popover?.permittedArrowDirections = .any
+		routeDetailVC.preferredContentSize = CGSize(width: 200.0, height: 500.0)
+		
+		
+		present(routeDetailVC, animated: true, completion: nil)
+		*/
 	}
 	
 	func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 		let userLocation: CLLocation = locations[locations.count-1]
 		CLGeocoder().reverseGeocodeLocation(userLocation) { (placemark, error) in
 			if(error != nil) {
-				print("error")
+				print("error \(String(describing: error?.localizedDescription))")
 			} else {
 				if let placemark = placemark?[0] {
 					var address = ""
@@ -517,6 +543,8 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
 			queryBusArrivals()
 			stationListCollectionView.reloadData()
 			bearingListCollectionView.reloadData()
+			stationListCollectionView.scrollToItem(at: IndexPath(item: currentStationNumber, section: 0), at: .centeredHorizontally, animated: true)
+			bearingListCollectionView.scrollToItem(at: IndexPath(item: currentBearingNumber, section: 0), at: .centeredHorizontally, animated: true)
 		}
 	}
 	
@@ -568,6 +596,26 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 		return cell
 	}
 	
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		print("didselect tableview \(indexPath.row)")
+		print("posting \(ViewController.routeList[currentStationNumber][currentBearingNumber][indexPath.row])")
+		NotificationCenter.default.post(name: NSNotification.Name("Detail"), object: ViewController.routeList[currentStationNumber][currentBearingNumber][indexPath.row])
+		/*
+		let routeDetailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RouteDetailStoryboard") as! RouteDetailViewController
+		routeDetailVC.modalPresentationStyle = .popover
+		
+		let popover = routeDetailVC.popoverPresentationController
+		popover?.delegate =
+		popover?.sourceView = tableView.cellForRow(at: indexPath)
+		popover?.sourceRect = tableView.cellForRow(at: indexPath)!.bounds
+		popover?.permittedArrowDirections = .any
+		routeDetailVC.preferredContentSize = CGSize(width: 200.0, height: 500.0)
+		
+		
+		present(routeDetailVC, animated: true, completion: nil)
+		*/
+	}
+	
 	func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
 		let tempCell = cell as! RouteTableViewCell
 		var colorOriginal: UIColor?
@@ -601,5 +649,20 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 	
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		return 55.0
+	}
+}
+
+extension ViewController: UIPopoverPresentationControllerDelegate {
+	
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		print("preparing for segue")
+		segue.destination.preferredContentSize = CGSize(width: 200.0, height: 500.0)
+		segue.destination.modalPresentationStyle = .popover
+		
+		(segue.destination as! RouteDetailViewController).busStop = sender as? BusStop
+	}
+	
+	func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+		return .none
 	}
 }

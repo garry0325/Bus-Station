@@ -226,13 +226,52 @@ class BusQuery {
 				return a.estimatedArrival <= b.estimatedArrival
 			}
 		}
-		/*
+		
 		for stop in stopsList {
 			print("\(stop.routeId)\t\(stop.routeName)\t\(stop.information)")
 		}
-		*/
+		
 		return stopsList
 		// list of [[BusStop], [BusStop]...] ordered by estimatedArrival
+	}
+	
+	func queryRealTimeBusLocation(busStop: BusStop) -> [String] {
+		self.prepareAuthorizations()
+		var request: URLRequest
+		
+		let semaphore = DispatchSemaphore(value: 0)
+		var stopsLabels = [String]()
+		
+		// get all the stops of a route first
+		let url = URL(string: String("https://ptx.transportdata.tw/MOTC/v2/Bus/StopOfRoute/City/\(busStop.city)?$filter=RouteID eq '\(busStop.routeId)' and Direction eq \(busStop.direction)&$select=RouteID, Direction, Stops&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+		request = URLRequest(url: url)
+		request.setValue(authTimeString, forHTTPHeaderField: "x-date")
+		request.setValue(authorization, forHTTPHeaderField: "Authorization")
+		let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+			if let error = error {
+				print("Error: \(error.localizedDescription)")
+			}
+			else if let response = response as? HTTPURLResponse,
+					let data = data {
+				if(response.statusCode == 200) {
+					var rawStops = try? (JSONSerialization.jsonObject(with: data, options: []) as! [[String: Any]])[0]["Stops"] as? [[String: Any]]
+					rawStops!.sort(by: { ($0["StopSequence"] as! Int) < ($1["StopSequence"] as! Int) })
+					
+					for stop in rawStops! {
+						print("\((stop["StopName"] as! [String: String])["Zh_tw"]!)")
+						stopsLabels.append((stop["StopName"] as! [String: String])["Zh_tw"]!)
+					}
+				}
+				else {
+					print("All bus stops time response status code \(response.statusCode)")
+				}
+			}
+			semaphore.signal()
+		}
+		task.resume()
+		semaphore.wait()
+		
+		return stopsLabels
 	}
 	
 	func prepareAuthorizations() {
