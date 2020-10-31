@@ -24,6 +24,7 @@ class RouteDetailViewController: UIViewController {
 		}
 	}
 	
+	var needAutoscroll = true
 	var autoRefreshTimer = Timer()
 	
 	override func viewDidLoad() {
@@ -50,7 +51,10 @@ class RouteDetailViewController: UIViewController {
 			
 			DispatchQueue.main.async {
 				self.routeDetailTableView.reloadData()
-				self.autoScrollPosition = self.liveStatusStops.firstIndex(where: { $0.isCurrentStop == true })
+				if(self.needAutoscroll) {
+					self.autoScrollPosition = self.liveStatusStops.firstIndex(where: { $0.isCurrentStop == true })
+					self.needAutoscroll = false
+				}
 				self.activityIndicator.stopAnimating()
 			}
 		}
