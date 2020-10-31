@@ -22,6 +22,7 @@
 		C2B35E11253DE82000108776 /* BusClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B35E10253DE82000108776 /* BusClasses.swift */; };
 		C2B35E16253DE85100108776 /* MOTCQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B35E15253DE85100108776 /* MOTCQuery.swift */; };
 		C2B35E1E253E0A5C00108776 /* RouteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B35E1D253E0A5C00108776 /* RouteTableViewCell.swift */; };
+		C2BCFF6F254D625900EC960F /* RouteDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BCFF6E254D625900EC960F /* RouteDetailTableViewCell.swift */; };
 		C2DC9CF02548A8C10004860D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DC9CEF2548A8C10004860D /* Constants.swift */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +65,7 @@
 		C2B35E10253DE82000108776 /* BusClasses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusClasses.swift; sourceTree = "<group>"; };
 		C2B35E15253DE85100108776 /* MOTCQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MOTCQuery.swift; sourceTree = "<group>"; };
 		C2B35E1D253E0A5C00108776 /* RouteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteTableViewCell.swift; sourceTree = "<group>"; };
+		C2BCFF6E254D625900EC960F /* RouteDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteDetailTableViewCell.swift; sourceTree = "<group>"; };
 		C2DC9CEF2548A8C10004860D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -121,6 +123,7 @@
 				C23D91B82549CA950027125A /* RouteCollectionViewCell.swift */,
 				C2B35E1D253E0A5C00108776 /* RouteTableViewCell.swift */,
 				C269C465254B196300BA41B4 /* RouteDetailViewController.swift */,
+				C2BCFF6E254D625900EC960F /* RouteDetailTableViewCell.swift */,
 				C2B35E15253DE85100108776 /* MOTCQuery.swift */,
 				C2B35E10253DE82000108776 /* BusClasses.swift */,
 				C2B35E08253DD24800108776 /* TopCollectionViewCells.swift */,
@@ -288,6 +291,7 @@
 				C269C466254B196300BA41B4 /* RouteDetailViewController.swift in Sources */,
 				C2B35DCD253DCA5B00108776 /* SceneDelegate.swift in Sources */,
 				C23D91B92549CA950027125A /* RouteCollectionViewCell.swift in Sources */,
+				C2BCFF6F254D625900EC960F /* RouteDetailTableViewCell.swift in Sources */,
 				C2B35DD5253DCA5B00108776 /* Bus_Station.xcdatamodeld in Sources */,
 				C2B35E1E253E0A5C00108776 /* RouteTableViewCell.swift in Sources */,
 				C2B35E09253DD24800108776 /* TopCollectionViewCells.swift in Sources */,

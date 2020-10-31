@@ -45,7 +45,7 @@
                                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="綠2左" textAlignment="natural" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0yz-40-u5K">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="綠2左" textAlignment="natural" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="0yz-40-u5K">
                                                                         <rect key="frame" x="122" y="4.6666666666666679" width="272" height="23"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                                                         <nil key="textColor"/>
@@ -78,7 +78,7 @@
                                                                             </userDefinedRuntimeAttribute>
                                                                         </userDefinedRuntimeAttributes>
                                                                     </view>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="往台北車站" textAlignment="natural" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PgV-cC-3Sl">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="往台北車站" textAlignment="natural" lineBreakMode="tailTruncation" minimumScaleFactor="1" translatesAutoresizingMaskIntoConstraints="NO" id="PgV-cC-3Sl">
                                                                         <rect key="frame" x="122" y="27" width="272" height="16"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                         <color key="textColor" white="0.54430650680000003" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -349,27 +349,102 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ECe-3T-bgB">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ECe-3T-bgB">
                                 <rect key="frame" x="0.0" y="65" width="414" height="651"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DetailStop" id="qag-PO-YrX">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="43.666667938232422"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DetailStop" rowHeight="40" id="qag-PO-YrX" customClass="RouteDetailTableViewCell" customModule="Bus_Station" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="40"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qag-PO-YrX" id="vcr-nL-6oC">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.666667938232422"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="40"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="4CD-2z-N8C">
+                                                    <rect key="frame" x="114.33333333333333" y="18.666666666666664" width="19.999999999999986" height="18.999999999999993"/>
+                                                    <color key="tintColor" systemColor="systemGrayColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="20" id="0Jr-ZR-vF4"/>
+                                                        <constraint firstAttribute="width" constant="20" id="Diu-Vl-jU9"/>
+                                                    </constraints>
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="20"/>
+                                                </imageView>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="INv-wD-Lju">
+                                                    <rect key="frame" x="121.33333333333333" y="0.0" width="6" height="40"/>
+                                                    <color key="backgroundColor" systemColor="systemGrayColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="6" id="ssl-Mo-RGC"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bus" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Tam-V4-Sej">
+                                                    <rect key="frame" x="77.333333333333329" y="-1.7763568394002505e-15" width="25" height="26.333333333333339"/>
+                                                    <color key="tintColor" systemColor="labelColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="25" id="5hX-EW-xAf"/>
+                                                        <constraint firstAttribute="height" constant="25" id="d8K-zB-oCq"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="師大分部" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="PGs-xg-pEc">
+                                                    <rect key="frame" x="142" y="17.666666666666668" width="257" height="21.000000000000004"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bus" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="b1h-M5-YUX">
+                                                    <rect key="frame" x="77.333333333333329" y="15.333333333333336" width="25" height="26"/>
+                                                    <color key="tintColor" systemColor="labelColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="25" id="8jx-6h-u9D"/>
+                                                        <constraint firstAttribute="width" constant="25" id="kq1-9r-nbb"/>
+                                                    </constraints>
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="10"/>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="PGs-xg-pEc" firstAttribute="centerY" secondItem="4CD-2z-N8C" secondAttribute="centerY" id="5QV-GY-E5L"/>
+                                                <constraint firstItem="4CD-2z-N8C" firstAttribute="leading" secondItem="Tam-V4-Sej" secondAttribute="trailing" constant="12" id="8xe-F8-Ddf"/>
+                                                <constraint firstItem="INv-wD-Lju" firstAttribute="height" secondItem="vcr-nL-6oC" secondAttribute="height" id="SIu-xH-K9C"/>
+                                                <constraint firstItem="INv-wD-Lju" firstAttribute="centerX" secondItem="4CD-2z-N8C" secondAttribute="centerX" id="T5R-Sy-wb3"/>
+                                                <constraint firstItem="PGs-xg-pEc" firstAttribute="leading" secondItem="4CD-2z-N8C" secondAttribute="trailing" constant="7.6666666666666856" id="VXc-JW-rJL"/>
+                                                <constraint firstItem="4CD-2z-N8C" firstAttribute="leading" secondItem="b1h-M5-YUX" secondAttribute="trailing" constant="12" id="YEA-Tg-qp9"/>
+                                                <constraint firstItem="4CD-2z-N8C" firstAttribute="centerX" secondItem="vcr-nL-6oC" secondAttribute="centerX" multiplier="0.6" id="hDC-l1-db2"/>
+                                                <constraint firstItem="4CD-2z-N8C" firstAttribute="centerY" secondItem="vcr-nL-6oC" secondAttribute="centerY" multiplier="1.4" id="mwb-C6-RHz"/>
+                                                <constraint firstItem="INv-wD-Lju" firstAttribute="centerY" secondItem="vcr-nL-6oC" secondAttribute="centerY" id="t3o-kQ-Drg"/>
+                                                <constraint firstItem="b1h-M5-YUX" firstAttribute="top" secondItem="Tam-V4-Sej" secondAttribute="bottom" constant="-10" id="tWv-jX-4VK"/>
+                                                <constraint firstItem="b1h-M5-YUX" firstAttribute="centerY" secondItem="4CD-2z-N8C" secondAttribute="centerY" id="uMe-5f-O1e"/>
+                                                <constraint firstAttribute="trailing" secondItem="PGs-xg-pEc" secondAttribute="trailing" constant="15" id="xhD-IG-GJ6"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="busAtStopImage" destination="b1h-M5-YUX" id="Ibj-D7-Agc"/>
+                                            <outlet property="busTowardsStopImage" destination="Tam-V4-Sej" id="xzj-G8-lh4"/>
+                                            <outlet property="stopNameLabel" destination="PGs-xg-pEc" id="hOP-MW-ZWH"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="251區" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4u6-NH-Y9w">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KBo-gH-Clt">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="65"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowOpacity">
+                                        <real key="value" value="0.40000000000000002"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="size" keyPath="layer.shadowOffset">
+                                        <size key="value" width="0.0" height="3"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="251區" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="4u6-NH-Y9w">
                                 <rect key="frame" x="20" y="8" width="374" height="29"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="往公館捷運站" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3tU-6y-Oeg">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="往公館捷運站" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="3tU-6y-Oeg">
                                 <rect key="frame" x="20" y="37" width="374" height="20"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="textColor" white="0.54430650680000003" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -386,10 +461,14 @@
                             <constraint firstItem="ECe-3T-bgB" firstAttribute="leading" secondItem="s4S-AW-QLa" secondAttribute="leading" id="4uJ-Pg-YDR"/>
                             <constraint firstItem="Z0O-Em-p3z" firstAttribute="centerY" secondItem="T5G-pr-CuF" secondAttribute="centerY" id="5qu-ma-J4N"/>
                             <constraint firstItem="3tU-6y-Oeg" firstAttribute="leading" secondItem="4u6-NH-Y9w" secondAttribute="leading" id="7fr-Sn-4EN"/>
+                            <constraint firstItem="KBo-gH-Clt" firstAttribute="leading" secondItem="s4S-AW-QLa" secondAttribute="leading" id="EHV-IM-Ksn"/>
                             <constraint firstItem="3tU-6y-Oeg" firstAttribute="top" secondItem="4u6-NH-Y9w" secondAttribute="bottom" id="HaN-vK-OrW"/>
+                            <constraint firstAttribute="trailing" secondItem="KBo-gH-Clt" secondAttribute="trailing" id="MOp-1e-bL2"/>
                             <constraint firstItem="4u6-NH-Y9w" firstAttribute="top" secondItem="T5G-pr-CuF" secondAttribute="top" constant="8" id="PzL-fM-HDc"/>
                             <constraint firstItem="T5G-pr-CuF" firstAttribute="trailing" secondItem="3tU-6y-Oeg" secondAttribute="trailing" constant="20" id="TcV-tc-YES"/>
                             <constraint firstItem="Z0O-Em-p3z" firstAttribute="centerX" secondItem="T5G-pr-CuF" secondAttribute="centerX" id="aL0-Ww-pDx"/>
+                            <constraint firstItem="KBo-gH-Clt" firstAttribute="bottom" secondItem="ECe-3T-bgB" secondAttribute="top" id="dc1-R7-vbs"/>
+                            <constraint firstAttribute="top" secondItem="KBo-gH-Clt" secondAttribute="top" id="h2D-LM-AXl"/>
                             <constraint firstAttribute="trailing" secondItem="ECe-3T-bgB" secondAttribute="trailing" id="iB0-kU-Kzg"/>
                             <constraint firstItem="ECe-3T-bgB" firstAttribute="top" secondItem="s4S-AW-QLa" secondAttribute="top" constant="65" id="ppq-R1-p2I"/>
                             <constraint firstAttribute="bottom" secondItem="ECe-3T-bgB" secondAttribute="bottom" id="w4z-18-tB5"/>
@@ -410,8 +489,13 @@
         </scene>
     </scenes>
     <resources>
+        <image name="bus" catalog="system" width="128" height="122"/>
+        <image name="circle.fill" catalog="system" width="128" height="121"/>
         <image name="location.fill" catalog="system" width="128" height="121"/>
         <image name="star" catalog="system" width="128" height="116"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

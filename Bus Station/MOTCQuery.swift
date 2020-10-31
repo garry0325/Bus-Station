@@ -42,8 +42,8 @@ class BusQuery {
 		let currentLongitude = location.coordinate.longitude
 		
 		for city in queryCities {
-			let url = URL(string: "https://ptx.transportdata.tw/MOTC/v2/Bus/Station/City/\(city)?$select=StationID%2C%20StationName%2C%20StationPosition%2C%20Stops&$filter=StationPosition%2FPositionLat%20ge%20\(currentLatitude - nearbyStationHeight)%20and%20StationPosition%2FPositionLat%20le%20\(currentLatitude + nearbyStationHeight)%20and%20StationPosition%2FPositionLon%20ge%20\(currentLongitude - nearbyStationWidth)%20and%20StationPosition%2FPositionLon%20le%20\(currentLongitude + nearbyStationWidth)&$format=JSON")!
-			request = URLRequest(url: url)
+			let urlStation = URL(string: "https://ptx.transportdata.tw/MOTC/v2/Bus/Station/City/\(city)?$select=StationID%2C%20StationName%2C%20StationPosition%2C%20Stops&$filter=StationPosition%2FPositionLat%20ge%20\(currentLatitude - nearbyStationHeight)%20and%20StationPosition%2FPositionLat%20le%20\(currentLatitude + nearbyStationHeight)%20and%20StationPosition%2FPositionLon%20ge%20\(currentLongitude - nearbyStationWidth)%20and%20StationPosition%2FPositionLon%20le%20\(currentLongitude + nearbyStationWidth)&$format=JSON")!
+			request = URLRequest(url: urlStation)
 			request.setValue(authTimeString, forHTTPHeaderField: "x-date")
 			request.setValue(authorization, forHTTPHeaderField: "Authorization")
 			let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
@@ -94,8 +94,8 @@ class BusQuery {
 		
 		for city in queryCities {
 			let stationIDQuery = "StationID eq '" + (stationIDs.joined(separator: "' or StationID eq '")) + "'"
-			let url = URL(string: String("https://ptx.transportdata.tw/MOTC/v2/Bus/Stop/City/\(city)?$select=StationID, Bearing&$filter=\(stationIDQuery)&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
-			request = URLRequest(url: url)
+			let urlStop = URL(string: String("https://ptx.transportdata.tw/MOTC/v2/Bus/Stop/City/\(city)?$select=StationID, Bearing&$filter=\(stationIDQuery)&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+			request = URLRequest(url: urlStop)
 			request.setValue(authTimeString, forHTTPHeaderField: "x-date")
 			request.setValue(authorization, forHTTPHeaderField: "Authorization")
 			let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
@@ -143,8 +143,8 @@ class BusQuery {
 				stopIDs.append(stop.stopId)
 			}
 			let stopIDQuery = "StopID eq '" + stopIDs.joined(separator: "' or StopID eq '") + "'"
-			let url = URL(string: String("https://ptx.transportdata.tw/MOTC/v2/Bus/EstimatedTimeOfArrival/City/\(city)?$select=StopID, RouteID, RouteName, Direction, EstimateTime, StopStatus&$filter=\(stopIDQuery)&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
-			request = URLRequest(url: url)
+			let urlEstimatedTimeOfArrival = URL(string: String("https://ptx.transportdata.tw/MOTC/v2/Bus/EstimatedTimeOfArrival/City/\(city)?$select=StopID, RouteID, RouteName, Direction, EstimateTime, StopStatus&$filter=\(stopIDQuery)&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+			request = URLRequest(url: urlEstimatedTimeOfArrival)
 			request.setValue(authTimeString, forHTTPHeaderField: "x-date")
 			request.setValue(authorization, forHTTPHeaderField: "Authorization")
 			let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
@@ -184,8 +184,8 @@ class BusQuery {
 				routeIDs.append(stop.routeId)
 			}
 			let destinationQuery = "RouteID eq '" + routeIDs.joined(separator: "' or RouteID eq '") + "'"
-			let url = URL(string: String("https://ptx.transportdata.tw/MOTC/v2/Bus/Route/City/\(city)?$select=RouteID, DepartureStopNameZh, DestinationStopNameZh, TicketPriceDescriptionZh&$filter=\(destinationQuery)&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
-			request = URLRequest(url: url)
+			let urlRoute = URL(string: String("https://ptx.transportdata.tw/MOTC/v2/Bus/Route/City/\(city)?$select=RouteID, DepartureStopNameZh, DestinationStopNameZh, TicketPriceDescriptionZh&$filter=\(destinationQuery)&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+			request = URLRequest(url: urlRoute)
 			request.setValue(authTimeString, forHTTPHeaderField: "x-date")
 			request.setValue(authorization, forHTTPHeaderField: "Authorization")
 			let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
@@ -235,16 +235,16 @@ class BusQuery {
 		// list of [[BusStop], [BusStop]...] ordered by estimatedArrival
 	}
 	
-	func queryRealTimeBusLocation(busStop: BusStop) -> [String] {
+	func queryRealTimeBusLocation(busStop: BusStop) -> [BusStopLiveStatus] {
 		self.prepareAuthorizations()
 		var request: URLRequest
 		
 		let semaphore = DispatchSemaphore(value: 0)
-		var stopsLabels = [String]()
+		var busStopLiveStatus = [BusStopLiveStatus]()
 		
 		// get all the stops of a route first
-		let url = URL(string: String("https://ptx.transportdata.tw/MOTC/v2/Bus/StopOfRoute/City/\(busStop.city)?$filter=RouteID eq '\(busStop.routeId)' and Direction eq \(busStop.direction)&$select=RouteID, Direction, Stops&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
-		request = URLRequest(url: url)
+		let urlStopOfRoute = URL(string: String("https://ptx.transportdata.tw/MOTC/v2/Bus/StopOfRoute/City/\(busStop.city)?$filter=RouteID eq '\(busStop.routeId)' and Direction eq \(busStop.direction)&$select=RouteID, Direction, Stops&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+		request = URLRequest(url: urlStopOfRoute)
 		request.setValue(authTimeString, forHTTPHeaderField: "x-date")
 		request.setValue(authorization, forHTTPHeaderField: "Authorization")
 		let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
@@ -254,13 +254,18 @@ class BusQuery {
 			else if let response = response as? HTTPURLResponse,
 					let data = data {
 				if(response.statusCode == 200) {
-					var rawStops = try? (JSONSerialization.jsonObject(with: data, options: []) as! [[String: Any]])[0]["Stops"] as? [[String: Any]]
-					rawStops!.sort(by: { ($0["StopSequence"] as! Int) < ($1["StopSequence"] as! Int) })
+					let rawStops = try? (JSONSerialization.jsonObject(with: data, options: []) as! [[String: Any]])[0]["Stops"] as? [[String: Any]]
 					
-					for stop in rawStops! {	// MAYBE USE .map
-						print("\((stop["StopName"] as! [String: String])["Zh_tw"]!)")
-						stopsLabels.append((stop["StopName"] as! [String: String])["Zh_tw"]!)
+					var count = 1
+					for stop in rawStops! {
+						busStopLiveStatus.append(BusStopLiveStatus(stopId: stop["StopID"] as! String, stopName: (stop["StopName"] as! [String: String])["Zh_tw"]!, sequence: stop["StopSequence"] as! Int))
+						if(count != (stop["StopSequence"] as! Int)) {
+							print("stop sequence is wrong")
+						}
+						count = count + 1
 					}
+					// TODO: CONSIDER REMOVE THIS BECAUSE SEQUENCE IS ALREADY PROVIDED
+					busStopLiveStatus.sort(by: { $0.stopSequence < $1.stopSequence })
 				}
 				else {
 					print("All bus stops time response status code \(response.statusCode)")
@@ -271,7 +276,37 @@ class BusQuery {
 		task.resume()
 		semaphore.wait()
 		
-		return stopsLabels
+		// then get RealTimeNearStop api (A2)
+		let urlRealTimeNearStop = URL(string: String("https://ptx.transportdata.tw/MOTC/v2/Bus/RealTimeNearStop/City/\(busStop.city)?$filter=RouteID eq '\(busStop.routeId)' and Direction eq \(busStop.direction)&$select=PlateNumb, StopID, StopSequence, BusStatus, A2EventType&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+		request = URLRequest(url: urlRealTimeNearStop)
+		request.setValue(authTimeString, forHTTPHeaderField: "x-date")
+		request.setValue(authorization, forHTTPHeaderField: "Authorization")
+		let task2 = URLSession.shared.dataTask(with: request) { (data, response, error) in
+			if let error = error {
+				print("Error: \(error.localizedDescription)")
+			}
+			else if let response = response as? HTTPURLResponse,
+					let data = data {
+				if(response.statusCode == 200) {
+					let rawBuses = try? (JSONSerialization.jsonObject(with: data, options: []) as! [[String: Any]])
+					
+					for rawBus in rawBuses! {
+						let sequence = rawBus["StopSequence"] as! Int - 1
+						busStopLiveStatus[sequence].plateNumber = (rawBus["PlateNumb"] as! String)
+						busStopLiveStatus[sequence].busStatus = BusStopLiveStatus.BusStatus(rawValue: ((rawBus["BusStatus"] ?? 0) as! Int))!
+						busStopLiveStatus[sequence].eventType = BusStopLiveStatus.EventType(rawValue: (rawBus["A2EventType"] as! Int))!
+					}
+				}
+				else {
+					print("A2 response status code \(response.statusCode)")
+				}
+			}
+			semaphore.signal()
+		}
+		task2.resume()
+		semaphore.wait()
+		
+		return busStopLiveStatus
 	}
 	
 	func prepareAuthorizations() {

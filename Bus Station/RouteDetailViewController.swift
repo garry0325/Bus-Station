@@ -17,7 +17,7 @@ class RouteDetailViewController: UIViewController {
 	@IBOutlet var activityIndicator: UIActivityIndicatorView!
 	
 	var busQuery = BusQuery()
-	var stopLabels = [String]()
+	var liveStatusStops = [BusStopLiveStatus]()
 	
 	override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,19 +26,22 @@ class RouteDetailViewController: UIViewController {
 		routeDetailTableView.dataSource = self
 		
 		activityIndicator.startAnimating()
-		print("route detail view did load \(String(describing: busStop?.routeName))")
 		
 		DispatchQueue.global(qos: .background).async {
 			print("querying real time location")
-			self.stopLabels = self.busQuery.queryRealTimeBusLocation(busStop: self.busStop!)
+			self.liveStatusStops = self.busQuery.queryRealTimeBusLocation(busStop: self.busStop!)
 			print("queryed")
 			DispatchQueue.main.async {
 				self.routeDetailTableView.reloadData()
 				self.activityIndicator.stopAnimating()
 			}
 		}
-        // Do any additional setup after loading the view.
+		
+		routeNameLabel.text = busStop?.routeName
+		routeDestinationLabel.text = busStop?.destination
     }
+	
+	
     
 
     /*
@@ -55,16 +58,19 @@ class RouteDetailViewController: UIViewController {
 
 extension RouteDetailViewController: UITableViewDelegate, UITableViewDataSource {
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return self.stopLabels.count
+		return self.liveStatusStops.count
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: "DetailStop")
+		let cell = tableView.dequeueReusableCell(withIdentifier: "DetailStop") as! RouteDetailTableViewCell
 		
-		cell?.textLabel?.text = self.stopLabels[indexPath.row]
+		cell.stopName = self.liveStatusStops[indexPath.row].stopName
+		cell.eventType = self.liveStatusStops[indexPath.row].eventType
 		
-		return cell!
+		return cell
 	}
 	
-	
+	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+		return 40.0
+	}
 }

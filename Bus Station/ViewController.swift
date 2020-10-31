@@ -48,6 +48,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 				let item = bearingIndexToItem[currentStationNumber][currentBearingNumber]
 				routeCollectionView.scrollToItem(at: IndexPath(item: item, section: 0), at: .centeredHorizontally, animated: true)
 				
+				ViewController.stationNumberForDetailView = currentStationNumber
+				
 				updateStarredButton()
 			}
 		}
@@ -62,6 +64,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 				let item = bearingIndexToItem[currentStationNumber][currentBearingNumber]
 				routeCollectionView.scrollToItem(at: IndexPath(item: item, section: 0), at: .centeredHorizontally, animated: true)
 				
+				ViewController.bearingNumberForDetailView = currentBearingNumber
+				
 				updateStarredButton()
 			}
 		}
@@ -75,6 +79,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	var bearingIndexToItem: Array<Array<Int>> = []
 	static var bearingItemToIndex: Array<Array<Int>> = []
 	var bearingStationsCount = 0
+	
+	static var bearingNumberForDetailView = 0
+	static var stationNumberForDetailView = 0
 	
 	
 	override func viewDidLoad() {
@@ -278,7 +285,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 						for j in 0..<bearingTemp.count {
 							switch bearingTemp[j] {
 							case "E":
-								bearingTemp[j] = "往東"
+								bearingTemp[j] = "往東"	// TODO: make static enum
 							case "W":
 								bearingTemp[j] = "往西"
 							case "S":
@@ -599,8 +606,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		print("didselect tableview \(indexPath.row)")
-		print("posting \(ViewController.routeList[currentStationNumber][currentBearingNumber][indexPath.row])")
-		NotificationCenter.default.post(name: NSNotification.Name("Detail"), object: ViewController.routeList[currentStationNumber][currentBearingNumber][indexPath.row])
+		print("posting \(ViewController.routeList[ViewController.stationNumberForDetailView][ViewController.bearingNumberForDetailView][indexPath.row])")
+		NotificationCenter.default.post(name: NSNotification.Name("Detail"), object: ViewController.routeList[ViewController.stationNumberForDetailView][ViewController.bearingNumberForDetailView][indexPath.row])
 		/*
 		let routeDetailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RouteDetailStoryboard") as! RouteDetailViewController
 		routeDetailVC.modalPresentationStyle = .popover
@@ -657,7 +664,6 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
 	
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		print("preparing for segue")
-		segue.destination.preferredContentSize = CGSize(width: 200.0, height: 500.0)
 		segue.destination.modalPresentationStyle = .popover
 		
 		(segue.destination as! RouteDetailViewController).busStop = sender as? BusStop
