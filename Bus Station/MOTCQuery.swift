@@ -226,10 +226,10 @@ class BusQuery {
 				return a.estimatedArrival <= b.estimatedArrival
 			}
 		}
-		
+		/*
 		for stop in stopsList {
 			print("\(stop.routeId)\t\(stop.routeName)\t\(stop.information)")
-		}
+		}*/
 		
 		return stopsList
 		// list of [[BusStop], [BusStop]...] ordered by estimatedArrival
@@ -238,7 +238,7 @@ class BusQuery {
 	func queryRealTimeBusLocation(busStop: BusStop) -> [BusStopLiveStatus] {
 		self.prepareAuthorizations()
 		var request: URLRequest
-		print("\(busStop.stopId)")
+		
 		let semaphore = DispatchSemaphore(value: 0)
 		var busStopLiveStatus = [BusStopLiveStatus]()
 		
@@ -257,7 +257,6 @@ class BusQuery {
 					let rawStops = try? (JSONSerialization.jsonObject(with: data, options: []) as! [[String: Any]])[0]["Stops"] as? [[String: Any]]
 					
 					var saveTime = true
-					var count = 1
 					for stop in rawStops! {
 						busStopLiveStatus.append(BusStopLiveStatus(stopId: stop["StopID"] as! String, stopName: (stop["StopName"] as! [String: String])["Zh_tw"]!, sequence: stop["StopSequence"] as! Int))
 						
@@ -265,10 +264,6 @@ class BusQuery {
 							busStopLiveStatus.last?.isCurrentStop = true
 							saveTime = false
 						}
-						if(count != (stop["StopSequence"] as! Int)) {
-							print("stop sequence is wrong")
-						}
-						count = count + 1
 					}
 					// TODO: CONSIDER REMOVE THIS BECAUSE SEQUENCE IS ALREADY PROVIDED
 					busStopLiveStatus.sort(by: { $0.stopSequence < $1.stopSequence })

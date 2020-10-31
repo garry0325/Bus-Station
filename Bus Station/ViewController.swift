@@ -605,23 +605,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 	}
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		print("didselect tableview \(indexPath.row)")
-		print("posting \(ViewController.routeList[ViewController.stationNumberForDetailView][ViewController.bearingNumberForDetailView][indexPath.row])")
 		NotificationCenter.default.post(name: NSNotification.Name("Detail"), object: ViewController.routeList[ViewController.stationNumberForDetailView][ViewController.bearingNumberForDetailView][indexPath.row])
-		/*
-		let routeDetailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RouteDetailStoryboard") as! RouteDetailViewController
-		routeDetailVC.modalPresentationStyle = .popover
-		
-		let popover = routeDetailVC.popoverPresentationController
-		popover?.delegate =
-		popover?.sourceView = tableView.cellForRow(at: indexPath)
-		popover?.sourceRect = tableView.cellForRow(at: indexPath)!.bounds
-		popover?.permittedArrowDirections = .any
-		routeDetailVC.preferredContentSize = CGSize(width: 200.0, height: 500.0)
-		
-		
-		present(routeDetailVC, animated: true, completion: nil)
-		*/
 	}
 	
 	func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -663,9 +647,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 extension ViewController: UIPopoverPresentationControllerDelegate {
 	
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		print("preparing for segue")
 		segue.destination.modalPresentationStyle = .popover
-		
 		(segue.destination as! RouteDetailViewController).busStop = sender as? BusStop
 	}
 	
