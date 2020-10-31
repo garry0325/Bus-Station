@@ -19,6 +19,8 @@ class RouteDetailViewController: UIViewController {
 	var busQuery = BusQuery()
 	var liveStatusStops = [BusStopLiveStatus]()
 	
+	var autoRefreshTimer = Timer()
+	
 	override func viewDidLoad() {
         super.viewDidLoad()
 		
@@ -29,19 +31,24 @@ class RouteDetailViewController: UIViewController {
 		
 		activityIndicator.startAnimating()
 		
+		autoRefresh()
+		
+		routeNameLabel.text = busStop?.routeName
+		routeDestinationLabel.text = busStop?.destination
+		
+		autoRefreshTimer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(autoRefresh), userInfo: nil, repeats: true)
+	}
+	
+	@objc func autoRefresh() {
 		DispatchQueue.global(qos: .background).async {
-			print("querying real time location")
 			self.liveStatusStops = self.busQuery.queryRealTimeBusLocation(busStop: self.busStop!)
-			print("queryed")
+			
 			DispatchQueue.main.async {
 				self.routeDetailTableView.reloadData()
 				self.activityIndicator.stopAnimating()
 			}
 		}
-		
-		routeNameLabel.text = busStop?.routeName
-		routeDestinationLabel.text = busStop?.destination
-    }
+	}
 }
 
 extension RouteDetailViewController: UITableViewDelegate, UITableViewDataSource {

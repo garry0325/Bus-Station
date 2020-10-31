@@ -13,8 +13,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	
 	let locationDeviateThreshold = 40.0
 	
-	static let shared = ViewController()	// TODO: REMOVE
-	
 	let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 	var starredStations: Array<StarredStation> = []
 	
@@ -33,6 +31,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	// TODO: combine buses from other cities
 	// TODO: add queryBusesArrivals() on adjacent pages
 	// TODO: haptic feedback when location is updated
+	// TODO: make static enum
+	// TODO: check far away location
 	
 	var busQuery = BusQuery()
 	var locationWhenPinned = CLLocation()
@@ -244,7 +244,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 					self.stationList = []
 					ViewController.routeList = []
 					self.stationListNames = []
-					self.bearingListNames = []	// TODO: CHECK far away location
+					self.bearingListNames = []
 					self.bearingStationsCount = 0
 					self.bearingStationDict = [Int:Int]()
 					self.bearingIndexToItem = []
@@ -284,7 +284,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 						for j in 0..<bearingTemp.count {
 							switch bearingTemp[j] {
 							case "E":
-								bearingTemp[j] = "往東"	// TODO: make static enum
+								bearingTemp[j] = "往東"
 							case "W":
 								bearingTemp[j] = "往西"
 							case "S":
