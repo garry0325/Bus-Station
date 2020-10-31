@@ -34,6 +34,7 @@ class RouteDetailTableViewCell: UITableViewCell {
 		didSet {
 			currentStopIndicatorView.isHidden = !isCurrentStop
 			routeNodeView.tintColor = isCurrentStop ? .systemBlue:.systemGray
+			stopNameLabel.font = isCurrentStop ? UIFont.systemFont(ofSize: 20.0, weight: .bold):UIFont.systemFont(ofSize: 17.0, weight: .regular)
 		}
 	}
 	var isDepartureStop = false {

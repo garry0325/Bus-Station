@@ -18,6 +18,11 @@ class RouteDetailViewController: UIViewController {
 	
 	var busQuery = BusQuery()
 	var liveStatusStops = [BusStopLiveStatus]()
+	var autoScrollPosition: Int? {
+		didSet {
+			routeDetailTableView.scrollToRow(at: IndexPath(row: autoScrollPosition ?? 0, section: 0), at: .middle, animated: false)
+		}
+	}
 	
 	var autoRefreshTimer = Timer()
 	
@@ -45,6 +50,7 @@ class RouteDetailViewController: UIViewController {
 			
 			DispatchQueue.main.async {
 				self.routeDetailTableView.reloadData()
+				self.autoScrollPosition = self.liveStatusStops.firstIndex(where: { $0.isCurrentStop == true })
 				self.activityIndicator.stopAnimating()
 			}
 		}
