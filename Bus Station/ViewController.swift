@@ -647,7 +647,9 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
 	
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		segue.destination.modalPresentationStyle = .popover
-		(segue.destination as! RouteDetailViewController).busStop = sender as? BusStop
+		
+		let destination = segue.destination as! RouteDetailViewController
+		destination.busStop = sender as? BusStop
 	}
 	
 	func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
