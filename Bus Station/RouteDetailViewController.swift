@@ -71,7 +71,19 @@ extension RouteDetailViewController: UITableViewDelegate, UITableViewDataSource 
 		cell.stopName = self.liveStatusStops[indexPath.row].stopName
 		cell.eventType = self.liveStatusStops[indexPath.row].eventType
 		
+		if(cell.isCurrentStop) {
+			let scaledTransform = cell.currentStopIndicatorView.transform.scaledBy(x: 2.0, y: 2.0)
+			UIView.animate(withDuration: 1.5, delay: 0.0, options: [.repeat]) {
+				cell.currentStopIndicatorView.transform = scaledTransform
+				cell.currentStopIndicatorView.alpha = 0.0
+			}
+		}
+		
 		return cell
+	}
+	
+	func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+
 	}
 	
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
