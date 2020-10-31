@@ -353,31 +353,48 @@
                                 <rect key="frame" x="0.0" y="65" width="414" height="651"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DetailStop" rowHeight="40" id="qag-PO-YrX" customClass="RouteDetailTableViewCell" customModule="Bus_Station" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="40"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DetailStop" rowHeight="35" id="qag-PO-YrX" customClass="RouteDetailTableViewCell" customModule="Bus_Station" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="35"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qag-PO-YrX" id="vcr-nL-6oC">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="40"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="35"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="IGS-LL-9Tf">
+                                                    <rect key="frame" x="111.33333333333333" y="11" width="25.999999999999986" height="25.666666666666664"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="tintColor" systemColor="systemBlueColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="26" id="8KT-tr-2Qt"/>
+                                                        <constraint firstAttribute="height" constant="26" id="sSC-PD-2Qu"/>
+                                                    </constraints>
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="8"/>
+                                                </imageView>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="4CD-2z-N8C">
-                                                    <rect key="frame" x="114.33333333333333" y="18.666666666666664" width="19.999999999999986" height="18.999999999999993"/>
+                                                    <rect key="frame" x="115.33333333333333" y="15.000000000000002" width="17.999999999999986" height="17.666666666666664"/>
                                                     <color key="tintColor" systemColor="systemGrayColor"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="20" id="0Jr-ZR-vF4"/>
-                                                        <constraint firstAttribute="width" constant="20" id="Diu-Vl-jU9"/>
+                                                        <constraint firstAttribute="height" constant="18" id="0Jr-ZR-vF4"/>
+                                                        <constraint firstAttribute="width" constant="18" id="Diu-Vl-jU9"/>
                                                     </constraints>
-                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="20"/>
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="2"/>
                                                 </imageView>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="INv-wD-Lju">
-                                                    <rect key="frame" x="121.33333333333333" y="0.0" width="6" height="40"/>
+                                                    <rect key="frame" x="122.66666666666667" y="0.0" width="3" height="23.666666666666668"/>
                                                     <color key="backgroundColor" systemColor="systemGrayColor"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="6" id="ssl-Mo-RGC"/>
+                                                        <constraint firstAttribute="width" constant="3" id="ssl-Mo-RGC"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="QtA-Qy-thL">
+                                                    <rect key="frame" x="122.66666666666667" y="23.666666666666668" width="3" height="11.333333333333332"/>
+                                                    <color key="backgroundColor" systemColor="systemGrayColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="3" id="yoG-EE-PBJ"/>
                                                     </constraints>
                                                 </imageView>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bus" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Tam-V4-Sej">
-                                                    <rect key="frame" x="77.333333333333329" y="-1.7763568394002505e-15" width="25" height="26.333333333333339"/>
+                                                    <rect key="frame" x="78.333333333333329" y="-1.6666666666666679" width="25" height="26.333333333333336"/>
                                                     <color key="tintColor" systemColor="labelColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="25" id="5hX-EW-xAf"/>
@@ -385,13 +402,13 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="師大分部" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="PGs-xg-pEc">
-                                                    <rect key="frame" x="142" y="17.666666666666668" width="257" height="21.000000000000004"/>
+                                                    <rect key="frame" x="141" y="13" width="258" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bus" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="b1h-M5-YUX">
-                                                    <rect key="frame" x="77.333333333333329" y="15.333333333333336" width="25" height="26"/>
+                                                    <rect key="frame" x="78.333333333333329" y="10.666666666666668" width="25" height="26.000000000000004"/>
                                                     <color key="tintColor" systemColor="labelColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="25" id="8jx-6h-u9D"/>
@@ -403,21 +420,30 @@
                                             <constraints>
                                                 <constraint firstItem="PGs-xg-pEc" firstAttribute="centerY" secondItem="4CD-2z-N8C" secondAttribute="centerY" id="5QV-GY-E5L"/>
                                                 <constraint firstItem="4CD-2z-N8C" firstAttribute="leading" secondItem="Tam-V4-Sej" secondAttribute="trailing" constant="12" id="8xe-F8-Ddf"/>
-                                                <constraint firstItem="INv-wD-Lju" firstAttribute="height" secondItem="vcr-nL-6oC" secondAttribute="height" id="SIu-xH-K9C"/>
+                                                <constraint firstAttribute="bottom" secondItem="QtA-Qy-thL" secondAttribute="bottom" id="9B9-5d-YGK"/>
+                                                <constraint firstItem="QtA-Qy-thL" firstAttribute="centerX" secondItem="4CD-2z-N8C" secondAttribute="centerX" id="Gg0-ML-SOv"/>
+                                                <constraint firstItem="QtA-Qy-thL" firstAttribute="top" secondItem="4CD-2z-N8C" secondAttribute="centerY" id="LZO-cU-FYJ"/>
                                                 <constraint firstItem="INv-wD-Lju" firstAttribute="centerX" secondItem="4CD-2z-N8C" secondAttribute="centerX" id="T5R-Sy-wb3"/>
                                                 <constraint firstItem="PGs-xg-pEc" firstAttribute="leading" secondItem="4CD-2z-N8C" secondAttribute="trailing" constant="7.6666666666666856" id="VXc-JW-rJL"/>
+                                                <constraint firstItem="INv-wD-Lju" firstAttribute="top" secondItem="vcr-nL-6oC" secondAttribute="top" id="WZs-cM-eX6"/>
                                                 <constraint firstItem="4CD-2z-N8C" firstAttribute="leading" secondItem="b1h-M5-YUX" secondAttribute="trailing" constant="12" id="YEA-Tg-qp9"/>
+                                                <constraint firstItem="IGS-LL-9Tf" firstAttribute="centerX" secondItem="4CD-2z-N8C" secondAttribute="centerX" id="b4u-c5-Rcp"/>
+                                                <constraint firstItem="INv-wD-Lju" firstAttribute="bottom" secondItem="4CD-2z-N8C" secondAttribute="centerY" id="blt-3e-rQU"/>
                                                 <constraint firstItem="4CD-2z-N8C" firstAttribute="centerX" secondItem="vcr-nL-6oC" secondAttribute="centerX" multiplier="0.6" id="hDC-l1-db2"/>
-                                                <constraint firstItem="4CD-2z-N8C" firstAttribute="centerY" secondItem="vcr-nL-6oC" secondAttribute="centerY" multiplier="1.4" id="mwb-C6-RHz"/>
-                                                <constraint firstItem="INv-wD-Lju" firstAttribute="centerY" secondItem="vcr-nL-6oC" secondAttribute="centerY" id="t3o-kQ-Drg"/>
-                                                <constraint firstItem="b1h-M5-YUX" firstAttribute="top" secondItem="Tam-V4-Sej" secondAttribute="bottom" constant="-10" id="tWv-jX-4VK"/>
+                                                <constraint firstItem="IGS-LL-9Tf" firstAttribute="centerY" secondItem="4CD-2z-N8C" secondAttribute="centerY" id="k0h-Om-cFr"/>
+                                                <constraint firstItem="4CD-2z-N8C" firstAttribute="centerY" secondItem="vcr-nL-6oC" secondAttribute="centerY" multiplier="1.35" id="mwb-C6-RHz"/>
+                                                <constraint firstItem="b1h-M5-YUX" firstAttribute="top" secondItem="Tam-V4-Sej" secondAttribute="bottom" constant="-13" id="tWv-jX-4VK"/>
                                                 <constraint firstItem="b1h-M5-YUX" firstAttribute="centerY" secondItem="4CD-2z-N8C" secondAttribute="centerY" id="uMe-5f-O1e"/>
                                                 <constraint firstAttribute="trailing" secondItem="PGs-xg-pEc" secondAttribute="trailing" constant="15" id="xhD-IG-GJ6"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="busAtStopImage" destination="b1h-M5-YUX" id="Ibj-D7-Agc"/>
-                                            <outlet property="busTowardsStopImage" destination="Tam-V4-Sej" id="xzj-G8-lh4"/>
+                                            <outlet property="busAtStopView" destination="b1h-M5-YUX" id="Ibj-D7-Agc"/>
+                                            <outlet property="busTowardsStopView" destination="Tam-V4-Sej" id="xzj-G8-lh4"/>
+                                            <outlet property="currentStopIndicatorView" destination="IGS-LL-9Tf" id="lmu-z8-uE0"/>
+                                            <outlet property="routeLineBottom" destination="QtA-Qy-thL" id="fN8-xC-wBf"/>
+                                            <outlet property="routeLineUp" destination="INv-wD-Lju" id="L36-Ow-3eC"/>
+                                            <outlet property="routeNodeView" destination="4CD-2z-N8C" id="73U-P1-KaD"/>
                                             <outlet property="stopNameLabel" destination="PGs-xg-pEc" id="hOP-MW-ZWH"/>
                                         </connections>
                                     </tableViewCell>
@@ -490,6 +516,7 @@
     </scenes>
     <resources>
         <image name="bus" catalog="system" width="128" height="122"/>
+        <image name="circle" catalog="system" width="128" height="121"/>
         <image name="circle.fill" catalog="system" width="128" height="121"/>
         <image name="location.fill" catalog="system" width="128" height="121"/>
         <image name="star" catalog="system" width="128" height="116"/>
@@ -498,6 +525,9 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGrayColor">
             <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -18,21 +18,42 @@ class RouteDetailTableViewCell: UITableViewCell {
 		didSet {
 			switch eventType {
 			case .Arriving:
-				busTowardsStopImage.isHidden = false
-				busAtStopImage.isHidden = true
+				busTowardsStopView.isHidden = false
+				busAtStopView.isHidden = true
 			case .Departing:
-				busTowardsStopImage.isHidden = true
-				busAtStopImage.isHidden = false
+				busTowardsStopView.isHidden = true
+				busAtStopView.isHidden = false
 			default:
-				busTowardsStopImage.isHidden = true
-				busAtStopImage.isHidden = true
+				busTowardsStopView.isHidden = true
+				busAtStopView.isHidden = true
 			}
 		}
 	}
 	
+	var isCurrentStop = false {
+		didSet {
+			currentStopIndicatorView.isHidden = !isCurrentStop
+			routeNodeView.tintColor = isCurrentStop ? .systemBlue:.systemGray
+		}
+	}
+	var isDepartureStop = false {
+		didSet {
+			routeLineUp.isHidden = isDepartureStop
+		}
+	}
+	var isDestinationStop = false {
+		didSet {
+			routeLineBottom.isHidden = isDestinationStop
+		}
+	}
+	
 	@IBOutlet var stopNameLabel: UILabel!
-	@IBOutlet var busTowardsStopImage: UIImageView!
-	@IBOutlet var busAtStopImage: UIImageView!
+	@IBOutlet var busTowardsStopView: UIImageView!
+	@IBOutlet var busAtStopView: UIImageView!
+	@IBOutlet var routeNodeView: UIImageView!
+	@IBOutlet var currentStopIndicatorView: UIImageView!
+	@IBOutlet var routeLineUp: UIImageView!
+	@IBOutlet var routeLineBottom: UIImageView!
 	
 	override func awakeFromNib() {
         super.awakeFromNib()

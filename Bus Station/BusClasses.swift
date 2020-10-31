@@ -80,6 +80,10 @@ class BusStopLiveStatus {
 	var busStatus: BusStatus = BusStatus.Error
 	var eventType: EventType = EventType.Unknown
 	
+	var isCurrentStop = false
+	var isDepartureStop = false
+	var isDestinationStop = false
+	
 	init(stopId: String, stopName: String, sequence: Int) {
 		self.stopId = stopId
 		self.stopName = stopName

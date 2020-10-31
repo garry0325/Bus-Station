@@ -238,7 +238,7 @@ class BusQuery {
 	func queryRealTimeBusLocation(busStop: BusStop) -> [BusStopLiveStatus] {
 		self.prepareAuthorizations()
 		var request: URLRequest
-		
+		print("\(busStop.stopId)")
 		let semaphore = DispatchSemaphore(value: 0)
 		var busStopLiveStatus = [BusStopLiveStatus]()
 		
@@ -256,9 +256,15 @@ class BusQuery {
 				if(response.statusCode == 200) {
 					let rawStops = try? (JSONSerialization.jsonObject(with: data, options: []) as! [[String: Any]])[0]["Stops"] as? [[String: Any]]
 					
+					var saveTime = true
 					var count = 1
 					for stop in rawStops! {
 						busStopLiveStatus.append(BusStopLiveStatus(stopId: stop["StopID"] as! String, stopName: (stop["StopName"] as! [String: String])["Zh_tw"]!, sequence: stop["StopSequence"] as! Int))
+						
+						if(saveTime && busStopLiveStatus.last?.stopId == busStop.stopId) {
+							busStopLiveStatus.last?.isCurrentStop = true
+							saveTime = false
+						}
 						if(count != (stop["StopSequence"] as! Int)) {
 							print("stop sequence is wrong")
 						}
@@ -296,6 +302,9 @@ class BusQuery {
 						busStopLiveStatus[sequence].busStatus = BusStopLiveStatus.BusStatus(rawValue: ((rawBus["BusStatus"] ?? 0) as! Int))!
 						busStopLiveStatus[sequence].eventType = BusStopLiveStatus.EventType(rawValue: (rawBus["A2EventType"] as! Int))!
 					}
+					
+					busStopLiveStatus[0].isDepartureStop = true
+					busStopLiveStatus[busStopLiveStatus.count - 1].isDestinationStop = true
 				}
 				else {
 					print("A2 response status code \(response.statusCode)")

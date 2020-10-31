@@ -25,6 +25,8 @@ class RouteDetailViewController: UIViewController {
 		routeDetailTableView.delegate = self
 		routeDetailTableView.dataSource = self
 		
+		routeDetailTableView.contentInset = UIEdgeInsets(top: 7.0, left: 0.0, bottom: 10.0, right: 0.0)
+		
 		activityIndicator.startAnimating()
 		
 		DispatchQueue.global(qos: .background).async {
@@ -40,20 +42,6 @@ class RouteDetailViewController: UIViewController {
 		routeNameLabel.text = busStop?.routeName
 		routeDestinationLabel.text = busStop?.destination
     }
-	
-	
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
 extension RouteDetailViewController: UITableViewDelegate, UITableViewDataSource {
@@ -64,6 +52,9 @@ extension RouteDetailViewController: UITableViewDelegate, UITableViewDataSource 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: "DetailStop") as! RouteDetailTableViewCell
 		
+		cell.isCurrentStop = self.liveStatusStops[indexPath.row].isCurrentStop
+		cell.isDepartureStop = self.liveStatusStops[indexPath.row].isDepartureStop
+		cell.isDestinationStop = self.liveStatusStops[indexPath.row].isDestinationStop
 		cell.stopName = self.liveStatusStops[indexPath.row].stopName
 		cell.eventType = self.liveStatusStops[indexPath.row].eventType
 		
@@ -71,6 +62,6 @@ extension RouteDetailViewController: UITableViewDelegate, UITableViewDataSource 
 	}
 	
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		return 40.0
+		return 35.0
 	}
 }
