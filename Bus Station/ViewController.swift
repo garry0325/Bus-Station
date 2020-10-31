@@ -48,10 +48,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 				let item = bearingIndexToItem[currentStationNumber][currentBearingNumber]
 				routeCollectionView.scrollToItem(at: IndexPath(item: item, section: 0), at: .centeredHorizontally, animated: true)
 				
-				ViewController.stationNumberForDetailView = currentStationNumber
-				
 				updateStarredButton()
 			}
+			ViewController.stationNumberForDetailView = currentStationNumber
 		}
 	}
 	var currentBearingNumber = 0 {
@@ -64,10 +63,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 				let item = bearingIndexToItem[currentStationNumber][currentBearingNumber]
 				routeCollectionView.scrollToItem(at: IndexPath(item: item, section: 0), at: .centeredHorizontally, animated: true)
 				
-				ViewController.bearingNumberForDetailView = currentBearingNumber
 				
 				updateStarredButton()
 			}
+			ViewController.bearingNumberForDetailView = currentBearingNumber
 		}
 	}
 	var stationList: Array<Array<BusStation>> = []
