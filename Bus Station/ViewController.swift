@@ -176,34 +176,36 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	}
 	
 	@IBAction func starButtonPressed(_ sender: Any) {
-		let checkStarredStationId = stationList[currentStationNumber][currentBearingNumber].stationId
-		if(!stationIsStarred(stationID: checkStarredStationId)) {
-			starButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
-			starButton.tintColor = .systemYellow
-			
-			let starred = StarredStation(context: self.context)
-			starred.stationID = checkStarredStationId
-			starredStations.append(starred)
-			do {
-				try self.context.save()
-			} catch {
-				print("Error saving starred station")
+		if(currentStationNumber < stationList.count && currentBearingNumber < stationList[currentStationNumber].count) {
+			let checkStarredStationId = stationList[currentStationNumber][currentBearingNumber].stationId
+			if(!stationIsStarred(stationID: checkStarredStationId)) {
+				starButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
+				starButton.tintColor = .systemYellow
+				
+				let starred = StarredStation(context: self.context)
+				starred.stationID = checkStarredStationId
+				starredStations.append(starred)
+				do {
+					try self.context.save()
+				} catch {
+					print("Error saving starred station")
+				}
 			}
-		}
-		else {
-			starButton.setImage(UIImage(systemName: "star"), for: .normal)
-			starButton.tintColor = .systemGray
-			
-			for i in 0..<starredStations.count {
-				if(starredStations[i].stationID == checkStarredStationId) {
-					self.context.delete(starredStations[i])
-					do {
-						try self.context.save()
-					} catch {
-						print("Error saving unstarred station")
+			else {
+				starButton.setImage(UIImage(systemName: "star"), for: .normal)
+				starButton.tintColor = .systemGray
+				
+				for i in 0..<starredStations.count {
+					if(starredStations[i].stationID == checkStarredStationId) {
+						self.context.delete(starredStations[i])
+						do {
+							try self.context.save()
+						} catch {
+							print("Error saving unstarred station")
+						}
+						starredStations.remove(at: i)
+						break
 					}
-					starredStations.remove(at: i)
-					break
 				}
 			}
 		}
