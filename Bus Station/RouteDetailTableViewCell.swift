@@ -16,29 +16,29 @@ class RouteDetailTableViewCell: UITableViewCell {
 	}
 	var eventType: BusStopLiveStatus.EventType = .Unknown {
 		didSet {
-			switch eventType {
+			switch eventType {	// 0 Departing, 1 Arriving in actual situation
 			case .Arriving:
-				busTowardsStopView.isHidden = false
-				busAtStopView.isHidden = true
-				plateTowardsStopLabel.isHidden = false
-				plateAtStopLabel.isHidden = true
-			case .Departing:
-				busTowardsStopView.isHidden = true
 				busAtStopView.isHidden = false
-				plateTowardsStopLabel.isHidden = true
+				busDepartStopView.isHidden = true
 				plateAtStopLabel.isHidden = false
-			default:
-				busTowardsStopView.isHidden = true
+				plateDepartStopLabel.isHidden = true
+			case .Departing:
 				busAtStopView.isHidden = true
-				plateTowardsStopLabel.isHidden = true
+				busDepartStopView.isHidden = false
 				plateAtStopLabel.isHidden = true
+				plateDepartStopLabel.isHidden = false
+			default:
+				busAtStopView.isHidden = true
+				busDepartStopView.isHidden = true
+				plateAtStopLabel.isHidden = true
+				plateDepartStopLabel.isHidden = true
 			}
 		}
 	}
 	var plateNumber: String = "" {
 		didSet {
-			plateTowardsStopLabel.text = plateNumber + " "
 			plateAtStopLabel.text = plateNumber + " "
+			plateDepartStopLabel.text = plateNumber + " "
 		}
 	}
 	
@@ -60,10 +60,10 @@ class RouteDetailTableViewCell: UITableViewCell {
 	}
 	
 	@IBOutlet var stopNameLabel: UILabel!
-	@IBOutlet var busTowardsStopView: UIImageView!
 	@IBOutlet var busAtStopView: UIImageView!
-	@IBOutlet var plateTowardsStopLabel: UILabel!
+	@IBOutlet var busDepartStopView: UIImageView!
 	@IBOutlet var plateAtStopLabel: UILabel!
+	@IBOutlet var plateDepartStopLabel: UILabel!
 	@IBOutlet var routeNodeView: UIImageView!
 	@IBOutlet var currentStopIndicatorView: UIImageView!
 	@IBOutlet var routeLineUp: UIImageView!
@@ -72,10 +72,10 @@ class RouteDetailTableViewCell: UITableViewCell {
 	override func awakeFromNib() {
         super.awakeFromNib()
 		
-		plateTowardsStopLabel.layer.cornerRadius = 3.0
 		plateAtStopLabel.layer.cornerRadius = 3.0
-		plateTowardsStopLabel.layer.masksToBounds = true
+		plateDepartStopLabel.layer.cornerRadius = 3.0
 		plateAtStopLabel.layer.masksToBounds = true
+		plateDepartStopLabel.layer.masksToBounds = true
 		
 		currentStopIndicatorView.tintColor = .white
 		currentStopIndicatorView.layer.borderColor = UIColor.systemBlue.cgColor

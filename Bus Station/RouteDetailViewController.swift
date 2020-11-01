@@ -34,7 +34,7 @@ class RouteDetailViewController: UIViewController {
 	}
 	
 	var needAutoscroll = true
-	var autoRefreshTimer = Timer()
+	var autoRefreshTimer: Timer?
 	
 	override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +42,7 @@ class RouteDetailViewController: UIViewController {
 		routeDetailTableView.delegate = self
 		routeDetailTableView.dataSource = self
 		
-		routeDetailTableView.contentInset = UIEdgeInsets(top: 7.0, left: 0.0, bottom: 20.0, right: 0.0)
+		routeDetailTableView.contentInset = UIEdgeInsets(top: 30.0, left: 0.0, bottom: 50.0, right: 0.0)
 		
 		configureInformationLabel()
 		
@@ -52,6 +52,11 @@ class RouteDetailViewController: UIViewController {
 		
 		autoRefresh()
 		autoRefreshTimer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(autoRefresh), userInfo: nil, repeats: true)
+	}
+	
+	override func viewDidDisappear(_ animated: Bool) {
+		// CRUCIAL BECAUSE WHEN VIEW IS CLOSED, THE TIMER KEEPS GOING CAUSING BAD_ACCESS
+		autoRefreshTimer?.invalidate()
 	}
 	
 	func configureInformationLabel() {
