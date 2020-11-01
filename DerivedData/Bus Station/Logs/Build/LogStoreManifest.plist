@@ -516,6 +516,74 @@
 			<key>uniqueIdentifier</key>
 			<string>B931E43D-8832-4D4C-9DD8-5C1BDC040BC7</string>
 		</dict>
+		<key>BCC941C6-A16F-4197-870C-9E651CFBDA4C</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>BCC941C6-A16F-4197-870C-9E651CFBDA4C.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Bus Station project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Bus Station</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build Bus Station</string>
+			<key>timeStartedRecording</key>
+			<real>625904750.77290702</real>
+			<key>timeStoppedRecording</key>
+			<real>625904752.04317498</real>
+			<key>title</key>
+			<string>Build Bus Station</string>
+			<key>uniqueIdentifier</key>
+			<string>BCC941C6-A16F-4197-870C-9E651CFBDA4C</string>
+		</dict>
+		<key>BD2EA61C-1188-4EDC-983A-6B949D5D4CB5</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>BD2EA61C-1188-4EDC-983A-6B949D5D4CB5.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Bus Station project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Bus Station</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build Bus Station</string>
+			<key>timeStartedRecording</key>
+			<real>625904720.58819199</real>
+			<key>timeStoppedRecording</key>
+			<real>625904723.06822598</real>
+			<key>title</key>
+			<string>Build Bus Station</string>
+			<key>uniqueIdentifier</key>
+			<string>BD2EA61C-1188-4EDC-983A-6B949D5D4CB5</string>
+		</dict>
 		<key>D893272E-FC78-4BF4-943C-1BE89735263F</key>
 		<dict>
 			<key>className</key>

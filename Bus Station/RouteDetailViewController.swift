@@ -44,18 +44,21 @@ class RouteDetailViewController: UIViewController {
 		
 		routeDetailTableView.contentInset = UIEdgeInsets(top: 7.0, left: 0.0, bottom: 20.0, right: 0.0)
 		
+		configureInformationLabel()
+		
 		informationLabel.layer.zPosition = 1
 		
 		activityIndicator.startAnimating()
 		
 		autoRefresh()
-		
+		autoRefreshTimer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(autoRefresh), userInfo: nil, repeats: true)
+	}
+	
+	func configureInformationLabel() {
 		routeNameLabel.text = busStop?.routeName
 		routeDestinationLabel.text = busStop?.destination
 		information = busStop?.information ?? ""
 		informationBackgroundView.backgroundColor = busStop?.informationLabelColor ?? RouteInformationLabelColors.gray
-		
-		autoRefreshTimer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(autoRefresh), userInfo: nil, repeats: true)
 	}
 	
 	@objc func autoRefresh() {
@@ -74,7 +77,13 @@ class RouteDetailViewController: UIViewController {
 		
 		// updating the information label
 		DispatchQueue.global(qos: .background).async {
+			if(self.busStop != nil) {
+				self.busStop = self.busQuery.querySpecificBusArrival(busStop: self.busStop!)
+			}
 			
+			DispatchQueue.main.async {
+				self.configureInformationLabel()
+			}
 		}
 	}
 }
