@@ -45,8 +45,6 @@ class RouteDetailTableViewCell: UITableViewCell {
 	var isCurrentStop = false {
 		didSet {
 			currentStopIndicatorView.isHidden = !isCurrentStop
-			routeNodeView.tintColor = isCurrentStop ? .systemBlue:.systemGray
-			routeNodeView.image = UIImage(systemName: "circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: (isCurrentStop ? 5:2)))
 			stopNameLabel.font = isCurrentStop ? UIFont.systemFont(ofSize: 20.0, weight: .bold):UIFont.systemFont(ofSize: 17.0, weight: .regular)
 		}
 	}
@@ -74,10 +72,15 @@ class RouteDetailTableViewCell: UITableViewCell {
 	override func awakeFromNib() {
         super.awakeFromNib()
 		
-		plateTowardsStopLabel.sizeToFit()
-		plateAtStopLabel.sizeToFit()
-		plateTowardsStopLabel.layer.cornerRadius = 5.0
-		plateAtStopLabel.layer.cornerRadius = 5.0
+		plateTowardsStopLabel.layer.cornerRadius = 3.0
+		plateAtStopLabel.layer.cornerRadius = 3.0
+		plateTowardsStopLabel.layer.masksToBounds = true
+		plateAtStopLabel.layer.masksToBounds = true
+		
+		currentStopIndicatorView.tintColor = .white
+		currentStopIndicatorView.layer.borderColor = UIColor.systemBlue.cgColor
+		currentStopIndicatorView.layer.cornerRadius = currentStopIndicatorView.frame.width / 2
+		currentStopIndicatorView.layer.borderWidth = 5.0
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

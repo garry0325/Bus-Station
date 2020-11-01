@@ -99,14 +99,6 @@ extension RouteDetailViewController: UITableViewDelegate, UITableViewDataSource 
 		cell.eventType = self.liveStatusStops[indexPath.row].eventType
 		cell.plateNumber = self.liveStatusStops[indexPath.row].plateNumber
 		
-		if(cell.isCurrentStop) {
-			let scaledTransform = cell.currentStopIndicatorView.transform.scaledBy(x: 2.0, y: 2.0)
-			UIView.animate(withDuration: 1.5, delay: 0.0, options: [.repeat]) {
-				cell.currentStopIndicatorView.transform = scaledTransform
-				cell.currentStopIndicatorView.alpha = 0.0
-			}
-		}
-		
 		return cell
 	}
 	

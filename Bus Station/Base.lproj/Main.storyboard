@@ -360,41 +360,22 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="35"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="IGS-LL-9Tf">
-                                                    <rect key="frame" x="120.66666666666669" y="9.6666666666666643" width="28" height="28"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <color key="tintColor" systemColor="systemBlueColor"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="28" id="8KT-tr-2Qt"/>
-                                                        <constraint firstAttribute="height" constant="28" id="sSC-PD-2Qu"/>
-                                                    </constraints>
-                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="4" scale="medium"/>
-                                                </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="INv-wD-Lju">
-                                                    <rect key="frame" x="133" y="0.0" width="3" height="23.666666666666668"/>
+                                                    <rect key="frame" x="143.33333333333334" y="0.0" width="3" height="22.666666666666668"/>
                                                     <color key="backgroundColor" systemColor="systemGrayColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="3" id="ssl-Mo-RGC"/>
                                                     </constraints>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="QtA-Qy-thL">
-                                                    <rect key="frame" x="133" y="23.666666666666668" width="3" height="11.333333333333332"/>
+                                                    <rect key="frame" x="143.33333333333334" y="22.666666666666668" width="3" height="12.333333333333332"/>
                                                     <color key="backgroundColor" systemColor="systemGrayColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="3" id="yoG-EE-PBJ"/>
                                                     </constraints>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="4CD-2z-N8C">
-                                                    <rect key="frame" x="125.66666666666669" y="15.000000000000002" width="18" height="17.666666666666664"/>
-                                                    <color key="tintColor" systemColor="systemGrayColor"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="18" id="0Jr-ZR-vF4"/>
-                                                        <constraint firstAttribute="width" constant="18" id="Diu-Vl-jU9"/>
-                                                    </constraints>
-                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="2"/>
-                                                </imageView>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bus" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="b1h-M5-YUX">
-                                                    <rect key="frame" x="92.666666666666671" y="10.666666666666668" width="25" height="26.000000000000004"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bus.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="b1h-M5-YUX">
+                                                    <rect key="frame" x="103" y="10.333333333333332" width="25" height="25.666666666666668"/>
                                                     <color key="tintColor" systemColor="labelColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="25" id="8jx-6h-u9D"/>
@@ -402,8 +383,26 @@
                                                     </constraints>
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="10"/>
                                                 </imageView>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bus" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Tam-V4-Sej">
-                                                    <rect key="frame" x="92.666666666666671" y="-1.6666666666666679" width="25" height="26.333333333333336"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="4CD-2z-N8C">
+                                                    <rect key="frame" x="136" y="14.000000000000002" width="18" height="17.666666666666664"/>
+                                                    <color key="tintColor" systemColor="systemGrayColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="18" id="0Jr-ZR-vF4"/>
+                                                        <constraint firstAttribute="width" constant="18" id="Diu-Vl-jU9"/>
+                                                    </constraints>
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="2"/>
+                                                </imageView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="IGS-LL-9Tf">
+                                                    <rect key="frame" x="132.33333333333334" y="10.333333333333336" width="25" height="25"/>
+                                                    <color key="tintColor" systemColor="systemGrayColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="25" id="8KT-tr-2Qt"/>
+                                                        <constraint firstAttribute="height" constant="25" id="sSC-PD-2Qu"/>
+                                                    </constraints>
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="4" scale="medium"/>
+                                                </imageView>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bus.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Tam-V4-Sej">
+                                                    <rect key="frame" x="103" y="-1.6666666666666661" width="25" height="26"/>
                                                     <color key="tintColor" systemColor="labelColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="25" id="5hX-EW-xAf"/>
@@ -411,13 +410,13 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="師大分部" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="PGs-xg-pEc">
-                                                    <rect key="frame" x="151.33333333333337" y="13" width="247.66666666666663" height="21"/>
+                                                    <rect key="frame" x="161.66666666666663" y="12.333333333333336" width="237.33333333333337" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AAA-8888" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="roJ-zd-4ib">
-                                                    <rect key="frame" x="19.333333333333336" y="2.6666666666666661" width="68.333333333333314" height="18"/>
+                                                    <rect key="frame" x="29.666666666666664" y="1.6666666666666661" width="68.333333333333343" height="18"/>
                                                     <color key="backgroundColor" systemColor="systemGray2Color"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="18" id="ZIA-Bq-uBs"/>
@@ -432,7 +431,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AAA-8888" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nid-48-mjz">
-                                                    <rect key="frame" x="19.333333333333336" y="14.666666666666664" width="68.333333333333314" height="18"/>
+                                                    <rect key="frame" x="29.666666666666664" y="13.666666666666664" width="68.333333333333343" height="18"/>
                                                     <color key="backgroundColor" systemColor="systemGray2Color"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="18" id="nXK-Lr-uc1"/>
@@ -464,9 +463,9 @@
                                                 <constraint firstItem="4CD-2z-N8C" firstAttribute="leading" secondItem="b1h-M5-YUX" secondAttribute="trailing" constant="8" id="YEA-Tg-qp9"/>
                                                 <constraint firstItem="IGS-LL-9Tf" firstAttribute="centerX" secondItem="4CD-2z-N8C" secondAttribute="centerX" id="b4u-c5-Rcp"/>
                                                 <constraint firstItem="INv-wD-Lju" firstAttribute="bottom" secondItem="4CD-2z-N8C" secondAttribute="centerY" id="blt-3e-rQU"/>
-                                                <constraint firstItem="4CD-2z-N8C" firstAttribute="centerX" secondItem="vcr-nL-6oC" secondAttribute="centerX" multiplier="0.65" id="hDC-l1-db2"/>
+                                                <constraint firstItem="4CD-2z-N8C" firstAttribute="centerX" secondItem="vcr-nL-6oC" secondAttribute="centerX" multiplier="0.7" id="hDC-l1-db2"/>
                                                 <constraint firstItem="IGS-LL-9Tf" firstAttribute="centerY" secondItem="4CD-2z-N8C" secondAttribute="centerY" id="k0h-Om-cFr"/>
-                                                <constraint firstItem="4CD-2z-N8C" firstAttribute="centerY" secondItem="vcr-nL-6oC" secondAttribute="centerY" multiplier="1.35" id="mwb-C6-RHz"/>
+                                                <constraint firstItem="4CD-2z-N8C" firstAttribute="centerY" secondItem="vcr-nL-6oC" secondAttribute="centerY" multiplier="1.3" id="mwb-C6-RHz"/>
                                                 <constraint firstItem="nid-48-mjz" firstAttribute="centerY" secondItem="b1h-M5-YUX" secondAttribute="centerY" id="ndN-P1-Edq"/>
                                                 <constraint firstItem="b1h-M5-YUX" firstAttribute="top" secondItem="Tam-V4-Sej" secondAttribute="bottom" constant="-13" id="tWv-jX-4VK"/>
                                                 <constraint firstItem="b1h-M5-YUX" firstAttribute="centerY" secondItem="4CD-2z-N8C" secondAttribute="centerY" id="uMe-5f-O1e"/>
@@ -588,8 +587,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="bus" catalog="system" width="128" height="122"/>
-        <image name="circle" catalog="system" width="128" height="121"/>
+        <image name="bus.fill" catalog="system" width="128" height="122"/>
         <image name="circle.fill" catalog="system" width="128" height="121"/>
         <image name="location.fill" catalog="system" width="128" height="121"/>
         <image name="star" catalog="system" width="128" height="116"/>
@@ -598,9 +596,6 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray2Color">
             <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
