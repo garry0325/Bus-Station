@@ -37,8 +37,8 @@ class RouteDetailTableViewCell: UITableViewCell {
 	}
 	var plateNumber: String = "" {
 		didSet {
-			plateTowardsStopLabel.text = " " + plateNumber + " "
-			plateAtStopLabel.text = " " + plateNumber + " "
+			plateTowardsStopLabel.text = plateNumber + " "
+			plateAtStopLabel.text = plateNumber + " "
 		}
 	}
 	

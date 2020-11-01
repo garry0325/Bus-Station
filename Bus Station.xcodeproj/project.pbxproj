@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		C23D91B92549CA950027125A /* RouteCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23D91B82549CA950027125A /* RouteCollectionViewCell.swift */; };
 		C269C466254B196300BA41B4 /* RouteDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C269C465254B196300BA41B4 /* RouteDetailViewController.swift */; };
+		C275EDF3254E965A0028ACCC /* Roadgeek2005SeriesD.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C275EDF2254E965A0028ACCC /* Roadgeek2005SeriesD.ttf */; };
 		C2B35DCB253DCA5B00108776 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B35DCA253DCA5B00108776 /* AppDelegate.swift */; };
 		C2B35DCD253DCA5B00108776 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B35DCC253DCA5B00108776 /* SceneDelegate.swift */; };
 		C2B35DCF253DCA5B00108776 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B35DCE253DCA5B00108776 /* ViewController.swift */; };
@@ -46,6 +47,7 @@
 /* Begin PBXFileReference section */
 		C23D91B82549CA950027125A /* RouteCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteCollectionViewCell.swift; sourceTree = "<group>"; };
 		C269C465254B196300BA41B4 /* RouteDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteDetailViewController.swift; sourceTree = "<group>"; };
+		C275EDF2254E965A0028ACCC /* Roadgeek2005SeriesD.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Roadgeek2005SeriesD.ttf; sourceTree = "<group>"; };
 		C2B35DC7253DCA5B00108776 /* Bus Station.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bus Station.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2B35DCA253DCA5B00108776 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C2B35DCC253DCA5B00108776 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 				C2DC9CEF2548A8C10004860D /* Constants.swift */,
 				C2B35DD0253DCA5B00108776 /* Main.storyboard */,
 				C2B35DD6253DCA5E00108776 /* Assets.xcassets */,
+				C275EDF2254E965A0028ACCC /* Roadgeek2005SeriesD.ttf */,
 				C2B35DD8253DCA5E00108776 /* LaunchScreen.storyboard */,
 				C2B35DDB253DCA5E00108776 /* Info.plist */,
 				C2B35DD3253DCA5B00108776 /* Bus_Station.xcdatamodeld */,
@@ -260,6 +263,7 @@
 			files = (
 				C2B35DDA253DCA5E00108776 /* LaunchScreen.storyboard in Resources */,
 				C2B35DD7253DCA5E00108776 /* Assets.xcassets in Resources */,
+				C275EDF3254E965A0028ACCC /* Roadgeek2005SeriesD.ttf in Resources */,
 				C2B35DD2253DCA5B00108776 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
