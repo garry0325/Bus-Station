@@ -159,7 +159,7 @@ class BusQuery {
 							let busStopTemp = BusStop(stopId: route["StopID"] as! String, city: city, routeId: route["RouteID"] as! String, routeName: (route["RouteName"] as! [String: String])["Zh_tw"]!)
 							busStopTemp.direction = route["Direction"] as! Int
 							busStopTemp.estimatedArrival = (route["EstimateTime"] as? Int ?? -1)
-							busStopTemp.stopStatus = route["StopStatus"] as! Int
+							busStopTemp.stopStatus = BusStop.StopStatus(rawValue: route["StopStatus"] as! Int)!
 							
 							routeDict[busStopTemp.routeId] = busStopTemp
 							stopsList.append(busStopTemp)
@@ -178,6 +178,7 @@ class BusQuery {
 			semaphore.wait()
 		}
 		
+		// get departure & destination stop information based on direction
 		for city in queryCities {
 			var routeIDs = [String]()
 			for stop in station.stops {
@@ -311,6 +312,40 @@ class BusQuery {
 		semaphore.wait()
 		
 		return busStopLiveStatus
+	}
+	
+	func querySpecificBusArrival(busStop: BusStop) -> Int{
+		self.prepareAuthorizations()
+		var request: URLRequest
+		
+		let semaphore = DispatchSemaphore(value: 0)
+		var estimatedTime = -1
+		
+		let urlStopOfRoute = URL(string: String("https://ptx.transportdata.tw/MOTC/v2/Bus/EstimatedTimeOfArrival/City/\(busStop.city)?$filter=RouteID eq '\(busStop.routeId)' and StopID eq '\(busStop.stopId)' and Direction eq \(busStop.direction)&$select=RouteID, Direction, StopStatus, EstimateTime&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+		request = URLRequest(url: urlStopOfRoute)
+		request.setValue(authTimeString, forHTTPHeaderField: "x-date")
+		request.setValue(authorization, forHTTPHeaderField: "Authorization")
+		let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+			if let error = error {
+				print("Error: \(error.localizedDescription)")
+			}
+			else if let response = response as? HTTPURLResponse,
+					let data = data {
+				if(response.statusCode == 200) {
+					let rawReturned = try? ((JSONSerialization.jsonObject(with: data, options: []) as! [[String: Any]])[0]["EstimateTime"] as? Int) ?? -1
+					
+					estimatedTime = rawReturned!
+				}
+				else {
+					print("Specific bus arrival response status code \(response.statusCode)")
+				}
+			}
+			semaphore.signal()
+		}
+		task.resume()
+		semaphore.wait()
+		
+		return estimatedTime
 	}
 	
 	func prepareAuthorizations() {

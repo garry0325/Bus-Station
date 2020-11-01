@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-struct RouteLabelColors {
+enum RouteInformationLabelColors {
 	static let red =	UIColor(red: 255/255, green: 96/255, blue: 96/255, alpha: 1.0)
 	static let orange =	UIColor(red: 255/255, green: 164/255, blue: 89/255, alpha: 1.0)
 	static let green =	UIColor(red: 89/255, green: 206/255, blue: 88/255, alpha: 1.0)

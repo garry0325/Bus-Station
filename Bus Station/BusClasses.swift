@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 import CoreLocation
 
 class BusStation {
@@ -31,44 +32,76 @@ class BusStop {
 	var direction: Int = -1
 	var destination: String = ""
 	var estimatedArrival: Int = -1
-	var stopStatus: Int = -1 {
+	var stopStatus: StopStatus = .Unknown {
 		didSet {
 			switch stopStatus {
-			case 0:
+			case .Normal:
 				if(estimatedArrival < 30) {
-					information = "進站中"
+					information = Information.Arriving
+					informationLabelColor = RouteInformationLabelColors.red
 				}
 				else if(estimatedArrival < 120) {
-					information = "將到站"
+					information = Information.Approaching
+					informationLabelColor = RouteInformationLabelColors.red
+				}
+				else if(estimatedArrival < 300) {
+					information = "\(estimatedArrival / 60)\(Information.Incoming)"
+					informationLabelColor = RouteInformationLabelColors.orange
 				}
 				else {
-					information = "\(estimatedArrival / 60)分"
+					information = "\(estimatedArrival / 60)\(Information.Incoming)"
+					informationLabelColor = RouteInformationLabelColors.green
 				}
-			case 1:
+			case .NotDeparted:
 				if(estimatedArrival == -1) {
-					information = "尚未發車"
+					information = Information.NotDeparted
+					informationLabelColor = RouteInformationLabelColors.gray
 				}
 				else {
-					information = "\(estimatedArrival / 60)分"
+					information = "\(estimatedArrival / 60)\(Information.Incoming)"
+					informationLabelColor = RouteInformationLabelColors.green
 				}
-			case 2:
-				information = "交管不停靠"
-			case 3:
-				information = "末班車已過"
-			case 4:
-				information = "今日未營運"
+			case .TrafficRegulation:
+				information = Information.TrafficRegulation
+				informationLabelColor = RouteInformationLabelColors.gray
+			case .OutService:
+				information = Information.OutService
+				informationLabelColor = RouteInformationLabelColors.gray
+			case .NoServiceToday:
+				information = Information.NoServiceToday
+				informationLabelColor = RouteInformationLabelColors.gray
 			default:
 				break
 			}
 		}
 	}
 	var information: String = ""
+	var informationLabelColor: UIColor = RouteInformationLabelColors.gray
 	
 	init(stopId: String, city: String, routeId: String, routeName: String) {
 		self.stopId = stopId
 		self.city = city
 		self.routeId = routeId
 		self.routeName = routeName
+	}
+	
+	enum StopStatus: Int {
+		case Normal				= 0
+		case NotDeparted		= 1
+		case TrafficRegulation	= 2
+		case OutService			= 3
+		case NoServiceToday		= 4
+		case Unknown			= -1
+	}
+	
+	enum Information {
+		static let Arriving				= "進站中"
+		static let Approaching			= "將到站"
+		static let Incoming				= "分"
+		static let NotDeparted			= "尚未發車"
+		static let TrafficRegulation	= "交管不停靠"
+		static let OutService			= "末班車已過"
+		static let NoServiceToday		= "今日未營運"
 	}
 }
 

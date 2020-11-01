@@ -599,6 +599,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 		cell.routeName = ViewController.routeList[stationNumber][bearingNumber][indexPath.row].routeName
 		cell.information = ViewController.routeList[stationNumber][bearingNumber][indexPath.row].information
 		cell.destination = ViewController.routeList[stationNumber][bearingNumber][indexPath.row].destination
+		cell.labelColor = ViewController.routeList[stationNumber][bearingNumber][indexPath.row].informationLabelColor
 		
 		return cell
 	}
@@ -614,21 +615,21 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 		var animateDuration: TimeInterval?
 		
 		switch tempCell.labelColor {
-		case RouteLabelColors.red:
-			colorOriginal = RouteLabelColors.red
-			colorAnimating = RouteLabelColors.redAnimating
+		case RouteInformationLabelColors.red:
+			colorOriginal = RouteInformationLabelColors.red
+			colorAnimating = RouteInformationLabelColors.redAnimating
 			animateDuration = 0.3
-		case RouteLabelColors.orange:
-			colorOriginal = RouteLabelColors.orange
-			colorAnimating = RouteLabelColors.orangeAnimating
+		case RouteInformationLabelColors.orange:
+			colorOriginal = RouteInformationLabelColors.orange
+			colorAnimating = RouteInformationLabelColors.orangeAnimating
 			animateDuration = 0.8
-		case RouteLabelColors.green:
-			colorOriginal = RouteLabelColors.green
-			colorAnimating = RouteLabelColors.greenAnimating
+		case RouteInformationLabelColors.green:
+			colorOriginal = RouteInformationLabelColors.green
+			colorAnimating = RouteInformationLabelColors.greenAnimating
 			animateDuration = 1.5
 		default:
-			colorOriginal = RouteLabelColors.gray
-			colorAnimating = RouteLabelColors.gray
+			colorOriginal = RouteInformationLabelColors.gray
+			colorAnimating = RouteInformationLabelColors.gray
 			animateDuration = 1
 		}
 		

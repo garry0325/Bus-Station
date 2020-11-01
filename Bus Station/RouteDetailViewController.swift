@@ -22,17 +22,6 @@ class RouteDetailViewController: UIViewController {
 	var information = "" {
 		didSet {
 			informationLabel.text = " " + information + " "
-			
-			switch information {
-			case "進站中", "將到站":
-				informationBackgroundView.backgroundColor = RouteLabelColors.red
-			case "2分", "3分", "4分":
-				informationBackgroundView.backgroundColor = RouteLabelColors.orange
-			case "尚未發車", "末班車已過", "今日未營運", "交管不停靠":
-				informationBackgroundView.backgroundColor = RouteLabelColors.gray
-			default:
-				informationBackgroundView.backgroundColor = RouteLabelColors.green
-			}
 		}
 	}
 	
@@ -53,7 +42,7 @@ class RouteDetailViewController: UIViewController {
 		routeDetailTableView.delegate = self
 		routeDetailTableView.dataSource = self
 		
-		routeDetailTableView.contentInset = UIEdgeInsets(top: 7.0, left: 0.0, bottom: 10.0, right: 0.0)
+		routeDetailTableView.contentInset = UIEdgeInsets(top: 7.0, left: 0.0, bottom: 20.0, right: 0.0)
 		
 		informationLabel.layer.zPosition = 1
 		
@@ -64,6 +53,7 @@ class RouteDetailViewController: UIViewController {
 		routeNameLabel.text = busStop?.routeName
 		routeDestinationLabel.text = busStop?.destination
 		information = busStop?.information ?? ""
+		informationBackgroundView.backgroundColor = busStop?.informationLabelColor ?? RouteInformationLabelColors.gray
 		
 		autoRefreshTimer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(autoRefresh), userInfo: nil, repeats: true)
 	}
@@ -80,6 +70,11 @@ class RouteDetailViewController: UIViewController {
 				}
 				self.activityIndicator.stopAnimating()
 			}
+		}
+		
+		// updating the information label
+		DispatchQueue.global(qos: .background).async {
+			
 		}
 	}
 }
