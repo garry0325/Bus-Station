@@ -117,7 +117,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	}
 	
 	@objc func showRouteDetailVC(notification: Notification) {
-		
 		self.performSegue(withIdentifier: "RouteDetail", sender: notification.object)
 		
 		/*
@@ -608,6 +607,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		NotificationCenter.default.post(name: NSNotification.Name("Detail"), object: ViewController.routeList[ViewController.stationNumberForDetailView][ViewController.bearingNumberForDetailView][indexPath.row])
+		print("sending \(Unmanaged.passUnretained(ViewController.routeList[ViewController.stationNumberForDetailView][ViewController.bearingNumberForDetailView][indexPath.row]).toOpaque())")
 	}
 	
 	func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

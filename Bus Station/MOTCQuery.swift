@@ -247,7 +247,7 @@ class BusQuery {
 		var currentStopSequence: Int?
 		
 		// get the stop sequence of a route first
-		let urlStopOfRoute = URL(string: String("https://ptx.transportdata.tw/MOTC/v2/Bus/StopOfRoute/City/\(busStop.city)?$filter=RouteID eq '\(busStop.routeId)' and Direction eq \(busStop.direction)&$select=RouteID, Direction, Stops&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+		let urlStopOfRoute = URL(string: String("https://ptx.transportdata.tw/MOTC/v2/Bus/DisplayStopOfRoute/City/\(busStop.city)?$filter=RouteID eq '\(busStop.routeId)' and Direction eq \(busStop.direction)&$select=RouteID, Direction, Stops&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
 		request = URLRequest(url: urlStopOfRoute)
 		request.setValue(authTimeString, forHTTPHeaderField: "x-date")
 		request.setValue(authorization, forHTTPHeaderField: "Authorization")
@@ -258,65 +258,21 @@ class BusQuery {
 			else if let response = response as? HTTPURLResponse,
 					let data = data {
 				if(response.statusCode == 200) {
-					let rawSubRoutes = try? (JSONSerialization.jsonObject(with: data, options: []) as! [[String: Any]])//[0]["Stops"] as? [[String: Any]]
+					let stops = try? (JSONSerialization.jsonObject(with: data, options: []) as! [[String: Any]])[0]["Stops"] as? [[String: Any]]
 					
-					if(rawSubRoutes!.count > 1) {
-						print("THERE ARE \(rawSubRoutes!.count) FUCKING SUBROUTES")
+					var saveTime = true
+					for stop in stops! {
+						busStopLiveStatus.append(BusStopLiveStatus(stopId: stop["StopID"] as! String, stopName: (stop["StopName"] as! [String: String])["Zh_tw"]!, sequence: stop["StopSequence"] as! Int))
 						
-						var toBeComparedJson: Array<Array<[String: Any]>> = []
-						var lengths = [Int]()
-						var saveTime = true
-						for i in 0..<rawSubRoutes!.count {
-							let subRouteTemp = rawSubRoutes![i]["Stops"] as! [[String: Any]]
-							toBeComparedJson.append(subRouteTemp)
-							lengths.append(subRouteTemp.count)
-						}
-						var sequence = 0	// if there are more than one subroute, sequence starts 0
-						for i in 0..<lengths.max()! {
-							var same: Bool = true
-							for j in 0..<(rawSubRoutes!.count - 1) {
-								if((toBeComparedJson[j][i]["StopID"] as! String) != (toBeComparedJson[j+1][i]["StopID"] as! String)) {
-									same = false
-									break
-								}
-							}
-							if(same) {
-								busStopLiveStatus.append(BusStopLiveStatus(stopId: toBeComparedJson[0][i]["StopID"] as! String, stopName: (toBeComparedJson[0][i]["StopName"] as! [String: String])["Zh_tw"]!, sequence: sequence))
-								
-								stopIDtoSeqDict[busStopLiveStatus.last!.stopId] = sequence
-								sequence = sequence + 1
-							}
-							else {
-								for j in 0..<(rawSubRoutes!.count) {
-									busStopLiveStatus.append(BusStopLiveStatus(stopId: toBeComparedJson[j][i]["StopID"] as! String, stopName: (toBeComparedJson[j][i]["StopName"] as! [String: String])["Zh_tw"]!, sequence: sequence))
-									
-									stopIDtoSeqDict[busStopLiveStatus.last!.stopId] = sequence
-									sequence = sequence + 1
-								}
-							}
-							
-							if(saveTime && busStopLiveStatus.last?.stopId == busStop.stopId) {
-								busStopLiveStatus.last?.isCurrentStop = true
-								currentStopSequence = busStopLiveStatus.count - 1
-								saveTime = false
-							}
+						if(saveTime && busStopLiveStatus.last?.stopId == busStop.stopId) {
+							busStopLiveStatus.last?.isCurrentStop = true
+							currentStopSequence = busStopLiveStatus.count - 1
+							saveTime = false
 						}
 						
+						stopIDtoSeqDict[busStopLiveStatus.last!.stopId] = busStopLiveStatus.count - 1
 					}
-					else {
-						var saveTime = true
-						for stop in rawSubRoutes![0]["Stops"] as! [[String: Any]] {
-							busStopLiveStatus.append(BusStopLiveStatus(stopId: stop["StopID"] as! String, stopName: (stop["StopName"] as! [String: String])["Zh_tw"]!, sequence: stop["StopSequence"] as! Int))
-							
-							if(saveTime && busStopLiveStatus.last?.stopId == busStop.stopId) {
-								busStopLiveStatus.last?.isCurrentStop = true
-								currentStopSequence = busStopLiveStatus.count - 1
-								saveTime = false
-							}
-							
-							stopIDtoSeqDict[busStopLiveStatus.last!.stopId] = busStopLiveStatus.count - 1
-						}
-					}
+					
 					// TODO: CONSIDER REMOVE THIS BECAUSE SEQUENCE IS ALREADY PROVIDED
 					busStopLiveStatus.sort(by: { $0.stopSequence < $1.stopSequence })
 				}
@@ -451,7 +407,6 @@ class BusQuery {
 		var request: URLRequest
 		
 		let semaphore = DispatchSemaphore(value: 0)
-		var newBusStop: BusStop?
 		
 		let urlStopOfRoute = URL(string: String("https://ptx.transportdata.tw/MOTC/v2/Bus/EstimatedTimeOfArrival/City/\(busStop.city)?$filter=RouteID eq '\(busStop.routeId)' and StopID eq '\(busStop.stopId)' and Direction eq \(busStop.direction)&$select=RouteID, Direction, StopStatus, EstimateTime&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
 		request = URLRequest(url: urlStopOfRoute)
@@ -466,11 +421,8 @@ class BusQuery {
 				if(response.statusCode == 200) {
 					let rawReturned = try? (JSONSerialization.jsonObject(with: data, options: []) as! [[String: Any]])[0]
 					
-					newBusStop = BusStop(stopId: busStop.stopId, city: busStop.city, routeId: busStop.routeId, routeName: busStop.routeName)
-					newBusStop!.direction = busStop.direction
-					newBusStop?.destination = busStop.destination
-					newBusStop?.estimatedArrival = (rawReturned?["EstimateTime"] as? Int) ?? -1
-					newBusStop?.stopStatus = BusStop.StopStatus(rawValue: (rawReturned?["StopStatus"] as? Int) ?? -1)!
+					busStop.estimatedArrival = (rawReturned?["EstimateTime"] as? Int) ?? -1
+					busStop.stopStatus = BusStop.StopStatus(rawValue: (rawReturned?["StopStatus"] as? Int) ?? -1)!
 				}
 				else {
 					print("Specific bus arrival response status code \(response.statusCode)")
@@ -481,7 +433,7 @@ class BusQuery {
 		task.resume()
 		semaphore.wait()
 		
-		return newBusStop ?? nil
+		return busStop
 	}
 	
 	func prepareAuthorizations() {
