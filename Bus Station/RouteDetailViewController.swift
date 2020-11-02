@@ -126,10 +126,13 @@ extension RouteDetailViewController: UITableViewDelegate, UITableViewDataSource 
 		
 		return cell
 	}
-	
+	/*
 	func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
 		let cell = cell as! RouteDetailTableViewCell
 		
+		if(cell.presentInformation == false) {
+			return
+		}
 		var duration: Double?
 		switch cell.informationLabelColor {
 		case RouteInformationLabelColors.red:
@@ -137,23 +140,21 @@ extension RouteDetailViewController: UITableViewDelegate, UITableViewDataSource 
 		case RouteInformationLabelColors.orange:
 			duration = 0.6
 		case RouteInformationLabelColors.green:
-			duration = 2.0
+			duration = 0.0
+			return
 		default:
-			duration = 2.0
+			duration = 0.0
+			return
 		}
 		
-		cell.busAtStopView.alpha = 1.0
-		cell.busDepartStopView.alpha = 1.0
 		cell.plateAtStopLabel.alpha = 1.0
 		cell.plateDepartStopLabel.alpha = 1.0
 		UIView.animate(withDuration: duration!, delay: 0.0, options: [.autoreverse, .repeat], animations: {
-			cell.busAtStopView.alpha = 0.7
-			cell.busDepartStopView.alpha = 0.7
-			cell.plateAtStopLabel.alpha = 0.7
-			cell.plateDepartStopLabel.alpha = 0.7
+			cell.plateAtStopLabel.alpha = 0
+			cell.plateDepartStopLabel.alpha = 0
 		}, completion: nil)
 	}
-	
+	*/
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		return 35.0
 	}

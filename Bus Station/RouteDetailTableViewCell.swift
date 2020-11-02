@@ -67,16 +67,16 @@ class RouteDetailTableViewCell: UITableViewCell {
 				plateDepartStopLabel.text = " " + information + " "
 				plateAtStopLabel.backgroundColor = informationLabelColor
 				plateDepartStopLabel.backgroundColor = informationLabelColor
-				plateAtStopLabel.font = UIFont.systemFont(ofSize: 16.0)
-				plateDepartStopLabel.font = UIFont.systemFont(ofSize: 16.0)
+				plateAtStopLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
+				plateDepartStopLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
 			}
 			else {
 				plateAtStopLabel.text = " " + plateNumber + " "
 				plateDepartStopLabel.text = " " + plateNumber + " "
 				plateAtStopLabel.backgroundColor = UIColor.lightGray
 				plateDepartStopLabel.backgroundColor = UIColor.lightGray
-				plateAtStopLabel.font = UIFont(name: "Roadgeek2005SeriesD", size: 17.0)
-				plateDepartStopLabel.font = UIFont(name: "Roadgeek2005SeriesD", size: 17.0)
+				plateAtStopLabel.font = UIFont(name: "Roadgeek2005SeriesD", size: 16.0)
+				plateDepartStopLabel.font = UIFont(name: "Roadgeek2005SeriesD", size: 16.0)
 			}
 		}
 	}
