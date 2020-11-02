@@ -289,6 +289,7 @@ class BusQuery {
 		request = URLRequest(url: urlRealTimeNearStop)
 		request.setValue(authTimeString, forHTTPHeaderField: "x-date")
 		request.setValue(authorization, forHTTPHeaderField: "Authorization")
+		print(urlRealTimeNearStop)
 		let task2 = URLSession.shared.dataTask(with: request) { (data, response, error) in
 			if let error = error {
 				print("Error: \(error.localizedDescription)")
@@ -351,15 +352,13 @@ class BusQuery {
 		let currentEstimatedArrival = busStopLiveStatus[currentStopSequence!].estimatedArrival
 		var compensate = [currentEstimatedArrival]
 		var first = true
-		for i in 0...currentStopSequence! {
-			print("\(busStopLiveStatus[i].estimatedArrival)\t\(busStopLiveStatus[i].stopName)")
-		}
 		for i in (0...currentStopSequence!).reversed() {
 			if(i == currentStopSequence && ((busStopLiveStatus[i].eventType == BusStopLiveStatus.EventType.Departing) || (busStopLiveStatus[i].eventType == BusStopLiveStatus.EventType.Arriving && busStopLiveStatus[i].estimatedArrival > 120))) {
 				busStopLiveStatus[i].estimatedArrival = -1
 				continue
 			}
 			if(busStopLiveStatus[i].plateNumber != "") {
+				// if a stop has plateNumber, then get the max of estimatedArrival of its adjacent's
 				var maxArrival = [Int]()
 				if(i == 0) {
 					if(busStopLiveStatus[i+1].plateNumber == "") {
@@ -396,7 +395,7 @@ class BusQuery {
 			}
 		}
 		
-		for i in currentStopSequence!..<busStopLiveStatus.count {
+		for i in (currentStopSequence!+1)..<busStopLiveStatus.count {
 			busStopLiveStatus[i].estimatedArrival = -1
 		}
 		return busStopLiveStatus

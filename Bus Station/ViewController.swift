@@ -158,7 +158,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 						self.queryNearbyStations(location: self.locationWhenPinned)
 					}
 					else {
-						print("lcoation has updated")
+						print("location has updated")
 						// check if current location is deviated from locationWhenPinned over 30m
 						// if so, then dim the location button
 						if(userLocation.distance(from: self.locationWhenPinned) > self.locationDeviateThreshold) {

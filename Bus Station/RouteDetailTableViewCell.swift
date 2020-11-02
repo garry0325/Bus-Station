@@ -67,8 +67,8 @@ class RouteDetailTableViewCell: UITableViewCell {
 				plateDepartStopLabel.text = " " + information + " "
 				plateAtStopLabel.backgroundColor = informationLabelColor
 				plateDepartStopLabel.backgroundColor = informationLabelColor
-				plateAtStopLabel.font = UIFont.systemFont(ofSize: 13.0)
-				plateDepartStopLabel.font = UIFont.systemFont(ofSize: 13.0)
+				plateAtStopLabel.font = UIFont.systemFont(ofSize: 14.0)
+				plateDepartStopLabel.font = UIFont.systemFont(ofSize: 14.0)
 			}
 			else {
 				plateAtStopLabel.text = " " + plateNumber + " "
