@@ -167,7 +167,7 @@ class BusQuery {
 						}
 					}
 					else {
-						print("Estimate time response status code \(response.statusCode)")
+						print("N1 for main response status code \(response.statusCode)")
 					}
 				}
 				semaphore.signal()
@@ -243,8 +243,10 @@ class BusQuery {
 		
 		let semaphore = DispatchSemaphore(value: 0)
 		var busStopLiveStatus = [BusStopLiveStatus]()
+		var stopIDtoSeqDict = [String: Int]()
+		var currentStopSequence: Int?
 		
-		// get all the stops of a route first
+		// get the stop sequence of a route first
 		let urlStopOfRoute = URL(string: String("https://ptx.transportdata.tw/MOTC/v2/Bus/StopOfRoute/City/\(busStop.city)?$filter=RouteID eq '\(busStop.routeId)' and Direction eq \(busStop.direction)&$select=RouteID, Direction, Stops&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
 		request = URLRequest(url: urlStopOfRoute)
 		request.setValue(authTimeString, forHTTPHeaderField: "x-date")
@@ -264,8 +266,11 @@ class BusQuery {
 						
 						if(saveTime && busStopLiveStatus.last?.stopId == busStop.stopId) {
 							busStopLiveStatus.last?.isCurrentStop = true
+							currentStopSequence = busStopLiveStatus.count - 1
 							saveTime = false
 						}
+						
+						stopIDtoSeqDict[busStopLiveStatus.last!.stopId] = busStopLiveStatus.count - 1
 					}
 					// TODO: CONSIDER REMOVE THIS BECAUSE SEQUENCE IS ALREADY PROVIDED
 					busStopLiveStatus.sort(by: { $0.stopSequence < $1.stopSequence })
@@ -312,6 +317,88 @@ class BusQuery {
 		task2.resume()
 		semaphore.wait()
 		
+		// then get estimated arrival of those buses
+		let urlEstimateTimeForAllStops = URL(string: String("https://ptx.transportdata.tw/MOTC/v2/Bus/EstimatedTimeOfArrival/City/\(busStop.city)?$filter=RouteID eq '\(busStop.routeId)' and Direction eq \(busStop.direction)&$select=StopID, RouteID, EstimateTime, StopStatus&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+		request = URLRequest(url: urlEstimateTimeForAllStops)
+		request.setValue(authTimeString, forHTTPHeaderField: "x-date")
+		request.setValue(authorization, forHTTPHeaderField: "Authorization")
+		let task3 = URLSession.shared.dataTask(with: request) { (data, response, error) in
+			if let error = error {
+				print("Error: \(error.localizedDescription)")
+			}
+			else if let response = response as? HTTPURLResponse,
+					let data = data {
+				if(response.statusCode == 200) {
+					let rawReturned = try? (JSONSerialization.jsonObject(with: data, options: []) as! [[String: Any]])
+					
+					for stop in rawReturned! {
+						let stopStatus = stop["StopStatus"] as! Int
+						if(stopStatus == 0 || stopStatus == 1) {
+							let estimate = (stop["EstimateTime"] ?? -1) as! Int
+							busStopLiveStatus[stopIDtoSeqDict[stop["StopID"] as! String]!].estimatedArrival = estimate
+						}
+					}
+				}
+				else {
+					print("N1 for detail status code \(response.statusCode)")
+				}
+			}
+			semaphore.signal()
+		}
+		task3.resume()
+		semaphore.wait()
+		
+		let currentEstimatedArrival = busStopLiveStatus[currentStopSequence!].estimatedArrival
+		var compensate = [currentEstimatedArrival]
+		var first = true
+		for i in 0...currentStopSequence! {
+			print("\(busStopLiveStatus[i].estimatedArrival)\t\(busStopLiveStatus[i].stopName)")
+		}
+		for i in (0...currentStopSequence!).reversed() {
+			if(i == currentStopSequence && ((busStopLiveStatus[i].eventType == BusStopLiveStatus.EventType.Departing) || (busStopLiveStatus[i].eventType == BusStopLiveStatus.EventType.Arriving && busStopLiveStatus[i].estimatedArrival > 120))) {
+				busStopLiveStatus[i].estimatedArrival = -1
+				continue
+			}
+			if(busStopLiveStatus[i].plateNumber != "") {
+				var maxArrival = [Int]()
+				if(i == 0) {
+					if(busStopLiveStatus[i+1].plateNumber == "") {
+						maxArrival.append(busStopLiveStatus[i+1].estimatedArrival)
+					}
+					maxArrival.append(busStopLiveStatus[i].estimatedArrival)
+				} else if(i == currentStopSequence!) {
+					if(busStopLiveStatus[i-1].plateNumber == "") {
+						maxArrival.append(busStopLiveStatus[i-1].estimatedArrival)
+					}
+					maxArrival.append(busStopLiveStatus[i].estimatedArrival)
+				} else {
+					if(busStopLiveStatus[i+1].plateNumber == "") {
+						maxArrival.append(busStopLiveStatus[i+1].estimatedArrival)
+					}
+					if(busStopLiveStatus[i-1].plateNumber == "") {
+						maxArrival.append(busStopLiveStatus[i-1].estimatedArrival)
+					}
+					maxArrival.append(busStopLiveStatus[i].estimatedArrival)
+				}
+				compensate.append(maxArrival.max()!)
+				
+				if(!first) {
+					var temp = 0
+					for j in 0..<(compensate.count-1) {
+						temp = temp + compensate[j]
+					}
+					busStopLiveStatus[i].estimatedArrival = temp
+				}
+				else {
+					busStopLiveStatus[i].estimatedArrival = currentEstimatedArrival
+					first = false
+				}
+			}
+		}
+		
+		for i in currentStopSequence!..<busStopLiveStatus.count {
+			busStopLiveStatus[i].estimatedArrival = -1
+		}
 		return busStopLiveStatus
 	}
 	

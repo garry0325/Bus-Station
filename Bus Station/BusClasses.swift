@@ -113,6 +113,34 @@ class BusStopLiveStatus {
 	var busStatus: BusStatus = BusStatus.Error
 	var eventType: EventType = EventType.Unknown
 	
+	var estimatedArrival: Int = -1	// not the estimated arrival time to stopId
+	{
+		didSet {
+			if(estimatedArrival == -1) {
+				information = ""
+				informationLabelColor = RouteInformationLabelColors.gray
+			}
+			else if(estimatedArrival < 30) {
+				information = Information.Arriving
+				informationLabelColor = RouteInformationLabelColors.red
+			}
+			else if(estimatedArrival < 120) {
+				information = Information.Approaching
+				informationLabelColor = RouteInformationLabelColors.red
+			}
+			else if(estimatedArrival < 300) {
+				information = "\(estimatedArrival / 60)\(Information.Incoming)"
+				informationLabelColor = RouteInformationLabelColors.orange
+			}
+			else {
+				information = "\(estimatedArrival / 60)\(Information.Incoming)"
+				informationLabelColor = RouteInformationLabelColors.green
+			}
+		}
+	}
+	var information: String = ""
+	var informationLabelColor: UIColor = RouteInformationLabelColors.gray
+	
 	var isCurrentStop = false
 	var isDepartureStop = false
 	var isDestinationStop = false
@@ -143,5 +171,15 @@ class BusStopLiveStatus {
 		case Departing		= 0
 		case Arriving		= 1
 		case Unknown		= -1
+	}
+	
+	enum Information {
+		static let Arriving				= "進站中"
+		static let Approaching			= "將到站"
+		static let Incoming				= "分"
+		static let NotDeparted			= "尚未發車"
+		static let TrafficRegulation	= "交管不停靠"
+		static let OutService			= "末班車已過"
+		static let NoServiceToday		= "今日未營運"
 	}
 }

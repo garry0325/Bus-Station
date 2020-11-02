@@ -35,12 +35,9 @@ class RouteDetailTableViewCell: UITableViewCell {
 			}
 		}
 	}
-	var plateNumber: String = "" {
-		didSet {
-			plateAtStopLabel.text = plateNumber + " "
-			plateDepartStopLabel.text = plateNumber + " "
-		}
-	}
+	var plateNumber: String = ""
+	var information: String = ""
+	var informationLabelColor: UIColor = RouteInformationLabelColors.gray
 	
 	var isCurrentStop = false {
 		didSet {
@@ -56,6 +53,31 @@ class RouteDetailTableViewCell: UITableViewCell {
 	var isDestinationStop = false {
 		didSet {
 			routeLineBottom.isHidden = isDestinationStop
+		}
+	}
+	
+	var presentInformation = true {
+		didSet {
+			if(presentInformation) {
+				if(information == "") {
+					plateAtStopLabel.isHidden = true
+					plateDepartStopLabel.isHidden = true
+				}
+				plateAtStopLabel.text = " " + information + " "
+				plateDepartStopLabel.text = " " + information + " "
+				plateAtStopLabel.backgroundColor = informationLabelColor
+				plateDepartStopLabel.backgroundColor = informationLabelColor
+				plateAtStopLabel.font = UIFont.systemFont(ofSize: 13.0)
+				plateDepartStopLabel.font = UIFont.systemFont(ofSize: 13.0)
+			}
+			else {
+				plateAtStopLabel.text = " " + plateNumber + " "
+				plateDepartStopLabel.text = " " + plateNumber + " "
+				plateAtStopLabel.backgroundColor = UIColor.lightGray
+				plateDepartStopLabel.backgroundColor = UIColor.lightGray
+				plateAtStopLabel.font = UIFont(name: "Roadgeek2005SeriesD", size: 15.0)
+				plateDepartStopLabel.font = UIFont(name: "Roadgeek2005SeriesD", size: 15.0)
+			}
 		}
 	}
 	
@@ -76,6 +98,8 @@ class RouteDetailTableViewCell: UITableViewCell {
 		plateDepartStopLabel.layer.cornerRadius = 3.0
 		plateAtStopLabel.layer.masksToBounds = true
 		plateDepartStopLabel.layer.masksToBounds = true
+		plateAtStopLabel.layer.backgroundColor = UIColor.lightGray.cgColor
+		plateDepartStopLabel.layer.backgroundColor = UIColor.lightGray.cgColor
 		
 		currentStopIndicatorView.tintColor = .white
 		currentStopIndicatorView.layer.borderColor = UIColor.systemBlue.cgColor

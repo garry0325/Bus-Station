@@ -24,6 +24,7 @@ class RouteDetailViewController: UIViewController {
 			informationLabel.text = " " + information + " "
 		}
 	}
+	var presentInformation = true
 	
 	var busQuery = BusQuery()
 	var liveStatusStops = [BusStopLiveStatus]()
@@ -38,6 +39,9 @@ class RouteDetailViewController: UIViewController {
 	
 	override func viewDidLoad() {
         super.viewDidLoad()
+		
+		let tap = UITapGestureRecognizer(target: self, action: #selector(switchInformationLabel))
+		routeDetailTableView.addGestureRecognizer(tap)
 		
 		routeDetailTableView.delegate = self
 		routeDetailTableView.dataSource = self
@@ -67,6 +71,7 @@ class RouteDetailViewController: UIViewController {
 	}
 	
 	@objc func autoRefresh() {
+		print("autorefreshing \(String(describing: busStop?.routeName))")
 		DispatchQueue.global(qos: .background).async {
 			self.liveStatusStops = self.busQuery.queryRealTimeBusLocation(busStop: self.busStop!)
 			
@@ -91,6 +96,11 @@ class RouteDetailViewController: UIViewController {
 			}
 		}
 	}
+	
+	@objc func switchInformationLabel() {
+		presentInformation = !presentInformation
+		routeDetailTableView.reloadData()
+	}
 }
 
 extension RouteDetailViewController: UITableViewDelegate, UITableViewDataSource {
@@ -107,12 +117,11 @@ extension RouteDetailViewController: UITableViewDelegate, UITableViewDataSource 
 		cell.stopName = self.liveStatusStops[indexPath.row].stopName
 		cell.eventType = self.liveStatusStops[indexPath.row].eventType
 		cell.plateNumber = self.liveStatusStops[indexPath.row].plateNumber
+		cell.information = self.liveStatusStops[indexPath.row].information
+		cell.informationLabelColor = self.liveStatusStops[indexPath.row].informationLabelColor
+		cell.presentInformation = presentInformation
 		
 		return cell
-	}
-	
-	func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-
 	}
 	
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
