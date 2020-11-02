@@ -421,10 +421,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AAA-8888" textAlignment="center" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="roJ-zd-4ib">
-                                                    <rect key="frame" x="31" y="3" width="67" height="18"/>
+                                                    <rect key="frame" x="31" y="2" width="67" height="20"/>
                                                     <color key="backgroundColor" systemColor="systemGray2Color"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="18" id="ZIA-Bq-uBs"/>
+                                                        <constraint firstAttribute="height" constant="20" id="ZIA-Bq-uBs"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="Roadgeek2005SeriesD" family="Roadgeek 2005 Series D" pointSize="15"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -436,10 +436,10 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AAA-8888" textAlignment="center" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nid-48-mjz">
-                                                    <rect key="frame" x="31" y="15" width="67" height="18"/>
+                                                    <rect key="frame" x="31" y="14" width="67" height="20"/>
                                                     <color key="backgroundColor" systemColor="systemGray2Color"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="18" id="nXK-Lr-uc1"/>
+                                                        <constraint firstAttribute="height" constant="20" id="nXK-Lr-uc1"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="Roadgeek2005SeriesD" family="Roadgeek 2005 Series D" pointSize="15"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

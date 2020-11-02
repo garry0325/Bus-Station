@@ -26,13 +26,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	@IBOutlet var starButton: UIButton!
 	@IBOutlet var activityIndicator: UIActivityIndicatorView!
 	
-	// TODO: add substops
+	// TODO: add substops +
 	// TODO: station collectionview has bug in length
 	// TODO: combine buses from other cities
 	// TODO: add queryBusesArrivals() on adjacent pages
 	// TODO: haptic feedback when location is updated
-	// TODO: make static enum
-	// TODO: check far away location
+	// TODO: make static enum +
+	// TODO: check far away location 
 	
 	var busQuery = BusQuery()
 	var locationWhenPinned = CLLocation()

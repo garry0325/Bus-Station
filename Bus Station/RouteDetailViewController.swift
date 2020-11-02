@@ -127,6 +127,33 @@ extension RouteDetailViewController: UITableViewDelegate, UITableViewDataSource 
 		return cell
 	}
 	
+	func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+		let cell = cell as! RouteDetailTableViewCell
+		
+		var duration: Double?
+		switch cell.informationLabelColor {
+		case RouteInformationLabelColors.red:
+			duration = 0.3
+		case RouteInformationLabelColors.orange:
+			duration = 0.6
+		case RouteInformationLabelColors.green:
+			duration = 2.0
+		default:
+			duration = 2.0
+		}
+		
+		cell.busAtStopView.alpha = 1.0
+		cell.busDepartStopView.alpha = 1.0
+		cell.plateAtStopLabel.alpha = 1.0
+		cell.plateDepartStopLabel.alpha = 1.0
+		UIView.animate(withDuration: duration!, delay: 0.0, options: [.autoreverse, .repeat], animations: {
+			cell.busAtStopView.alpha = 0.7
+			cell.busDepartStopView.alpha = 0.7
+			cell.plateAtStopLabel.alpha = 0.7
+			cell.plateDepartStopLabel.alpha = 0.7
+		}, completion: nil)
+	}
+	
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		return 35.0
 	}
