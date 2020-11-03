@@ -56,7 +56,6 @@ class RouteDetailViewController: UIViewController {
 		
 		autoRefresh()
 		autoRefreshTimer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(autoRefresh), userInfo: nil, repeats: true)
-		print("busstop is at \(Unmanaged.passUnretained(busStop!).toOpaque())")
 	}
 	
 	override func viewDidDisappear(_ animated: Bool) {
@@ -90,8 +89,6 @@ class RouteDetailViewController: UIViewController {
 		DispatchQueue.global(qos: .background).async {
 			if(self.busStop != nil) {
 				self.busStop = self.busQuery.querySpecificBusArrival(busStop: self.busStop!)
-				
-				print("busstop is still at \(Unmanaged.passUnretained(self.busStop!).toOpaque())")
 			}
 			
 			DispatchQueue.main.async {

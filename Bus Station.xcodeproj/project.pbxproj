@@ -24,6 +24,7 @@
 		C2B35E16253DE85100108776 /* MOTCQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B35E15253DE85100108776 /* MOTCQuery.swift */; };
 		C2B35E1E253E0A5C00108776 /* RouteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B35E1D253E0A5C00108776 /* RouteTableViewCell.swift */; };
 		C2BCFF6F254D625900EC960F /* RouteDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BCFF6E254D625900EC960F /* RouteDetailTableViewCell.swift */; };
+		C2BDFDD725516E6A009C979D /* MOTCQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B35E15253DE85100108776 /* MOTCQuery.swift */; };
 		C2DC9CF02548A8C10004860D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DC9CEF2548A8C10004860D /* Constants.swift */; };
 /* End PBXBuildFile section */
 
@@ -309,6 +310,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C2B35DE5253DCA5F00108776 /* Bus_StationTests.swift in Sources */,
+				C2BDFDD725516E6A009C979D /* MOTCQuery.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

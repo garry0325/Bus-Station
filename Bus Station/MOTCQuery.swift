@@ -243,9 +243,12 @@ class BusQuery {
 		
 		let semaphore = DispatchSemaphore(value: 0)
 		var busStopLiveStatus = [BusStopLiveStatus]()
-		var stopIDtoSeqDict = [String: Int]()
+		// because StopSequence might not be continuous, so two dicts are used
+		var stopIDtoSequenceDict = [String: Int]()
+		var sequenceToIndexDict = [Int: Int]()
+		var sequenceIndexCount = 0
 		var currentStopSequence: Int?
-		var plateNumbertoSeqDict = [String: Int]()
+		var plateNumbertoIndexDict = [String: Int]()
 		
 		// get the stop sequence of a route first
 		let urlStopOfRoute = URL(string: String("https://ptx.transportdata.tw/MOTC/v2/Bus/DisplayStopOfRoute/City/\(busStop.city)?$filter=RouteID eq '\(busStop.routeId)' and Direction eq \(busStop.direction)&$select=RouteID, Direction, Stops&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
@@ -260,10 +263,10 @@ class BusQuery {
 					let data = data {
 				if(response.statusCode == 200) {
 					let stops = try? (JSONSerialization.jsonObject(with: data, options: []) as! [[String: Any]])[0]["Stops"] as? [[String: Any]]
-					
 					var saveTime = true
 					for stop in stops! {
-						busStopLiveStatus.append(BusStopLiveStatus(stopId: stop["StopID"] as! String, stopName: (stop["StopName"] as! [String: String])["Zh_tw"]!, sequence: stop["StopSequence"] as! Int))
+						let stopSequence = stop["StopSequence"] as! Int
+						busStopLiveStatus.append(BusStopLiveStatus(stopId: stop["StopID"] as! String, stopName: (stop["StopName"] as! [String: String])["Zh_tw"]!, sequence: stopSequence))
 						
 						if(saveTime && busStopLiveStatus.last?.stopId == busStop.stopId) {
 							busStopLiveStatus.last?.isCurrentStop = true
@@ -271,7 +274,9 @@ class BusQuery {
 							saveTime = false
 						}
 						
-						stopIDtoSeqDict[busStopLiveStatus.last!.stopId] = busStopLiveStatus.count - 1
+						sequenceToIndexDict[stopSequence] = sequenceIndexCount
+						stopIDtoSequenceDict[busStopLiveStatus.last!.stopId] = stopSequence
+						sequenceIndexCount = sequenceIndexCount + 1
 					}
 					
 					// TODO: CONSIDER REMOVE THIS BECAUSE SEQUENCE IS ALREADY PROVIDED
@@ -291,7 +296,6 @@ class BusQuery {
 		request = URLRequest(url: urlRealTimeNearStop)
 		request.setValue(authTimeString, forHTTPHeaderField: "x-date")
 		request.setValue(authorization, forHTTPHeaderField: "Authorization")
-		//print(urlRealTimeNearStop)
 		let task2 = URLSession.shared.dataTask(with: request) { (data, response, error) in
 			if let error = error {
 				print("Error: \(error.localizedDescription)")
@@ -302,13 +306,13 @@ class BusQuery {
 					let rawBuses = try? (JSONSerialization.jsonObject(with: data, options: []) as! [[String: Any]])
 					
 					for rawBus in rawBuses! {
-						let sequence = rawBus["StopSequence"] as! Int - 1
+						let sequence = rawBus["StopSequence"] as! Int
 						let plateNumber = rawBus["PlateNumb"] as! String
-						busStopLiveStatus[sequence].plateNumber = plateNumber
-						busStopLiveStatus[sequence].busStatus = BusStopLiveStatus.BusStatus(rawValue: ((rawBus["BusStatus"] ?? 0) as! Int))!
-						busStopLiveStatus[sequence].eventType = BusStopLiveStatus.EventType(rawValue: (rawBus["A2EventType"] as! Int))!
+						busStopLiveStatus[sequenceToIndexDict[sequence]!].plateNumber = plateNumber
+						busStopLiveStatus[sequenceToIndexDict[sequence]!].busStatus = BusStopLiveStatus.BusStatus(rawValue: ((rawBus["BusStatus"] ?? 0) as! Int))!
+						busStopLiveStatus[sequenceToIndexDict[sequence]!].eventType = BusStopLiveStatus.EventType(rawValue: (rawBus["A2EventType"] as! Int))!
 						
-						plateNumbertoSeqDict[plateNumber] = sequence
+						plateNumbertoIndexDict[plateNumber] = sequenceToIndexDict[sequence]
 					}
 					
 					busStopLiveStatus[0].isDepartureStop = true
@@ -341,7 +345,7 @@ class BusQuery {
 						let stopStatus = stop["StopStatus"] as! Int
 						if(stopStatus == 0 || stopStatus == 1) {
 							let estimate = (stop["EstimateTime"] ?? -1) as! Int
-							busStopLiveStatus[stopIDtoSeqDict[stop["StopID"] as! String]!].estimatedArrival = estimate
+							busStopLiveStatus[sequenceToIndexDict[stopIDtoSequenceDict[stop["StopID"] as! String]!]!].estimatedArrival = estimate
 						}
 					}
 				}
@@ -405,7 +409,7 @@ class BusQuery {
 		}
 		
 		// check vehicle type
-		let plateNumbersArray = Array(plateNumbertoSeqDict.keys)
+		let plateNumbersArray = Array(plateNumbertoIndexDict.keys)
 		let plateNumbersQuery = "PlateNumb eq '" + plateNumbersArray.joined(separator: "' or PlateNumb eq '") + "'"
 		let urlVehicleType = URL(string: String("https://ptx.transportdata.tw/MOTC/v2/Bus/Vehicle/City/\(busStop.city)?$filter=\(plateNumbersQuery)&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
 		request = URLRequest(url: urlVehicleType)
@@ -423,7 +427,7 @@ class BusQuery {
 					for vehicle in rawReturned! {
 						let plate = vehicle["PlateNumb"] as! String
 						let type = vehicle["VehicleType"] as! Int
-						busStopLiveStatus[plateNumbertoSeqDict[plate]!].vehicleType = BusStopLiveStatus.VehicleType(rawValue: type)!
+						busStopLiveStatus[plateNumbertoIndexDict[plate]!].vehicleType = BusStopLiveStatus.VehicleType(rawValue: type)!
 					}
 				}
 				else {

@@ -135,8 +135,8 @@ class RouteDetailTableViewCell: UITableViewCell {
 		
 		plateAtStopLabel.imageView?.contentMode = .scaleAspectFit
 		plateDepartStopLabel.imageView?.contentMode = .scaleAspectFit
-		plateAtStopLabel.imageEdgeInsets = UIEdgeInsets(top: 3.0, left: 3.0, bottom: 3.0, right: 0.0)
-		plateDepartStopLabel.imageEdgeInsets = UIEdgeInsets(top: 3.0, left: 3.0, bottom: 3.0, right: 0.0)
+		plateAtStopLabel.imageEdgeInsets = UIEdgeInsets(top: 3.0, left: 0.0, bottom: 3.0, right: 0.0)
+		plateDepartStopLabel.imageEdgeInsets = UIEdgeInsets(top: 3.0, left: 0.0, bottom: 3.0, right: 0.0)
 		plateAtStopLabel.titleLabel?.adjustsFontSizeToFitWidth = true
 		plateDepartStopLabel.titleLabel?.adjustsFontSizeToFitWidth = true
 		
