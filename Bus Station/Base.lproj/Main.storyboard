@@ -450,6 +450,26 @@
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Gw-rO-Dtc">
+                                                    <rect key="frame" x="8" y="2" width="76.5" height="20"/>
+                                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="20" id="10R-W5-W2h"/>
+                                                    </constraints>
+                                                    <state key="normal" title="AAA-8888" image="disabled">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </state>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ao3-x8-6Fz">
+                                                    <rect key="frame" x="8" y="14" width="76.5" height="20"/>
+                                                    <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="20" id="JfY-V2-uJx"/>
+                                                    </constraints>
+                                                    <state key="normal" title="AAA-8888" image="disabled">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </state>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="Tam-V4-Sej" firstAttribute="leading" secondItem="roJ-zd-4ib" secondAttribute="trailing" constant="5" id="3AR-cE-fRA"/>
@@ -457,9 +477,11 @@
                                                 <constraint firstItem="PGs-xg-pEc" firstAttribute="centerY" secondItem="4CD-2z-N8C" secondAttribute="centerY" id="5QV-GY-E5L"/>
                                                 <constraint firstItem="4CD-2z-N8C" firstAttribute="leading" secondItem="Tam-V4-Sej" secondAttribute="trailing" constant="8" id="8xe-F8-Ddf"/>
                                                 <constraint firstAttribute="bottom" secondItem="QtA-Qy-thL" secondAttribute="bottom" id="9B9-5d-YGK"/>
+                                                <constraint firstItem="2Gw-rO-Dtc" firstAttribute="centerY" secondItem="Tam-V4-Sej" secondAttribute="centerY" id="Afc-er-1xr"/>
                                                 <constraint firstItem="roJ-zd-4ib" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="vcr-nL-6oC" secondAttribute="leading" constant="10" id="DPl-09-zxf"/>
                                                 <constraint firstItem="QtA-Qy-thL" firstAttribute="centerX" secondItem="4CD-2z-N8C" secondAttribute="centerX" id="Gg0-ML-SOv"/>
                                                 <constraint firstItem="QtA-Qy-thL" firstAttribute="top" secondItem="4CD-2z-N8C" secondAttribute="centerY" id="LZO-cU-FYJ"/>
+                                                <constraint firstItem="ao3-x8-6Fz" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="vcr-nL-6oC" secondAttribute="leading" constant="8" id="NPO-wH-8C5"/>
                                                 <constraint firstItem="nid-48-mjz" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="vcr-nL-6oC" secondAttribute="leading" constant="10" id="OFv-gQ-82h"/>
                                                 <constraint firstItem="Tam-V4-Sej" firstAttribute="centerY" secondItem="4CD-2z-N8C" secondAttribute="centerY" id="Slh-Dw-pTQ"/>
                                                 <constraint firstItem="INv-wD-Lju" firstAttribute="centerX" secondItem="4CD-2z-N8C" secondAttribute="centerX" id="T5R-Sy-wb3"/>
@@ -467,6 +489,8 @@
                                                 <constraint firstItem="INv-wD-Lju" firstAttribute="top" secondItem="vcr-nL-6oC" secondAttribute="top" id="WZs-cM-eX6"/>
                                                 <constraint firstItem="b1h-M5-YUX" firstAttribute="leading" secondItem="nid-48-mjz" secondAttribute="trailing" constant="5" id="X2u-Jl-2WB"/>
                                                 <constraint firstItem="4CD-2z-N8C" firstAttribute="leading" secondItem="b1h-M5-YUX" secondAttribute="trailing" constant="8" id="YEA-Tg-qp9"/>
+                                                <constraint firstItem="Tam-V4-Sej" firstAttribute="leading" secondItem="2Gw-rO-Dtc" secondAttribute="trailing" constant="5" id="YP4-Tr-UjT"/>
+                                                <constraint firstItem="2Gw-rO-Dtc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="vcr-nL-6oC" secondAttribute="leading" constant="8" id="YTz-8H-bkI"/>
                                                 <constraint firstItem="IGS-LL-9Tf" firstAttribute="centerX" secondItem="4CD-2z-N8C" secondAttribute="centerX" id="b4u-c5-Rcp"/>
                                                 <constraint firstItem="INv-wD-Lju" firstAttribute="bottom" secondItem="4CD-2z-N8C" secondAttribute="centerY" id="blt-3e-rQU"/>
                                                 <constraint firstItem="4CD-2z-N8C" firstAttribute="centerX" secondItem="vcr-nL-6oC" secondAttribute="centerX" multiplier="0.7" id="hDC-l1-db2"/>
@@ -474,15 +498,19 @@
                                                 <constraint firstItem="IGS-LL-9Tf" firstAttribute="centerY" secondItem="4CD-2z-N8C" secondAttribute="centerY" id="k0h-Om-cFr"/>
                                                 <constraint firstItem="4CD-2z-N8C" firstAttribute="centerY" secondItem="vcr-nL-6oC" secondAttribute="centerY" multiplier="0.68" id="mwb-C6-RHz"/>
                                                 <constraint firstItem="nid-48-mjz" firstAttribute="centerY" secondItem="b1h-M5-YUX" secondAttribute="centerY" id="ndN-P1-Edq"/>
+                                                <constraint firstItem="ao3-x8-6Fz" firstAttribute="centerY" secondItem="b1h-M5-YUX" secondAttribute="centerY" id="xXW-xb-2eU"/>
                                                 <constraint firstAttribute="trailing" secondItem="PGs-xg-pEc" secondAttribute="trailing" constant="15" id="xhD-IG-GJ6"/>
+                                                <constraint firstItem="b1h-M5-YUX" firstAttribute="leading" secondItem="ao3-x8-6Fz" secondAttribute="trailing" constant="5" id="zE1-8A-nsN"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="busAtStopView" destination="Tam-V4-Sej" id="xzj-G8-lh4"/>
                                             <outlet property="busDepartStopView" destination="b1h-M5-YUX" id="Ibj-D7-Agc"/>
                                             <outlet property="currentStopIndicatorView" destination="IGS-LL-9Tf" id="lmu-z8-uE0"/>
-                                            <outlet property="plateAtStopLabel" destination="roJ-zd-4ib" id="yio-v1-nbc"/>
-                                            <outlet property="plateDepartStopLabel" destination="nid-48-mjz" id="A9q-6D-LJl"/>
+                                            <outlet property="infoAtStop" destination="roJ-zd-4ib" id="yio-v1-nbc"/>
+                                            <outlet property="infoDepartStop" destination="nid-48-mjz" id="A9q-6D-LJl"/>
+                                            <outlet property="plateAtStopLabel" destination="2Gw-rO-Dtc" id="gvy-bP-b9g"/>
+                                            <outlet property="plateDepartStopLabel" destination="ao3-x8-6Fz" id="yfn-vY-wvI"/>
                                             <outlet property="routeLineBottom" destination="QtA-Qy-thL" id="fN8-xC-wBf"/>
                                             <outlet property="routeLineUp" destination="INv-wD-Lju" id="L36-Ow-3eC"/>
                                             <outlet property="routeNodeView" destination="4CD-2z-N8C" id="73U-P1-KaD"/>
@@ -594,6 +622,7 @@
     <resources>
         <image name="bus.fill" catalog="system" width="128" height="122"/>
         <image name="circle.fill" catalog="system" width="128" height="121"/>
+        <image name="disabled" width="24" height="24"/>
         <image name="location.fill" catalog="system" width="128" height="121"/>
         <image name="star" catalog="system" width="128" height="116"/>
         <systemColor name="labelColor">

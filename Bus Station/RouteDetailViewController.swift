@@ -120,6 +120,7 @@ extension RouteDetailViewController: UITableViewDelegate, UITableViewDataSource 
 		cell.stopName = self.liveStatusStops[indexPath.row].stopName
 		cell.eventType = self.liveStatusStops[indexPath.row].eventType
 		cell.plateNumber = self.liveStatusStops[indexPath.row].plateNumber
+		cell.vehicleType = self.liveStatusStops[indexPath.row].vehicleType
 		cell.information = self.liveStatusStops[indexPath.row].information
 		cell.informationLabelColor = self.liveStatusStops[indexPath.row].informationLabelColor
 		cell.presentInformation = presentInformation

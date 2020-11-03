@@ -245,6 +245,7 @@ class BusQuery {
 		var busStopLiveStatus = [BusStopLiveStatus]()
 		var stopIDtoSeqDict = [String: Int]()
 		var currentStopSequence: Int?
+		var plateNumbertoSeqDict = [String: Int]()
 		
 		// get the stop sequence of a route first
 		let urlStopOfRoute = URL(string: String("https://ptx.transportdata.tw/MOTC/v2/Bus/DisplayStopOfRoute/City/\(busStop.city)?$filter=RouteID eq '\(busStop.routeId)' and Direction eq \(busStop.direction)&$select=RouteID, Direction, Stops&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
@@ -302,9 +303,12 @@ class BusQuery {
 					
 					for rawBus in rawBuses! {
 						let sequence = rawBus["StopSequence"] as! Int - 1
-						busStopLiveStatus[sequence].plateNumber = (rawBus["PlateNumb"] as! String)
+						let plateNumber = rawBus["PlateNumb"] as! String
+						busStopLiveStatus[sequence].plateNumber = plateNumber
 						busStopLiveStatus[sequence].busStatus = BusStopLiveStatus.BusStatus(rawValue: ((rawBus["BusStatus"] ?? 0) as! Int))!
 						busStopLiveStatus[sequence].eventType = BusStopLiveStatus.EventType(rawValue: (rawBus["A2EventType"] as! Int))!
+						
+						plateNumbertoSeqDict[plateNumber] = sequence
 					}
 					
 					busStopLiveStatus[0].isDepartureStop = true
@@ -399,6 +403,38 @@ class BusQuery {
 		for i in (currentStopSequence!+1)..<busStopLiveStatus.count {
 			busStopLiveStatus[i].estimatedArrival = -1
 		}
+		
+		// check vehicle type
+		let plateNumbersArray = Array(plateNumbertoSeqDict.keys)
+		let plateNumbersQuery = "PlateNumb eq '" + plateNumbersArray.joined(separator: "' or PlateNumb eq '") + "'"
+		let urlVehicleType = URL(string: String("https://ptx.transportdata.tw/MOTC/v2/Bus/Vehicle/City/\(busStop.city)?$filter=\(plateNumbersQuery)&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+		request = URLRequest(url: urlVehicleType)
+		request.setValue(authTimeString, forHTTPHeaderField: "x-date")
+		request.setValue(authorization, forHTTPHeaderField: "Authorization")
+		let task4 = URLSession.shared.dataTask(with: request) { (data, response, error) in
+			if let error = error {
+				print("Error: \(error.localizedDescription)")
+			}
+			else if let response = response as? HTTPURLResponse,
+					let data = data {
+				if(response.statusCode == 200) {
+					let rawReturned = try? (JSONSerialization.jsonObject(with: data, options: []) as! [[String: Any]])
+					
+					for vehicle in rawReturned! {
+						let plate = vehicle["PlateNumb"] as! String
+						let type = vehicle["VehicleType"] as! Int
+						busStopLiveStatus[plateNumbertoSeqDict[plate]!].vehicleType = BusStopLiveStatus.VehicleType(rawValue: type)!
+					}
+				}
+				else {
+					print("Vehicle Type detail status code \(response.statusCode)")
+				}
+			}
+			semaphore.signal()
+		}
+		task4.resume()
+		semaphore.wait()
+		
 		return busStopLiveStatus
 	}
 	

@@ -110,6 +110,7 @@ class BusStopLiveStatus {
 	let stopName: String
 	var stopSequence = -1
 	var plateNumber = ""
+	var vehicleType: VehicleType = VehicleType.General
 	var busStatus: BusStatus = BusStatus.Error
 	var eventType: EventType = EventType.Unknown
 	
@@ -149,6 +150,13 @@ class BusStopLiveStatus {
 		self.stopId = stopId
 		self.stopName = stopName
 		self.stopSequence = sequence
+	}
+	
+	enum VehicleType: Int {
+		case General	= 0
+		case Accessible	= 1
+		case Rehabus	= 2
+		case Small		= 3
 	}
 	
 	enum BusStatus: Int {
