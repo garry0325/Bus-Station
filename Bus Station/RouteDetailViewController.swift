@@ -30,7 +30,11 @@ class RouteDetailViewController: UIViewController {
 	var liveStatusStops = [BusStopLiveStatus]()
 	var autoScrollPosition: Int? {
 		didSet {
-			routeDetailTableView.scrollToRow(at: IndexPath(row: autoScrollPosition ?? 0, section: 0), at: .middle, animated: false)
+			autoScrollPosition = (autoScrollPosition ?? 0) - 4
+			if(autoScrollPosition! >= liveStatusStops.count) {
+				autoScrollPosition = liveStatusStops.count - 1
+			}
+			routeDetailTableView.scrollToRow(at: IndexPath(row: autoScrollPosition!, section: 0), at: .middle, animated: false)
 		}
 	}
 	
