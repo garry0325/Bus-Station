@@ -44,6 +44,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	var currentStationNumber = 0 {
 		didSet {
 			if(stationList.count > 0 && currentStationNumber < bearingListNames.count && currentBearingNumber < bearingListNames[currentStationNumber].count) {
+				
 				currentStationLabel.text = stationListNames[currentStationNumber]
 				currentStationBearingLabel.text = bearingListNames[currentStationNumber][currentBearingNumber]
 				
@@ -350,6 +351,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 				DispatchQueue.main.async {
 					self.routeCollectionView.reloadData()	// not sure why this, but otherwise first load will not make routeCollectionView autoscroll
 					self.currentStationNumber = 0
+					self.skipBannedBearingStation()
 					self.findStarredBearingStation()
 					self.updatePanel()
 					
@@ -524,14 +526,33 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	}
 	
 	func findStarredBearingStation() {	// TODO: IMPROVE ALGORITHM
-		for i in 0..<starredStations.count {
-			for j in 0..<stationList[currentStationNumber].count {
-				if(starredStations[i].stationID == stationList[currentStationNumber][j].stationId) {
+		var bearingNumberForBackup: Int?
+		for i in 0..<stationList[currentStationNumber].count {
+			if(starredStations.contains(where: {$0.stationID == stationList[currentStationNumber][i].stationId})) {
+				currentBearingNumber = i
+				return
+			}
+			if(!bannedStations.contains(where: {$0.stationID == stationList[currentStationNumber][i].stationId}) && bearingNumberForBackup == nil) {
+				bearingNumberForBackup = i
+			}
+			
+		}
+		
+		currentBearingNumber = ((bearingNumberForBackup == nil) ? 0:bearingNumberForBackup)!
+	}
+	
+	func skipBannedBearingStation() {
+		for i in 0..<stationList.count {
+			for j in 0..<stationList[i].count {
+				if(!bannedStations.contains(where: {$0.stationID == stationList[i][j].stationId})) {
+					currentStationNumber = i
 					currentBearingNumber = j
 					return
 				}
 			}
 		}
+		
+		currentStationNumber = 0
 		currentBearingNumber = 0
 	}
 	
