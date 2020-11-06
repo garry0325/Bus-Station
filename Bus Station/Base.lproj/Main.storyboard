@@ -320,7 +320,7 @@
                                     <constraint firstAttribute="height" constant="30" id="hTi-o3-Q2R"/>
                                 </constraints>
                                 <color key="tintColor" systemColor="systemGrayColor"/>
-                                <state key="normal" image="nosign" catalog="system">
+                                <state key="normal" image="xmark.circle" catalog="system">
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="22"/>
                                 </state>
                                 <connections>
@@ -651,8 +651,8 @@
         <image name="circle.fill" catalog="system" width="128" height="121"/>
         <image name="disabled" width="24" height="24"/>
         <image name="location.fill" catalog="system" width="128" height="121"/>
-        <image name="nosign" catalog="system" width="128" height="121"/>
         <image name="star" catalog="system" width="128" height="116"/>
+        <image name="xmark.circle" catalog="system" width="128" height="121"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -188,6 +188,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 				modifyStarredandBannedContext(stationID: checkStarredStationId, starOrBan: 0, addOrRemove: 0)
 				
 				if(stationIsBanned(stationID: checkStarredStationId)) {
+					banButton.setImage(UIImage(systemName: "xmark.circle"), for: .normal)
 					banButton.tintColor = .systemGray
 					
 					modifyStarredandBannedContext(stationID: checkStarredStationId, starOrBan: 1, addOrRemove: 1)
@@ -206,7 +207,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		if(currentStationNumber < stationList.count && currentBearingNumber < stationList[currentStationNumber].count) {
 			let checkBannedStationId = stationList[currentStationNumber][currentBearingNumber].stationId
 			if(!stationIsBanned(stationID: checkBannedStationId)) {
-				banButton.tintColor = .systemRed
+				banButton.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
+				banButton.tintColor = .systemPink
 				
 				modifyStarredandBannedContext(stationID: checkBannedStationId, starOrBan: 1, addOrRemove: 0)
 				
@@ -219,6 +221,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 				}
 			}
 			else {
+				banButton.setImage(UIImage(systemName: "xmark.circle"), for: .normal)
 				banButton.tintColor = .systemGray
 				
 				modifyStarredandBannedContext(stationID: checkBannedStationId, starOrBan: 1, addOrRemove: 1)
@@ -498,9 +501,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		}
 		
 		if(stationIsBanned(stationID: stationList[currentStationNumber][currentBearingNumber].stationId)) {
-			banButton.tintColor = .systemRed
+			banButton.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
+			banButton.tintColor = .systemPink
 		}
 		else {
+			banButton.setImage(UIImage(systemName: "xmark.circle"), for: .normal)
 			banButton.tintColor = .systemGray
 		}
 	}
