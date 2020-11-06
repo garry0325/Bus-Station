@@ -11,10 +11,11 @@ import CoreLocation
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
 	
-	let locationDeviateThreshold = 40.0
+	let locationDeviateThreshold = 40.0	// in meters
 	
 	let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 	var starredStations: Array<StarredStation> = []
+	var bannedStations: Array<BannedStation> = []
 	
 	var locationManager = CLLocationManager()
 	@IBOutlet var stationListCollectionView: UICollectionView!
@@ -24,6 +25,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	@IBOutlet var currentStationBearingLabel: UILabel!
 	@IBOutlet var updateLocationButton: UIButton!
 	@IBOutlet var starButton: UIButton!
+	@IBOutlet var banButton: UIButton!
 	@IBOutlet var activityIndicator: UIActivityIndicatorView!
 	
 	// TODO: add substops +
@@ -48,7 +50,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 				let item = bearingIndexToItem[currentStationNumber][currentBearingNumber]
 				routeCollectionView.scrollToItem(at: IndexPath(item: item, section: 0), at: .centeredHorizontally, animated: true)
 				
-				updateStarredButton()
+				updateStarredAndBannedButton()
 			}
 			ViewController.stationNumberForDetailView = currentStationNumber
 		}
@@ -64,7 +66,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 				routeCollectionView.scrollToItem(at: IndexPath(item: item, section: 0), at: .centeredHorizontally, animated: true)
 				
 				
-				updateStarredButton()
+				updateStarredAndBannedButton()
 			}
 			ViewController.bearingNumberForDetailView = currentBearingNumber
 		}
@@ -101,7 +103,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		
 		stationListCollectionView.contentInset.right = 100	// compensate for the bug that the last cell will be covered due to not enough scrollable length
 		
-		fetchStarredStops()
+		fetchStarredAndBannedStops()
 		
 		updateLocationAndStations()
 		
@@ -182,31 +184,43 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 				starButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
 				starButton.tintColor = .systemYellow
 				
-				let starred = StarredStation(context: self.context)
-				starred.stationID = checkStarredStationId
-				starredStations.append(starred)
-				do {
-					try self.context.save()
-				} catch {
-					print("Error saving starred station")
+				modifyStarredandBannedContext(stationID: checkStarredStationId, starOrBan: 0, addOrRemove: 0)
+				
+				if(stationIsBanned(stationID: checkStarredStationId)) {
+					banButton.tintColor = .systemGray
+					
+					modifyStarredandBannedContext(stationID: checkStarredStationId, starOrBan: 1, addOrRemove: 1)
 				}
 			}
 			else {
 				starButton.setImage(UIImage(systemName: "star"), for: .normal)
 				starButton.tintColor = .systemGray
 				
-				for i in 0..<starredStations.count {
-					if(starredStations[i].stationID == checkStarredStationId) {
-						self.context.delete(starredStations[i])
-						do {
-							try self.context.save()
-						} catch {
-							print("Error saving unstarred station")
-						}
-						starredStations.remove(at: i)
-						break
-					}
+				modifyStarredandBannedContext(stationID: checkStarredStationId, starOrBan: 0, addOrRemove: 1)
+			}
+		}
+	}
+	
+	@IBAction func banButtonPressed(_ sender: Any) {
+		if(currentStationNumber < stationList.count && currentBearingNumber < stationList[currentStationNumber].count) {
+			let checkBannedStationId = stationList[currentStationNumber][currentBearingNumber].stationId
+			if(!stationIsBanned(stationID: checkBannedStationId)) {
+				banButton.tintColor = .systemRed
+				
+				modifyStarredandBannedContext(stationID: checkBannedStationId, starOrBan: 1, addOrRemove: 0)
+				
+				// remove the starred station if it is banned
+				if(stationIsStarred(stationID: checkBannedStationId)) {
+					starButton.setImage(UIImage(systemName: "star"), for: .normal)
+					starButton.tintColor = .systemGray
+					
+					modifyStarredandBannedContext(stationID: checkBannedStationId, starOrBan: 0, addOrRemove: 1)
 				}
+			}
+			else {
+				banButton.tintColor = .systemGray
+				
+				modifyStarredandBannedContext(stationID: checkBannedStationId, starOrBan: 1, addOrRemove: 1)
 			}
 		}
 	}
@@ -398,16 +412,80 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		present(locationServiceAlert, animated: true, completion: nil)
 	}
 	
-	func fetchStarredStops() {
+	func fetchStarredAndBannedStops() {
 		do {
 			starredStations = try (context.fetch(StarredStation.fetchRequest()) as? [StarredStation])!
 			print("\(starredStations.count) starred stations")
 		} catch {
 			print("Error fetching starredStations")
 		}
+		
+		do {
+			bannedStations = try (context.fetch(BannedStation.fetchRequest()) as? [BannedStation])!
+			print("\(bannedStations.count) banned stations")
+		} catch {
+			print("Error fetching bannedStations")
+		}
 	}
 	
-	func updateStarredButton() {
+	func modifyStarredandBannedContext(stationID: String, starOrBan: Int, addOrRemove: Int) {
+		// 0 for star, 0 for add, 1 for ban, 1 for remove
+		
+		if(addOrRemove == 0) {
+			if(starOrBan == 0) {
+				let starred = StarredStation(context: self.context)
+				starred.stationID = stationID
+				starredStations.append(starred)
+				do {
+					try self.context.save()
+				} catch {
+					print("Error saving starred station")
+				}
+			}
+			else if(starOrBan == 1) {
+				let banned = BannedStation(context: self.context)
+				banned.stationID = stationID
+				bannedStations.append(banned)
+				do {
+					try self.context.save()
+				} catch {
+					print("Error saving banned station")
+				}
+			}
+		}
+		else if(addOrRemove == 1) {
+			if(starOrBan == 0) {
+				for i in 0..<starredStations.count {
+					if(starredStations[i].stationID == stationID) {
+						self.context.delete(starredStations[i])
+						do {
+							try self.context.save()
+						} catch {
+							print("Error deleting starred station")
+						}
+						starredStations.remove(at: i)
+						break
+					}
+				}
+			}
+			else if(starOrBan == 1) {
+				for i in 0..<bannedStations.count {
+					if(bannedStations[i].stationID == stationID) {
+						self.context.delete(bannedStations[i])
+						do {
+							try self.context.save()
+						} catch {
+							print("Error deleting banned station")
+						}
+						bannedStations.remove(at: i)
+						break
+					}
+				}
+			}
+		}
+	}
+	
+	func updateStarredAndBannedButton() {
 		if(stationIsStarred(stationID: stationList[currentStationNumber][currentBearingNumber].stationId)) {
 			starButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
 			starButton.tintColor = .systemYellow
@@ -416,11 +494,28 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 			starButton.setImage(UIImage(systemName: "star"), for: .normal)
 			starButton.tintColor = .systemGray
 		}
+		
+		if(stationIsBanned(stationID: stationList[currentStationNumber][currentBearingNumber].stationId)) {
+			banButton.tintColor = .systemRed
+		}
+		else {
+			banButton.tintColor = .systemGray
+		}
 	}
 	
-	func stationIsStarred(stationID: String) -> Bool{
+	func stationIsStarred(stationID: String) -> Bool {
 		for i in 0..<starredStations.count {
 			if(starredStations[i].stationID == stationList[currentStationNumber][currentBearingNumber].stationId) {
+				return true
+			}
+		}
+		
+		return false
+	}
+	
+	func stationIsBanned(stationID: String) -> Bool {
+		for i in 0..<bannedStations.count {
+			if(bannedStations[i].stationID == stationList[currentStationNumber][currentBearingNumber].stationId) {
 				return true
 			}
 		}
