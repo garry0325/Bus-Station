@@ -82,6 +82,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	static var bearingNumberForDetailView = 0
 	static var stationNumberForDetailView = 0
 	
+	var feedbackGenerator = UINotificationFeedbackGenerator()
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -341,6 +342,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 					self.queryBusArrivals()
 					
 					self.stationListCollectionView.scrollToItem(at: IndexPath(item: self.currentStationNumber, section: 0), at: .centeredHorizontally, animated: true)
+					
+					self.feedbackGenerator.notificationOccurred(.success)
 				}
 			}
 		}
