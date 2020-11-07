@@ -96,8 +96,8 @@ class RouteDetailTableViewCell: UITableViewCell {
 				
 				plateAtStopLabel.setTitle(" " + plateNumber + " ", for: .normal)
 				plateDepartStopLabel.setTitle(" " + plateNumber + " ", for: .normal)
-				plateAtStopLabel.backgroundColor = UIColor.lightGray
-				plateDepartStopLabel.backgroundColor = UIColor.lightGray
+				plateAtStopLabel.backgroundColor = PlateNumberBackgroundColor
+				plateDepartStopLabel.backgroundColor = PlateNumberBackgroundColor
 				plateAtStopLabel.titleLabel?.font = UIFont(name: "Roadgeek2005SeriesD", size: 16.0)
 				plateDepartStopLabel.titleLabel?.font = UIFont(name: "Roadgeek2005SeriesD", size: 16.0)
 			}
@@ -130,8 +130,8 @@ class RouteDetailTableViewCell: UITableViewCell {
 		plateDepartStopLabel.layer.cornerRadius = 3.0
 		plateAtStopLabel.layer.masksToBounds = true
 		plateDepartStopLabel.layer.masksToBounds = true
-		plateAtStopLabel.layer.backgroundColor = UIColor.lightGray.cgColor
-		plateDepartStopLabel.layer.backgroundColor = UIColor.lightGray.cgColor
+		plateAtStopLabel.layer.backgroundColor = PlateNumberBackgroundColor.cgColor
+		plateDepartStopLabel.layer.backgroundColor = PlateNumberBackgroundColor.cgColor
 		
 		plateAtStopLabel.imageView?.contentMode = .scaleAspectFit
 		plateDepartStopLabel.imageView?.contentMode = .scaleAspectFit

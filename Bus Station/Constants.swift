@@ -18,3 +18,5 @@ enum RouteInformationLabelColors {
 	static let orangeAnimating =	UIColor(red: 255/255, green: 197/255, blue: 107/255, alpha: 1.0)
 	static let greenAnimating =		UIColor(red: 98/255, green: 227/255, blue: 97/255, alpha: 1.0)
 }
+
+let PlateNumberBackgroundColor = UIColor(red: 0.0, green: 96/255, blue: 17/255, alpha: 1.0)
