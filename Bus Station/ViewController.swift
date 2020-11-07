@@ -37,6 +37,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	var displayAd = true
 	var needAdData: Array<Ad> = []
 	
+	@IBOutlet var aboutButton: UIButton!
+	@IBOutlet var aboutButtonToSafeAreaConstraint: NSLayoutConstraint!
+	var aboutButtonToAdBannerConstraint: NSLayoutConstraint?
+	
 	// TODO: add substops +
 	// TODO: station collectionview has bug in length
 	// TODO: combine buses from other cities
@@ -113,7 +117,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		
 		stationListCollectionView.contentInset.right = 100	// compensate for the bug that the last cell will be covered due to not enough scrollable length
 		
+		
 		self.updateButtonToAdBannerConstraint = NSLayoutConstraint(item: updateLocationButton!, attribute: .bottom, relatedBy: .equal, toItem: adBannerView, attribute: .top, multiplier: 1.0, constant: -20.0)
+		self.aboutButtonToAdBannerConstraint = NSLayoutConstraint(item: aboutButton!, attribute: .bottom, relatedBy: .equal, toItem: adBannerView, attribute: .top, multiplier: 1.0, constant: -15.0)
 		self.adBannerView.isHidden = true
 		self.adBannerView.delegate = self
 		self.adBannerView.adUnitID = "ca-app-pub-5814041924860954/9661829499"
@@ -823,6 +829,8 @@ extension ViewController: GADBannerViewDelegate {
 		
 		updateButtonToSafeAreaConstraint.isActive = false
 		updateButtonToAdBannerConstraint?.isActive = true
+		aboutButtonToSafeAreaConstraint.isActive = false
+		aboutButtonToAdBannerConstraint?.isActive = true
 	}
 	
 	func adView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: GADRequestError) {
@@ -830,5 +838,7 @@ extension ViewController: GADBannerViewDelegate {
 		
 		updateButtonToSafeAreaConstraint.isActive = true
 		updateButtonToAdBannerConstraint?.isActive = false
+		aboutButtonToSafeAreaConstraint.isActive = true
+		aboutButtonToAdBannerConstraint?.isActive = false
 	}
 }

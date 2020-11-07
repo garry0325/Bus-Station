@@ -334,6 +334,17 @@
                                     <constraint firstAttribute="height" constant="60" id="EoZ-KR-hCo"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cAf-WX-0Ok">
+                                <rect key="frame" x="320" y="612" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="H9e-3y-sLt"/>
+                                    <constraint firstAttribute="width" constant="40" id="xay-zA-iGK"/>
+                                </constraints>
+                                <color key="tintColor" systemColor="systemGrayColor"/>
+                                <state key="normal" image="info.circle.fill" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="20"/>
+                                </state>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -352,6 +363,7 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Tmq-tj-XKk" secondAttribute="bottom" constant="40" id="Dx5-er-FYb"/>
                             <constraint firstItem="A7s-yq-Rio" firstAttribute="leading" secondItem="q40-ga-30g" secondAttribute="trailing" constant="3" id="EHY-7o-U8L"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="akc-z5-ytS" secondAttribute="bottom" id="GzE-h5-ZcO"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="cAf-WX-0Ok" secondAttribute="trailing" constant="15" id="IA3-CR-kc5"/>
                             <constraint firstItem="KmK-Jy-1Yr" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="LeJ-0R-PEs"/>
                             <constraint firstItem="jvc-Vv-Whj" firstAttribute="top" secondItem="wkw-Pp-9Mn" secondAttribute="bottom" id="QPo-Yy-OBy"/>
                             <constraint firstItem="jvc-Vv-Whj" firstAttribute="trailing" secondItem="wkw-Pp-9Mn" secondAttribute="trailing" id="RCA-B1-QC3"/>
@@ -365,9 +377,12 @@
                             <constraint firstItem="A7s-yq-Rio" firstAttribute="centerY" secondItem="q40-ga-30g" secondAttribute="centerY" id="tl2-hF-aC3"/>
                             <constraint firstItem="q40-ga-30g" firstAttribute="centerY" secondItem="wkw-Pp-9Mn" secondAttribute="centerY" id="vst-Td-eh1"/>
                             <constraint firstItem="KmK-Jy-1Yr" firstAttribute="top" secondItem="wkw-Pp-9Mn" secondAttribute="centerY" multiplier="1.5" constant="15" id="xr0-Nf-2L5"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="cAf-WX-0Ok" secondAttribute="bottom" constant="15" id="ynk-Ob-Yed"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="aboutButton" destination="cAf-WX-0Ok" id="Qgz-sA-KCF"/>
+                        <outlet property="aboutButtonToSafeAreaConstraint" destination="ynk-Ob-Yed" id="xM1-C6-XPL"/>
                         <outlet property="activityIndicator" destination="q40-ga-30g" id="Rld-vd-28b"/>
                         <outlet property="adBannerView" destination="akc-z5-ytS" id="KV7-dd-HeA"/>
                         <outlet property="banButton" destination="A7s-yq-Rio" id="pAA-GO-Ger"/>
@@ -662,6 +677,7 @@
         <image name="bus.fill" catalog="system" width="128" height="122"/>
         <image name="circle.fill" catalog="system" width="128" height="121"/>
         <image name="disabled" width="24" height="24"/>
+        <image name="info.circle.fill" catalog="system" width="128" height="121"/>
         <image name="location.fill" catalog="system" width="128" height="121"/>
         <image name="star" catalog="system" width="128" height="116"/>
         <image name="xmark.circle" catalog="system" width="128" height="121"/>
