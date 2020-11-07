@@ -136,6 +136,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		// Because when app is reopen from background, the animation stops
 		NotificationCenter.default.addObserver(self, selector: #selector(backFromBackground), name: UIApplication.didBecomeActiveNotification, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(showRouteDetailVC), name: NSNotification.Name("Detail"), object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(removeAdSuccess), name: NSNotification.Name("RemoveAd"), object: nil)
 		autoRefreshTimer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(autoRefresh), userInfo: nil, repeats: true)
 	}
 	deinit {
@@ -603,6 +604,20 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		}
 	}
 	
+	@objc func removeAdSuccess() {
+		let msg = displayAd ? "移除廣告":"復原廣告"
+		ErrorAlert.presentErrorAlert(title: msg, message: "")
+		
+		do {
+			needAdData = try context.fetch(Ad.fetchRequest()) as! [Ad]
+			needAdData[needAdData.count - 1].needAd = !displayAd
+			try self.context.save()
+		}
+		catch {
+			print("Error saving context remove ad")
+		}
+	}
+	
 	func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
 		if(CLLocationManager.locationServicesEnabled() &&
 			(locationManager.authorizationStatus == .authorizedAlways ||
@@ -802,10 +817,19 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 extension ViewController: UIPopoverPresentationControllerDelegate {
 	
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		
 		segue.destination.modalPresentationStyle = .popover
 		
-		let destination = segue.destination as! RouteDetailViewController
-		destination.busStop = sender as? BusStop
+		if(segue.identifier == "RouteDetail") {
+			let destination = segue.destination as! RouteDetailViewController
+			destination.busStop = sender as? BusStop
+		}
+		else if(segue.identifier == "About") {
+			let destination = segue.destination as! AboutViewController
+			destination.preferredContentSize = CGSize(width: 350.0, height: 130.0)
+			destination.popoverPresentationController?.delegate = self
+		}
+
 	}
 	
 	func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
