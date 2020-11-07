@@ -31,8 +31,8 @@ class RouteDetailViewController: UIViewController {
 	var autoScrollPosition: Int? {
 		didSet {
 			autoScrollPosition = (autoScrollPosition ?? 0) - 4
-			if(autoScrollPosition! >= liveStatusStops.count) {
-				autoScrollPosition = liveStatusStops.count - 1
+			if(autoScrollPosition! < 0) {
+				autoScrollPosition = 0
 			}
 			routeDetailTableView.scrollToRow(at: IndexPath(row: autoScrollPosition!, section: 0), at: .middle, animated: false)
 		}

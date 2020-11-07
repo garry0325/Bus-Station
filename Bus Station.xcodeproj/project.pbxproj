@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -26,6 +26,7 @@
 		C2BCFF6F254D625900EC960F /* RouteDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BCFF6E254D625900EC960F /* RouteDetailTableViewCell.swift */; };
 		C2BDFDD725516E6A009C979D /* MOTCQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B35E15253DE85100108776 /* MOTCQuery.swift */; };
 		C2DC9CF02548A8C10004860D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DC9CEF2548A8C10004860D /* Constants.swift */; };
+		CE24CDA4644C56CFD42E5B81 /* Pods_Bus_Station.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3509FC6EC6AB3C32A043664 /* Pods_Bus_Station.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +47,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		27471A3335CDBB69B3D431B5 /* Pods-Bus Station.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bus Station.debug.xcconfig"; path = "Target Support Files/Pods-Bus Station/Pods-Bus Station.debug.xcconfig"; sourceTree = "<group>"; };
 		C23D91B82549CA950027125A /* RouteCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteCollectionViewCell.swift; sourceTree = "<group>"; };
 		C269C465254B196300BA41B4 /* RouteDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteDetailViewController.swift; sourceTree = "<group>"; };
 		C275EDF2254E965A0028ACCC /* Roadgeek2005SeriesD.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Roadgeek2005SeriesD.ttf; sourceTree = "<group>"; };
@@ -70,6 +72,8 @@
 		C2B35E1D253E0A5C00108776 /* RouteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteTableViewCell.swift; sourceTree = "<group>"; };
 		C2BCFF6E254D625900EC960F /* RouteDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteDetailTableViewCell.swift; sourceTree = "<group>"; };
 		C2DC9CEF2548A8C10004860D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		C3509FC6EC6AB3C32A043664 /* Pods_Bus_Station.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bus_Station.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C5E9582FA05C2251D7114D96 /* Pods-Bus Station.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bus Station.release.xcconfig"; path = "Target Support Files/Pods-Bus Station/Pods-Bus Station.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE24CDA4644C56CFD42E5B81 /* Pods_Bus_Station.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -97,6 +102,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A5DECA97C44D17CF943CC26F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C3509FC6EC6AB3C32A043664 /* Pods_Bus_Station.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		C2B35DBE253DCA5B00108776 = {
 			isa = PBXGroup;
 			children = (
@@ -104,6 +117,8 @@
 				C2B35DE3253DCA5F00108776 /* Bus StationTests */,
 				C2B35DEE253DCA5F00108776 /* Bus StationUITests */,
 				C2B35DC8253DCA5B00108776 /* Products */,
+				D57846ED5227D69F7834B28A /* Pods */,
+				A5DECA97C44D17CF943CC26F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -159,6 +174,15 @@
 			path = "Bus StationUITests";
 			sourceTree = "<group>";
 		};
+		D57846ED5227D69F7834B28A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				27471A3335CDBB69B3D431B5 /* Pods-Bus Station.debug.xcconfig */,
+				C5E9582FA05C2251D7114D96 /* Pods-Bus Station.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -166,9 +190,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C2B35DF4253DCA5F00108776 /* Build configuration list for PBXNativeTarget "Bus Station" */;
 			buildPhases = (
+				B156EC4BD91BB28F90FBC497 /* [CP] Check Pods Manifest.lock */,
+				7893D506AAD35DC53C52ED54 /* [CP] Prepare Artifacts */,
 				C2B35DC3253DCA5B00108776 /* Sources */,
 				C2B35DC4253DCA5B00108776 /* Frameworks */,
 				C2B35DC5253DCA5B00108776 /* Resources */,
+				8A58F355645C57F17A8B7130 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -284,6 +311,65 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		7893D506AAD35DC53C52ED54 /* [CP] Prepare Artifacts */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Bus Station/Pods-Bus Station-artifacts-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Prepare Artifacts";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Bus Station/Pods-Bus Station-artifacts-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Bus Station/Pods-Bus Station-artifacts.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8A58F355645C57F17A8B7130 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Bus Station/Pods-Bus Station-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Bus Station/Pods-Bus Station-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Bus Station/Pods-Bus Station-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B156EC4BD91BB28F90FBC497 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Bus Station-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		C2B35DC3253DCA5B00108776 /* Sources */ = {
@@ -475,6 +561,7 @@
 		};
 		C2B35DF5253DCA5F00108776 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 27471A3335CDBB69B3D431B5 /* Pods-Bus Station.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -488,12 +575,13 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "Garry.Bus-Station";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		C2B35DF6253DCA5F00108776 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C5E9582FA05C2251D7114D96 /* Pods-Bus Station.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -507,7 +595,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "Garry.Bus-Station";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

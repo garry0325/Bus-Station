@@ -8,6 +8,9 @@
 import UIKit
 import CoreData
 import CoreLocation
+import GoogleMobileAds
+import AppTrackingTransparency
+import AdSupport
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
 	
@@ -27,6 +30,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	@IBOutlet var starButton: UIButton!
 	@IBOutlet var banButton: UIButton!
 	@IBOutlet var activityIndicator: UIActivityIndicatorView!
+	
+	@IBOutlet var adBannerView: GADBannerView!
+	@IBOutlet var updateButtonToSafeAreaConstraint: NSLayoutConstraint!
+	var updateButtonToAdBannerConstraint: NSLayoutConstraint?
+	var displayAd = true
+	var needAdData: Array<Ad> = []
 	
 	// TODO: add substops +
 	// TODO: station collectionview has bug in length
@@ -104,6 +113,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		
 		stationListCollectionView.contentInset.right = 100	// compensate for the bug that the last cell will be covered due to not enough scrollable length
 		
+		self.updateButtonToAdBannerConstraint = NSLayoutConstraint(item: updateLocationButton!, attribute: .bottom, relatedBy: .equal, toItem: adBannerView, attribute: .top, multiplier: 1.0, constant: -20.0)
+		self.adBannerView.isHidden = true
+		self.adBannerView.delegate = self
+		self.adBannerView.adUnitID = "ca-app-pub-5814041924860954/9661829499"
+		self.adBannerView.rootViewController = self
+		checkAdRemoval()
+		if(displayAd) {
+			self.adBannerView.load(GADRequest())
+		}
+		
 		fetchStarredAndBannedStops()
 		
 		updateLocationAndStations()
@@ -112,9 +131,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		NotificationCenter.default.addObserver(self, selector: #selector(backFromBackground), name: UIApplication.didBecomeActiveNotification, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(showRouteDetailVC), name: NSNotification.Name("Detail"), object: nil)
 		autoRefreshTimer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(autoRefresh), userInfo: nil, repeats: true)
-		
-		
-		// Do any additional setup after loading the view.
 	}
 	deinit {
 		NotificationCenter.default.removeObserver(self)
@@ -122,21 +138,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	
 	@objc func showRouteDetailVC(notification: Notification) {
 		self.performSegue(withIdentifier: "RouteDetail", sender: notification.object)
-		
-		/*
-		let routeDetailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RouteDetailStoryboard") as! RouteDetailViewController
-		routeDetailVC.modalPresentationStyle = .popover
-		
-		let popover = routeDetailVC.popoverPresentationController
-		popover?.delegate = self
-		popover?.sourceView =  routeCollectionView.cellForItem(at: IndexPath(item: 0, section: 0))
-		popover?.sourceRect = routeCollectionView.cellForItem(at: IndexPath(item: 0, section: 0))!.bounds
-		popover?.permittedArrowDirections = .any
-		routeDetailVC.preferredContentSize = CGSize(width: 200.0, height: 500.0)
-		
-		
-		present(routeDetailVC, animated: true, completion: nil)
-		*/
 	}
 	
 	func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -574,6 +575,28 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		activityIndicator.stopAnimating()
 	}
 	
+	func checkAdRemoval() {
+		do {
+			needAdData = try context.fetch(Ad.fetchRequest()) as! [Ad]
+			if(needAdData.count > 0 && needAdData[needAdData.count - 1].needAd == false) {
+				print("No need ad")
+				displayAd = false
+			}
+			else {
+				if(needAdData.count == 0) {
+					let ad = Ad(context: self.context)
+					ad.needAd = true
+					try self.context.save()
+				}
+				print("Need Ad")
+				displayAd = true
+			}
+		} catch {
+			print("Error fetching or storing needAd")
+			displayAd = true
+		}
+	}
+	
 	func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
 		if(CLLocationManager.locationServicesEnabled() &&
 			(locationManager.authorizationStatus == .authorizedAlways ||
@@ -781,5 +804,31 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
 	
 	func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
 		return .none
+	}
+}
+
+extension ViewController: GADBannerViewDelegate {
+	
+	func adViewWillPresentScreen(_ bannerView: GADBannerView) {
+		print("Ad will present")
+	}
+	
+	func adViewDidRecordImpression(_ bannerView: GADBannerView) {
+		print("Ad impression recorded")
+	}
+	
+	func adViewDidReceiveAd(_ bannerView: GADBannerView) {
+		print("Ad loaded successfully")
+		self.adBannerView.isHidden = false
+		
+		updateButtonToSafeAreaConstraint.isActive = false
+		updateButtonToAdBannerConstraint?.isActive = true
+	}
+	
+	func adView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: GADRequestError) {
+		print("Ad failed to load. \(error.localizedDescription)")
+		
+		updateButtonToSafeAreaConstraint.isActive = true
+		updateButtonToAdBannerConstraint?.isActive = false
 	}
 }
