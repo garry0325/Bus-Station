@@ -56,7 +56,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	
 	var currentStationNumber = 0 {
 		didSet {
-			if(stationList.count > 0 && currentStationNumber < bearingListNames.count && currentBearingNumber < bearingListNames[currentStationNumber].count) {
+			if(ViewController.stationList.count > 0 && currentStationNumber < bearingListNames.count && currentBearingNumber < bearingListNames[currentStationNumber].count) {
 				
 				currentStationLabel.text = stationListNames[currentStationNumber]
 				currentStationBearingLabel.text = bearingListNames[currentStationNumber][currentBearingNumber]
@@ -85,18 +85,20 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 			ViewController.bearingNumberForDetailView = currentBearingNumber
 		}
 	}
-	var stationList: Array<Array<BusStation>> = []
+	static var stationList: Array<Array<Station>> = []
 	var stationListNames = [String]()
 	var bearingListNames: Array<Array<String>> = []
 	
 	static var routeList: Array<Array<Array<BusStop>>> = []
+	#warning("Consider remove the following")
 	var bearingStationDict = [Int:Int]()
-	var bearingIndexToItem: Array<Array<Int>> = []
-	static var bearingItemToIndex: Array<Array<Int>> = []
-	var bearingStationsCount = 0
+	var bearingIndexToItem: Array<Array<Int>> = []	// an array dictionary (currentStationNumber&currentBearingNumber -> target index of routeCollectionView) to give quick access to index of routeCollectionView for autoscroll
+	static var bearingItemToIndex: Array<Array<Int>> = []	// an array dictionary (routeCollectionView item index -> currentStationNumber&currentBearingNumber) for left-right scrolling of collectionView
+	var bearingStationsCount = 0	// for total number of cells in routeCollectionView
+	static var stationTypeList: Array<Station.StationType> = []
 	
-	static var bearingNumberForDetailView = 0
-	static var stationNumberForDetailView = 0
+	static var bearingNumberForDetailView = 0	// static version of currentBearingNumber
+	static var stationNumberForDetailView = 0	// static version of currentStationNumber
 	
 	var feedbackGenerator = UINotificationFeedbackGenerator()
 	
@@ -187,8 +189,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	}
 	
 	@IBAction func starButtonPressed(_ sender: Any) {
-		if(currentStationNumber < stationList.count && currentBearingNumber < stationList[currentStationNumber].count) {
-			let checkStarredStationId = stationList[currentStationNumber][currentBearingNumber].stationId
+		if(currentStationNumber < ViewController.stationList.count && currentBearingNumber < ViewController.stationList[currentStationNumber].count) {
+			let checkStarredStationId = ViewController.stationList[currentStationNumber][currentBearingNumber].stationId
 			if(!stationIsStarred(stationID: checkStarredStationId)) {
 				starButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
 				starButton.tintColor = .systemYellow
@@ -212,8 +214,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	}
 	
 	@IBAction func banButtonPressed(_ sender: Any) {
-		if(currentStationNumber < stationList.count && currentBearingNumber < stationList[currentStationNumber].count) {
-			let checkBannedStationId = stationList[currentStationNumber][currentBearingNumber].stationId
+		if(currentStationNumber < ViewController.stationList.count && currentBearingNumber < ViewController.stationList[currentStationNumber].count) {
+			let checkBannedStationId = ViewController.stationList[currentStationNumber][currentBearingNumber].stationId
 			if(!stationIsBanned(stationID: checkBannedStationId)) {
 				banButton.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
 				banButton.tintColor = .systemPink
@@ -243,7 +245,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	}
 	
 	@objc func autoRefresh() {
-		if(stationList.count > 0) {
+		if(ViewController.stationList.count > 0) {
 			queryBusArrivals()
 		}
 	}
@@ -258,7 +260,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	func queryNearbyStations(location: CLLocation) {
 		presentActivityIndicator()
 		DispatchQueue.global(qos: .background).async {
-			let unorganizedStationList = self.busQuery.queryNearbyStations(location: location)
+			print("querying buses")
+			let unorganizedStationList = self.busQuery.queryNearbyBusStations(location: location)
+			print("buses done")
+			print("querying mrt")
+			let metroStationList = self.busQuery.queryNearbyMetroStatoins(location: location)
+			print("mrt done")
 			var stationTemp = [String]()
 			for station in unorganizedStationList {
 				stationTemp.append(station.stationName)
@@ -269,7 +276,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 				DispatchQueue.main.async {
 					self.currentStationLabel.text = "附近沒有公車站"
 					self.currentStationBearingLabel.text = ""
-					self.stationList = []
+					ViewController.stationList = []
 					ViewController.routeList = []
 					self.stationListNames = []
 					self.bearingListNames = []
@@ -277,12 +284,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 					self.bearingStationDict = [Int:Int]()
 					self.bearingIndexToItem = []
 					ViewController.bearingItemToIndex = []
+					ViewController.stationTypeList = []
 					self.updatePanel()
 				}
 			}
 			else {
 				var duplicates = Dictionary(grouping: unorganizedStationList, by: {$0.stationName})
-				self.stationList = []
+				ViewController.stationList = []
 				ViewController.routeList = []
 				self.stationListNames = []
 				self.bearingListNames = []
@@ -292,12 +300,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 				ViewController.bearingItemToIndex = []
 				var countForStation = 0
 				var countForBearing = 0
+				ViewController.stationTypeList = []
 				for i in 0..<unorganizedStationList.count {
 					if let exist = duplicates[unorganizedStationList[i].stationName] {
-						var stationTemp = [BusStation]()
+						var stationTemp = [Station]()
 						var bearingTemp = [String]()
 						var routeTemp: Array<Array<BusStop>> = []
-						var countForBearingOfEachStation = 0
+						var countForBearingOfCurrentStation = 0
 						var countForIndexToItemOfEachStation = [Int]()
 						for station in exist {
 							stationTemp.append(station)
@@ -306,8 +315,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 							routeTemp.append(routeTempTemp)
 							countForIndexToItemOfEachStation.append(countForBearing)
 							countForBearing = countForBearing + 1
-							ViewController.bearingItemToIndex.append([countForStation, countForBearingOfEachStation])
-							countForBearingOfEachStation = countForBearingOfEachStation + 1
+							ViewController.bearingItemToIndex.append([countForStation, countForBearingOfCurrentStation])
+							countForBearingOfCurrentStation = countForBearingOfCurrentStation + 1
 						}
 						for j in 0..<bearingTemp.count {
 							switch bearingTemp[j] {
@@ -348,17 +357,59 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 								}
 							}
 						}
-						self.stationList.append(stationTemp)
+						ViewController.stationList.append(stationTemp)
 						self.bearingListNames.append(bearingTemp)
 						self.stationListNames.append(unorganizedStationList[i].stationName)
 						ViewController.routeList.append(routeTemp)
-						self.bearingStationDict[countForStation] = countForBearingOfEachStation
+						self.bearingStationDict[countForStation] = countForBearingOfCurrentStation
 						self.bearingIndexToItem.append(countForIndexToItemOfEachStation)
+						ViewController.stationTypeList.append(.Bus)
 						countForStation = countForStation + 1
 						
 						duplicates.removeValue(forKey: unorganizedStationList[i].stationName)
 					}
 				}
+				
+				// insert Metro statoins
+				for i in 0..<metroStationList.count {
+					for j in 0..<ViewController.stationList.count {
+						var metroStationIsCloser = true
+						for k in 0..<ViewController.stationList[j].count {
+							if(metroStationList[i].location.distance(from: self.locationWhenPinned) > ViewController.stationList[j][k].location.distance(from: self.locationWhenPinned)) {
+								metroStationIsCloser = false
+								break
+							}
+						}
+						
+						if(metroStationIsCloser) {
+							let temp: Array<Station> = [metroStationList[i]]
+							ViewController.stationList.insert(temp, at: j)
+							self.stationListNames.insert(metroStationList[i].stationName, at: j)
+							self.bearingListNames.insert(["捷運"], at: j)
+							ViewController.routeList.insert([], at: j)
+							self.bearingIndexToItem.insert([0], at: j)
+							ViewController.stationTypeList.insert(.Metro, at: j)
+							
+							var insertStarted = false
+							var index = 0
+							while index < ViewController.bearingItemToIndex.count {
+								if(!insertStarted && ViewController.bearingItemToIndex[index][0] == j) {
+									ViewController.bearingItemToIndex.insert([j, 0], at: index)
+									insertStarted = true
+								}
+								if(insertStarted) {
+									ViewController.bearingItemToIndex[index][0] = ViewController.bearingItemToIndex[index][0] + 1
+								}
+								
+								index = index + 1
+							}
+							
+							self.bearingStationsCount = self.bearingStationsCount + 1
+							break
+						}
+					}
+				}
+				
 				DispatchQueue.main.async {
 					self.routeCollectionView.reloadData()	// not sure why this, but otherwise first load will not make routeCollectionView autoscroll
 					self.currentStationNumber = 0
@@ -366,11 +417,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 					self.findStarredBearingStation()
 					self.updatePanel()
 					
-					self.queryBusArrivals()
-					
-					self.stationListCollectionView.scrollToItem(at: IndexPath(item: self.currentStationNumber, section: 0), at: .centeredHorizontally, animated: true)
-					
-					self.feedbackGenerator.notificationOccurred(.success)
+					if(ViewController.stationTypeList[self.currentStationNumber] == .Bus) {
+						self.queryBusArrivals()
+						
+						self.stationListCollectionView.scrollToItem(at: IndexPath(item: self.currentStationNumber, section: 0), at: .centeredHorizontally, animated: true)
+						
+						self.feedbackGenerator.notificationOccurred(.success)
+					}
 				}
 			}
 		}
@@ -380,8 +433,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		presentActivityIndicator()
 		//print(stationList[currentStationNumber][currentBearingNumber].stationId)
 		DispatchQueue.global(qos: .background).async {
-			ViewController.routeList[self.currentStationNumber][self.currentBearingNumber] = self.busQuery.queryBusArrivals(station: self.stationList[self.currentStationNumber][self.currentBearingNumber])
-			
+			if(ViewController.stationTypeList[self.currentStationNumber] == .Bus) {
+				ViewController.routeList[self.currentStationNumber][self.currentBearingNumber] = self.busQuery.queryBusArrivals(station: ViewController.stationList[self.currentStationNumber][self.currentBearingNumber])
+			}
+			#warning("Add else for Metro query")
 			DispatchQueue.main.async {
 				self.updatePanel()
 			}
@@ -499,7 +554,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	}
 	
 	func updateStarredAndBannedButton() {
-		if(stationIsStarred(stationID: stationList[currentStationNumber][currentBearingNumber].stationId)) {
+		let stationId = ViewController.stationList[currentStationNumber][currentBearingNumber].stationId
+		if(stationIsStarred(stationID: stationId)) {
 			starButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
 			starButton.tintColor = .systemYellow
 		}
@@ -508,7 +564,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 			starButton.tintColor = .systemGray
 		}
 		
-		if(stationIsBanned(stationID: stationList[currentStationNumber][currentBearingNumber].stationId)) {
+		if(stationIsBanned(stationID: stationId)) {
 			banButton.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
 			banButton.tintColor = .systemPink
 		}
@@ -519,8 +575,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	}
 	
 	func stationIsStarred(stationID: String) -> Bool {
+		let stationId = ViewController.stationList[currentStationNumber][currentBearingNumber].stationId
 		for i in 0..<starredStations.count {
-			if(starredStations[i].stationID == stationList[currentStationNumber][currentBearingNumber].stationId) {
+			if(starredStations[i].stationID == stationId) {
 				return true
 			}
 		}
@@ -529,8 +586,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	}
 	
 	func stationIsBanned(stationID: String) -> Bool {
+		let stationId = ViewController.stationList[currentStationNumber][currentBearingNumber].stationId
 		for i in 0..<bannedStations.count {
-			if(bannedStations[i].stationID == stationList[currentStationNumber][currentBearingNumber].stationId) {
+			if(bannedStations[i].stationID == stationId) {
 				return true
 			}
 		}
@@ -540,12 +598,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	
 	func findStarredBearingStation() {	// TODO: IMPROVE ALGORITHM
 		var bearingNumberForBackup: Int?
-		for i in 0..<stationList[currentStationNumber].count {
-			if(starredStations.contains(where: {$0.stationID == stationList[currentStationNumber][i].stationId})) {
+		for i in 0..<ViewController.stationList[currentStationNumber].count {
+			if(starredStations.contains(where: {$0.stationID == ViewController.stationList[currentStationNumber][i].stationId})) {
 				currentBearingNumber = i
 				return
 			}
-			if(!bannedStations.contains(where: {$0.stationID == stationList[currentStationNumber][i].stationId}) && bearingNumberForBackup == nil) {
+			if(!bannedStations.contains(where: {$0.stationID == ViewController.stationList[currentStationNumber][i].stationId}) && bearingNumberForBackup == nil) {
 				bearingNumberForBackup = i
 			}
 			
@@ -555,9 +613,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	}
 	
 	func skipBannedBearingStation() {
-		for i in 0..<stationList.count {
-			for j in 0..<stationList[i].count {
-				if(!bannedStations.contains(where: {$0.stationID == stationList[i][j].stationId})) {
+		for i in 0..<ViewController.stationList.count {
+			for j in 0..<ViewController.stationList[i].count {
+				if(!bannedStations.contains(where: {$0.stationID == ViewController.stationList[i][j].stationId})) {
 					currentStationNumber = i
 					currentBearingNumber = j
 					return
@@ -650,13 +708,25 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
 		if(collectionView == stationListCollectionView) {
 			let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "StationCell", for: indexPath) as! StationListCollectionViewCell
 			
-			if(currentStationNumber == indexPath.item) {
-				cell.backgroundColor = UIColor(white: 0.45, alpha: 1.0)
-				cell.stationLabel.textColor = UIColor(white: 1.0, alpha: 1.0)
+			if(ViewController.stationTypeList[indexPath.item] == .Bus) {
+				if(currentStationNumber == indexPath.item) {
+					cell.backgroundColor = UIColor(white: 0.45, alpha: 1.0)
+					cell.stationLabel.textColor = UIColor(white: 1.0, alpha: 1.0)
+				}
+				else {
+					cell.backgroundColor = UIColor(white: 0.95, alpha: 1.0)
+					cell.stationLabel.textColor = UIColor(white: 0.0, alpha: 1.0)
+				}
 			}
 			else {
-				cell.backgroundColor = UIColor(white: 0.95, alpha: 1.0)
-				cell.stationLabel.textColor = UIColor(white: 0.0, alpha: 1.0)
+				if(currentStationNumber == indexPath.item) {
+					cell.backgroundColor = ViewController.stationList[indexPath.item][0].lineColor
+					cell.stationLabel.textColor = ViewController.stationList[indexPath.item][0].lineLabelColor
+				}
+				else {
+					cell.backgroundColor = ViewController.stationList[indexPath.item][0].lineColorUnselected
+					cell.stationLabel.textColor = ViewController.stationList[indexPath.item][0].lineLabelColor
+				}
 			}
 			//cell.clipsToBounds = true
 			cell.layer.cornerRadius = cell.frame.height / 2
@@ -755,7 +825,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		
+		#warning("swear out of index here")
 		return ViewController.routeList[ViewController.bearingItemToIndex[tableView.tag][0]][ViewController.bearingItemToIndex[tableView.tag][1]].count
 	}
 	
@@ -765,12 +835,17 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 		let stationNumber = ViewController.bearingItemToIndex[tableView.tag][0]
 		let bearingNumber = ViewController.bearingItemToIndex[tableView.tag][1]
 		
-		cell.routeName = ViewController.routeList[stationNumber][bearingNumber][indexPath.row].routeName
-		cell.information = ViewController.routeList[stationNumber][bearingNumber][indexPath.row].information
-		cell.destination = ViewController.routeList[stationNumber][bearingNumber][indexPath.row].destination
-		cell.labelColor = ViewController.routeList[stationNumber][bearingNumber][indexPath.row].informationLabelColor
-		
-		return cell
+		if(ViewController.stationTypeList[stationNumber] == .Metro) {
+			return cell
+		}
+		else {
+			cell.routeName = ViewController.routeList[stationNumber][bearingNumber][indexPath.row].routeName
+			cell.information = ViewController.routeList[stationNumber][bearingNumber][indexPath.row].information
+			cell.destination = ViewController.routeList[stationNumber][bearingNumber][indexPath.row].destination
+			cell.labelColor = ViewController.routeList[stationNumber][bearingNumber][indexPath.row].informationLabelColor
+			
+			return cell
+		}
 	}
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

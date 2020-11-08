@@ -10,8 +10,8 @@
         <attribute name="stationID" optional="YES" attributeType="String"/>
     </entity>
     <elements>
+        <element name="Ad" positionX="-45" positionY="9" width="128" height="58"/>
         <element name="BannedStation" positionX="-54" positionY="0" width="128" height="58"/>
         <element name="StarredStation" positionX="-54" positionY="-9" width="128" height="58"/>
-        <element name="Ad" positionX="-45" positionY="9" width="128" height="58"/>
     </elements>
 </model>

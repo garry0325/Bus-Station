@@ -18,10 +18,13 @@ class BusQuery {
 	private var key: SymmetricKey!
 	private let authorizationDateFormatter: DateFormatter
 	
-	let nearbyStationWidth = 0.005
-	let nearbyStationHeight = 0.0035
+	let nearbyBusStationWidth = 0.005	// in degree coordinates
+	let nearbyBusStationHeight = 0.0035
+	let nearbyMetroStationWidth = 0.010
+	let nearbyMetroStationHeight = 0.007
 	
 	let queryCities = ["Taipei", "NewTaipei"]
+	let queryMetroSystems = ["TRTC", "TYMC", "NTDLRT"] // TODO: test TYMC & NTDLRT
 	
 	init() {
 		authorizationDateFormatter = DateFormatter()
@@ -30,19 +33,19 @@ class BusQuery {
 		authorizationDateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
 	}
 	
-	func queryNearbyStations(location: CLLocation) -> [BusStation] {
+	func queryNearbyBusStations(location: CLLocation) -> [Station] {
 		self.prepareAuthorizations()
 		
 		let semaphore = DispatchSemaphore(value: 0)
 		var request: URLRequest
 		
-		var stationDict = [String: BusStation]()
+		var stationDict = [String: Station]()
 		
 		let currentLatitude = location.coordinate.latitude
 		let currentLongitude = location.coordinate.longitude
 		
 		for city in queryCities {
-			let urlStation = URL(string: "https://ptx.transportdata.tw/MOTC/v2/Bus/Station/City/\(city)?$select=StationID%2C%20StationName%2C%20StationPosition%2C%20Stops&$filter=StationPosition%2FPositionLat%20ge%20\(currentLatitude - nearbyStationHeight)%20and%20StationPosition%2FPositionLat%20le%20\(currentLatitude + nearbyStationHeight)%20and%20StationPosition%2FPositionLon%20ge%20\(currentLongitude - nearbyStationWidth)%20and%20StationPosition%2FPositionLon%20le%20\(currentLongitude + nearbyStationWidth)&$format=JSON")!
+			let urlStation = URL(string: "https://ptx.transportdata.tw/MOTC/v2/Bus/Station/City/\(city)?$select=StationID%2C%20StationName%2C%20StationPosition%2C%20Stops&$filter=StationPosition%2FPositionLat%20ge%20\(currentLatitude - nearbyBusStationHeight)%20and%20StationPosition%2FPositionLat%20le%20\(currentLatitude + nearbyBusStationHeight)%20and%20StationPosition%2FPositionLon%20ge%20\(currentLongitude - nearbyBusStationWidth)%20and%20StationPosition%2FPositionLon%20le%20\(currentLongitude + nearbyBusStationWidth)&$format=JSON")!
 			request = URLRequest(url: urlStation)
 			request.setValue(authTimeString, forHTTPHeaderField: "x-date")
 			request.setValue(authorization, forHTTPHeaderField: "Authorization")
@@ -66,7 +69,9 @@ class BusQuery {
 								let stationPositionRaw = station["StationPosition"] as! [String: Any]
 								let stationLocation = CLLocation(latitude: stationPositionRaw["PositionLat"] as! Double, longitude: stationPositionRaw["PositionLon"] as! Double)
 								
-								stationDict[stationID] = BusStation(stationName: (station["StationName"] as! [String: String])["Zh_tw"]!, stationId: stationID, location: stationLocation, stops: temp)
+								stationDict[stationID] = Station(stationName: (station["StationName"] as! [String: String])["Zh_tw"]!, stationId: stationID, stationType: .Bus)
+								stationDict[stationID]!.location = stationLocation
+								stationDict[stationID]!.stops = temp
 							}
 							else {
 								stationDict[stationID]!.stops = stationDict[stationID]!.stops + temp
@@ -83,7 +88,7 @@ class BusQuery {
 			semaphore.wait()
 		}
 		
-		var stationList: [BusStation] = []
+		var stationList: [Station] = []
 		var stationIDs = [String]()
 		for (stationID, station) in stationDict {
 			stationList.append(station)
@@ -128,7 +133,7 @@ class BusQuery {
 		// list like [[BusStation], [BusStation]...] ordered by distance
 	}
 	
-	func queryBusArrivals(station: BusStation) -> [BusStop] {
+	func queryBusArrivals(station: Station) -> [BusStop] {
 		self.prepareAuthorizations()
 		
 		let semaphore = DispatchSemaphore(value: 0)
@@ -474,6 +479,74 @@ class BusQuery {
 		semaphore.wait()
 		
 		return busStop
+	}
+	
+	func queryNearbyMetroStatoins(location: CLLocation) -> [Station] {
+		self.prepareAuthorizations()
+		
+		let semaphore = DispatchSemaphore(value: 0)
+		var request: URLRequest
+		
+		let currentLatitude = location.coordinate.latitude
+		let currentLongitude = location.coordinate.longitude
+		
+		var stationList = [Station]()
+		
+		for system in queryMetroSystems {
+			let urlStation = URL(string: "https://ptx.transportdata.tw/MOTC/v2/Rail/Metro/Station/\(system)?$filter=StationPosition%2FPositionLat%20ge%20\(currentLatitude - nearbyMetroStationHeight)%20and%20StationPosition%2FPositionLat%20le%20\(currentLatitude + nearbyMetroStationHeight)%20and%20StationPosition%2FPositionLon%20ge%20\(currentLongitude - nearbyMetroStationWidth)%20and%20StationPosition%2FPositionLon%20le%20\(currentLongitude + nearbyMetroStationWidth)&$format=JSON")!
+			request = URLRequest(url: urlStation)
+			request.setValue(authTimeString, forHTTPHeaderField: "x-date")
+			request.setValue(authorization, forHTTPHeaderField: "Authorization")
+			let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+				if let error = error {
+					print("Error: \(error.localizedDescription)")
+				}
+				else if let response = response as? HTTPURLResponse,
+						let data = data {
+					if(response.statusCode == 200) {
+						let rawReturned = try? (JSONSerialization.jsonObject(with: data, options: []) as! [[String: Any]])
+						for station in rawReturned! {
+							let stationID = station["StationID"] as! String
+							let stationName = (station["StationName"] as! [String: String])["Zh_tw"]!
+							let stationPositionRaw = station["StationPosition"] as! [String: Any]
+							let stationLocation = CLLocation(latitude: stationPositionRaw["PositionLat"] as! Double, longitude: stationPositionRaw["PositionLon"] as! Double)
+							
+							let newMetroStation = Station(stationName: stationName, stationId: stationID, stationType: .Metro)
+							newMetroStation.location = stationLocation
+							
+							stationList.append(newMetroStation)
+						}
+					}
+					else {
+						print("Query nearby \(system) status code \(response.statusCode)")
+					}
+				}
+				else {
+					print("Error query nearby \(system)")
+				}
+				semaphore.signal()
+			}
+			task.resume()
+		}
+		
+		for _ in 0..<queryMetroSystems.count {
+			semaphore.wait()
+		}
+		
+		var newStationList: [Station] = []
+		let duplicates = Dictionary(grouping: stationList, by: {$0.stationName})
+		for (stationName, station) in duplicates {
+			let newStation = Station(stationName: stationName, stationId: station[0].stationId, stationType: .Metro)
+			newStation.location = station[0].location
+			newStation.stationType = .Metro
+			
+			for i in 0..<station.count {
+				newStation.stationIDsForMetro.append(station[i].stationId)
+			}
+			newStationList.append(newStation)
+		}
+		
+		return newStationList
 	}
 	
 	func prepareAuthorizations() {

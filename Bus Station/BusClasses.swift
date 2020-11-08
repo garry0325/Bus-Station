@@ -9,18 +9,93 @@ import Foundation
 import UIKit
 import CoreLocation
 
-class BusStation {
-	let stationName: String
-	let stationId: String
-	let location: CLLocation
-	var bearing: String = ""
-	var stops: [BusStop]
+class Station {
+	var stationName: String = ""
+	var stationId: String = ""
+	var stationType: StationType = .Error {
+		didSet {
+			print("didset stationtype")
+			if(stationType == .Metro) {
+				print("is metro type")
+				if(stationId.hasPrefix(Line.BR.rawValue)) {
+					print("has prefix br")
+					line = .BR
+					lineColor = MetroLineColors.BR
+					lineColorUnselected = MetroLineColors.BRs
+					lineLabelColor = .white
+				} else if (stationId.hasPrefix(Line.R.rawValue)) {
+					line = .R
+					lineColor = MetroLineColors.R
+					lineColorUnselected = MetroLineColors.Rs
+					lineLabelColor = .white
+				} else if (stationId.hasPrefix(Line.G.rawValue)) {
+					line = .G
+					lineColor = MetroLineColors.G
+					lineColorUnselected = MetroLineColors.Gs
+					lineLabelColor = .white
+				} else if (stationId.hasPrefix(Line.O.rawValue)) {
+					line = .O
+					lineColor = MetroLineColors.O
+					lineColorUnselected = MetroLineColors.Os
+					lineLabelColor = .black
+				} else if (stationId.hasPrefix(Line.BL.rawValue)) {
+					line = .BL
+					lineColor = MetroLineColors.BL
+					lineColorUnselected = MetroLineColors.BLs
+					lineLabelColor = .white
+				} else if (stationId.hasPrefix(Line.Y.rawValue)) {
+					line = .Y
+					lineColor = MetroLineColors.Y
+					lineColorUnselected = MetroLineColors.Ys
+					lineLabelColor = .black
+				} else if (stationId.hasPrefix(Line.LG.rawValue)) {
+					line = .LG
+					lineColor = MetroLineColors.LG
+					lineColorUnselected = MetroLineColors.LGs
+					lineLabelColor = .black
+				} else if (stationId.hasPrefix(Line.SB.rawValue)) {
+					line = .SB
+					lineColor = MetroLineColors.SB
+					lineColorUnselected = MetroLineColors.SBs
+					lineLabelColor = .white
+				}
+			}
+		}
+	}
+	var location: CLLocation = CLLocation()
 	
-	init(stationName: String, stationId: String, location: CLLocation, stops: [BusStop]) {
-		self.stationName	= stationName
-		self.stationId		= stationId
-		self.location		= location
-		self.stops			= stops
+	var bearing: String = ""
+	var stops: [BusStop] = []
+	
+	var stationIDsForMetro: [String] = []
+	var line: Line	= .Z
+	var lineColor: UIColor = MetroLineColors.Z
+	var lineColorUnselected: UIColor = MetroLineColors.Z
+	var lineLabelColor: UIColor = UIColor.white
+	
+	init(stationName: String, stationId: String, stationType: StationType) {
+		self.stationName = stationName
+		self.stationId = stationId
+		self.stationType = stationType
+	}
+	
+	enum StationType: Int {
+		case Bus	= 1
+		case Metro	= 2
+		case Error	= 0
+	}
+	
+	enum Line: String {
+		case BR	= "BR"
+		case R	= "R"
+		case G	= "G"
+		case O	= "O"
+		case BL	= "BL"
+		case Y	= "Y"
+		case LG	= "LG"
+		case SB	= "SB"
+		
+		case Z	= "Z"	// unknown line
 	}
 }
 

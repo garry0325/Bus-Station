@@ -480,7 +480,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AAA-8888" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="roJ-zd-4ib">
-                                                    <rect key="frame" x="17.5" y="2" width="67" height="20"/>
+                                                    <rect key="frame" x="16" y="2" width="68.5" height="20"/>
                                                     <color key="backgroundColor" systemColor="systemGray2Color"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="ZIA-Bq-uBs"/>
@@ -495,7 +495,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AAA-8888" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="nid-48-mjz">
-                                                    <rect key="frame" x="17.5" y="14" width="67" height="20"/>
+                                                    <rect key="frame" x="16" y="14" width="68.5" height="20"/>
                                                     <color key="backgroundColor" systemColor="systemGray2Color"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="nXK-Lr-uc1"/>
@@ -691,7 +691,7 @@
                                     <fragment content="本">
                                         <attributes>
                                             <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                            <font key="NSFont" size="12" name=".PingFangTC-Regular"/>
+                                            <font key="NSFont" metaFont="cellTitle"/>
                                             <font key="NSOriginalFont" size="12" name="SFProText-Regular"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
                                                 <tabStops/>
@@ -711,7 +711,7 @@
                                     <fragment content="對於造成任何損害不負法律責任，包括任何疏忽責任。本">
                                         <attributes>
                                             <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                            <font key="NSFont" size="12" name=".PingFangTC-Regular"/>
+                                            <font key="NSFont" metaFont="cellTitle"/>
                                             <font key="NSOriginalFont" size="12" name="SFProText-Regular"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
                                                 <tabStops/>
@@ -731,7 +731,7 @@
                                     <fragment content="提供來自交通部「公共運輸整合資訊流通服務平臺」資料。">
                                         <attributes>
                                             <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                            <font key="NSFont" size="12" name=".PingFangTC-Regular"/>
+                                            <font key="NSFont" metaFont="cellTitle"/>
                                             <font key="NSOriginalFont" size="12" name="SFProText-Regular"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
                                                 <tabStops/>
@@ -767,7 +767,7 @@ Cg
                                     <fragment content="資料來源：交通部">
                                         <attributes>
                                             <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                            <font key="NSFont" size="12" name=".PingFangTC-Regular"/>
+                                            <font key="NSFont" metaFont="cellTitle"/>
                                             <font key="NSOriginalFont" size="12" name="SFProText-Regular"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
                                                 <tabStops/>
@@ -787,7 +787,7 @@ Cg
                                     <fragment content="平臺">
                                         <attributes>
                                             <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                            <font key="NSFont" size="12" name=".PingFangTC-Regular"/>
+                                            <font key="NSFont" metaFont="cellTitle"/>
                                             <font key="NSOriginalFont" size="12" name="SFProText-Regular"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
                                                 <tabStops/>
