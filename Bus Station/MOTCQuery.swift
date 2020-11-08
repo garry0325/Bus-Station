@@ -20,11 +20,11 @@ class BusQuery {
 	
 	let nearbyBusStationWidth = 0.005	// in degree coordinates
 	let nearbyBusStationHeight = 0.0035
-	let nearbyMetroStationWidth = 0.080
-	let nearbyMetroStationHeight = 0.056
+	let nearbyMetroStationWidth = 0.010
+	let nearbyMetroStationHeight = 0.007
 	
 	let queryCities = ["Taipei", "NewTaipei"]
-	let queryMetroSystems = ["TRTC", "TYMC", "NTDLRT"] // TODO: test TYMC & NTDLRT
+	let queryMetroSystems = ["TRTC", "NTDLRT", "TYMC"] // TODO: test TYMC & NTDLRT
 	
 	init() {
 		authorizationDateFormatter = DateFormatter()
@@ -537,7 +537,7 @@ class BusQuery {
 		let duplicates = Dictionary(grouping: stationList, by: {$0.stationName})
 		for (stationName, station) in duplicates {
 			let newStation = Station(stationName: stationName, stationId: station[0].stationId, stationType: .Metro)
-			newStation.location = station[0].location
+			newStation.location = station.last!.location
 			newStation.stationType = .Metro
 			
 			for i in 0..<station.count {

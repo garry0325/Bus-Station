@@ -26,6 +26,7 @@ enum MetroLineColors {
 	static let O	= UIColor(red: 245/255, green: 168/255, blue: 24/255, alpha: 1.0)
 	static let BL	= UIColor(red: 10/255, green: 89/255, blue: 174/255, alpha: 1.0)
 	static let Y	= UIColor(red: 254/255, green: 219/255, blue: 0/255, alpha: 1.0)
+	static let A	= UIColor(red: 130/255, green: 70/255, blue: 175/255, alpha: 1.0)
 	
 	static let LG	= UIColor(red: 162/255, green: 234/255, blue: 133/255, alpha: 1.0)
 	static let SB	= UIColor(red: 0/255, green: 177/255, blue: 242/255, alpha: 1.0)
@@ -39,6 +40,7 @@ enum MetroLineColors {
 	static let Os	= UIColor(hue: 39/359, saturation: 0.50, brightness: 0.96, alpha: 1.0)
 	static let BLs	= UIColor(hue: 211/359, saturation: 0.50, brightness: 0.85, alpha: 1.0)
 	static let Ys	= UIColor(hue: 52/359, saturation: 0.50, brightness: 1.00, alpha: 1.0)
+	static let As	= UIColor(hue: 274/359, saturation: 0.25, brightness: 0.90, alpha: 1.0)
 	
 	static let LGs	= UIColor(red: 194/255, green: 255/255, blue: 159/255, alpha: 1.0)
 	static let SBs	= UIColor(red: 0/255, green: 211/255, blue: 255/255, alpha: 1.0)

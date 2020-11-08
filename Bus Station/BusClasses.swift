@@ -48,6 +48,11 @@ class Station {
 					lineColor = MetroLineColors.Y
 					lineColorUnselected = MetroLineColors.Ys
 					lineLabelColor = .black
+				} else if (stationId.hasPrefix(Line.A.rawValue)) {
+					line = .A
+					lineColor = MetroLineColors.A
+					lineColorUnselected = MetroLineColors.As
+					lineLabelColor = .white
 				} else if (stationId.hasPrefix(Line.LG.rawValue)) {
 					line = .LG
 					lineColor = MetroLineColors.LG
@@ -92,6 +97,7 @@ class Station {
 		case O	= "O"
 		case BL	= "BL"
 		case Y	= "Y"
+		case A	= "A"
 		case LG	= "LG"
 		case SB	= "SB"
 		

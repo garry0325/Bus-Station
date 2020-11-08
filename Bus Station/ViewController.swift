@@ -394,7 +394,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 							let temp: Array<Station> = [metroStationList[i]]
 							ViewController.stationList.insert(temp, at: j)
 							self.stationListNames.insert(metroStationList[i].stationName, at: j)
-							self.bearingListNames.insert(["捷運"], at: j)
+							self.bearingListNames.insert(["捷運站"], at: j)
 							ViewController.routeList.insert([], at: j)
 							let last = (j == 0) ? 0:(self.bearingIndexToItem[j-1].last! + 1)
 							self.bearingIndexToItem.insert([last], at: j)
