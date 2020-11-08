@@ -24,6 +24,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	@IBOutlet var stationListCollectionView: UICollectionView!
 	@IBOutlet var bearingListCollectionView: UICollectionView!
 	@IBOutlet var routeCollectionView: UICollectionView!
+	@IBOutlet var stationTypeImage: UIImageView!
 	@IBOutlet var currentStationLabel: UILabel!
 	@IBOutlet var currentStationBearingLabel: UILabel!
 	@IBOutlet var updateLocationButton: UIButton!
@@ -58,6 +59,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		didSet {
 			if(ViewController.stationList.count > 0 && currentStationNumber < bearingListNames.count && currentBearingNumber < bearingListNames[currentStationNumber].count) {
 				
+				switch ViewController.stationTypeList[self.currentStationNumber] {
+				case .Bus:
+					stationTypeImage.image = UIImage(systemName: "bus.fill")
+				case .Metro:
+					stationTypeImage.image = UIImage(systemName: "tram.fill")
+				default:
+					stationTypeImage.image = UIImage(systemName: "bus.fill")
+				}
 				currentStationLabel.text = stationListNames[currentStationNumber]
 				currentStationBearingLabel.text = bearingListNames[currentStationNumber][currentBearingNumber]
 				
@@ -387,7 +396,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 							self.stationListNames.insert(metroStationList[i].stationName, at: j)
 							self.bearingListNames.insert(["捷運"], at: j)
 							ViewController.routeList.insert([], at: j)
-							self.bearingIndexToItem.insert([0], at: j)
+							let last = (j == 0) ? 0:(self.bearingIndexToItem[j-1].last! + 1)
+							self.bearingIndexToItem.insert([last], at: j)
 							ViewController.stationTypeList.insert(.Metro, at: j)
 							
 							var insertStarted = false
@@ -396,12 +406,19 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 								if(!insertStarted && ViewController.bearingItemToIndex[index][0] == j) {
 									ViewController.bearingItemToIndex.insert([j, 0], at: index)
 									insertStarted = true
+									index = index + 1
+									continue
 								}
 								if(insertStarted) {
 									ViewController.bearingItemToIndex[index][0] = ViewController.bearingItemToIndex[index][0] + 1
 								}
 								
 								index = index + 1
+							}
+							for k in (j+1)..<ViewController.stationList.count {
+								for l in 0..<self.bearingIndexToItem[k].count {
+									self.bearingIndexToItem[k][l] = self.bearingIndexToItem[k][l] + 1
+								}
 							}
 							
 							self.bearingStationsCount = self.bearingStationsCount + 1
@@ -419,11 +436,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 					
 					if(ViewController.stationTypeList[self.currentStationNumber] == .Bus) {
 						self.queryBusArrivals()
-						
-						self.stationListCollectionView.scrollToItem(at: IndexPath(item: self.currentStationNumber, section: 0), at: .centeredHorizontally, animated: true)
-						
-						self.feedbackGenerator.notificationOccurred(.success)
 					}
+					else {
+						
+					}
+					self.stationListCollectionView.scrollToItem(at: IndexPath(item: self.currentStationNumber, section: 0), at: .centeredHorizontally, animated: true)
+					
+					self.feedbackGenerator.notificationOccurred(.success)
 				}
 			}
 		}
@@ -436,6 +455,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 			if(ViewController.stationTypeList[self.currentStationNumber] == .Bus) {
 				ViewController.routeList[self.currentStationNumber][self.currentBearingNumber] = self.busQuery.queryBusArrivals(station: ViewController.stationList[self.currentStationNumber][self.currentBearingNumber])
 			}
+			
 			#warning("Add else for Metro query")
 			DispatchQueue.main.async {
 				self.updatePanel()
@@ -783,6 +803,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
 		
 		if(scrollView == routeCollectionView.self) {
 			let page = Int(x/routeCollectionView.frame.width)
+			print("\(page)")
 			currentBearingNumber = ViewController.bearingItemToIndex[page][1]
 			currentStationNumber = ViewController.bearingItemToIndex[page][0]
 			queryBusArrivals()
@@ -825,8 +846,15 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		#warning("swear out of index here")
-		return ViewController.routeList[ViewController.bearingItemToIndex[tableView.tag][0]][ViewController.bearingItemToIndex[tableView.tag][1]].count
+		let stationNumber = ViewController.bearingItemToIndex[tableView.tag][0]
+		let bearingNumber = ViewController.bearingItemToIndex[tableView.tag][1]
+		if(ViewController.stationTypeList[stationNumber] == .Bus) {
+			return ViewController.routeList[stationNumber][bearingNumber].count
+		}
+		else {
+			#warning("Metro support")
+			return 0
+		}
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

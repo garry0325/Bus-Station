@@ -20,8 +20,8 @@ class BusQuery {
 	
 	let nearbyBusStationWidth = 0.005	// in degree coordinates
 	let nearbyBusStationHeight = 0.0035
-	let nearbyMetroStationWidth = 0.010
-	let nearbyMetroStationHeight = 0.007
+	let nearbyMetroStationWidth = 0.080
+	let nearbyMetroStationHeight = 0.056
 	
 	let queryCities = ["Taipei", "NewTaipei"]
 	let queryMetroSystems = ["TRTC", "TYMC", "NTDLRT"] // TODO: test TYMC & NTDLRT
