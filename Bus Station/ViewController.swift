@@ -31,6 +31,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	@IBOutlet var starButton: UIButton!
 	@IBOutlet var banButton: UIButton!
 	@IBOutlet var activityIndicator: UIActivityIndicatorView!
+	@IBOutlet var buttonActivityIndicator: UIActivityIndicatorView!
 	
 	@IBOutlet var adBannerView: GADBannerView!
 	@IBOutlet var updateButtonToSafeAreaConstraint: NSLayoutConstraint!
@@ -62,8 +63,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 				switch ViewController.stationTypeList[self.currentStationNumber] {
 				case .Bus:
 					stationTypeImage.image = UIImage(systemName: "bus.fill")
+					stationTypeImage.tintColor = .black
+					currentStationLabel.textColor = .black
 				case .Metro:
 					stationTypeImage.image = UIImage(systemName: "tram.fill")
+					stationTypeImage.tintColor = ViewController.stationList[currentStationNumber][0].lineColor
+					currentStationLabel.textColor = ViewController.stationList[currentStationNumber][0].lineColor
 				default:
 					stationTypeImage.image = UIImage(systemName: "bus.fill")
 				}
@@ -139,6 +144,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		if(displayAd) {
 			self.adBannerView.load(GADRequest())
 		}
+		
+		buttonActivityIndicator.stopAnimating()
 		
 		fetchStarredAndBannedStops()
 		
@@ -249,6 +256,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	}
 	
 	func updateLocationAndStations() {
+		buttonActivityIndicator.startAnimating()
+		updateLocationButton.isHidden = true
 		checkLocationServicePermissionAndStartUpdating()
 		locationHasUpdated = false
 	}
@@ -442,6 +451,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 					}
 					self.stationListCollectionView.scrollToItem(at: IndexPath(item: self.currentStationNumber, section: 0), at: .centeredHorizontally, animated: true)
 					
+					self.buttonActivityIndicator.stopAnimating()
+					self.updateLocationButton.isHidden = false
 					self.feedbackGenerator.notificationOccurred(.success)
 				}
 			}

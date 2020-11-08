@@ -358,6 +358,28 @@
                                     <constraint firstAttribute="height" constant="25" id="uG8-9G-3GI"/>
                                 </constraints>
                             </imageView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="3dA-N6-IMw">
+                                <rect key="frame" x="157.5" y="567" width="60" height="60"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="LIe-Ov-grZ"/>
+                                    <constraint firstAttribute="width" constant="60" id="QBL-8i-646"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowOpacity">
+                                        <real key="value" value="0.20000000000000001"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="size" keyPath="layer.shadowOffset">
+                                        <size key="value" width="0.0" height="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="30"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -383,11 +405,13 @@
                             <constraint firstItem="KmK-Jy-1Yr" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="LeJ-0R-PEs"/>
                             <constraint firstItem="jvc-Vv-Whj" firstAttribute="top" secondItem="wkw-Pp-9Mn" secondAttribute="bottom" id="QPo-Yy-OBy"/>
                             <constraint firstItem="jvc-Vv-Whj" firstAttribute="trailing" secondItem="wkw-Pp-9Mn" secondAttribute="trailing" id="RCA-B1-QC3"/>
+                            <constraint firstItem="3dA-N6-IMw" firstAttribute="centerY" secondItem="Tmq-tj-XKk" secondAttribute="centerY" id="X8J-CM-j5N"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="YEz-21-DiZ" secondAttribute="trailing" constant="10" id="b9b-MB-Kkp"/>
                             <constraint firstItem="YEz-21-DiZ" firstAttribute="centerY" secondItem="q40-ga-30g" secondAttribute="centerY" id="cQo-jL-omA"/>
                             <constraint firstItem="jvc-Vv-Whj" firstAttribute="leading" secondItem="wkw-Pp-9Mn" secondAttribute="leading" id="jMh-c7-5XU"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="s4M-qc-5T1" secondAttribute="trailing" id="lAc-tq-Gxl"/>
                             <constraint firstItem="akc-z5-ytS" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="lsx-ON-gAM"/>
+                            <constraint firstItem="3dA-N6-IMw" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="pRN-7t-vt0"/>
                             <constraint firstItem="joa-bs-tEY" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="svK-XD-McR"/>
                             <constraint firstItem="A7s-yq-Rio" firstAttribute="centerY" secondItem="q40-ga-30g" secondAttribute="centerY" id="tl2-hF-aC3"/>
                             <constraint firstItem="q40-ga-30g" firstAttribute="centerY" secondItem="wkw-Pp-9Mn" secondAttribute="centerY" id="vst-Td-eh1"/>
@@ -402,6 +426,7 @@
                         <outlet property="adBannerView" destination="akc-z5-ytS" id="KV7-dd-HeA"/>
                         <outlet property="banButton" destination="A7s-yq-Rio" id="pAA-GO-Ger"/>
                         <outlet property="bearingListCollectionView" destination="s4M-qc-5T1" id="b41-zI-ewp"/>
+                        <outlet property="buttonActivityIndicator" destination="3dA-N6-IMw" id="wgD-wM-dba"/>
                         <outlet property="currentStationBearingLabel" destination="jvc-Vv-Whj" id="6X1-aW-ohL"/>
                         <outlet property="currentStationLabel" destination="wkw-Pp-9Mn" id="aCj-4w-VLP"/>
                         <outlet property="routeCollectionView" destination="joa-bs-tEY" id="Ca7-KT-qu5"/>
