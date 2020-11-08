@@ -877,6 +877,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 		let stationNumber = ViewController.bearingItemToIndex[tableView.tag][0]
 		let bearingNumber = ViewController.bearingItemToIndex[tableView.tag][1]
 		
+		cell.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi));
+		
 		if(ViewController.stationTypeList[stationNumber] == .Metro) {
 			return cell
 		}
