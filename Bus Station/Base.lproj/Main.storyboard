@@ -516,7 +516,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AAA-8888" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="roJ-zd-4ib">
-                                                    <rect key="frame" x="16" y="2" width="68.5" height="20"/>
+                                                    <rect key="frame" x="17.5" y="2" width="67" height="20"/>
                                                     <color key="backgroundColor" systemColor="systemGray2Color"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="ZIA-Bq-uBs"/>
@@ -531,7 +531,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AAA-8888" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="nid-48-mjz">
-                                                    <rect key="frame" x="16" y="14" width="68.5" height="20"/>
+                                                    <rect key="frame" x="17.5" y="14" width="67" height="20"/>
                                                     <color key="backgroundColor" systemColor="systemGray2Color"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="nXK-Lr-uc1"/>
@@ -641,9 +641,6 @@
                                 <color key="textColor" white="0.54430650680000003" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="Z0O-Em-p3z">
-                                <rect key="frame" x="169" y="305" width="37" height="37"/>
-                            </activityIndicatorView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zku-9a-DsW">
                                 <rect key="frame" x="273" y="13.5" width="82" height="38"/>
                                 <color key="backgroundColor" red="0.32549019610000002" green="0.72549019609999998" blue="0.76078431369999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -671,6 +668,41 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="Z0O-Em-p3z">
+                                <rect key="frame" x="169" y="305" width="37" height="37"/>
+                            </activityIndicatorView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PNo-pH-WqV">
+                                <rect key="frame" x="285" y="557" width="60" height="60"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="Cd0-3x-Ryu"/>
+                                    <constraint firstAttribute="height" constant="60" id="N5W-5A-ktK"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <color key="tintColor" systemColor="systemGrayColor"/>
+                                <state key="normal">
+                                    <imageReference key="image" image="xmark" catalog="system" symbolScale="default"/>
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="30"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowOpacity">
+                                        <real key="value" value="0.20000000000000001"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="size" keyPath="layer.shadowOffset">
+                                        <size key="value" width="0.0" height="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="30"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="closeRouteDetailViewController:" destination="1tY-i0-3cb" eventType="touchUpInside" id="aaV-BE-6Zk"/>
+                                    <action selector="updateLocationButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cOd-9w-t0Z"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="T5G-pr-CuF"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -681,6 +713,7 @@
                             <constraint firstItem="3tU-6y-Oeg" firstAttribute="leading" secondItem="4u6-NH-Y9w" secondAttribute="leading" id="7fr-Sn-4EN"/>
                             <constraint firstItem="wSP-dR-peX" firstAttribute="centerY" secondItem="KBo-gH-Clt" secondAttribute="centerY" id="Dj1-nU-9AI"/>
                             <constraint firstItem="KBo-gH-Clt" firstAttribute="leading" secondItem="s4S-AW-QLa" secondAttribute="leading" id="EHV-IM-Ksn"/>
+                            <constraint firstItem="T5G-pr-CuF" firstAttribute="bottom" secondItem="PNo-pH-WqV" secondAttribute="bottom" constant="30" id="EXm-Zw-Nus"/>
                             <constraint firstItem="3tU-6y-Oeg" firstAttribute="top" secondItem="4u6-NH-Y9w" secondAttribute="bottom" id="HaN-vK-OrW"/>
                             <constraint firstAttribute="trailing" secondItem="KBo-gH-Clt" secondAttribute="trailing" id="MOp-1e-bL2"/>
                             <constraint firstItem="4u6-NH-Y9w" firstAttribute="top" secondItem="T5G-pr-CuF" secondAttribute="top" constant="8" id="PzL-fM-HDc"/>
@@ -692,6 +725,7 @@
                             <constraint firstAttribute="top" secondItem="KBo-gH-Clt" secondAttribute="top" id="h2D-LM-AXl"/>
                             <constraint firstAttribute="trailing" secondItem="ECe-3T-bgB" secondAttribute="trailing" id="iB0-kU-Kzg"/>
                             <constraint firstItem="wSP-dR-peX" firstAttribute="centerX" secondItem="Zku-9a-DsW" secondAttribute="centerX" id="jEU-93-VjR"/>
+                            <constraint firstItem="T5G-pr-CuF" firstAttribute="trailing" secondItem="PNo-pH-WqV" secondAttribute="trailing" constant="30" id="nnA-TL-Nvo"/>
                             <constraint firstItem="Zku-9a-DsW" firstAttribute="leading" secondItem="4u6-NH-Y9w" secondAttribute="trailing" constant="15" id="po6-GI-1os"/>
                             <constraint firstItem="ECe-3T-bgB" firstAttribute="top" secondItem="s4S-AW-QLa" secondAttribute="top" constant="65" id="ppq-R1-p2I"/>
                             <constraint firstAttribute="trailing" secondItem="Zku-9a-DsW" secondAttribute="trailing" constant="20" id="roP-Dm-rij"/>
@@ -889,6 +923,7 @@ Cg
         <image name="info.circle.fill" catalog="system" width="128" height="121"/>
         <image name="location.fill" catalog="system" width="128" height="121"/>
         <image name="star" catalog="system" width="128" height="116"/>
+        <image name="xmark" catalog="system" width="128" height="113"/>
         <image name="xmark.circle" catalog="system" width="128" height="121"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

@@ -105,6 +105,11 @@ class RouteDetailViewController: UIViewController {
 		presentInformation = !presentInformation
 		routeDetailTableView.reloadData()
 	}
+	
+	@IBAction func closeRouteDetailViewController(_ sender: Any) {
+		autoRefreshTimer?.invalidate()
+		dismiss(animated: true, completion: nil)
+	}
 }
 
 extension RouteDetailViewController: UITableViewDelegate, UITableViewDataSource {

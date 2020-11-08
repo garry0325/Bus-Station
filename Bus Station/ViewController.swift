@@ -304,6 +304,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 					ViewController.bearingItemToIndex = []
 					ViewController.stationTypeList = []
 					self.updatePanel()
+					
+					self.buttonActivityIndicator.stopAnimating()
+					self.updateLocationButton.isHidden = false
 				}
 			}
 			else {
