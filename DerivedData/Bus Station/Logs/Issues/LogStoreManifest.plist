@@ -90,7 +90,7 @@
 			<key>uniqueIdentifier</key>
 			<string>805EFC69-B1A1-41A9-9A04-D164476DCDA3</string>
 		</dict>
-		<key>B168269F-078D-419F-A09F-6A188A228084</key>
+		<key>F6B05AEE-478A-4677-A144-6D16D2B47E1C</key>
 		<dict>
 			<key>className</key>
 			<string>IDEActivityLogMajorGroupSection</string>
@@ -99,7 +99,7 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.target.product-type.application</string>
 			<key>fileName</key>
-			<string>B168269F-078D-419F-A09F-6A188A228084.xcactivitylog</string>
+			<string>F6B05AEE-478A-4677-A144-6D16D2B47E1C.xcactivitylog</string>
 			<key>hasPrimaryLog</key>
 			<true/>
 			<key>primaryObservable</key>
@@ -110,13 +110,13 @@
 			<key>signature</key>
 			<string>Bus_Station-aezfbisvhkatsrdvgflxteszofku</string>
 			<key>timeStartedRecording</key>
-			<real>626716663.99028802</real>
+			<real>626718316.37317097</real>
 			<key>timeStoppedRecording</key>
-			<real>626716665.93347704</real>
+			<real>626718325.28577101</real>
 			<key>title</key>
 			<string>Build target Bus Station</string>
 			<key>uniqueIdentifier</key>
-			<string>B168269F-078D-419F-A09F-6A188A228084</string>
+			<string>F6B05AEE-478A-4677-A144-6D16D2B47E1C</string>
 		</dict>
 		<key>FDE4C044-4608-451B-B90C-1109FBEAD26E</key>
 		<dict>

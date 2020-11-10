@@ -937,13 +937,13 @@ Cg
                                     <action selector="upSideUpSwitched:" destination="8y7-MT-FrX" eventType="valueChanged" id="vxV-3z-ShV"/>
                                 </connections>
                             </switch>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="20" minValue="5" maxValue="200" translatesAutoresizingMaskIntoConstraints="NO" id="nwD-0l-9e0">
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="50" minValue="5" maxValue="200" translatesAutoresizingMaskIntoConstraints="NO" id="nwD-0l-9e0">
                                 <rect key="frame" x="14" y="124" width="322" height="31"/>
                                 <connections>
                                     <action selector="stationRadiusSliderChanged:" destination="8y7-MT-FrX" eventType="valueChanged" id="3AQ-UR-RCN"/>
                                 </connections>
                             </slider>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="周圍車站半徑 200m" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="LhI-vh-I2F">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="周圍車站半徑 500m" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="LhI-vh-I2F">
                                 <rect key="frame" x="16" y="95" width="318" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="xnj-lj-hYL"/>

@@ -18,10 +18,8 @@ class BusQuery {
 	private var key: SymmetricKey!
 	private let authorizationDateFormatter: DateFormatter
 	
-	let nearbyBusStationWidth = 0.005	// in degree coordinates
-	let nearbyBusStationHeight = 0.0035
-	let nearbyMetroStationWidth = 0.010
-	let nearbyMetroStationHeight = 0.007
+	var nearbyStationWidth = 0.005	// in degree coordinates
+	var nearbyStationHeight = 0.0035
 	
 	let queryCities = ["Taipei", "NewTaipei"]
 	let queryMetroSystems = ["TRTC", "NTDLRT", "TYMC"] // TODO: test TYMC & NTDLRT
@@ -35,6 +33,7 @@ class BusQuery {
 	
 	func queryNearbyBusStations(location: CLLocation) -> [Station] {
 		self.prepareAuthorizations()
+		self.updateStationRadius()
 		
 		let semaphore = DispatchSemaphore(value: 0)
 		var request: URLRequest
@@ -45,7 +44,7 @@ class BusQuery {
 		let currentLongitude = location.coordinate.longitude
 		
 		for city in queryCities {
-			let urlStation = URL(string: "https://ptx.transportdata.tw/MOTC/v2/Bus/Station/City/\(city)?$select=StationID%2C%20StationName%2C%20StationPosition%2C%20Stops&$filter=StationPosition%2FPositionLat%20ge%20\(currentLatitude - nearbyBusStationHeight)%20and%20StationPosition%2FPositionLat%20le%20\(currentLatitude + nearbyBusStationHeight)%20and%20StationPosition%2FPositionLon%20ge%20\(currentLongitude - nearbyBusStationWidth)%20and%20StationPosition%2FPositionLon%20le%20\(currentLongitude + nearbyBusStationWidth)&$format=JSON")!
+			let urlStation = URL(string: "https://ptx.transportdata.tw/MOTC/v2/Bus/Station/City/\(city)?$select=StationID%2C%20StationName%2C%20StationPosition%2C%20Stops&$filter=StationPosition%2FPositionLat%20ge%20\(currentLatitude - nearbyStationHeight)%20and%20StationPosition%2FPositionLat%20le%20\(currentLatitude + nearbyStationHeight)%20and%20StationPosition%2FPositionLon%20ge%20\(currentLongitude - nearbyStationWidth)%20and%20StationPosition%2FPositionLon%20le%20\(currentLongitude + nearbyStationWidth)&$format=JSON")!
 			request = URLRequest(url: urlStation)
 			request.setValue(authTimeString, forHTTPHeaderField: "x-date")
 			request.setValue(authorization, forHTTPHeaderField: "Authorization")
@@ -493,7 +492,7 @@ class BusQuery {
 		var stationList = [Station]()
 		
 		for system in queryMetroSystems {
-			let urlStation = URL(string: "https://ptx.transportdata.tw/MOTC/v2/Rail/Metro/Station/\(system)?$filter=StationPosition%2FPositionLat%20ge%20\(currentLatitude - nearbyMetroStationHeight)%20and%20StationPosition%2FPositionLat%20le%20\(currentLatitude + nearbyMetroStationHeight)%20and%20StationPosition%2FPositionLon%20ge%20\(currentLongitude - nearbyMetroStationWidth)%20and%20StationPosition%2FPositionLon%20le%20\(currentLongitude + nearbyMetroStationWidth)&$format=JSON")!
+			let urlStation = URL(string: "https://ptx.transportdata.tw/MOTC/v2/Rail/Metro/Station/\(system)?$filter=StationPosition%2FPositionLat%20ge%20\(currentLatitude - nearbyStationHeight)%20and%20StationPosition%2FPositionLat%20le%20\(currentLatitude + nearbyStationHeight)%20and%20StationPosition%2FPositionLon%20ge%20\(currentLongitude - nearbyStationWidth)%20and%20StationPosition%2FPositionLon%20le%20\(currentLongitude + nearbyStationWidth)&$format=JSON")!
 			request = URLRequest(url: urlStation)
 			request.setValue(authTimeString, forHTTPHeaderField: "x-date")
 			request.setValue(authorization, forHTTPHeaderField: "Authorization")
@@ -555,5 +554,10 @@ class BusQuery {
 		let hmac = HMAC<SHA256>.authenticationCode(for: Data(String(format: "x-date: %@", self.authTimeString).utf8), using: key)
 		let base64HmacString = Data(hmac).base64EncodedString()
 		self.authorization = "hmac username=\"\(self.appID)\", algorithm=\"hmac-sha256\", headers=\"x-date\", signature=\"\(base64HmacString)\""
+	}
+	
+	func updateStationRadius() {
+		nearbyStationWidth = Double(stationRadius / 100890)
+		nearbyStationHeight = Double(stationRadius / 110574)
 	}
 }
