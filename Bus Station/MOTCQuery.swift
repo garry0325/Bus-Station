@@ -557,7 +557,7 @@ class BusQuery {
 	}
 	
 	func updateStationRadius() {
-		nearbyStationWidth = Double(stationRadius / 100890)
-		nearbyStationHeight = Double(stationRadius / 110574)
+		nearbyStationWidth = Double(stationRadius / 100925)
+		nearbyStationHeight = Double(stationRadius / 110803)
 	}
 }
