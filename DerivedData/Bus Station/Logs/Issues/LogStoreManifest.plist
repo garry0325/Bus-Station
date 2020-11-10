@@ -6,6 +6,34 @@
 	<integer>10</integer>
 	<key>logs</key>
 	<dict>
+		<key>00A97B27-30F8-49EE-92AB-23537269AD4B</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogMajorGroupSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.target.product-type.application</string>
+			<key>fileName</key>
+			<string>00A97B27-30F8-49EE-92AB-23537269AD4B.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>W</string>
+			</dict>
+			<key>signature</key>
+			<string>Bus_Station-aezfbisvhkatsrdvgflxteszofku</string>
+			<key>timeStartedRecording</key>
+			<real>626715068.34019601</real>
+			<key>timeStoppedRecording</key>
+			<real>626715070.00732696</real>
+			<key>title</key>
+			<string>Build target Bus Station</string>
+			<key>uniqueIdentifier</key>
+			<string>00A97B27-30F8-49EE-92AB-23537269AD4B</string>
+		</dict>
 		<key>1CB27A81-8D23-4CE9-A435-101CDAD5C25A</key>
 		<dict>
 			<key>className</key>
@@ -89,34 +117,6 @@
 			<string>Build target Pods-Bus Station</string>
 			<key>uniqueIdentifier</key>
 			<string>824FDBA2-FDF4-4592-8A06-A50B9AA89342</string>
-		</dict>
-		<key>C8CC1415-115B-45C2-96AF-9873EB7D4D82</key>
-		<dict>
-			<key>className</key>
-			<string>IDEActivityLogMajorGroupSection</string>
-			<key>documentTypeString</key>
-			<string>&lt;nil&gt;</string>
-			<key>domainType</key>
-			<string>Xcode.IDEActivityLogDomainType.target.product-type.application</string>
-			<key>fileName</key>
-			<string>C8CC1415-115B-45C2-96AF-9873EB7D4D82.xcactivitylog</string>
-			<key>hasPrimaryLog</key>
-			<true/>
-			<key>primaryObservable</key>
-			<dict>
-				<key>highLevelStatus</key>
-				<string>W</string>
-			</dict>
-			<key>signature</key>
-			<string>Bus_Station-aezfbisvhkatsrdvgflxteszofku</string>
-			<key>timeStartedRecording</key>
-			<real>626714344.11059904</real>
-			<key>timeStoppedRecording</key>
-			<real>626714347.35969901</real>
-			<key>title</key>
-			<string>Build target Bus Station</string>
-			<key>uniqueIdentifier</key>
-			<string>C8CC1415-115B-45C2-96AF-9873EB7D4D82</string>
 		</dict>
 		<key>E9B1A760-4A04-4027-A3D5-A1C41483F72E</key>
 		<dict>

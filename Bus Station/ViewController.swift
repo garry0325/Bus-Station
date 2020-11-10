@@ -19,7 +19,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 	var starredStations: Array<StarredStation> = []
 	var bannedStations: Array<BannedStation> = []
-	var savedLayoutPreference: Array<UpSideUp> = []
+	var layoutPreferenceData: Array<UpSideUp> = []
 	
 	var locationManager = CLLocationManager()
 	
@@ -175,6 +175,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		NotificationCenter.default.addObserver(self, selector: #selector(backFromBackground), name: UIApplication.didBecomeActiveNotification, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(showRouteDetailVC), name: NSNotification.Name("Detail"), object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(saveNewLayoutPreference), name: NSNotification.Name("LayoutPreference"), object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(saveNewStationRadiusPreference), name: NSNotification.Name("StationRadiusPreference"), object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(removeAdSuccess), name: NSNotification.Name("RemoveAd"), object: nil)
 		autoRefreshTimer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(autoRefresh), userInfo: nil, repeats: true)
 		
@@ -548,30 +549,19 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	
 	func fetchLayoutPreference() {
 		do {
-			savedLayoutPreference = try (context.fetch(UpSideUp.fetchRequest()) as? [UpSideUp])!
-			if(savedLayoutPreference.count == 0) {
+			layoutPreferenceData = try (context.fetch(UpSideUp.fetchRequest()) as? [UpSideUp])!
+			if(layoutPreferenceData.count == 0) {
 				upSideUpLayout = true
 				let newLayoutPreference = UpSideUp(context: self.context)
 				newLayoutPreference.upSideUp = upSideUpLayout
 				try self.context.save()
 			} else {
-				upSideUpLayout = savedLayoutPreference.last!.upSideUp
+				upSideUpLayout = layoutPreferenceData.last!.upSideUp
 				
-				print("\(upSideUpLayout ? "UP":"DOWN") preference data count \(savedLayoutPreference.count)")
+				print("\(upSideUpLayout ? "UP":"DOWN") preference data count \(layoutPreferenceData.count)")
 			}
 		} catch {
 			print("Error fetching layout preference")
-		}
-	}
-	
-	@objc func saveNewLayoutPreference() {
-		updateLayoutConstraint()
-		do {
-			savedLayoutPreference = try context.fetch(UpSideUp.fetchRequest()) as! [UpSideUp]
-			savedLayoutPreference.last!.upSideUp = upSideUpLayout
-			try self.context.save()
-		} catch {
-			print("Error saving new layout preference")
 		}
 	}
 	
@@ -588,6 +578,27 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 			print("\(bannedStations.count) banned stations")
 		} catch {
 			print("Error fetching bannedStations")
+		}
+	}
+	
+	@objc func saveNewLayoutPreference() {
+		updateLayoutConstraint()
+		do {
+			layoutPreferenceData = try context.fetch(UpSideUp.fetchRequest()) as! [UpSideUp]
+			layoutPreferenceData.last!.upSideUp = upSideUpLayout
+			try self.context.save()
+		} catch {
+			print("Error saving new layout preference")
+		}
+	}
+	
+	@objc func saveNewStationRadiusPreference() {
+		do {
+			stationRadiusPreferenceData = try context.fetch(StationRadius.fetchRequest()) as! [StationRadius]
+			stationRadiusPreferenceData.last!.stationRadius = stationRadius
+			try self.context.save()
+		} catch {
+			print("Error saving station radius preference")
 		}
 	}
 	
@@ -740,6 +751,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 			stationRadiusPreferenceData = try context.fetch(StationRadius.fetchRequest()) as! [StationRadius]
 			if(stationRadiusPreferenceData.count > 0) {
 				stationRadius = stationRadiusPreferenceData.last!.stationRadius
+				print("Station Radius \(stationRadius)m")
 			}
 			else {
 				let newStationRadius = StationRadius(context: self.context)

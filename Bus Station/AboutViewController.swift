@@ -33,12 +33,14 @@ class AboutViewController: UIViewController {
 		numberFormatter.numberStyle = .decimal
 		
 		upSideUpSwitch.setOn(!upSideUpLayout, animated: true)
+		stationRadiusTemporary = stationRadius
 		stationRadiusSlider.value = stationRadius / stationRadiusSliderScale
 		versionLabel.text = "版本：" + (Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String)
 	}
 	
 	override func viewDidDisappear(_ animated: Bool) {
-		
+		stationRadius = stationRadiusTemporary
+		NotificationCenter.default.post(name: NSNotification.Name("StationRadiusPreference"), object: nil)
 	}
 	
 	@IBAction func upSideUpSwitched(_ sender: UISwitch) {
