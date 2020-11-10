@@ -786,7 +786,7 @@
                                 <attributedString key="attributedText">
                                     <fragment content="本">
                                         <attributes>
-                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" size="12" name=".PingFangTC-Regular"/>
                                             <font key="NSOriginalFont" metaFont="cellTitle"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
@@ -796,7 +796,7 @@
                                     </fragment>
                                     <fragment content=" App ">
                                         <attributes>
-                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" size="12" name="SFProText-Regular"/>
                                             <font key="NSOriginalFont" size="12" name="SFProText-Regular"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
@@ -806,7 +806,7 @@
                                     </fragment>
                                     <fragment content="對於造成任何損害不負法律責任，包括任何疏忽責任。本">
                                         <attributes>
-                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" size="12" name=".PingFangTC-Regular"/>
                                             <font key="NSOriginalFont" metaFont="cellTitle"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
@@ -816,7 +816,7 @@
                                     </fragment>
                                     <fragment content=" App ">
                                         <attributes>
-                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" size="12" name="SFProText-Regular"/>
                                             <font key="NSOriginalFont" size="12" name="SFProText-Regular"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
@@ -826,7 +826,7 @@
                                     </fragment>
                                     <fragment content="提供來自交通部「公共運輸整合資訊流通服務平臺」資料。">
                                         <attributes>
-                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" size="12" name=".PingFangTC-Regular"/>
                                             <font key="NSOriginalFont" metaFont="cellTitle"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
@@ -839,7 +839,7 @@
 Cg
 </string>
                                         <attributes>
-                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" size="12" name="SFProText-Regular"/>
                                             <font key="NSOriginalFont" size="12" name="SFProText-Regular"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
@@ -852,7 +852,7 @@ Cg
 Cg
 </string>
                                         <attributes>
-                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" size="12" name="SFProText-Regular"/>
                                             <font key="NSOriginalFont" size="12" name="SFProText-Regular"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
@@ -862,7 +862,7 @@ Cg
                                     </fragment>
                                     <fragment content="資料來源：交通部">
                                         <attributes>
-                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" size="12" name=".PingFangTC-Regular"/>
                                             <font key="NSOriginalFont" metaFont="cellTitle"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
@@ -872,7 +872,7 @@ Cg
                                     </fragment>
                                     <fragment content="PTX">
                                         <attributes>
-                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" size="12" name="SFProText-Regular"/>
                                             <font key="NSOriginalFont" size="12" name="SFProText-Regular"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
@@ -882,7 +882,7 @@ Cg
                                     </fragment>
                                     <fragment content="平臺、台北捷運公司">
                                         <attributes>
-                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" size="12" name=".PingFangTC-Regular"/>
                                             <font key="NSOriginalFont" metaFont="cellTitle"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="1" defaultTabInterval="28" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
@@ -900,24 +900,17 @@ Cg
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U3i-z8-qh5">
-                                <rect key="frame" x="7" y="7" width="30" height="30"/>
+                                <rect key="frame" x="7" y="181" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
                                     <action selector="removeAdPressed:" destination="8y7-MT-FrX" eventType="touchUpInside" id="sGV-9p-5XZ"/>
                                 </connections>
                             </button>
                             <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rLf-Vi-SR3">
-                                <rect key="frame" x="7" y="64" width="30" height="30"/>
+                                <rect key="frame" x="7" y="238" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
                                     <action selector="removeAdPressed:" destination="8y7-MT-FrX" eventType="touchUpInside" id="3Sh-2N-dHe"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cEB-EY-4br">
-                                <rect key="frame" x="138" y="64" width="30" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <connections>
-                                    <action selector="removeAdPressed:" destination="8y7-MT-FrX" eventType="touchUpInside" id="Dab-DF-OOv"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="車站名在下方" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="3eT-rz-fi6">
@@ -926,7 +919,7 @@ Cg
                                     <constraint firstAttribute="height" constant="21" id="tYM-2q-CkN"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="BX0-Kd-ieJ">
@@ -935,48 +928,63 @@ Cg
                                     <action selector="upSideUpSwitched:" destination="8y7-MT-FrX" eventType="valueChanged" id="vxV-3z-ShV"/>
                                 </connections>
                             </switch>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="500" minValue="50" maxValue="2000" translatesAutoresizingMaskIntoConstraints="NO" id="nwD-0l-9e0">
-                                <rect key="frame" x="14" y="119" width="322" height="31"/>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="4" minValue="1" maxValue="40" translatesAutoresizingMaskIntoConstraints="NO" id="nwD-0l-9e0">
+                                <rect key="frame" x="14" y="124" width="322" height="31"/>
+                                <connections>
+                                    <action selector="stationRadiusSliderChanged:" destination="8y7-MT-FrX" eventType="valueChanged" id="3AQ-UR-RCN"/>
+                                </connections>
                             </slider>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="周圍車站半徑 500m" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="LhI-vh-I2F">
-                                <rect key="frame" x="16" y="90" width="318" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="周圍車站半徑 200m" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="LhI-vh-I2F">
+                                <rect key="frame" x="16" y="95" width="318" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="xnj-lj-hYL"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cEB-EY-4br">
+                                <rect key="frame" x="221" y="238" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="removeAdPressed:" destination="8y7-MT-FrX" eventType="touchUpInside" id="Dab-DF-OOv"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="cCe-88-9Sa"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" red="0.90000000000000002" green="0.90000000000000002" blue="0.90000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="3eT-rz-fi6" firstAttribute="leading" secondItem="cCe-88-9Sa" secondAttribute="leading" constant="16" id="4Oz-RN-8zo"/>
                             <constraint firstItem="3eT-rz-fi6" firstAttribute="centerX" secondItem="cCe-88-9Sa" secondAttribute="centerX" id="5gB-at-glE"/>
                             <constraint firstItem="VMX-bK-VyF" firstAttribute="centerX" secondItem="cCe-88-9Sa" secondAttribute="centerX" id="7DP-1e-WVB"/>
+                            <constraint firstItem="LhI-vh-I2F" firstAttribute="leading" secondItem="cCe-88-9Sa" secondAttribute="leading" constant="16" id="7Mb-Fl-TGF"/>
                             <constraint firstItem="nwD-0l-9e0" firstAttribute="leading" secondItem="cCe-88-9Sa" secondAttribute="leading" constant="16" id="8tv-nm-viN"/>
                             <constraint firstItem="3eT-rz-fi6" firstAttribute="top" secondItem="cCe-88-9Sa" secondAttribute="top" constant="15" id="Fs7-ED-PfP"/>
                             <constraint firstItem="nwD-0l-9e0" firstAttribute="top" secondItem="LhI-vh-I2F" secondAttribute="bottom" constant="8" symbolic="YES" id="Jkt-yk-YI9"/>
                             <constraint firstItem="cCe-88-9Sa" firstAttribute="trailing" secondItem="nwD-0l-9e0" secondAttribute="trailing" constant="16" id="LaV-Yj-Cje"/>
                             <constraint firstItem="BX0-Kd-ieJ" firstAttribute="centerX" secondItem="cCe-88-9Sa" secondAttribute="centerX" id="OmP-x8-vPf"/>
+                            <constraint firstItem="LhI-vh-I2F" firstAttribute="centerX" secondItem="cCe-88-9Sa" secondAttribute="centerX" id="Qij-WR-mIl"/>
                             <constraint firstItem="giA-zh-JQW" firstAttribute="leading" secondItem="cCe-88-9Sa" secondAttribute="leading" constant="16" id="a8d-3w-2r9"/>
                             <constraint firstItem="cCe-88-9Sa" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="3eT-rz-fi6" secondAttribute="trailing" constant="16" id="azM-0g-Ixf"/>
-                            <constraint firstItem="LhI-vh-I2F" firstAttribute="top" secondItem="BX0-Kd-ieJ" secondAttribute="bottom" constant="15" id="oWO-3m-Cgt"/>
+                            <constraint firstItem="LhI-vh-I2F" firstAttribute="top" secondItem="BX0-Kd-ieJ" secondAttribute="bottom" constant="20" id="oWO-3m-Cgt"/>
                             <constraint firstItem="giA-zh-JQW" firstAttribute="trailing" secondItem="cCe-88-9Sa" secondAttribute="trailing" constant="-16" id="pgk-Eh-Zjh"/>
                             <constraint firstItem="BX0-Kd-ieJ" firstAttribute="top" secondItem="3eT-rz-fi6" secondAttribute="bottom" constant="8" symbolic="YES" id="sZo-2T-glQ"/>
+                            <constraint firstItem="cCe-88-9Sa" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="LhI-vh-I2F" secondAttribute="trailing" constant="16" id="uJC-46-L9U"/>
                             <constraint firstItem="cCe-88-9Sa" firstAttribute="bottom" secondItem="VMX-bK-VyF" secondAttribute="bottom" constant="10" id="vmU-MK-y2G"/>
                             <constraint firstItem="cCe-88-9Sa" firstAttribute="bottom" secondItem="giA-zh-JQW" secondAttribute="bottom" constant="40" id="zCq-GH-YC8"/>
                         </constraints>
                     </view>
                     <size key="freeformSize" width="350" height="300"/>
                     <connections>
+                        <outlet property="stationRadiusLabel" destination="LhI-vh-I2F" id="QE7-c2-5Fm"/>
+                        <outlet property="stationRadiusSlider" destination="nwD-0l-9e0" id="C0w-pe-YKM"/>
                         <outlet property="upSideUpSwitch" destination="BX0-Kd-ieJ" id="xdF-u6-yDf"/>
                         <outlet property="versionLabel" destination="VMX-bK-VyF" id="nS8-Q3-Voo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NUA-Km-3XV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="836.79999999999995" y="567.61619190404804"/>
+            <point key="canvasLocation" x="837" y="622"/>
         </scene>
     </scenes>
     <resources>

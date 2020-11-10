@@ -1062,7 +1062,7 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
 		}
 		else if(segue.identifier == "About") {
 			let destination = segue.destination as! AboutViewController
-			destination.preferredContentSize = CGSize(width: 350.0, height: 250.0)
+			destination.preferredContentSize = CGSize(width: 350.0, height: 300.0)
 			destination.popoverPresentationController?.delegate = self
 		}
 

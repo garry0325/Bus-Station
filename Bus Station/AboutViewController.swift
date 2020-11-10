@@ -8,9 +8,20 @@
 import UIKit
 
 class AboutViewController: UIViewController {
+	
+	let stationRadiusSliderScale: Float = 50.0
 
-	@IBOutlet var versionLabel: UILabel!
 	@IBOutlet var upSideUpSwitch: UISwitch!
+	@IBOutlet var stationRadiusLabel: UILabel!
+	@IBOutlet var stationRadiusSlider: UISlider!
+	@IBOutlet var versionLabel: UILabel!
+	var stationRadiusTemporary = stationRadius {
+		didSet {
+			stationRadiusLabel.text = "周圍車站半徑 \(String(numberFormatter.string(from: NSNumber(value: stationRadiusTemporary))!))m"
+		}
+	}
+	
+	let numberFormatter = NumberFormatter()
 	
 	var count = 0
 	var rightCount = 0
@@ -19,8 +30,15 @@ class AboutViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		numberFormatter.numberStyle = .decimal
+		
 		upSideUpSwitch.setOn(!upSideUpLayout, animated: true)
+		stationRadiusSlider.value = stationRadius / stationRadiusSliderScale
 		versionLabel.text = "版本：" + (Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String)
+	}
+	
+	override func viewDidDisappear(_ animated: Bool) {
+		
 	}
 	
 	@IBAction func upSideUpSwitched(_ sender: UISwitch) {
@@ -28,6 +46,9 @@ class AboutViewController: UIViewController {
 		NotificationCenter.default.post(name: NSNotification.Name("LayoutPreference"), object: nil)
 	}
 	
+	@IBAction func stationRadiusSliderChanged(_ sender: UISlider) {
+		stationRadiusTemporary = Float(Int(sender.value)) * stationRadiusSliderScale
+	}
 	
 	@IBAction func removeAdPressed(_ sender: UIButton) {
 		print("removeAd \(sender.tag)")
