@@ -50,7 +50,7 @@ class RouteDetailViewController: UIViewController {
 		routeDetailTableView.delegate = self
 		routeDetailTableView.dataSource = self
 		
-		routeDetailTableView.contentInset = UIEdgeInsets(top: 30.0, left: 0.0, bottom: 50.0, right: 0.0)
+		routeDetailTableView.contentInset = UIEdgeInsets(top: 50.0, left: 0.0, bottom: 150.0, right: 0.0)
 		
 		configureInformationLabel()
 		

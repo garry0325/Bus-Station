@@ -169,10 +169,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		
 		checkAdRemoval()
 		
-		if(displayAd) {
-			self.adBannerView.load(GADRequest())
-		}
-		
 		fetchStarredAndBannedStops()
 		
 		updateLocationAndStations()
@@ -183,6 +179,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		NotificationCenter.default.addObserver(self, selector: #selector(saveNewLayoutPreference), name: NSNotification.Name("LayoutPreference"), object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(removeAdSuccess), name: NSNotification.Name("RemoveAd"), object: nil)
 		autoRefreshTimer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(autoRefresh), userInfo: nil, repeats: true)
+		
+		if(displayAd) {
+			self.adBannerView.load(GADRequest())
+		}
 	}
 	deinit {
 		NotificationCenter.default.removeObserver(self)
@@ -778,8 +778,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	func applyAutoLayoutConstraints() {
 
 		self.whiteViewToBottomRouteCollectionViewConstraintB = NSLayoutConstraint(item: whiteView!, attribute: .top, relatedBy: .equal, toItem: routeCollectionView, attribute: .bottom, multiplier: 1.0, constant: 0.0)
-		self.bearingCollectionViewToBottomSafeAreaConstraintB = NSLayoutConstraint(item: bearingListCollectionView!, attribute: .bottom, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .bottom, multiplier: 1.0, constant: 0.0)
-		self.bearingCollectionViewToTopAdBannerConstraintB = NSLayoutConstraint(item: bearingListCollectionView!, attribute: .bottom, relatedBy: .equal, toItem: adBannerView, attribute: .top, multiplier: 1.0, constant: -10.0)
+		self.bearingCollectionViewToBottomSafeAreaConstraintB = NSLayoutConstraint(item: bearingListCollectionView!, attribute: .bottom, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .bottom, multiplier: 1.0, constant: -20.0)
+		self.bearingCollectionViewToTopAdBannerConstraintB = NSLayoutConstraint(item: bearingListCollectionView!, attribute: .bottom, relatedBy: .equal, toItem: adBannerView, attribute: .top, multiplier: 1.0, constant: -20.0)
 		self.routeCollectionViewToTopSafeAreaConstraintB = NSLayoutConstraint(item: routeCollectionView!, attribute: .top, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .top, multiplier: 1.0, constant: 0.0)
 		
 		self.routeCollectionViewToTopAdBannerConstraintA = NSLayoutConstraint(item: routeCollectionView!, attribute: .bottom, relatedBy: .equal, toItem: adBannerView, attribute: .top, multiplier: 1.0, constant: 0.0)
