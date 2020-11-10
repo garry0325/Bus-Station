@@ -44,6 +44,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 			updateLayoutConstraintWithAd()
 		}
 	}
+	var stationRadiusPreferenceData: Array<StationRadius> = []
 	
 	@IBOutlet var aboutButton: UIButton!
 	
@@ -159,17 +160,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		
 		#warning("maybe load the content first")
 		#warning("get layout setting first")
-		fetchLayoutPreference()
+		fetchSavedSettings()
+		
 		applyAutoLayoutConstraints()
 		
 		self.adBannerView.isHidden = true
 		self.adBannerView.delegate = self
 		self.adBannerView.adUnitID = "ca-app-pub-5814041924860954/9661829499"
 		self.adBannerView.rootViewController = self
-		
-		checkAdRemoval()
-		
-		fetchStarredAndBannedStops()
 		
 		updateLocationAndStations()
 		
@@ -186,6 +184,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	}
 	deinit {
 		NotificationCenter.default.removeObserver(self)
+	}
+	
+	func fetchSavedSettings() {
+		fetchLayoutPreference()
+		checkAdRemoval()
+		fetchStarredAndBannedStops()
+		fetchStationRadiusPreference()
 	}
 	
 	@objc func showRouteDetailVC(notification: Notification) {
@@ -728,6 +733,22 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	func dismissActivityIndicator() {
 		activityIndicator.isHidden = true
 		activityIndicator.stopAnimating()
+	}
+	
+	func fetchStationRadiusPreference() {
+		do {
+			stationRadiusPreferenceData = try context.fetch(StationRadius.fetchRequest()) as! [StationRadius]
+			if(stationRadiusPreferenceData.count > 0) {
+				stationRadius = stationRadiusPreferenceData.last!.stationRadius
+			}
+			else {
+				let newStationRadius = StationRadius(context: self.context)
+				newStationRadius.stationRadius = stationRadius
+				try self.context.save()
+			}
+		} catch {
+			print("Error fetching station radius preference")
+		}
 	}
 	
 	func checkAdRemoval() {
