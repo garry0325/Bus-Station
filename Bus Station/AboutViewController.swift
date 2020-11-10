@@ -9,7 +9,7 @@ import UIKit
 
 class AboutViewController: UIViewController {
 	
-	let stationRadiusSliderScale: Float = 50.0
+	let stationRadiusSliderScale: Float = 10.0
 
 	@IBOutlet var upSideUpSwitch: UISwitch!
 	@IBOutlet var stationRadiusLabel: UILabel!
