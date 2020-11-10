@@ -117,7 +117,7 @@ class RouteDetailTableViewCell: UITableViewCell {
 	@IBOutlet var routeLineBottom: UIImageView!
 	
 	override func awakeFromNib() {
-        super.awakeFromNib()
+		super.awakeFromNib()
 		
 		infoAtStop.layer.cornerRadius = 3.0
 		infoDepartStop.layer.cornerRadius = 3.0
@@ -145,11 +145,11 @@ class RouteDetailTableViewCell: UITableViewCell {
 		currentStopIndicatorView.layer.cornerRadius = currentStopIndicatorView.frame.width / 2
 		currentStopIndicatorView.layer.borderWidth = 5.0
 		
-    }
+	}
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        // Configure the view for the selected state
-    }
+	override func setSelected(_ selected: Bool, animated: Bool) {
+		super.setSelected(selected, animated: animated)
+		// Configure the view for the selected state
+	}
 
 }

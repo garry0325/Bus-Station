@@ -42,7 +42,7 @@ class RouteDetailViewController: UIViewController {
 	var autoRefreshTimer: Timer?
 	
 	override func viewDidLoad() {
-        super.viewDidLoad()
+		super.viewDidLoad()
 		
 		let tap = UITapGestureRecognizer(target: self, action: #selector(switchInformationLabel))
 		routeDetailTableView.addGestureRecognizer(tap)

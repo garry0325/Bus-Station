@@ -10,6 +10,7 @@ import UIKit
 class AboutViewController: UIViewController {
 
 	@IBOutlet var versionLabel: UILabel!
+	@IBOutlet var upSideUpSwitch: UISwitch!
 	
 	var count = 0
 	var rightCount = 0
@@ -18,8 +19,15 @@ class AboutViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		upSideUpSwitch.setOn(!upSideUpLayout, animated: true)
 		versionLabel.text = "版本：" + (Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String)
 	}
+	
+	@IBAction func upSideUpSwitched(_ sender: UISwitch) {
+		upSideUpLayout = !upSideUpSwitch.isOn
+		NotificationCenter.default.post(name: NSNotification.Name("LayoutPreference"), object: nil)
+	}
+	
 	
 	@IBAction func removeAdPressed(_ sender: UIButton) {
 		print("removeAd \(sender.tag)")

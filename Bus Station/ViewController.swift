@@ -19,8 +19,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 	var starredStations: Array<StarredStation> = []
 	var bannedStations: Array<BannedStation> = []
+	var savedLayoutPreference: Array<UpSideUp> = []
 	
 	var locationManager = CLLocationManager()
+	
 	@IBOutlet var stationListCollectionView: UICollectionView!
 	@IBOutlet var bearingListCollectionView: UICollectionView!
 	@IBOutlet var routeCollectionView: UICollectionView!
@@ -34,14 +36,36 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	@IBOutlet var buttonActivityIndicator: UIActivityIndicatorView!
 	
 	@IBOutlet var adBannerView: GADBannerView!
-	@IBOutlet var updateButtonToSafeAreaConstraint: NSLayoutConstraint!
-	var updateButtonToAdBannerConstraint: NSLayoutConstraint?
 	var displayAd = true
 	var needAdData: Array<Ad> = []
+	var adDisplayedSuccessfully = false {
+		didSet {
+			adBannerView.isHidden = !adDisplayedSuccessfully
+			updateLayoutConstraintWithAd()
+		}
+	}
 	
 	@IBOutlet var aboutButton: UIButton!
-	@IBOutlet var aboutButtonToSafeAreaConstraint: NSLayoutConstraint!
-	var aboutButtonToAdBannerConstraint: NSLayoutConstraint?
+	
+	@IBOutlet var whiteView: UIView!
+	
+	@IBOutlet var whiteViewToTopSafeAreaConstraintA: NSLayoutConstraint!
+	@IBOutlet var bearingCollectionViewToRouteCollectionViewConstraintA: NSLayoutConstraint!
+	@IBOutlet var routeCollectionViewToBottomConstraintA: NSLayoutConstraint!
+	var whiteViewToBottomRouteCollectionViewConstraintB: NSLayoutConstraint?
+	var bearingCollectionViewToBottomSafeAreaConstraintB: NSLayoutConstraint?
+	var bearingCollectionViewToTopAdBannerConstraintB: NSLayoutConstraint?
+	var routeCollectionViewToTopSafeAreaConstraintB: NSLayoutConstraint?
+	
+	var routeCollectionViewToTopAdBannerConstraintA: NSLayoutConstraint?
+	@IBOutlet var updateButtonAtCenterConstraintA: NSLayoutConstraint!
+	@IBOutlet var updateButtonToSafeAreaConstraintA: NSLayoutConstraint!
+	var updateButtonToAdBannerConstraintA: NSLayoutConstraint?
+	@IBOutlet var aboutButtonToSafeAreaConstraintA: NSLayoutConstraint!
+	var aboutButtonToAdBannerConstraintA: NSLayoutConstraint?
+	var updateButtonToWhiteViewTopConstraintB: NSLayoutConstraint?
+	var updateButtonToTrailingConstraintB: NSLayoutConstraint?
+	var aboutButtonToUpdateButtonVerticalSpacingConstraintB: NSLayoutConstraint?
 	
 	// TODO: add substops +
 	// TODO: station collectionview has bug in length
@@ -49,7 +73,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	// TODO: add queryBusesArrivals() on adjacent pages
 	// TODO: haptic feedback when location is updated
 	// TODO: make static enum +
-	// TODO: check far away location 
+	// TODO: check far away location
 	
 	var busQuery = BusQuery()
 	var locationWhenPinned = CLLocation()
@@ -133,19 +157,21 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		
 		stationListCollectionView.contentInset.right = 100	// compensate for the bug that the last cell will be covered due to not enough scrollable length
 		
+		#warning("maybe load the content first")
+		#warning("get layout setting first")
+		fetchLayoutPreference()
+		applyAutoLayoutConstraints()
 		
-		self.updateButtonToAdBannerConstraint = NSLayoutConstraint(item: updateLocationButton!, attribute: .bottom, relatedBy: .equal, toItem: adBannerView, attribute: .top, multiplier: 1.0, constant: -20.0)
-		self.aboutButtonToAdBannerConstraint = NSLayoutConstraint(item: aboutButton!, attribute: .bottom, relatedBy: .equal, toItem: adBannerView, attribute: .top, multiplier: 1.0, constant: -15.0)
 		self.adBannerView.isHidden = true
 		self.adBannerView.delegate = self
 		self.adBannerView.adUnitID = "ca-app-pub-5814041924860954/9661829499"
 		self.adBannerView.rootViewController = self
+		
 		checkAdRemoval()
+		
 		if(displayAd) {
 			self.adBannerView.load(GADRequest())
 		}
-		
-		buttonActivityIndicator.stopAnimating()
 		
 		fetchStarredAndBannedStops()
 		
@@ -154,6 +180,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		// Because when app is reopen from background, the animation stops
 		NotificationCenter.default.addObserver(self, selector: #selector(backFromBackground), name: UIApplication.didBecomeActiveNotification, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(showRouteDetailVC), name: NSNotification.Name("Detail"), object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(saveNewLayoutPreference), name: NSNotification.Name("LayoutPreference"), object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(removeAdSuccess), name: NSNotification.Name("RemoveAd"), object: nil)
 		autoRefreshTimer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(autoRefresh), userInfo: nil, repeats: true)
 	}
@@ -514,6 +541,35 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		present(locationServiceAlert, animated: true, completion: nil)
 	}
 	
+	func fetchLayoutPreference() {
+		do {
+			savedLayoutPreference = try (context.fetch(UpSideUp.fetchRequest()) as? [UpSideUp])!
+			if(savedLayoutPreference.count == 0) {
+				upSideUpLayout = true
+				let newLayoutPreference = UpSideUp(context: self.context)
+				newLayoutPreference.upSideUp = upSideUpLayout
+				try self.context.save()
+			} else {
+				upSideUpLayout = savedLayoutPreference.last!.upSideUp
+				
+				print("\(upSideUpLayout ? "UP":"DOWN") preference data count \(savedLayoutPreference.count)")
+			}
+		} catch {
+			print("Error fetching layout preference")
+		}
+	}
+	
+	@objc func saveNewLayoutPreference() {
+		updateLayoutConstraint()
+		do {
+			savedLayoutPreference = try context.fetch(UpSideUp.fetchRequest()) as! [UpSideUp]
+			savedLayoutPreference.last!.upSideUp = upSideUpLayout
+			try self.context.save()
+		} catch {
+			print("Error saving new layout preference")
+		}
+	}
+	
 	func fetchStarredAndBannedStops() {
 		do {
 			starredStations = try (context.fetch(StarredStation.fetchRequest()) as? [StarredStation])!
@@ -718,6 +774,65 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 			locationManager.startUpdatingLocation()
 		}
 	}
+	
+	func applyAutoLayoutConstraints() {
+
+		self.whiteViewToBottomRouteCollectionViewConstraintB = NSLayoutConstraint(item: whiteView!, attribute: .top, relatedBy: .equal, toItem: routeCollectionView, attribute: .bottom, multiplier: 1.0, constant: 0.0)
+		self.bearingCollectionViewToBottomSafeAreaConstraintB = NSLayoutConstraint(item: bearingListCollectionView!, attribute: .bottom, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .bottom, multiplier: 1.0, constant: 0.0)
+		self.bearingCollectionViewToTopAdBannerConstraintB = NSLayoutConstraint(item: bearingListCollectionView!, attribute: .bottom, relatedBy: .equal, toItem: adBannerView, attribute: .top, multiplier: 1.0, constant: -10.0)
+		self.routeCollectionViewToTopSafeAreaConstraintB = NSLayoutConstraint(item: routeCollectionView!, attribute: .top, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .top, multiplier: 1.0, constant: 0.0)
+		
+		self.routeCollectionViewToTopAdBannerConstraintA = NSLayoutConstraint(item: routeCollectionView!, attribute: .bottom, relatedBy: .equal, toItem: adBannerView, attribute: .top, multiplier: 1.0, constant: 0.0)
+		self.updateButtonToAdBannerConstraintA = NSLayoutConstraint(item: updateLocationButton!, attribute: .bottom, relatedBy: .equal, toItem: adBannerView, attribute: .top, multiplier: 1.0, constant: -20.0)
+		self.aboutButtonToAdBannerConstraintA = NSLayoutConstraint(item: aboutButton!, attribute: .bottom, relatedBy: .equal, toItem: adBannerView, attribute: .top, multiplier: 1.0, constant: -15.0)
+		self.updateButtonToWhiteViewTopConstraintB = NSLayoutConstraint(item: updateLocationButton!, attribute: .bottom, relatedBy: .equal, toItem: whiteView, attribute: .top, multiplier: 1.0, constant: -40.0)
+		self.updateButtonToTrailingConstraintB = NSLayoutConstraint(item: updateLocationButton!, attribute: .right, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .right, multiplier: 1.0, constant: -30.0)
+		self.aboutButtonToUpdateButtonVerticalSpacingConstraintB = NSLayoutConstraint(item: aboutButton!, attribute: .bottom, relatedBy: .equal, toItem: updateLocationButton!, attribute: .top, multiplier: 1.0, constant: -10.0)
+		
+		updateLayoutConstraint()
+	}
+	
+	@objc func updateLayoutConstraint() {
+		
+		if(upSideUpLayout) {
+			NSLayoutConstraint.deactivate([whiteViewToBottomRouteCollectionViewConstraintB!, bearingCollectionViewToBottomSafeAreaConstraintB!, bearingCollectionViewToTopAdBannerConstraintB!, updateButtonToWhiteViewTopConstraintB!, updateButtonToTrailingConstraintB!, aboutButtonToUpdateButtonVerticalSpacingConstraintB!])
+			
+			NSLayoutConstraint.deactivate([routeCollectionViewToTopSafeAreaConstraintB!, routeCollectionViewToTopAdBannerConstraintA!, updateButtonToAdBannerConstraintA!, aboutButtonToAdBannerConstraintA!])
+			
+			NSLayoutConstraint.activate([whiteViewToTopSafeAreaConstraintA, bearingCollectionViewToRouteCollectionViewConstraintA, routeCollectionViewToBottomConstraintA, updateButtonAtCenterConstraintA, updateButtonToSafeAreaConstraintA, aboutButtonToSafeAreaConstraintA])
+
+			whiteView.clipsToBounds = true
+			bearingListCollectionView.clipsToBounds = false
+		}
+		else {
+			NSLayoutConstraint.deactivate([whiteViewToTopSafeAreaConstraintA, bearingCollectionViewToRouteCollectionViewConstraintA, routeCollectionViewToBottomConstraintA, routeCollectionViewToTopAdBannerConstraintA!, updateButtonAtCenterConstraintA, updateButtonToSafeAreaConstraintA, updateButtonToAdBannerConstraintA!, aboutButtonToSafeAreaConstraintA, aboutButtonToAdBannerConstraintA!])
+			
+			NSLayoutConstraint.deactivate([bearingCollectionViewToTopAdBannerConstraintB!])
+			
+			NSLayoutConstraint.activate([whiteViewToBottomRouteCollectionViewConstraintB!, bearingCollectionViewToBottomSafeAreaConstraintB!, routeCollectionViewToTopSafeAreaConstraintB!, updateButtonToWhiteViewTopConstraintB!, updateButtonToTrailingConstraintB!, aboutButtonToUpdateButtonVerticalSpacingConstraintB!])
+			
+			whiteView.clipsToBounds = false
+			bearingListCollectionView.clipsToBounds = true
+		}
+		
+		updateLayoutConstraintWithAd()
+		
+		routeCollectionView.reloadData()
+	}
+	
+	func updateLayoutConstraintWithAd() {
+		if(upSideUpLayout) {
+			routeCollectionViewToBottomConstraintA.isActive = !adDisplayedSuccessfully
+			routeCollectionViewToTopAdBannerConstraintA?.isActive = adDisplayedSuccessfully
+			updateButtonToSafeAreaConstraintA.isActive = !adDisplayedSuccessfully
+			updateButtonToAdBannerConstraintA?.isActive = adDisplayedSuccessfully
+			aboutButtonToSafeAreaConstraintA.isActive = !adDisplayedSuccessfully
+			aboutButtonToAdBannerConstraintA?.isActive = adDisplayedSuccessfully
+		} else {
+			bearingCollectionViewToBottomSafeAreaConstraintB?.isActive = !adDisplayedSuccessfully
+			bearingCollectionViewToTopAdBannerConstraintB?.isActive = adDisplayedSuccessfully
+		}
+	}
 }
 
 extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -877,7 +992,9 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 		let stationNumber = ViewController.bearingItemToIndex[tableView.tag][0]
 		let bearingNumber = ViewController.bearingItemToIndex[tableView.tag][1]
 		
-		cell.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi));
+		if(!upSideUpLayout) {
+			cell.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi));
+		}
 		
 		if(ViewController.stationTypeList[stationNumber] == .Metro) {
 			return cell
@@ -945,7 +1062,7 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
 		}
 		else if(segue.identifier == "About") {
 			let destination = segue.destination as! AboutViewController
-			destination.preferredContentSize = CGSize(width: 350.0, height: 130.0)
+			destination.preferredContentSize = CGSize(width: 350.0, height: 250.0)
 			destination.popoverPresentationController?.delegate = self
 		}
 
@@ -968,20 +1085,13 @@ extension ViewController: GADBannerViewDelegate {
 	
 	func adViewDidReceiveAd(_ bannerView: GADBannerView) {
 		print("Ad loaded successfully")
-		self.adBannerView.isHidden = false
 		
-		updateButtonToSafeAreaConstraint.isActive = false
-		updateButtonToAdBannerConstraint?.isActive = true
-		aboutButtonToSafeAreaConstraint.isActive = false
-		aboutButtonToAdBannerConstraint?.isActive = true
+		adDisplayedSuccessfully = true
 	}
 	
 	func adView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: GADRequestError) {
 		print("Ad failed to load. \(error.localizedDescription)")
 		
-		updateButtonToSafeAreaConstraint.isActive = true
-		updateButtonToAdBannerConstraint?.isActive = false
-		aboutButtonToSafeAreaConstraint.isActive = true
-		aboutButtonToAdBannerConstraint?.isActive = false
+		adDisplayedSuccessfully = false
 	}
 }
