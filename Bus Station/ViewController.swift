@@ -75,6 +75,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	// TODO: haptic feedback when location is updated
 	// TODO: make static enum +
 	// TODO: check far away location
+	// TODO: dark mode black label color be hidden
 	
 	var busQuery = BusQuery()
 	var locationWhenPinned = CLLocation()
@@ -104,6 +105,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 				routeCollectionView.scrollToItem(at: IndexPath(item: item, section: 0), at: .centeredHorizontally, animated: true)
 				
 				updateStarredAndBannedButton()
+			}
+			else if(ViewController.stationTypeList[currentStationNumber] == .Metro) {
+				stationTypeImage.image = UIImage(systemName: "tram.fill")
+				stationTypeImage.tintColor = ViewController.stationList[currentStationNumber][0].lineColor
+				currentStationLabel.textColor = ViewController.stationList[currentStationNumber][0].lineColor
 			}
 			ViewController.stationNumberForDetailView = currentStationNumber
 		}
