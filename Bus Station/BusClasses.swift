@@ -176,7 +176,7 @@ class BusStop {
 	}
 	
 	enum Information {
-		static let Arriving				= "進站中"
+		static let Arriving				= "到站中"
 		static let Approaching			= "將到站"
 		static let Incoming				= "分"
 		static let NotDeparted			= "尚未發車"
@@ -263,7 +263,7 @@ class BusStopLiveStatus {
 	}
 	
 	enum Information {
-		static let Arriving				= "進站中"
+		static let Arriving				= "到站中"
 		static let Approaching			= "將到站"
 		static let Incoming				= "分"
 		static let NotDeparted			= "尚未發車"
