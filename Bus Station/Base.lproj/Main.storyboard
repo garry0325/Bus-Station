@@ -137,7 +137,7 @@
                             </collectionView>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kz4-5o-FfU" userLabel="White View">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="57"/>
-                                <color key="backgroundColor" name="AccentColor"/>
+                                <color key="backgroundColor" name="White"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="57" id="6Cv-db-Vcb"/>
                                 </constraints>
@@ -476,9 +476,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JF7-DS-r8A">
+                                <rect key="frame" x="0.0" y="65" width="375" height="582"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="aYC-g6-I3i">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="582"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                                <blurEffect style="systemMaterial"/>
+                            </visualEffectView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ECe-3T-bgB">
                                 <rect key="frame" x="0.0" y="65" width="375" height="582"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DetailStop" rowHeight="35" id="qag-PO-YrX" customClass="RouteDetailTableViewCell" customModule="Bus_Station" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="35"/>
@@ -543,7 +551,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AAA-8888" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="roJ-zd-4ib">
-                                                    <rect key="frame" x="16" y="2" width="68.5" height="20"/>
+                                                    <rect key="frame" x="17.5" y="2" width="67" height="20"/>
                                                     <color key="backgroundColor" systemColor="systemGray2Color"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="ZIA-Bq-uBs"/>
@@ -558,7 +566,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AAA-8888" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="nid-48-mjz">
-                                                    <rect key="frame" x="16" y="14" width="68.5" height="20"/>
+                                                    <rect key="frame" x="17.5" y="14" width="67" height="20"/>
                                                     <color key="backgroundColor" systemColor="systemGray2Color"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="nXK-Lr-uc1"/>
@@ -593,6 +601,7 @@
                                                     </state>
                                                 </button>
                                             </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstItem="Tam-V4-Sej" firstAttribute="leading" secondItem="roJ-zd-4ib" secondAttribute="trailing" constant="5" id="3AR-cE-fRA"/>
                                                 <constraint firstItem="roJ-zd-4ib" firstAttribute="centerY" secondItem="Tam-V4-Sej" secondAttribute="centerY" id="5Mq-Bc-eIP"/>
@@ -625,6 +634,7 @@
                                                 <constraint firstItem="b1h-M5-YUX" firstAttribute="leading" secondItem="ao3-x8-6Fz" secondAttribute="trailing" constant="5" id="zE1-8A-nsN"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
                                             <outlet property="busAtStopView" destination="Tam-V4-Sej" id="xzj-G8-lh4"/>
                                             <outlet property="busDepartStopView" destination="b1h-M5-YUX" id="Ibj-D7-Agc"/>
@@ -732,9 +742,11 @@
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="T5G-pr-CuF"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="wSP-dR-peX" firstAttribute="centerY" secondItem="Zku-9a-DsW" secondAttribute="centerY" id="1Tu-z2-RiW"/>
+                            <constraint firstItem="JF7-DS-r8A" firstAttribute="leading" secondItem="s4S-AW-QLa" secondAttribute="leading" id="2Ra-n9-2ac"/>
+                            <constraint firstAttribute="bottom" secondItem="JF7-DS-r8A" secondAttribute="bottom" id="2mR-Nz-KaH"/>
                             <constraint firstItem="ECe-3T-bgB" firstAttribute="leading" secondItem="s4S-AW-QLa" secondAttribute="leading" id="4uJ-Pg-YDR"/>
                             <constraint firstItem="Z0O-Em-p3z" firstAttribute="centerY" secondItem="T5G-pr-CuF" secondAttribute="centerY" id="5qu-ma-J4N"/>
                             <constraint firstItem="3tU-6y-Oeg" firstAttribute="leading" secondItem="4u6-NH-Y9w" secondAttribute="leading" id="7fr-Sn-4EN"/>
@@ -744,11 +756,13 @@
                             <constraint firstItem="3tU-6y-Oeg" firstAttribute="top" secondItem="4u6-NH-Y9w" secondAttribute="bottom" id="HaN-vK-OrW"/>
                             <constraint firstAttribute="trailing" secondItem="KBo-gH-Clt" secondAttribute="trailing" id="MOp-1e-bL2"/>
                             <constraint firstItem="4u6-NH-Y9w" firstAttribute="top" secondItem="T5G-pr-CuF" secondAttribute="top" constant="8" id="PzL-fM-HDc"/>
+                            <constraint firstItem="JF7-DS-r8A" firstAttribute="top" secondItem="KBo-gH-Clt" secondAttribute="bottom" id="QbC-T3-0UB"/>
                             <constraint firstItem="Zku-9a-DsW" firstAttribute="width" secondItem="wSP-dR-peX" secondAttribute="width" id="Uff-ku-KuB"/>
                             <constraint firstItem="Zku-9a-DsW" firstAttribute="leading" secondItem="3tU-6y-Oeg" secondAttribute="trailing" constant="15" id="Xat-AV-Tfn"/>
                             <constraint firstItem="Z0O-Em-p3z" firstAttribute="centerX" secondItem="T5G-pr-CuF" secondAttribute="centerX" id="aL0-Ww-pDx"/>
                             <constraint firstItem="Zku-9a-DsW" firstAttribute="height" secondItem="wSP-dR-peX" secondAttribute="height" multiplier="1.37349" id="ajq-KC-D6p"/>
                             <constraint firstItem="KBo-gH-Clt" firstAttribute="bottom" secondItem="ECe-3T-bgB" secondAttribute="top" id="dc1-R7-vbs"/>
+                            <constraint firstAttribute="trailing" secondItem="JF7-DS-r8A" secondAttribute="trailing" id="fFq-Vc-dhu"/>
                             <constraint firstAttribute="top" secondItem="KBo-gH-Clt" secondAttribute="top" id="h2D-LM-AXl"/>
                             <constraint firstAttribute="trailing" secondItem="ECe-3T-bgB" secondAttribute="trailing" id="iB0-kU-Kzg"/>
                             <constraint firstItem="wSP-dR-peX" firstAttribute="centerX" secondItem="Zku-9a-DsW" secondAttribute="centerX" id="jEU-93-VjR"/>
@@ -1008,7 +1022,7 @@ Cg
         <image name="star" catalog="system" width="128" height="116"/>
         <image name="xmark" catalog="system" width="128" height="113"/>
         <image name="xmark.circle" catalog="system" width="128" height="121"/>
-        <namedColor name="AccentColor">
+        <namedColor name="White">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">

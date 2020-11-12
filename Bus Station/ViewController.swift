@@ -89,8 +89,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 				switch ViewController.stationTypeList[self.currentStationNumber] {
 				case .Bus:
 					stationTypeImage.image = UIImage(systemName: "bus.fill")
-					stationTypeImage.tintColor = .black
-					currentStationLabel.textColor = .black
+					stationTypeImage.tintColor = labelStandardBlack
+					currentStationLabel.textColor = labelStandardBlack
 				case .Metro:
 					stationTypeImage.image = UIImage(systemName: "tram.fill")
 					stationTypeImage.tintColor = ViewController.stationList[currentStationNumber][0].lineColor

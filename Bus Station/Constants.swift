@@ -47,3 +47,6 @@ enum MetroLineColors {
 }
 
 let PlateNumberBackgroundColor = UIColor(red: 0.0, green: 96/255, blue: 17/255, alpha: 1.0)
+
+let labelStandardBlack = UIColor(named: "Black")
+let labelStandardWhite = UIColor(named: "White")
