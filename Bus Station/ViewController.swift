@@ -1129,8 +1129,7 @@ extension ViewController: GADBannerViewDelegate {
 	}
 	
 	func adView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: GADRequestError) {
-		print("Ad failed to load. \(error.localizedDescription)")
-		
+		print("Ad failed to load. \(error.localizedDescription) code: \(error.code)")
 		adDisplayedSuccessfully = false
 	}
 }

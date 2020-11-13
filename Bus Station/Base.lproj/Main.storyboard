@@ -58,7 +58,7 @@
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
-                                                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="212分" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="wmq-H9-HNF">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="212分" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="wmq-H9-HNF">
                                                                         <rect key="frame" x="20" y="11" width="82" height="28"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" constant="82" id="K3X-mC-LNP"/>
@@ -67,7 +67,7 @@
                                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
-                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FcM-Ap-brQ">
+                                                                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FcM-Ap-brQ">
                                                                         <rect key="frame" x="17" y="6" width="88" height="38"/>
                                                                         <color key="backgroundColor" red="0.32549019610000002" green="0.72549019609999998" blue="0.76078431369999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <userDefinedRuntimeAttributes>
