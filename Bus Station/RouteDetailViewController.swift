@@ -18,6 +18,9 @@ class RouteDetailViewController: UIViewController {
 	
 	@IBOutlet var routeDetailTableView: UITableView!
 	@IBOutlet var activityIndicator: UIActivityIndicatorView!
+	@IBOutlet var closeButton: UIButton!
+	@IBOutlet var closeButtonTrailingToSafeAreaConstraint: NSLayoutConstraint!
+	
 	
 	var information = "" {
 		didSet {
@@ -55,6 +58,13 @@ class RouteDetailViewController: UIViewController {
 		configureInformationLabel()
 		
 		informationLabel.layer.zPosition = 1
+		
+		
+		// put the close button in the center if large screen
+		if(self.view.frame.height > 750.0) {
+			closeButtonTrailingToSafeAreaConstraint.isActive = false
+			NSLayoutConstraint(item: closeButton!, attribute: .centerX, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .centerX, multiplier: 1.0, constant: 0.0).isActive = true
+		}
 		
 		activityIndicator.startAnimating()
 		

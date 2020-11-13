@@ -6,7 +6,7 @@
 	<integer>10</integer>
 	<key>logs</key>
 	<dict>
-		<key>642F6C10-FB41-48A2-86B9-159392635C38</key>
+		<key>B737D86D-2022-4E05-9E30-C3E7CBDD6BA7</key>
 		<dict>
 			<key>className</key>
 			<string>IDEActivityLogSection</string>
@@ -15,7 +15,7 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
 			<key>fileName</key>
-			<string>642F6C10-FB41-48A2-86B9-159392635C38.xcactivitylog</string>
+			<string>B737D86D-2022-4E05-9E30-C3E7CBDD6BA7.xcactivitylog</string>
 			<key>hasPrimaryLog</key>
 			<true/>
 			<key>primaryObservable</key>
@@ -32,47 +32,13 @@
 			<key>signature</key>
 			<string>Build Bus Station</string>
 			<key>timeStartedRecording</key>
-			<real>626896827.75237703</real>
+			<real>626966973.07971299</real>
 			<key>timeStoppedRecording</key>
-			<real>626896830.18580103</real>
+			<real>626966975.55879402</real>
 			<key>title</key>
 			<string>Build Bus Station</string>
 			<key>uniqueIdentifier</key>
-			<string>642F6C10-FB41-48A2-86B9-159392635C38</string>
-		</dict>
-		<key>A4A32A6D-A6C1-45C4-BA12-6CE1E8D1E7A1</key>
-		<dict>
-			<key>className</key>
-			<string>IDEActivityLogSection</string>
-			<key>documentTypeString</key>
-			<string>&lt;nil&gt;</string>
-			<key>domainType</key>
-			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
-			<key>fileName</key>
-			<string>A4A32A6D-A6C1-45C4-BA12-6CE1E8D1E7A1.xcactivitylog</string>
-			<key>hasPrimaryLog</key>
-			<true/>
-			<key>primaryObservable</key>
-			<dict>
-				<key>highLevelStatus</key>
-				<string>W</string>
-			</dict>
-			<key>schemeIdentifier-containerName</key>
-			<string>Bus Station project</string>
-			<key>schemeIdentifier-schemeName</key>
-			<string>Bus Station</string>
-			<key>schemeIdentifier-sharedScheme</key>
-			<integer>1</integer>
-			<key>signature</key>
-			<string>Build Bus Station</string>
-			<key>timeStartedRecording</key>
-			<real>626965546.62491596</real>
-			<key>timeStoppedRecording</key>
-			<real>626965551.34005404</real>
-			<key>title</key>
-			<string>Build Bus Station</string>
-			<key>uniqueIdentifier</key>
-			<string>A4A32A6D-A6C1-45C4-BA12-6CE1E8D1E7A1</string>
+			<string>B737D86D-2022-4E05-9E30-C3E7CBDD6BA7</string>
 		</dict>
 	</dict>
 </dict>
