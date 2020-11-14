@@ -71,11 +71,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	// TODO: add substops +
 	// TODO: station collectionview has bug in length
 	// TODO: combine buses from other cities
-	// TODO: add queryBusesArrivals() on adjacent pages
-	// TODO: haptic feedback when location is updated
 	// TODO: make static enum +
 	// TODO: check far away location
-	// TODO: dark mode black label color be hidden
+	// TODO: connectivity issue warnings
 	
 	var busQuery = BusQuery()
 	var locationWhenPinned = CLLocation()

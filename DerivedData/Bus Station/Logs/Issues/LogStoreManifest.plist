@@ -6,7 +6,7 @@
 	<integer>10</integer>
 	<key>logs</key>
 	<dict>
-		<key>418A589B-30AD-4AA0-9A6F-B59743540BEC</key>
+		<key>5AB64092-C66E-45E0-A8DE-761B4670F602</key>
 		<dict>
 			<key>className</key>
 			<string>IDEActivityLogMajorGroupSection</string>
@@ -15,91 +15,7 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.target.product-type.framework</string>
 			<key>fileName</key>
-			<string>418A589B-30AD-4AA0-9A6F-B59743540BEC.xcactivitylog</string>
-			<key>hasPrimaryLog</key>
-			<true/>
-			<key>primaryObservable</key>
-			<dict>
-				<key>highLevelStatus</key>
-				<string>S</string>
-			</dict>
-			<key>signature</key>
-			<string>GoogleUtilities-dfymwmqfktfcauctipoybrdojmgv</string>
-			<key>timeStartedRecording</key>
-			<real>626966973.32230604</real>
-			<key>timeStoppedRecording</key>
-			<real>626966973.37247097</real>
-			<key>title</key>
-			<string>Build target GoogleUtilities</string>
-			<key>uniqueIdentifier</key>
-			<string>418A589B-30AD-4AA0-9A6F-B59743540BEC</string>
-		</dict>
-		<key>503756A3-509A-4ACD-8AD2-25DEA54606E9</key>
-		<dict>
-			<key>className</key>
-			<string>IDEActivityLogMajorGroupSection</string>
-			<key>documentTypeString</key>
-			<string>&lt;nil&gt;</string>
-			<key>domainType</key>
-			<string>Xcode.IDEActivityLogDomainType.target.product-type.framework</string>
-			<key>fileName</key>
-			<string>503756A3-509A-4ACD-8AD2-25DEA54606E9.xcactivitylog</string>
-			<key>hasPrimaryLog</key>
-			<true/>
-			<key>primaryObservable</key>
-			<dict>
-				<key>highLevelStatus</key>
-				<string>S</string>
-			</dict>
-			<key>signature</key>
-			<string>nanopb-dfymwmqfktfcauctipoybrdojmgv</string>
-			<key>timeStartedRecording</key>
-			<real>626966973.244084</real>
-			<key>timeStoppedRecording</key>
-			<real>626966973.31649494</real>
-			<key>title</key>
-			<string>Build target nanopb</string>
-			<key>uniqueIdentifier</key>
-			<string>503756A3-509A-4ACD-8AD2-25DEA54606E9</string>
-		</dict>
-		<key>5C09B056-BB3F-43E3-89E0-229BBF7A5185</key>
-		<dict>
-			<key>className</key>
-			<string>IDEActivityLogMajorGroupSection</string>
-			<key>documentTypeString</key>
-			<string>&lt;nil&gt;</string>
-			<key>domainType</key>
-			<string>Xcode.IDEActivityLogDomainType.target.product-type.framework</string>
-			<key>fileName</key>
-			<string>5C09B056-BB3F-43E3-89E0-229BBF7A5185.xcactivitylog</string>
-			<key>hasPrimaryLog</key>
-			<true/>
-			<key>primaryObservable</key>
-			<dict>
-				<key>highLevelStatus</key>
-				<string>S</string>
-			</dict>
-			<key>signature</key>
-			<string>PromisesObjC-dfymwmqfktfcauctipoybrdojmgv</string>
-			<key>timeStartedRecording</key>
-			<real>626966973.24504101</real>
-			<key>timeStoppedRecording</key>
-			<real>626966973.32061005</real>
-			<key>title</key>
-			<string>Build target PromisesObjC</string>
-			<key>uniqueIdentifier</key>
-			<string>5C09B056-BB3F-43E3-89E0-229BBF7A5185</string>
-		</dict>
-		<key>8601E10C-EB8B-476A-AE82-BA70F8AA6256</key>
-		<dict>
-			<key>className</key>
-			<string>IDEActivityLogMajorGroupSection</string>
-			<key>documentTypeString</key>
-			<string>&lt;nil&gt;</string>
-			<key>domainType</key>
-			<string>Xcode.IDEActivityLogDomainType.target.product-type.framework</string>
-			<key>fileName</key>
-			<string>8601E10C-EB8B-476A-AE82-BA70F8AA6256.xcactivitylog</string>
+			<string>5AB64092-C66E-45E0-A8DE-761B4670F602.xcactivitylog</string>
 			<key>hasPrimaryLog</key>
 			<true/>
 			<key>primaryObservable</key>
@@ -110,15 +26,99 @@
 			<key>signature</key>
 			<string>Pods-Bus_Station-dfymwmqfktfcauctipoybrdojmgv</string>
 			<key>timeStartedRecording</key>
-			<real>626966973.37351</real>
+			<real>627026001.23789299</real>
 			<key>timeStoppedRecording</key>
-			<real>626966973.39650202</real>
+			<real>627026001.23957098</real>
 			<key>title</key>
 			<string>Build target Pods-Bus Station</string>
 			<key>uniqueIdentifier</key>
-			<string>8601E10C-EB8B-476A-AE82-BA70F8AA6256</string>
+			<string>5AB64092-C66E-45E0-A8DE-761B4670F602</string>
 		</dict>
-		<key>B69EFB64-917A-41CE-84A2-86F823980A00</key>
+		<key>8CC99C97-5365-4077-BF17-56E4A38471FC</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogMajorGroupSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.target.product-type.framework</string>
+			<key>fileName</key>
+			<string>8CC99C97-5365-4077-BF17-56E4A38471FC.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>signature</key>
+			<string>PromisesObjC-dfymwmqfktfcauctipoybrdojmgv</string>
+			<key>timeStartedRecording</key>
+			<real>627026001.22606897</real>
+			<key>timeStoppedRecording</key>
+			<real>627026001.233078</real>
+			<key>title</key>
+			<string>Build target PromisesObjC</string>
+			<key>uniqueIdentifier</key>
+			<string>8CC99C97-5365-4077-BF17-56E4A38471FC</string>
+		</dict>
+		<key>9354FA14-7DAE-470C-8E5D-1DABDDDC25C6</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogMajorGroupSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.target.product-type.framework</string>
+			<key>fileName</key>
+			<string>9354FA14-7DAE-470C-8E5D-1DABDDDC25C6.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>signature</key>
+			<string>nanopb-dfymwmqfktfcauctipoybrdojmgv</string>
+			<key>timeStartedRecording</key>
+			<real>627026001.22640896</real>
+			<key>timeStoppedRecording</key>
+			<real>627026001.23303604</real>
+			<key>title</key>
+			<string>Build target nanopb</string>
+			<key>uniqueIdentifier</key>
+			<string>9354FA14-7DAE-470C-8E5D-1DABDDDC25C6</string>
+		</dict>
+		<key>CB8C7B46-894E-43BC-9DEA-2721B3A74711</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogMajorGroupSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.target.product-type.framework</string>
+			<key>fileName</key>
+			<string>CB8C7B46-894E-43BC-9DEA-2721B3A74711.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>signature</key>
+			<string>GoogleUtilities-dfymwmqfktfcauctipoybrdojmgv</string>
+			<key>timeStartedRecording</key>
+			<real>627026001.23396397</real>
+			<key>timeStoppedRecording</key>
+			<real>627026001.237082</real>
+			<key>title</key>
+			<string>Build target GoogleUtilities</string>
+			<key>uniqueIdentifier</key>
+			<string>CB8C7B46-894E-43BC-9DEA-2721B3A74711</string>
+		</dict>
+		<key>FC8A6BB2-9342-4005-A2FD-BBE0519334A6</key>
 		<dict>
 			<key>className</key>
 			<string>IDEActivityLogMajorGroupSection</string>
@@ -127,7 +127,7 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.target.product-type.application</string>
 			<key>fileName</key>
-			<string>B69EFB64-917A-41CE-84A2-86F823980A00.xcactivitylog</string>
+			<string>FC8A6BB2-9342-4005-A2FD-BBE0519334A6.xcactivitylog</string>
 			<key>hasPrimaryLog</key>
 			<true/>
 			<key>primaryObservable</key>
@@ -138,13 +138,13 @@
 			<key>signature</key>
 			<string>Bus_Station-aezfbisvhkatsrdvgflxteszofku</string>
 			<key>timeStartedRecording</key>
-			<real>626966973.24351394</real>
+			<real>627027420.37062299</real>
 			<key>timeStoppedRecording</key>
-			<real>626966975.54472697</real>
+			<real>627027424.33267796</real>
 			<key>title</key>
 			<string>Build target Bus Station</string>
 			<key>uniqueIdentifier</key>
-			<string>B69EFB64-917A-41CE-84A2-86F823980A00</string>
+			<string>FC8A6BB2-9342-4005-A2FD-BBE0519334A6</string>
 		</dict>
 	</dict>
 	<key>preserveOldLogs</key>
