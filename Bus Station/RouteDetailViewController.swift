@@ -29,6 +29,7 @@ class RouteDetailViewController: UIViewController {
 	}
 	var contentMode: ContentMode = .ETAForCurrentStation
 	var selectedBusIndex = 0
+	var plateNumberForAllStation: String = ""
 	var listForETAForAllStation: Array<String> = []
 	
 	var busQuery = BusQuery()
@@ -98,6 +99,9 @@ class RouteDetailViewController: UIViewController {
 			self.liveStatusStops = self.busQuery.queryRealTimeBusLocation(busStop: self.busStop!)
 			
 			DispatchQueue.main.async {
+				if(self.contentMode == .ETAForEveryStation) {
+					self.organizeAllStationETA()
+				}
 				self.routeDetailTableView.reloadData()
 				if(self.needAutoscroll) {
 					self.autoScrollPosition = self.liveStatusStops.firstIndex(where: { $0.isCurrentStop == true })
@@ -120,27 +124,30 @@ class RouteDetailViewController: UIViewController {
 	}
 	
 	@objc func showAllStationETA(notification: Notification) {
-		let plateNumber = notification.object as! String
+		plateNumberForAllStation = notification.object as! String
+		organizeAllStationETA()
+		contentMode = .ETAForEveryStation
+		routeDetailTableView.reloadData()
+	}
+	
+	func organizeAllStationETA() {
 		var temp = false
 		var cumulativeETA = 0
-		
 		listForETAForAllStation = []
+		
 		for i in 0..<liveStatusStops.count {
 			if(temp) {
 				listForETAForAllStation.append(" \(Int(cumulativeETA/60))分 ")
 				cumulativeETA = cumulativeETA + liveStatusStops[i].timeToTheNextStation
 				continue
 			}
-			else if(plateNumber == liveStatusStops[i].plateNumber) {
+			else if(plateNumberForAllStation == liveStatusStops[i].plateNumber) {
 				selectedBusIndex = i
 				cumulativeETA = liveStatusStops[i+1].estimatedArrival
 				temp = true
 			}
 			listForETAForAllStation.append("")
 		}
-		
-		contentMode = .ETAForEveryStation
-		routeDetailTableView.reloadData()
 	}
 	
 	@objc func switchInformationLabel() {
@@ -179,8 +186,8 @@ extension RouteDetailViewController: UITableViewDelegate, UITableViewDataSource 
 		
 		if(contentMode == .ETAForEveryStation) {
 			cell.information = listForETAForAllStation[indexPath.row]
-			cell.informationLabelColor = RouteInformationLabelColors.green
-			cell.presentAllStationETA = (indexPath.row > selectedBusIndex) ? true:false
+			cell.selectedBusIndex = selectedBusIndex
+			cell.tag = indexPath.row
 		}
 		else {
 			cell.information = self.liveStatusStops[indexPath.row].information

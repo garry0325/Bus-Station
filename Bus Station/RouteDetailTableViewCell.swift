@@ -18,22 +18,22 @@ class RouteDetailTableViewCell: UITableViewCell {
 		didSet {
 			switch eventType {	// 0 Departing, 1 Arriving in actual situation
 			case .Arriving:
-				busAtStopView.isHidden = false
-				busDepartStopView.isHidden = true
+				busAtStopButton.isHidden = false
+				busDepartStopButton.isHidden = true
 				infoAtStop.isHidden = false
 				infoDepartStop.isHidden = true
 				plateAtStopLabel.isHidden = false
 				plateDepartStopLabel.isHidden = true
 			case .Departing:
-				busAtStopView.isHidden = true
-				busDepartStopView.isHidden = false
+				busAtStopButton.isHidden = true
+				busDepartStopButton.isHidden = false
 				infoAtStop.isHidden = true
 				infoDepartStop.isHidden = false
 				plateAtStopLabel.isHidden = true
 				plateDepartStopLabel.isHidden = false
 			default:
-				busAtStopView.isHidden = true
-				busDepartStopView.isHidden = true
+				busAtStopButton.isHidden = true
+				busDepartStopButton.isHidden = true
 				infoAtStop.isHidden = true
 				infoDepartStop.isHidden = true
 				plateAtStopLabel.isHidden = true
@@ -63,7 +63,7 @@ class RouteDetailTableViewCell: UITableViewCell {
 		}
 	}
 	
-	var presentAllStationETA = false
+	var selectedBusIndex = 0
 	var mode: RouteDetailViewController.ContentMode = .ETAForCurrentStation {	// present information or plate number
 		didSet {
 			switch mode {
@@ -80,8 +80,8 @@ class RouteDetailTableViewCell: UITableViewCell {
 				infoDepartStop.text = " " + information + " "
 				infoAtStop.backgroundColor = informationLabelColor
 				infoDepartStop.backgroundColor = informationLabelColor
-				infoAtStop.font = UIFont.boldSystemFont(ofSize: 16.0)
-				infoDepartStop.font = UIFont.boldSystemFont(ofSize: 16.0)
+				allStationETAModeIndicator.isHidden = true
+				
 			case .PlateNumber:
 				infoAtStop.isHidden = true
 				infoDepartStop.isHidden = true
@@ -97,25 +97,25 @@ class RouteDetailTableViewCell: UITableViewCell {
 				
 				plateAtStopLabel.setTitle(" " + plateNumber + " ", for: .normal)
 				plateDepartStopLabel.setTitle(" " + plateNumber + " ", for: .normal)
-				plateAtStopLabel.backgroundColor = PlateNumberBackgroundColor
-				plateDepartStopLabel.backgroundColor = PlateNumberBackgroundColor
-				plateAtStopLabel.titleLabel?.font = UIFont(name: "Roadgeek2005SeriesD", size: 16.0)
-				plateDepartStopLabel.titleLabel?.font = UIFont(name: "Roadgeek2005SeriesD", size: 16.0)
+				allStationETAModeIndicator.isHidden = true
+				
 			case .ETAForEveryStation:
 				plateAtStopLabel.isHidden = true
 				plateDepartStopLabel.isHidden = true
-				infoAtStop.isHidden = !presentAllStationETA
+				infoAtStop.isHidden = (self.tag > selectedBusIndex) ? false:true
 				infoDepartStop.isHidden = true
 				
 				infoAtStop.text = information
+				infoAtStop.backgroundColor = allStationETAModeIndicator.tintColor
+				allStationETAModeIndicator.isHidden = (self.tag != selectedBusIndex)
 			}
 		}
 	}
 	
 	@IBOutlet var stopNameLabel: UILabel!
 	@IBOutlet var busAtStopButton: UIButton!
-	@IBOutlet var busAtStopView: UIImageView!
-	@IBOutlet var busDepartStopView: UIImageView!
+	@IBOutlet var busDepartStopButton: UIButton!
+	@IBOutlet var allStationETAModeIndicator: UIImageView!
 	@IBOutlet var plateAtStopLabel: UIButton!
 	@IBOutlet var plateDepartStopLabel: UIButton!
 	@IBOutlet var infoAtStop: UILabel!
@@ -134,6 +134,8 @@ class RouteDetailTableViewCell: UITableViewCell {
 		infoDepartStop.layer.masksToBounds = true
 		infoAtStop.layer.backgroundColor = UIColor.lightGray.cgColor
 		infoDepartStop.layer.backgroundColor = UIColor.lightGray.cgColor
+		infoAtStop.font = UIFont.boldSystemFont(ofSize: 16.0)
+		infoDepartStop.font = UIFont.boldSystemFont(ofSize: 16.0)
 		
 		plateAtStopLabel.layer.cornerRadius = 3.0
 		plateDepartStopLabel.layer.cornerRadius = 3.0
@@ -142,10 +144,6 @@ class RouteDetailTableViewCell: UITableViewCell {
 		plateAtStopLabel.layer.backgroundColor = PlateNumberBackgroundColor.cgColor
 		plateDepartStopLabel.layer.backgroundColor = PlateNumberBackgroundColor.cgColor
 		
-		#warning("set plate labels font at here")
-		#warning("set plate labels background color")
-		#warning("info labels text size")
-		
 		plateAtStopLabel.imageView?.contentMode = .scaleAspectFit
 		plateDepartStopLabel.imageView?.contentMode = .scaleAspectFit
 		plateAtStopLabel.imageEdgeInsets = UIEdgeInsets(top: 3.0, left: 0.0, bottom: 3.0, right: 0.0)
@@ -153,11 +151,15 @@ class RouteDetailTableViewCell: UITableViewCell {
 		plateAtStopLabel.titleLabel?.adjustsFontSizeToFitWidth = true
 		plateDepartStopLabel.titleLabel?.adjustsFontSizeToFitWidth = true
 		
+		plateAtStopLabel.backgroundColor = PlateNumberBackgroundColor
+		plateDepartStopLabel.backgroundColor = PlateNumberBackgroundColor
+		plateAtStopLabel.titleLabel?.font = UIFont(name: "Roadgeek2005SeriesD", size: 16.0)
+		plateDepartStopLabel.titleLabel?.font = UIFont(name: "Roadgeek2005SeriesD", size: 16.0)
+		
 		currentStopIndicatorView.tintColor = .white
 		currentStopIndicatorView.layer.borderColor = UIColor.systemBlue.cgColor
 		currentStopIndicatorView.layer.cornerRadius = currentStopIndicatorView.frame.width / 2
 		currentStopIndicatorView.layer.borderWidth = 5.0
-		
 	}
 
 	override func setSelected(_ selected: Bool, animated: Bool) {

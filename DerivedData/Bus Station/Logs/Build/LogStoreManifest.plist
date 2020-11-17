@@ -244,6 +244,40 @@
 			<key>uniqueIdentifier</key>
 			<string>3DCC6859-2F4D-4B5F-BE7B-640DB70648E3</string>
 		</dict>
+		<key>4147CF15-1F55-4482-9B1C-E2FBFB60CE8D</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>4147CF15-1F55-4482-9B1C-E2FBFB60CE8D.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>W</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Bus Station project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Bus Station</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build Bus Station</string>
+			<key>timeStartedRecording</key>
+			<real>627312834.43096197</real>
+			<key>timeStoppedRecording</key>
+			<real>627312838.057845</real>
+			<key>title</key>
+			<string>Build Bus Station</string>
+			<key>uniqueIdentifier</key>
+			<string>4147CF15-1F55-4482-9B1C-E2FBFB60CE8D</string>
+		</dict>
 		<key>47C017D6-6B5D-40A2-93E8-EB70FE56F0B2</key>
 		<dict>
 			<key>className</key>
@@ -277,6 +311,74 @@
 			<string>Build Bus Station</string>
 			<key>uniqueIdentifier</key>
 			<string>47C017D6-6B5D-40A2-93E8-EB70FE56F0B2</string>
+		</dict>
+		<key>4E301248-79E4-422C-B36E-B0D042D3D6F8</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>4E301248-79E4-422C-B36E-B0D042D3D6F8.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>W</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Bus Station project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Bus Station</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build Bus Station</string>
+			<key>timeStartedRecording</key>
+			<real>627310966.54496706</real>
+			<key>timeStoppedRecording</key>
+			<real>627310968.35003102</real>
+			<key>title</key>
+			<string>Build Bus Station</string>
+			<key>uniqueIdentifier</key>
+			<string>4E301248-79E4-422C-B36E-B0D042D3D6F8</string>
+		</dict>
+		<key>562F20A6-3872-41F7-8A99-3EEE6B9BC095</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>562F20A6-3872-41F7-8A99-3EEE6B9BC095.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>W</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Bus Station project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Bus Station</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build Bus Station</string>
+			<key>timeStartedRecording</key>
+			<real>627310822.884166</real>
+			<key>timeStoppedRecording</key>
+			<real>627310830.96627104</real>
+			<key>title</key>
+			<string>Build Bus Station</string>
+			<key>uniqueIdentifier</key>
+			<string>562F20A6-3872-41F7-8A99-3EEE6B9BC095</string>
 		</dict>
 		<key>67A73F1C-838B-4B4D-AAE9-B1A869BC7F7E</key>
 		<dict>
@@ -312,6 +414,40 @@
 			<key>uniqueIdentifier</key>
 			<string>67A73F1C-838B-4B4D-AAE9-B1A869BC7F7E</string>
 		</dict>
+		<key>701CB694-9F14-4EF0-9F79-A5A20CA4ACD3</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>701CB694-9F14-4EF0-9F79-A5A20CA4ACD3.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>W</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Bus Station project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Bus Station</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build Bus Station</string>
+			<key>timeStartedRecording</key>
+			<real>627311703.73522794</real>
+			<key>timeStoppedRecording</key>
+			<real>627311709.10914898</real>
+			<key>title</key>
+			<string>Build Bus Station</string>
+			<key>uniqueIdentifier</key>
+			<string>701CB694-9F14-4EF0-9F79-A5A20CA4ACD3</string>
+		</dict>
 		<key>78862F6D-ED91-44D1-AF88-B71E6F822E62</key>
 		<dict>
 			<key>className</key>
@@ -346,6 +482,108 @@
 			<key>uniqueIdentifier</key>
 			<string>78862F6D-ED91-44D1-AF88-B71E6F822E62</string>
 		</dict>
+		<key>7C67C97E-1E16-47AE-B68E-A25443A53152</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>7C67C97E-1E16-47AE-B68E-A25443A53152.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>W</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Bus Station project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Bus Station</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build Bus Station</string>
+			<key>timeStartedRecording</key>
+			<real>627312757.72565496</real>
+			<key>timeStoppedRecording</key>
+			<real>627312762.15297902</real>
+			<key>title</key>
+			<string>Build Bus Station</string>
+			<key>uniqueIdentifier</key>
+			<string>7C67C97E-1E16-47AE-B68E-A25443A53152</string>
+		</dict>
+		<key>81BE97D4-E29E-4892-AB1D-CF3810BC1E86</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>81BE97D4-E29E-4892-AB1D-CF3810BC1E86.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>W</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Bus Station project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Bus Station</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build Bus Station</string>
+			<key>timeStartedRecording</key>
+			<real>627312594.42796004</real>
+			<key>timeStoppedRecording</key>
+			<real>627312606.81745505</real>
+			<key>title</key>
+			<string>Build Bus Station</string>
+			<key>uniqueIdentifier</key>
+			<string>81BE97D4-E29E-4892-AB1D-CF3810BC1E86</string>
+		</dict>
+		<key>9F6E5F24-5022-48C2-BBD9-E00E98C283C3</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>9F6E5F24-5022-48C2-BBD9-E00E98C283C3.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>W</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Bus Station project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Bus Station</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build Bus Station</string>
+			<key>timeStartedRecording</key>
+			<real>627311351.60013902</real>
+			<key>timeStoppedRecording</key>
+			<real>627311359.66070604</real>
+			<key>title</key>
+			<string>Build Bus Station</string>
+			<key>uniqueIdentifier</key>
+			<string>9F6E5F24-5022-48C2-BBD9-E00E98C283C3</string>
+		</dict>
 		<key>A70ACDF8-9585-4543-BAC2-AFEBAF50B612</key>
 		<dict>
 			<key>className</key>
@@ -379,6 +617,74 @@
 			<string>Build Bus Station</string>
 			<key>uniqueIdentifier</key>
 			<string>A70ACDF8-9585-4543-BAC2-AFEBAF50B612</string>
+		</dict>
+		<key>A7DE1D62-7994-4E5D-BBF9-AD2E08662D34</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>A7DE1D62-7994-4E5D-BBF9-AD2E08662D34.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>W</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Bus Station project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Bus Station</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build Bus Station</string>
+			<key>timeStartedRecording</key>
+			<real>627312390.26848996</real>
+			<key>timeStoppedRecording</key>
+			<real>627312397.79982996</real>
+			<key>title</key>
+			<string>Build Bus Station</string>
+			<key>uniqueIdentifier</key>
+			<string>A7DE1D62-7994-4E5D-BBF9-AD2E08662D34</string>
+		</dict>
+		<key>CEF8E067-4A12-4F98-92AA-810A1C9669B7</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>CEF8E067-4A12-4F98-92AA-810A1C9669B7.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>W</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Bus Station project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Bus Station</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build Bus Station</string>
+			<key>timeStartedRecording</key>
+			<real>627311046.18199897</real>
+			<key>timeStoppedRecording</key>
+			<real>627311048.19655395</real>
+			<key>title</key>
+			<string>Build Bus Station</string>
+			<key>uniqueIdentifier</key>
+			<string>CEF8E067-4A12-4F98-92AA-810A1C9669B7</string>
 		</dict>
 		<key>CFC76094-7D53-4D9B-B88B-479434C5ADA0</key>
 		<dict>
@@ -448,6 +754,74 @@
 			<key>uniqueIdentifier</key>
 			<string>E3C6435B-CE3C-44B5-9738-37A91EA837AB</string>
 		</dict>
+		<key>E5151D01-240C-4A2B-A8D1-48F6323EBD43</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>E5151D01-240C-4A2B-A8D1-48F6323EBD43.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>W</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Bus Station project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Bus Station</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build Bus Station</string>
+			<key>timeStartedRecording</key>
+			<real>627312506.99083996</real>
+			<key>timeStoppedRecording</key>
+			<real>627312508.88372397</real>
+			<key>title</key>
+			<string>Build Bus Station</string>
+			<key>uniqueIdentifier</key>
+			<string>E5151D01-240C-4A2B-A8D1-48F6323EBD43</string>
+		</dict>
+		<key>E60B3F33-3E72-47C9-88CB-820C82D04B53</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>E60B3F33-3E72-47C9-88CB-820C82D04B53.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>W</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Bus Station project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Bus Station</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build Bus Station</string>
+			<key>timeStartedRecording</key>
+			<real>627310831.64301598</real>
+			<key>timeStoppedRecording</key>
+			<real>627310831.71511304</real>
+			<key>title</key>
+			<string>Build Bus Station</string>
+			<key>uniqueIdentifier</key>
+			<string>E60B3F33-3E72-47C9-88CB-820C82D04B53</string>
+		</dict>
 		<key>F7A32BF6-08A9-442E-997A-0DA0C3DBA720</key>
 		<dict>
 			<key>className</key>
@@ -515,6 +889,40 @@
 			<string>Build Bus Station</string>
 			<key>uniqueIdentifier</key>
 			<string>FB201F05-3F4C-4F46-A9A7-8D82EF5E8094</string>
+		</dict>
+		<key>FC5CFE0D-883E-47CA-8AE0-D94412FD9C96</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>FC5CFE0D-883E-47CA-8AE0-D94412FD9C96.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>W</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Bus Station project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Bus Station</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build Bus Station</string>
+			<key>timeStartedRecording</key>
+			<real>627311747.37953806</real>
+			<key>timeStoppedRecording</key>
+			<real>627311749.37476695</real>
+			<key>title</key>
+			<string>Build Bus Station</string>
+			<key>uniqueIdentifier</key>
+			<string>FC5CFE0D-883E-47CA-8AE0-D94412FD9C96</string>
 		</dict>
 	</dict>
 </dict>
