@@ -14,7 +14,6 @@ class RouteCollectionViewCell: UICollectionViewCell {
 	var viewController = ViewController()
 	
 	override func awakeFromNib() {
-		print("awaked")
 		routeListTableView.delegate = viewController
 		routeListTableView.dataSource = viewController
 		

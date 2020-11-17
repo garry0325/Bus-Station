@@ -78,7 +78,6 @@ class RouteDetailViewController: UIViewController {
 	}
 	deinit {
 		NotificationCenter.default.removeObserver(self)
-		print("closed")
 	}
 	
 	override func viewDidDisappear(_ animated: Bool) {
@@ -125,8 +124,8 @@ class RouteDetailViewController: UIViewController {
 	
 	@objc func showAllStationETA(notification: Notification) {
 		plateNumberForAllStation = notification.object as! String
-		organizeAllStationETA()
 		contentMode = .ETAForEveryStation
+		organizeAllStationETA()
 		routeDetailTableView.reloadData()
 	}
 	
@@ -141,12 +140,19 @@ class RouteDetailViewController: UIViewController {
 				cumulativeETA = cumulativeETA + liveStatusStops[i].timeToTheNextStation
 				continue
 			}
-			else if(plateNumberForAllStation == liveStatusStops[i].plateNumber) {
+			else if(plateNumberForAllStation == liveStatusStops[i].plateNumber &&
+						i < liveStatusStops.count - 1) {
 				selectedBusIndex = i
-				cumulativeETA = liveStatusStops[i+1].estimatedArrival
+				cumulativeETA = liveStatusStops[i+1].estimatedArrival	// i+1 crashes when at terminal
 				temp = true
 			}
 			listForETAForAllStation.append("")
+		}
+		
+		if(temp == false) {	//	ignore the case when tapping on terminal station
+			plateNumberForAllStation = ""
+			selectedBusIndex = 0
+			contentMode = .ETAForCurrentStation
 		}
 	}
 	
