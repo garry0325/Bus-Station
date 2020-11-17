@@ -80,6 +80,9 @@ class RouteDetailTableViewCell: UITableViewCell {
 				infoDepartStop.text = " " + information + " "
 				infoAtStop.backgroundColor = informationLabelColor
 				infoDepartStop.backgroundColor = informationLabelColor
+				
+				busAtStopButton.tintColor = UIColor(named: "Black")
+				busDepartStopButton.tintColor = UIColor(named: "Black")
 				allStationETAModeIndicator.isHidden = true
 				
 			case .PlateNumber:
@@ -97,6 +100,9 @@ class RouteDetailTableViewCell: UITableViewCell {
 				
 				plateAtStopLabel.setTitle(" " + plateNumber + " ", for: .normal)
 				plateDepartStopLabel.setTitle(" " + plateNumber + " ", for: .normal)
+				
+				busAtStopButton.tintColor = UIColor(named: "Black")
+				busDepartStopButton.tintColor = UIColor(named: "Black")
 				allStationETAModeIndicator.isHidden = true
 				
 			case .ETAForEveryStation:
@@ -107,6 +113,8 @@ class RouteDetailTableViewCell: UITableViewCell {
 				
 				infoAtStop.text = information
 				infoAtStop.backgroundColor = allStationETAModeIndicator.tintColor
+				busAtStopButton.tintColor = (self.tag == selectedBusIndex) ? allStationETAModeIndicator.tintColor:UIColor(named: "Black")
+				busDepartStopButton.tintColor = (self.tag == selectedBusIndex) ? allStationETAModeIndicator.tintColor:UIColor(named: "Black")
 				allStationETAModeIndicator.isHidden = (self.tag != selectedBusIndex)
 			}
 		}
