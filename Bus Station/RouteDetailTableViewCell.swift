@@ -63,9 +63,11 @@ class RouteDetailTableViewCell: UITableViewCell {
 		}
 	}
 	
-	var presentInformation = true {	// present information or plate number
+	var presentAllStationETA = false
+	var mode: RouteDetailViewController.ContentMode = .ETAForCurrentStation {	// present information or plate number
 		didSet {
-			if(presentInformation) {
+			switch mode {
+			case .ETAForCurrentStation:
 				plateAtStopLabel.isHidden = true
 				plateDepartStopLabel.isHidden = true
 				
@@ -80,8 +82,7 @@ class RouteDetailTableViewCell: UITableViewCell {
 				infoDepartStop.backgroundColor = informationLabelColor
 				infoAtStop.font = UIFont.boldSystemFont(ofSize: 16.0)
 				infoDepartStop.font = UIFont.boldSystemFont(ofSize: 16.0)
-			}
-			else {
+			case .PlateNumber:
 				infoAtStop.isHidden = true
 				infoDepartStop.isHidden = true
 				
@@ -100,11 +101,19 @@ class RouteDetailTableViewCell: UITableViewCell {
 				plateDepartStopLabel.backgroundColor = PlateNumberBackgroundColor
 				plateAtStopLabel.titleLabel?.font = UIFont(name: "Roadgeek2005SeriesD", size: 16.0)
 				plateDepartStopLabel.titleLabel?.font = UIFont(name: "Roadgeek2005SeriesD", size: 16.0)
+			case .ETAForEveryStation:
+				plateAtStopLabel.isHidden = true
+				plateDepartStopLabel.isHidden = true
+				infoAtStop.isHidden = !presentAllStationETA
+				infoDepartStop.isHidden = true
+				
+				infoAtStop.text = information
 			}
 		}
 	}
 	
 	@IBOutlet var stopNameLabel: UILabel!
+	@IBOutlet var busAtStopButton: UIButton!
 	@IBOutlet var busAtStopView: UIImageView!
 	@IBOutlet var busDepartStopView: UIImageView!
 	@IBOutlet var plateAtStopLabel: UIButton!
@@ -133,6 +142,10 @@ class RouteDetailTableViewCell: UITableViewCell {
 		plateAtStopLabel.layer.backgroundColor = PlateNumberBackgroundColor.cgColor
 		plateDepartStopLabel.layer.backgroundColor = PlateNumberBackgroundColor.cgColor
 		
+		#warning("set plate labels font at here")
+		#warning("set plate labels background color")
+		#warning("info labels text size")
+		
 		plateAtStopLabel.imageView?.contentMode = .scaleAspectFit
 		plateDepartStopLabel.imageView?.contentMode = .scaleAspectFit
 		plateAtStopLabel.imageEdgeInsets = UIEdgeInsets(top: 3.0, left: 0.0, bottom: 3.0, right: 0.0)
@@ -151,5 +164,8 @@ class RouteDetailTableViewCell: UITableViewCell {
 		super.setSelected(selected, animated: animated)
 		// Configure the view for the selected state
 	}
-
+	@IBAction func busAtStopButtonTapped(_ sender: UIButton) {
+		NotificationCenter.default.post(name: NSNotification.Name("AllStationETA"), object: plateNumber)
+	}
+	
 }

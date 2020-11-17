@@ -375,6 +375,16 @@ class BusQuery {
 		task3.resume()
 		semaphore.wait()
 		
+		// first, calculate the time needed for bus to get to the next station
+		for i in 0..<(busStopLiveStatus.count - 1) {
+			let currentStationETA = busStopLiveStatus[i].estimatedArrival
+			let nextStationETA = busStopLiveStatus[i+1].estimatedArrival
+			if(currentStationETA <= nextStationETA) {
+				busStopLiveStatus[i].timeToTheNextStation = nextStationETA - currentStationETA
+			}
+		}
+		
+		// calculate each bus to current station estimated arrival time
 		let currentEstimatedArrival = busStopLiveStatus[currentStopSequence!].estimatedArrival
 		var compensate = [currentEstimatedArrival]
 		var first = true

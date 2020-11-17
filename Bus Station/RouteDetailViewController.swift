@@ -27,7 +27,9 @@ class RouteDetailViewController: UIViewController {
 			informationLabel.text = " " + information + " "
 		}
 	}
-	var presentInformation = true
+	var contentMode: ContentMode = .ETAForCurrentStation
+	var selectedBusIndex = 0
+	var listForETAForAllStation: Array<String> = []
 	
 	var busQuery = BusQuery()
 	var liveStatusStops = [BusStopLiveStatus]()
@@ -70,6 +72,12 @@ class RouteDetailViewController: UIViewController {
 		
 		autoRefresh()
 		autoRefreshTimer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(autoRefresh), userInfo: nil, repeats: true)
+		
+		NotificationCenter.default.addObserver(self, selector: #selector(showAllStationETA), name: NSNotification.Name("AllStationETA"), object: nil)
+	}
+	deinit {
+		NotificationCenter.default.removeObserver(self)
+		print("closed")
 	}
 	
 	override func viewDidDisappear(_ animated: Bool) {
@@ -111,8 +119,39 @@ class RouteDetailViewController: UIViewController {
 		}
 	}
 	
+	@objc func showAllStationETA(notification: Notification) {
+		let plateNumber = notification.object as! String
+		var temp = false
+		var cumulativeETA = 0
+		
+		listForETAForAllStation = []
+		for i in 0..<liveStatusStops.count {
+			if(temp) {
+				listForETAForAllStation.append(" \(Int(cumulativeETA/60))分 ")
+				cumulativeETA = cumulativeETA + liveStatusStops[i].timeToTheNextStation
+				continue
+			}
+			else if(plateNumber == liveStatusStops[i].plateNumber) {
+				selectedBusIndex = i
+				cumulativeETA = liveStatusStops[i+1].estimatedArrival
+				temp = true
+			}
+			listForETAForAllStation.append("")
+		}
+		
+		contentMode = .ETAForEveryStation
+		routeDetailTableView.reloadData()
+	}
+	
 	@objc func switchInformationLabel() {
-		presentInformation = !presentInformation
+		switch contentMode {
+		case .ETAForCurrentStation:
+			contentMode = .PlateNumber
+		case .PlateNumber:
+			contentMode = .ETAForCurrentStation
+		case .ETAForEveryStation:
+			contentMode = .ETAForCurrentStation
+		}
 		routeDetailTableView.reloadData()
 	}
 	
@@ -137,9 +176,18 @@ extension RouteDetailViewController: UITableViewDelegate, UITableViewDataSource 
 		cell.eventType = self.liveStatusStops[indexPath.row].eventType
 		cell.plateNumber = self.liveStatusStops[indexPath.row].plateNumber
 		cell.vehicleType = self.liveStatusStops[indexPath.row].vehicleType
-		cell.information = self.liveStatusStops[indexPath.row].information
-		cell.informationLabelColor = self.liveStatusStops[indexPath.row].informationLabelColor
-		cell.presentInformation = presentInformation
+		
+		if(contentMode == .ETAForEveryStation) {
+			cell.information = listForETAForAllStation[indexPath.row]
+			cell.informationLabelColor = RouteInformationLabelColors.green
+			cell.presentAllStationETA = (indexPath.row > selectedBusIndex) ? true:false
+		}
+		else {
+			cell.information = self.liveStatusStops[indexPath.row].information
+			cell.informationLabelColor = self.liveStatusStops[indexPath.row].informationLabelColor
+		}
+		
+		cell.mode = contentMode
 		
 		return cell
 	}
@@ -174,5 +222,13 @@ extension RouteDetailViewController: UITableViewDelegate, UITableViewDataSource 
 	*/
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		return 35.0
+	}
+}
+
+extension RouteDetailViewController {
+	enum ContentMode {
+		case ETAForCurrentStation
+		case PlateNumber
+		case ETAForEveryStation
 	}
 }

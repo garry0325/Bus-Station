@@ -220,6 +220,7 @@ class BusStopLiveStatus {
 			}
 		}
 	}
+	var timeToTheNextStation = 90
 	var information: String = ""
 	var informationLabelColor: UIColor = RouteInformationLabelColors.gray
 	

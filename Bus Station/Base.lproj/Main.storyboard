@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -600,12 +600,25 @@
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
                                                 </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fZg-AT-F5a">
+                                                    <rect key="frame" x="91" y="-0.66666666666666607" width="25" height="25"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="25" id="b0z-ub-WeP"/>
+                                                        <constraint firstAttribute="width" constant="25" id="zHj-Rq-iqq"/>
+                                                    </constraints>
+                                                    <color key="tintColor" systemColor="labelColor"/>
+                                                    <state key="normal" image="bus.fill" catalog="system"/>
+                                                    <connections>
+                                                        <action selector="busAtStopButtonTapped:" destination="qag-PO-YrX" eventType="touchUpInside" id="eOF-Q4-Aah"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstItem="Tam-V4-Sej" firstAttribute="leading" secondItem="roJ-zd-4ib" secondAttribute="trailing" constant="5" id="3AR-cE-fRA"/>
                                                 <constraint firstItem="roJ-zd-4ib" firstAttribute="centerY" secondItem="Tam-V4-Sej" secondAttribute="centerY" id="5Mq-Bc-eIP"/>
                                                 <constraint firstItem="PGs-xg-pEc" firstAttribute="centerY" secondItem="4CD-2z-N8C" secondAttribute="centerY" id="5QV-GY-E5L"/>
+                                                <constraint firstItem="fZg-AT-F5a" firstAttribute="centerY" secondItem="4CD-2z-N8C" secondAttribute="centerY" id="8eX-Qc-tyf"/>
                                                 <constraint firstItem="4CD-2z-N8C" firstAttribute="leading" secondItem="Tam-V4-Sej" secondAttribute="trailing" constant="8" id="8xe-F8-Ddf"/>
                                                 <constraint firstAttribute="bottom" secondItem="QtA-Qy-thL" secondAttribute="bottom" id="9B9-5d-YGK"/>
                                                 <constraint firstItem="2Gw-rO-Dtc" firstAttribute="centerY" secondItem="Tam-V4-Sej" secondAttribute="centerY" id="Afc-er-1xr"/>
@@ -624,11 +637,13 @@
                                                 <constraint firstItem="2Gw-rO-Dtc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="vcr-nL-6oC" secondAttribute="leading" constant="8" id="YTz-8H-bkI"/>
                                                 <constraint firstItem="IGS-LL-9Tf" firstAttribute="centerX" secondItem="4CD-2z-N8C" secondAttribute="centerX" id="b4u-c5-Rcp"/>
                                                 <constraint firstItem="INv-wD-Lju" firstAttribute="bottom" secondItem="4CD-2z-N8C" secondAttribute="centerY" id="blt-3e-rQU"/>
+                                                <constraint firstItem="4CD-2z-N8C" firstAttribute="leading" secondItem="fZg-AT-F5a" secondAttribute="trailing" constant="20" id="eL9-v0-aUI"/>
                                                 <constraint firstItem="4CD-2z-N8C" firstAttribute="centerX" secondItem="vcr-nL-6oC" secondAttribute="centerX" multiplier="0.7" id="hDC-l1-db2"/>
                                                 <constraint firstItem="Tam-V4-Sej" firstAttribute="bottom" secondItem="b1h-M5-YUX" secondAttribute="bottom" constant="-12" id="i9u-hY-l1d"/>
                                                 <constraint firstItem="IGS-LL-9Tf" firstAttribute="centerY" secondItem="4CD-2z-N8C" secondAttribute="centerY" id="k0h-Om-cFr"/>
                                                 <constraint firstItem="4CD-2z-N8C" firstAttribute="centerY" secondItem="vcr-nL-6oC" secondAttribute="centerY" multiplier="0.68" id="mwb-C6-RHz"/>
                                                 <constraint firstItem="nid-48-mjz" firstAttribute="centerY" secondItem="b1h-M5-YUX" secondAttribute="centerY" id="ndN-P1-Edq"/>
+                                                <constraint firstItem="fZg-AT-F5a" firstAttribute="leading" secondItem="2Gw-rO-Dtc" secondAttribute="trailing" constant="-7" id="ptR-Pf-SpM"/>
                                                 <constraint firstItem="ao3-x8-6Fz" firstAttribute="centerY" secondItem="b1h-M5-YUX" secondAttribute="centerY" id="xXW-xb-2eU"/>
                                                 <constraint firstAttribute="trailing" secondItem="PGs-xg-pEc" secondAttribute="trailing" constant="15" id="xhD-IG-GJ6"/>
                                                 <constraint firstItem="b1h-M5-YUX" firstAttribute="leading" secondItem="ao3-x8-6Fz" secondAttribute="trailing" constant="5" id="zE1-8A-nsN"/>
@@ -636,6 +651,7 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
+                                            <outlet property="busAtStopButton" destination="fZg-AT-F5a" id="Ln5-FU-bsO"/>
                                             <outlet property="busAtStopView" destination="Tam-V4-Sej" id="xzj-G8-lh4"/>
                                             <outlet property="busDepartStopView" destination="b1h-M5-YUX" id="Ibj-D7-Agc"/>
                                             <outlet property="currentStopIndicatorView" destination="IGS-LL-9Tf" id="lmu-z8-uE0"/>
