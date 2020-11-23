@@ -575,6 +575,46 @@ class BusQuery {
 		return newStationList
 	}
 	
+	func queryMetroArrivals() {
+		let semaphore = DispatchSemaphore(value: 0)
+		
+		let urlMetroArrivals = URL(string: String("https://api.metro.taipei/metroapi/TrackInfo.asmx").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+		let httpBody = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\nxmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n<soap:Body><getTrackInfo xmlns=\"http://tempuri.org/\"><userName>garry0325@gmail.com</userName><passWord>U66A9vG2</passWord> </getTrackInfo>  </soap:Body></soap:Envelope>"
+
+		let session = URLSession(configuration: urlConfig)
+
+		var request = URLRequest(url: urlMetroArrivals)
+		request.setValue("text/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
+		request.httpBody = Data(httpBody.utf8)
+		request.httpMethod = "POST"
+
+		let task = session.dataTask(with: request) { (data, response, error) in
+			if let error = error {
+				self.presentErrorMessage(query: "metro arrivals", description: error.localizedDescription, code: nil)
+			}
+			else if let response = response as? HTTPURLResponse, let data = data {
+				if(response.statusCode == 200) {
+					let rawReturned = String(data: data, encoding: .utf8)?.components(separatedBy: "<?xml")[0]
+					
+					let metroArrivalsList = try? JSONSerialization.jsonObject(with: (rawReturned!.data(using: .utf8))!, options: [])
+					
+					
+					print(rawReturned!)
+				}
+				else {
+					self.presentErrorMessage(query: "nearby metro", description: "status code", code: response.statusCode)
+				}
+			}
+			semaphore.signal()
+		}
+		task.resume()
+		
+		semaphore.wait()
+
+		
+		
+	}
+	
 	func prepareAuthorizations() {
 		self.authTimeString = authorizationDateFormatter.string(from: Date())
 		self.key = SymmetricKey(data: Data(self.appKey.utf8))

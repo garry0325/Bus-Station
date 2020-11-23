@@ -1045,7 +1045,7 @@ Cg
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NUA-Km-3XV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="837" y="622"/>
+            <point key="canvasLocation" x="832" y="637"/>
         </scene>
     </scenes>
     <resources>
