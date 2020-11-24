@@ -283,39 +283,39 @@ class MetroArrival {
 		didSet {
 			switch line {
 			case .BR:
-				lineName = "  文湖線  "
+				lineName = " 文湖線 "
 				lineColor = MetroLineColors.BR
 				lineLabelColor = .white
 			case .R:
-				lineName = "  淡水信義線  "
+				lineName = " 淡水信義線 "
 				lineColor = MetroLineColors.R
 				lineLabelColor = .white
 			case .G:
-				lineName = "  松山新店線  "
+				lineName = " 松山新店線 "
 				lineColor = MetroLineColors.G
 				lineLabelColor = .white
 			case .O:
-				lineName = "  中和新蘆線  "
+				lineName = " 中和新蘆線 "
 				lineColor = MetroLineColors.O
 				lineLabelColor = .black
 			case .BL:
-				lineName = "  板南線  "
+				lineName = " 板南線 "
 				lineColor = MetroLineColors.BL
 				lineLabelColor = .white
 			case .Y:
-				lineName = "  環狀線  "
+				lineName = " 環狀線 "
 				lineColor = MetroLineColors.Y
 				lineLabelColor = .black
 			case .A:
-				lineName = "  機場線  "
+				lineName = " 機場線 "
 				lineColor = MetroLineColors.A
 				lineLabelColor = .white
 			case .LG:
-				lineName = "  萬大-中和-樹林線  "
+				lineName = " 萬大-中和-樹林線 "
 				lineColor = MetroLineColors.LG
 				lineLabelColor = .black
 			case .SB:
-				lineName = "  民生汐止線  "
+				lineName = " 民生汐止線 "
 				lineColor = MetroLineColors.SB
 				lineLabelColor = .white
 			default:
@@ -326,28 +326,25 @@ class MetroArrival {
 	var lineName: String?
 	var lineColor: UIColor = MetroLineColors.Z
 	var lineLabelColor: UIColor = UIColor.white
-	var information: String = ""
 	var informationLabelColor: UIColor = RouteInformationLabelColors.gray
 	var status: Status? {
 		didSet {
 			switch status {
 			case .Normal:
-				if(estimatedArrival > 30) {
-					information = String(format: "%d:%02d", estimatedArrival / 60, estimatedArrival % 60)
+				if(estimatedArrival > 90) {
 					informationLabelColor = RouteInformationLabelColors.green
 				}
+				else if(estimatedArrival > 30) {
+					informationLabelColor = RouteInformationLabelColors.orange
+				}
 				else {
-					information = "到站中"
 					informationLabelColor = RouteInformationLabelColors.red
 				}
 			case .Loading:
-				information = "加載中"
 				informationLabelColor = RouteInformationLabelColors.gray
 			case .ServiceOver:
-				information = "末班車已過"
 				informationLabelColor = RouteInformationLabelColors.gray
 			default:
-				information = ""
 				informationLabelColor = RouteInformationLabelColors.gray
 			}
 		}

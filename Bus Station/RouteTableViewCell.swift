@@ -84,10 +84,44 @@ class MetroRouteTableViewCell: UITableViewCell {
 		}
 	}
 	
+	var estimatedArrival = 0
+	var countdownSeconds = 0
+	var status: MetroArrival.Status = .ServiceOver {
+		didSet {
+			switch status {
+			case .Normal:
+				if(estimatedArrival > 30) {
+					informationLabel.text = String(format: "%d:%02d", estimatedArrival / 60, estimatedArrival % 60)
+					countdownSeconds = estimatedArrival
+				}
+				else {
+					information = "到站中"
+				}
+			case .Loading:
+				information = "加載中"
+			case .ServiceOver:
+				information = "末班車已過"
+			}
+		}
+	}
+	var timer: Timer?
+	
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		
 		informationLabel.layer.zPosition = 1
+		
+		informationLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 23.0, weight: .regular)
+		
+		timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { (timer) in
+			if(self.countdownSeconds > 30) {
+				self.informationLabel.text = String(format: "%d:%02d", self.countdownSeconds / 60, self.countdownSeconds % 60)
+				self.countdownSeconds = self.countdownSeconds - 1
+			} else {
+				self.informationLabel.text = "到站中"
+				self.informationLabelColor = RouteInformationLabelColors.red
+			}
+		})
 		// Initialization code
 	}
 
@@ -95,5 +129,8 @@ class MetroRouteTableViewCell: UITableViewCell {
 		super.setSelected(selected, animated: animated)
 
 		// Configure the view for the selected state
+	}
+	
+	override func prepareForReuse() {
 	}
 }

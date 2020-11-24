@@ -585,7 +585,7 @@ class BusQuery {
 	func queryMetroArrivals(metroStation: Station) -> [MetroArrival] {
 		var metroArrivals = [MetroArrival]()
 		var nulled: Bool = true
-		print("querying metro arrivals")
+		
 		let semaphore = DispatchSemaphore(value: 0)
 		
 		let urlMetroArrivals = URL(string: String("https://api.metro.taipei/metroapi/TrackInfo.asmx").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
@@ -615,7 +615,7 @@ class BusQuery {
 					let nowTime = Date()
 					
 					var zhongxiaofuxing = 0
-					let metroArrivalsRaw = metroArrivalsList!.filter({ $0["StationName"] ==  (metroStation.stationName + "站") })
+					let metroArrivalsRaw = metroArrivalsList!.filter({ $0["StationName"] ==  ((metroStation.stationName.last == "站") ? metroStation.stationName:metroStation.stationName + "站") })
 					for metroArrival in metroArrivalsRaw {
 						let sourceTime = self.metroDateFormatter.date(from: metroArrival["NowDateTime"]!)!
 						let elapsedTime = nowTime.timeIntervalSince(sourceTime)
@@ -631,13 +631,18 @@ class BusQuery {
 						}
 						
 						let stationName = metroArrival["StationName"]!
-						let destination = metroArrival["DestinationName"]!
+						let destination = String(metroArrival["DestinationName"]!.prefix(metroArrival["DestinationName"]!.count - 1))
 						
-						metroArrivals.append(MetroArrival(stationName: stationName, destinationName: destination, estimatedArrival: estimatedArrival))
+						metroArrivals.append(MetroArrival(stationName: stationName, destinationName: "往" + destination, estimatedArrival: estimatedArrival))
 						
-						if(metroStation.stationName == "忠孝復興" && destination == "南港展覽館站") {
-							metroArrivals.last?.line = MetroDestinationToLineDict[destination]![zhongxiaofuxing]
-							zhongxiaofuxing = 1
+						if(destination == "南港展覽館") {
+							if(metroStation.stationName == "忠孝復興") {
+								metroArrivals.last?.line = MetroDestinationToLineDict[destination]![zhongxiaofuxing]
+								zhongxiaofuxing = 1
+							}
+							else if(!WenHuStations.contains(stationName)) {
+								metroArrivals.last?.line = MetroDestinationToLineDict[destination]![1]
+							}
 						}
 						else {
 							metroArrivals.last!.line = MetroDestinationToLineDict[destination]![0]

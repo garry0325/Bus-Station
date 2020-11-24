@@ -136,18 +136,9 @@
                                                                         <nil key="highlightedColor"/>
                                                                         <userDefinedRuntimeAttributes>
                                                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                                <integer key="value" value="8"/>
+                                                                                <integer key="value" value="5"/>
                                                                             </userDefinedRuntimeAttribute>
                                                                         </userDefinedRuntimeAttributes>
-                                                                    </label>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="212分" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="jon-GV-Cbi">
-                                                                        <rect key="frame" x="20" y="11" width="82" height="28"/>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="width" constant="82" id="LRC-Nu-NQw"/>
-                                                                        </constraints>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="23"/>
-                                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                        <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iuu-vj-rHK">
                                                                         <rect key="frame" x="17" y="5.6666666666666679" width="88" height="38.666666666666657"/>
@@ -167,6 +158,15 @@
                                                                             </userDefinedRuntimeAttribute>
                                                                         </userDefinedRuntimeAttributes>
                                                                     </view>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3:21" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="jon-GV-Cbi">
+                                                                        <rect key="frame" x="20" y="11" width="82" height="28"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="width" constant="82" id="LRC-Nu-NQw"/>
+                                                                        </constraints>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="往台北車站" textAlignment="natural" lineBreakMode="tailTruncation" minimumScaleFactor="1" translatesAutoresizingMaskIntoConstraints="NO" id="2aP-Dt-kXG">
                                                                         <rect key="frame" x="122" y="23" width="272" height="21.666666666666671"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>

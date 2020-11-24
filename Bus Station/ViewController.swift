@@ -495,7 +495,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		}
 	}
 	
-	func queryBusArrivals() {
+	func queryBusArrivals() {	// TODO: CHANGE FUNCTION NAME
 		presentActivityIndicator()
 		//print(stationList[currentStationNumber][currentBearingNumber].stationId)
 		DispatchQueue.global(qos: .background).async {
@@ -504,9 +504,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 			}
 			else {
 				ViewController.metroRouteList = self.busQuery.queryMetroArrivals(metroStation: ViewController.stationList[self.currentStationNumber][0])
-				for i in 0..<ViewController.metroRouteList.count {
-					print("\(ViewController.metroRouteList[i].stationName) 往\(ViewController.metroRouteList[i].destinationName) \(ViewController.metroRouteList[i].estimatedArrival)")
-				}
 			}
 			#warning("Add else for Metro query")
 			DispatchQueue.main.async {
@@ -1056,8 +1053,9 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 			cell.lineName = ViewController.metroRouteList[indexPath.row].lineName!
 			cell.lineColor = ViewController.metroRouteList[indexPath.row].lineColor
 			cell.lineLabelColor = ViewController.metroRouteList[indexPath.row].lineLabelColor
-			cell.information = ViewController.metroRouteList[indexPath.row].information
 			cell.informationLabelColor = ViewController.metroRouteList[indexPath.row].informationLabelColor
+			cell.estimatedArrival = ViewController.metroRouteList[indexPath.row].estimatedArrival
+			cell.status = ViewController.metroRouteList[indexPath.row].status!
 			
 			return cell
 		}
@@ -1071,7 +1069,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 	}
 	
 	func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		if(ViewController.stationTypeList[ViewController.stationNumberForDetailView] == .Bus) {
+		if(type(of: cell) == RouteTableViewCell.self) {
 			let tempCell = cell as! RouteTableViewCell
 			var colorOriginal: UIColor?
 			var colorAnimating: UIColor?
