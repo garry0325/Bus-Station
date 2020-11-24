@@ -38,7 +38,7 @@ class RouteDetailTableViewCell: UITableViewCell {
 				infoDepartStop.isHidden = true
 				plateAtStopLabel.isHidden = true
 				plateDepartStopLabel.isHidden = true
-		}
+			}
 		}
 	}
 	var plateNumber: String = ""

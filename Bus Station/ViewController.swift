@@ -505,6 +505,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 			else {
 				ViewController.metroRouteList = self.busQuery.queryMetroArrivals(metroStation: ViewController.stationList[self.currentStationNumber][0])
 			}
+
 			DispatchQueue.main.async {
 				self.updatePanel()
 			}
@@ -1051,14 +1052,20 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 			cell.estimatedArrival = ViewController.metroRouteList[indexPath.row].estimatedArrival
 			cell.status = ViewController.metroRouteList[indexPath.row].status!
 			
+			cell.currentStation = ViewController.metroRouteList[indexPath.row]
+			
 			return cell
 		}
 	}
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		if(ViewController.stationTypeList[ViewController.stationNumberForDetailView] == .Bus) {
+			print("didselect bus")
 			NotificationCenter.default.post(name: NSNotification.Name("Detail"), object: ViewController.routeList[ViewController.stationNumberForDetailView][ViewController.bearingNumberForDetailView][indexPath.row])
 			print("sending \(Unmanaged.passUnretained(ViewController.routeList[ViewController.stationNumberForDetailView][ViewController.bearingNumberForDetailView][indexPath.row]).toOpaque())")
+		} else {
+			print("didselect metro")
+			//performSegue(withIdentifier: "MetroDetail", sender: ViewController.metroRouteList[indexPath.row])
 		}
 	}
 	
@@ -1110,8 +1117,15 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
 		segue.destination.modalPresentationStyle = .popover
 		
 		if(segue.identifier == "RouteDetail") {
+			print("bus segue")
 			let destination = segue.destination as! RouteDetailViewController
 			destination.busStop = sender as? BusStop
+		}
+		else if(segue.identifier == "MetroDetail") {
+			print("metro segue")
+			let destination = segue.destination as! MetroDetailViewController
+			destination.metroRouteTableViewCell = sender as? MetroRouteTableViewCell
+			// unknown reason that MetroDetailViewController shows before didSelect is called
 		}
 		else if(segue.identifier == "About") {
 			let destination = segue.destination as! AboutViewController

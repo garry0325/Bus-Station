@@ -14,11 +14,8 @@ class Station {
 	var stationId: String = ""
 	var stationType: StationType = .Error {
 		didSet {
-			print("didset stationtype")
 			if(stationType == .Metro) {
-				print("is metro type")
 				if(stationId.hasPrefix(Line.BR.rawValue)) {
-					print("has prefix br")
 					line = .BR
 					lineColor = MetroLineColors.BR
 					lineColorUnselected = MetroLineColors.BRs
@@ -37,7 +34,7 @@ class Station {
 					line = .O
 					lineColor = MetroLineColors.O
 					lineColorUnselected = MetroLineColors.Os
-					lineLabelColor = .black
+					lineLabelColor = .white
 				} else if (stationId.hasPrefix(Line.BL.rawValue)) {
 					line = .BL
 					lineColor = MetroLineColors.BL
@@ -300,7 +297,7 @@ class MetroArrival {
 			case .O:
 				lineName = " 中和新蘆線 "
 				lineColor = MetroLineColors.O
-				lineLabelColor = .black
+				lineLabelColor = .white
 			case .BL:
 				lineName = " 板南線 "
 				lineColor = MetroLineColors.BL
@@ -371,5 +368,19 @@ class MetroArrival {
 		case Normal
 		case ServiceOver
 		case Loading
+	}
+}
+
+class MetroStation {
+	let stationName: String
+	let sequence: Int
+	
+	var isCurrentStation: Bool = false
+	var isDepartureStation: Bool = false
+	var isDestinationStation: Bool = false
+	
+	init(stationName: String, sequence: Int) {
+		self.stationName = stationName
+		self.sequence = sequence
 	}
 }

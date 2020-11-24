@@ -53,6 +53,8 @@ class MetroRouteTableViewCell: UITableViewCell {
 	@IBOutlet var informationLabel: UILabel!
 	@IBOutlet var informationBackgroundView: UIView!
 	
+	var currentStation: MetroArrival?
+	
 	var lineName = "" {
 		didSet {
 			lineNameLabel.text = lineName

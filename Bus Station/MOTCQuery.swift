@@ -691,6 +691,60 @@ class BusQuery {
 		return metroArrivals
 	}
 	
+	func queryMetroStationSequence(currentStation: MetroArrival) -> [MetroStation] {
+		self.prepareAuthorizations()
+		let semaphore = DispatchSemaphore(value: 0)
+		
+		var metroStations = [MetroStation]()
+		
+		var request: URLRequest
+		
+		let session = URLSession(configuration: urlConfig)
+		
+		var metroLine = currentStation.line
+		if(metroLine == .Gb) {
+			metroLine = .G
+		} else if(metroLine == .Rb) {
+			metroLine = .R
+		}
+		
+		let urlStopOfRoute = URL(string: String("https://ptx.transportdata.tw/MOTC/v2/Rail/Metro/StationOfLine/TRTC?$filter=LineNo eq '\(metroLine!.rawValue)'").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+		request = URLRequest(url: urlStopOfRoute)
+		request.setValue(authTimeString, forHTTPHeaderField: "x-date")
+		request.setValue(authorization, forHTTPHeaderField: "Authorization")
+		print(urlStopOfRoute)
+		let task = session.dataTask(with: request) { (data, response, error) in
+			if let error = error {
+				self.presentErrorMessage(query: "metro station sequence", description: error.localizedDescription, code: nil)
+			}
+			else if let response = response as? HTTPURLResponse,
+					let data = data {
+				if(response.statusCode == 200) {
+					let stations = try? (JSONSerialization.jsonObject(with: data, options: []) as! [[String: Any]])[0]["Stations"] as? [[String: Any]]
+					
+					for station in stations! {
+						let stationName = (station["StationName"] as! [String: String])["Zh_tw"]!
+						metroStations.append(MetroStation(stationName: stationName, sequence: station["Sequence"] as! Int))
+						if(((stationName.last == "站") ? stationName:stationName + "站") == currentStation.stationName) {
+							metroStations.last?.isCurrentStation = true
+						}
+					}
+					metroStations.first!.isDepartureStation = true
+					metroStations.last!.isDestinationStation = true
+				}
+				else {
+					self.presentErrorMessage(query: "metro station sequence", description: "status code", code: response.statusCode)
+				}
+			}
+			semaphore.signal()
+		}
+		
+		task.resume()
+		semaphore.wait()
+		
+		return metroStations
+	}
+	
 	func prepareAuthorizations() {
 		self.authTimeString = authorizationDateFormatter.string(from: Date())
 		self.key = SymmetricKey(data: Data(self.appKey.utf8))
