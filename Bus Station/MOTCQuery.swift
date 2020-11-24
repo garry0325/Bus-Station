@@ -688,6 +688,8 @@ class BusQuery {
 			print("\(metroArrivals[i].destinationName) \(metroArrivals[i].estimatedArrival)")
 		}
 		
+		NotificationCenter.default.post(name: NSNotification.Name("MetroArrivals"), object: metroArrivals)
+		
 		return metroArrivals
 	}
 	
@@ -724,6 +726,9 @@ class BusQuery {
 					
 					for station in stations! {
 						let stationName = (station["StationName"] as! [String: String])["Zh_tw"]!
+						if(stationName == "小碧潭" || stationName == "新北投") {
+							continue
+						}
 						metroStations.append(MetroStation(stationName: stationName, sequence: station["Sequence"] as! Int))
 						if(((stationName.last == "站") ? stationName:stationName + "站") == currentStation.stationName) {
 							metroStations.last?.isCurrentStation = true

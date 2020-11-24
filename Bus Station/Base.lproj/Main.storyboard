@@ -1074,14 +1074,20 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="往新店" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8pR-WY-kxY">
+                                <rect key="frame" x="74" y="38.666666666666664" width="52" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="251區" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="cdJ-Zj-Mo0">
                                 <rect key="frame" x="20" y="8" width="64.333333333333329" height="29"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="往公館捷運站" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="mnL-l5-CgA">
-                                <rect key="frame" x="20" y="39" width="98" height="20"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="文湖線" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="mnL-l5-CgA">
+                                <rect key="frame" x="20" y="39" width="49" height="20"/>
                                 <color key="backgroundColor" systemColor="systemOrangeColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="textColor" name="White"/>
@@ -1093,7 +1099,7 @@
                                 </userDefinedRuntimeAttributes>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Tz-dw-dBx">
-                                <rect key="frame" x="312" y="13.333333333333332" width="82" height="38.333333333333343"/>
+                                <rect key="frame" x="312" y="13.666666666666664" width="82" height="38"/>
                                 <color key="backgroundColor" red="0.32549019610000002" green="0.72549019609999998" blue="0.76078431369999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -1110,8 +1116,8 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="212分" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="JyR-xc-JCb">
-                                <rect key="frame" x="312" y="18.666666666666671" width="82" height="28"/>
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="   " textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="JyR-xc-JCb">
+                                <rect key="frame" x="312" y="18.666666666666664" width="82" height="27.666666666666664"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="82" id="Zdb-Q2-Lnq"/>
                                 </constraints>
@@ -1156,6 +1162,7 @@
                         <viewLayoutGuide key="safeArea" id="SA7-1n-7AL"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="5Tz-dw-dBx" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8pR-WY-kxY" secondAttribute="trailing" constant="15" id="155-Sl-qtv"/>
                             <constraint firstAttribute="trailing" secondItem="oaF-M2-EIu" secondAttribute="trailing" id="3ug-gk-vQc"/>
                             <constraint firstItem="JyR-xc-JCb" firstAttribute="centerY" secondItem="5Tz-dw-dBx" secondAttribute="centerY" id="78g-14-ndQ"/>
                             <constraint firstItem="mnL-l5-CgA" firstAttribute="leading" secondItem="cdJ-Zj-Mo0" secondAttribute="leading" id="8Cr-5I-qsv"/>
@@ -1177,10 +1184,11 @@
                             <constraint firstItem="oaF-M2-EIu" firstAttribute="leading" secondItem="w0c-hG-hba" secondAttribute="leading" id="mIy-RI-fZh"/>
                             <constraint firstItem="oaF-M2-EIu" firstAttribute="top" secondItem="1RU-2m-zC5" secondAttribute="bottom" id="oQa-Xa-0gI"/>
                             <constraint firstItem="cdJ-Zj-Mo0" firstAttribute="leading" secondItem="SA7-1n-7AL" secondAttribute="leading" constant="20" id="qFT-7V-Svo"/>
+                            <constraint firstItem="8pR-WY-kxY" firstAttribute="leading" secondItem="mnL-l5-CgA" secondAttribute="trailing" constant="5" id="qhB-8h-ezr"/>
+                            <constraint firstItem="8pR-WY-kxY" firstAttribute="centerY" secondItem="mnL-l5-CgA" secondAttribute="centerY" id="tfb-u9-TO2"/>
                             <constraint firstAttribute="bottom" secondItem="7Pa-Np-ZoA" secondAttribute="bottom" id="uG0-LM-6KQ"/>
                             <constraint firstItem="R9n-nU-rfb" firstAttribute="centerY" secondItem="SA7-1n-7AL" secondAttribute="centerY" id="uoM-cE-vv4"/>
                             <constraint firstItem="JyR-xc-JCb" firstAttribute="centerX" secondItem="5Tz-dw-dBx" secondAttribute="centerX" id="vHw-UW-A1I"/>
-                            <constraint firstItem="5Tz-dw-dBx" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="mnL-l5-CgA" secondAttribute="trailing" constant="15" id="vmT-BK-eho"/>
                             <constraint firstAttribute="bottom" secondItem="oaF-M2-EIu" secondAttribute="bottom" id="xQu-RU-c1X"/>
                             <constraint firstItem="1RU-2m-zC5" firstAttribute="bottom" secondItem="7Pa-Np-ZoA" secondAttribute="top" id="ydv-De-gsE"/>
                             <constraint firstItem="SA7-1n-7AL" firstAttribute="trailing" secondItem="bJF-FH-mDI" secondAttribute="trailing" constant="40" id="z9S-Za-wID"/>
@@ -1191,6 +1199,7 @@
                         <outlet property="activityIndicator" destination="R9n-nU-rfb" id="9Nk-Jw-NHg"/>
                         <outlet property="closeButton" destination="bJF-FH-mDI" id="VbH-t1-dBX"/>
                         <outlet property="closeButtonTrailingToSafeAreaConstraint" destination="z9S-Za-wID" id="JiR-lq-Ozw"/>
+                        <outlet property="destinationLabel" destination="8pR-WY-kxY" id="N6C-OV-twB"/>
                         <outlet property="informationBackgroundView" destination="5Tz-dw-dBx" id="H0M-FN-bT9"/>
                         <outlet property="informationLabel" destination="JyR-xc-JCb" id="r97-kn-cJf"/>
                         <outlet property="lineNameLabel" destination="mnL-l5-CgA" id="WFv-B9-qdi"/>

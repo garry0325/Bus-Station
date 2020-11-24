@@ -13,6 +13,7 @@ class MetroDetailViewController: UIViewController {
 	
 	@IBOutlet var stationNameLabel: UILabel!
 	@IBOutlet var lineNameLabel: UILabel!
+	@IBOutlet var destinationLabel: UILabel!
 	@IBOutlet var informationLabel: UILabel!
 	@IBOutlet var informationBackgroundView: UIView!
 	@IBOutlet var metroDetailTableView: UITableView!
@@ -25,6 +26,8 @@ class MetroDetailViewController: UIViewController {
 	
 	var busQuery = BusQuery()
 	var autoRefreshTimer: Timer?
+	var countdownTimer: Timer?
+	var countdownSeconds = 0
 	
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,20 +47,50 @@ class MetroDetailViewController: UIViewController {
 		
 		activityIndicator.startAnimating()
 		
-		autoRefresh()
-		autoRefreshTimer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(autoRefresh), userInfo: nil, repeats: true)
+		constructMetroStationSequence()
+		
+		NotificationCenter.default.addObserver(self, selector: #selector(refreshETA), name: NSNotification.Name("MetroArrivals"), object: nil)
         
     }
+	deinit {
+		print("deinited metro detailvc")
+		NotificationCenter.default.removeObserver(self)
+	}
+	
+	override func viewDidDisappear(_ animated: Bool) {
+		autoRefreshTimer?.invalidate()
+		countdownTimer?.invalidate()
+	}
     
 	func configureInformationLabel() {
 		stationNameLabel.text = metroRouteTableViewCell?.currentStation?.stationName
 		lineNameLabel.text = metroRouteTableViewCell?.lineName
 		lineNameLabel.textColor = metroRouteTableViewCell?.lineLabelColor
 		lineNameLabel.backgroundColor = metroRouteTableViewCell?.lineColor
+		
+		destinationLabel.text = (metroRouteTableViewCell?.currentStation!.destinationName)!
+		
+		informationLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 23.0, weight: .regular)
+		countdownSeconds = (metroRouteTableViewCell?.currentStation!.estimatedArrival)!
+		informationBackgroundView.backgroundColor = metroRouteTableViewCell?.currentStation?.informationLabelColor
+		
+		countdownTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { (timer) in
+			if(self.countdownSeconds > 120) {
+				self.informationLabel.text = String(format: "%d:%02d", self.countdownSeconds / 60, self.countdownSeconds % 60)
+				self.informationBackgroundView.backgroundColor = RouteInformationLabelColors.green
+				self.countdownSeconds = self.countdownSeconds - 1
+			} else if(self.countdownSeconds > 10) {
+				self.informationLabel.text = String(format: "%d:%02d", self.countdownSeconds / 60, self.countdownSeconds % 60)
+				self.informationBackgroundView.backgroundColor = RouteInformationLabelColors.orange
+				self.countdownSeconds = self.countdownSeconds - 1
+			} else {
+				self.informationLabel.text = "到站中"
+				self.informationBackgroundView.backgroundColor = RouteInformationLabelColors.red
+			}
+		})
 	}
 	
-	@objc func autoRefresh() {
-		print("autorefreshing \(String(describing: metroRouteTableViewCell?.currentStation))")
+	func constructMetroStationSequence() {
 		DispatchQueue.global(qos: .background).async {
 			self.metroStations = self.busQuery.queryMetroStationSequence(currentStation: self.metroRouteTableViewCell!.currentStation!)
 			
@@ -69,8 +102,21 @@ class MetroDetailViewController: UIViewController {
 		}
 	}
 	
+	@objc func refreshETA(notification: Notification) {
+		let metroArrivals = notification.object as! [MetroArrival]
+		
+		for metroArrival in metroArrivals {
+			if(metroArrival.destinationName == metroRouteTableViewCell?.currentStation?.destinationName) {
+				countdownSeconds = metroArrival.estimatedArrival
+				informationBackgroundView.backgroundColor = metroArrival.informationLabelColor
+				break
+			}
+		}
+	}
+	
 	@IBAction func closeMetroDetailViewController(_ sender: Any) {
 		autoRefreshTimer?.invalidate()
+		countdownTimer?.invalidate()
 		dismiss(animated: true, completion: nil)
 	}
 }
