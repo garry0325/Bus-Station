@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C23D91B92549CA950027125A /* RouteCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23D91B82549CA950027125A /* RouteCollectionViewCell.swift */; };
+		C265088F256C248F002B0C7F /* Metro.swift in Sources */ = {isa = PBXBuildFile; fileRef = C265088E256C248F002B0C7F /* Metro.swift */; };
 		C269C466254B196300BA41B4 /* RouteDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C269C465254B196300BA41B4 /* RouteDetailViewController.swift */; };
 		C275EDF3254E965A0028ACCC /* Roadgeek2005SeriesD.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C275EDF2254E965A0028ACCC /* Roadgeek2005SeriesD.ttf */; };
 		C2B35DCB253DCA5B00108776 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B35DCA253DCA5B00108776 /* AppDelegate.swift */; };
@@ -52,6 +53,7 @@
 /* Begin PBXFileReference section */
 		27471A3335CDBB69B3D431B5 /* Pods-Bus Station.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bus Station.debug.xcconfig"; path = "Target Support Files/Pods-Bus Station/Pods-Bus Station.debug.xcconfig"; sourceTree = "<group>"; };
 		C23D91B82549CA950027125A /* RouteCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteCollectionViewCell.swift; sourceTree = "<group>"; };
+		C265088E256C248F002B0C7F /* Metro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metro.swift; sourceTree = "<group>"; };
 		C269C465254B196300BA41B4 /* RouteDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteDetailViewController.swift; sourceTree = "<group>"; };
 		C275EDF2254E965A0028ACCC /* Roadgeek2005SeriesD.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Roadgeek2005SeriesD.ttf; sourceTree = "<group>"; };
 		C2B35DC7253DCA5B00108776 /* Bus Station.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bus Station.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -150,8 +152,9 @@
 				C2BCFF6E254D625900EC960F /* RouteDetailTableViewCell.swift */,
 				C2B35E15253DE85100108776 /* MOTCQuery.swift */,
 				C2B35E10253DE82000108776 /* BusClasses.swift */,
-				C2B35E08253DD24800108776 /* TopCollectionViewCells.swift */,
+				C265088E256C248F002B0C7F /* Metro.swift */,
 				C2CB97312556AAB400CAF02B /* AboutViewController.swift */,
+				C2B35E08253DD24800108776 /* TopCollectionViewCells.swift */,
 				C2DC9CEF2548A8C10004860D /* Constants.swift */,
 				C2BD1F49255A4F7100A36418 /* Globals.swift */,
 				C2CB97362556B17F00CAF02B /* ErrorHandling.swift */,
@@ -398,6 +401,7 @@
 				C2CB97372556B17F00CAF02B /* ErrorHandling.swift in Sources */,
 				C2B35E09253DD24800108776 /* TopCollectionViewCells.swift in Sources */,
 				C2B35E11253DE82000108776 /* BusClasses.swift in Sources */,
+				C265088F256C248F002B0C7F /* Metro.swift in Sources */,
 				C2CB97322556AAB400CAF02B /* AboutViewController.swift in Sources */,
 				C2DC9CF02548A8C10004860D /* Constants.swift in Sources */,
 			);

@@ -118,6 +118,84 @@
                                                                 </segue>
                                                             </connections>
                                                         </tableViewCell>
+                                                        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MetroCell" rowHeight="50" id="lwC-pT-mBc" customClass="MetroRouteTableViewCell" customModule="Bus_Station" customModuleProvider="target">
+                                                            <rect key="frame" x="0.0" y="78" width="414" height="50"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="lwC-pT-mBc" id="BEo-Fi-BEF">
+                                                                <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                                <subviews>
+                                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="文湖線" textAlignment="natural" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="RQg-Dx-JOy">
+                                                                        <rect key="frame" x="122" y="3.6666666666666661" width="43" height="20"/>
+                                                                        <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="height" constant="20" id="Zu8-2r-NYx"/>
+                                                                        </constraints>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                        <color key="textColor" name="White"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                        <userDefinedRuntimeAttributes>
+                                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                                <integer key="value" value="8"/>
+                                                                            </userDefinedRuntimeAttribute>
+                                                                        </userDefinedRuntimeAttributes>
+                                                                    </label>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="212分" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="jon-GV-Cbi">
+                                                                        <rect key="frame" x="20" y="11" width="82" height="28"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="width" constant="82" id="LRC-Nu-NQw"/>
+                                                                        </constraints>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iuu-vj-rHK">
+                                                                        <rect key="frame" x="17" y="5.6666666666666679" width="88" height="38.666666666666657"/>
+                                                                        <color key="backgroundColor" red="0.32549019610000002" green="0.72549019609999998" blue="0.76078431369999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        <userDefinedRuntimeAttributes>
+                                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                                <integer key="value" value="12"/>
+                                                                            </userDefinedRuntimeAttribute>
+                                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowOpacity">
+                                                                                <real key="value" value="0.40000000000000002"/>
+                                                                            </userDefinedRuntimeAttribute>
+                                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowRadius">
+                                                                                <integer key="value" value="4"/>
+                                                                            </userDefinedRuntimeAttribute>
+                                                                            <userDefinedRuntimeAttribute type="size" keyPath="layer.shadowOffset">
+                                                                                <size key="value" width="0.0" height="0.0"/>
+                                                                            </userDefinedRuntimeAttribute>
+                                                                        </userDefinedRuntimeAttributes>
+                                                                    </view>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="往台北車站" textAlignment="natural" lineBreakMode="tailTruncation" minimumScaleFactor="1" translatesAutoresizingMaskIntoConstraints="NO" id="2aP-Dt-kXG">
+                                                                        <rect key="frame" x="122" y="23" width="272" height="21.666666666666671"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                </subviews>
+                                                                <constraints>
+                                                                    <constraint firstItem="iuu-vj-rHK" firstAttribute="width" secondItem="jon-GV-Cbi" secondAttribute="width" multiplier="1.07317" id="1Yi-7w-Zwr"/>
+                                                                    <constraint firstItem="RQg-Dx-JOy" firstAttribute="centerY" secondItem="BEo-Fi-BEF" secondAttribute="centerY" multiplier="0.55" id="Kk6-ok-zeT"/>
+                                                                    <constraint firstItem="iuu-vj-rHK" firstAttribute="height" secondItem="jon-GV-Cbi" secondAttribute="height" multiplier="1.37349" id="N4S-UW-dMO"/>
+                                                                    <constraint firstItem="iuu-vj-rHK" firstAttribute="centerX" secondItem="jon-GV-Cbi" secondAttribute="centerX" id="NXQ-gP-hhd"/>
+                                                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="RQg-Dx-JOy" secondAttribute="trailing" constant="20" symbolic="YES" id="Oja-Nh-Pgs"/>
+                                                                    <constraint firstItem="jon-GV-Cbi" firstAttribute="leading" secondItem="BEo-Fi-BEF" secondAttribute="leading" constant="20" symbolic="YES" id="SDr-cy-ahN"/>
+                                                                    <constraint firstItem="2aP-Dt-kXG" firstAttribute="leading" secondItem="jon-GV-Cbi" secondAttribute="trailing" constant="20" id="Vt5-3C-vfN"/>
+                                                                    <constraint firstItem="jon-GV-Cbi" firstAttribute="centerY" secondItem="BEo-Fi-BEF" secondAttribute="centerY" id="atf-ZU-aqs"/>
+                                                                    <constraint firstItem="RQg-Dx-JOy" firstAttribute="leading" secondItem="jon-GV-Cbi" secondAttribute="trailing" constant="20" id="gWj-Cw-gOG"/>
+                                                                    <constraint firstItem="iuu-vj-rHK" firstAttribute="centerY" secondItem="jon-GV-Cbi" secondAttribute="centerY" id="hVR-zj-Kr3"/>
+                                                                    <constraint firstItem="2aP-Dt-kXG" firstAttribute="centerY" secondItem="BEo-Fi-BEF" secondAttribute="centerY" multiplier="1.35" id="lHq-0P-gR1"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="2aP-Dt-kXG" secondAttribute="trailing" constant="20" symbolic="YES" id="oSE-qk-glf"/>
+                                                                    <constraint firstItem="2aP-Dt-kXG" firstAttribute="leading" secondItem="RQg-Dx-JOy" secondAttribute="leading" id="qgs-aT-cJd"/>
+                                                                </constraints>
+                                                            </tableViewCellContentView>
+                                                            <connections>
+                                                                <outlet property="destinationLabel" destination="2aP-Dt-kXG" id="5b6-qP-hMS"/>
+                                                                <outlet property="informationBackgroundView" destination="iuu-vj-rHK" id="6E1-CJ-XbI"/>
+                                                                <outlet property="informationLabel" destination="jon-GV-Cbi" id="uT5-3D-jrV"/>
+                                                                <outlet property="lineNameLabel" destination="RQg-Dx-JOy" id="CCq-rS-Cvz"/>
+                                                            </connections>
+                                                        </tableViewCell>
                                                     </prototypes>
                                                 </tableView>
                                             </subviews>
@@ -1072,6 +1150,9 @@ Cg
         </systemColor>
         <systemColor name="systemGrayColor">
             <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

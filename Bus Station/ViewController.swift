@@ -133,6 +133,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	var bearingListNames: Array<Array<String>> = []
 	
 	static var routeList: Array<Array<Array<BusStop>>> = []
+	static var metroRouteList: Array<MetroArrival> = []
 	#warning("Consider remove the following")
 	var bearingStationDict = [Int:Int]()
 	var bearingIndexToItem: Array<Array<Int>> = []	// an array dictionary (currentStationNumber&currentBearingNumber -> target index of routeCollectionView) to give quick access to index of routeCollectionView for autoscroll
@@ -483,12 +484,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 					self.findStarredBearingStation()
 					self.updatePanel()
 					
-					if(ViewController.stationTypeList[self.currentStationNumber] == .Bus) {
-						self.queryBusArrivals()
-					}
-					else {
-						
-					}
+					self.queryBusArrivals()
 					self.stationListCollectionView.scrollToItem(at: IndexPath(item: self.currentStationNumber, section: 0), at: .centeredHorizontally, animated: true)
 					
 					self.buttonActivityIndicator.stopAnimating()
@@ -506,7 +502,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 			if(ViewController.stationTypeList[self.currentStationNumber] == .Bus) {
 				ViewController.routeList[self.currentStationNumber][self.currentBearingNumber] = self.busQuery.queryBusArrivals(station: ViewController.stationList[self.currentStationNumber][self.currentBearingNumber])
 			}
-			
+			else {
+				ViewController.metroRouteList = self.busQuery.queryMetroArrivals(metroStation: ViewController.stationList[self.currentStationNumber][0])
+				for i in 0..<ViewController.metroRouteList.count {
+					print("\(ViewController.metroRouteList[i].stationName) 往\(ViewController.metroRouteList[i].destinationName) \(ViewController.metroRouteList[i].estimatedArrival)")
+				}
+			}
 			#warning("Add else for Metro query")
 			DispatchQueue.main.async {
 				self.updatePanel()
@@ -1018,25 +1019,23 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 			return ViewController.routeList[stationNumber][bearingNumber].count
 		}
 		else {
-			#warning("Metro support")
-			return 0
+			return ViewController.metroRouteList.count
 		}
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: "RouteCell") as! RouteTableViewCell
-		cell.selectionStyle = .none
+		
 		let stationNumber = ViewController.bearingItemToIndex[tableView.tag][0]
 		let bearingNumber = ViewController.bearingItemToIndex[tableView.tag][1]
 		
-		if(!upSideUpLayout) {
-			cell.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi));
-		}
-		
-		if(ViewController.stationTypeList[stationNumber] == .Metro) {
-			return cell
-		}
-		else {
+		if(ViewController.stationTypeList[stationNumber] == .Bus) {
+			let cell = tableView.dequeueReusableCell(withIdentifier: "RouteCell") as! RouteTableViewCell
+			#warning("consider removing the selection style")
+			cell.selectionStyle = .none
+			
+			if(!upSideUpLayout) {
+				cell.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi));
+			}
 			cell.routeName = ViewController.routeList[stationNumber][bearingNumber][indexPath.row].routeName
 			cell.information = ViewController.routeList[stationNumber][bearingNumber][indexPath.row].information
 			cell.destination = ViewController.routeList[stationNumber][bearingNumber][indexPath.row].destination
@@ -1044,42 +1043,67 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 			
 			return cell
 		}
+		else {
+			let cell = tableView.dequeueReusableCell(withIdentifier: "MetroCell") as! MetroRouteTableViewCell
+			#warning("consider removing the selection style")
+			cell.selectionStyle = .none
+			
+			if(!upSideUpLayout) {
+				cell.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi));
+			}
+			
+			cell.destination = ViewController.metroRouteList[indexPath.row].destinationName
+			cell.lineName = ViewController.metroRouteList[indexPath.row].lineName!
+			cell.lineColor = ViewController.metroRouteList[indexPath.row].lineColor
+			cell.lineLabelColor = ViewController.metroRouteList[indexPath.row].lineLabelColor
+			cell.information = ViewController.metroRouteList[indexPath.row].information
+			cell.informationLabelColor = ViewController.metroRouteList[indexPath.row].informationLabelColor
+			
+			return cell
+		}
 	}
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		NotificationCenter.default.post(name: NSNotification.Name("Detail"), object: ViewController.routeList[ViewController.stationNumberForDetailView][ViewController.bearingNumberForDetailView][indexPath.row])
-		print("sending \(Unmanaged.passUnretained(ViewController.routeList[ViewController.stationNumberForDetailView][ViewController.bearingNumberForDetailView][indexPath.row]).toOpaque())")
+		if(ViewController.stationTypeList[ViewController.stationNumberForDetailView] == .Bus) {
+			NotificationCenter.default.post(name: NSNotification.Name("Detail"), object: ViewController.routeList[ViewController.stationNumberForDetailView][ViewController.bearingNumberForDetailView][indexPath.row])
+			print("sending \(Unmanaged.passUnretained(ViewController.routeList[ViewController.stationNumberForDetailView][ViewController.bearingNumberForDetailView][indexPath.row]).toOpaque())")
+		}
 	}
 	
 	func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-		let tempCell = cell as! RouteTableViewCell
-		var colorOriginal: UIColor?
-		var colorAnimating: UIColor?
-		var animateDuration: TimeInterval?
-		
-		switch tempCell.labelColor {
-		case RouteInformationLabelColors.red:
-			colorOriginal = RouteInformationLabelColors.red
-			colorAnimating = RouteInformationLabelColors.redAnimating
-			animateDuration = 0.3
-		case RouteInformationLabelColors.orange:
-			colorOriginal = RouteInformationLabelColors.orange
-			colorAnimating = RouteInformationLabelColors.orangeAnimating
-			animateDuration = 0.8
-		case RouteInformationLabelColors.green:
-			colorOriginal = RouteInformationLabelColors.green
-			colorAnimating = RouteInformationLabelColors.greenAnimating
-			animateDuration = 1.5
-		default:
-			colorOriginal = RouteInformationLabelColors.gray
-			colorAnimating = RouteInformationLabelColors.gray
-			animateDuration = 1
+		if(ViewController.stationTypeList[ViewController.stationNumberForDetailView] == .Bus) {
+			let tempCell = cell as! RouteTableViewCell
+			var colorOriginal: UIColor?
+			var colorAnimating: UIColor?
+			var animateDuration: TimeInterval?
+			
+			switch tempCell.labelColor {
+			case RouteInformationLabelColors.red:
+				colorOriginal = RouteInformationLabelColors.red
+				colorAnimating = RouteInformationLabelColors.redAnimating
+				animateDuration = 0.3
+			case RouteInformationLabelColors.orange:
+				colorOriginal = RouteInformationLabelColors.orange
+				colorAnimating = RouteInformationLabelColors.orangeAnimating
+				animateDuration = 0.8
+			case RouteInformationLabelColors.green:
+				colorOriginal = RouteInformationLabelColors.green
+				colorAnimating = RouteInformationLabelColors.greenAnimating
+				animateDuration = 1.5
+			default:
+				colorOriginal = RouteInformationLabelColors.gray
+				colorAnimating = RouteInformationLabelColors.gray
+				animateDuration = 1
+			}
+			
+			tempCell.informationBackgroundView.backgroundColor = colorOriginal
+			UIView.animate(withDuration: animateDuration!, delay: 0, options: [.autoreverse, .repeat], animations: {
+				tempCell.informationBackgroundView.backgroundColor = colorAnimating
+			}, completion: nil)
 		}
-		
-		tempCell.informationBackgroundView.backgroundColor = colorOriginal
-		UIView.animate(withDuration: animateDuration!, delay: 0, options: [.autoreverse, .repeat], animations: {
-			tempCell.informationBackgroundView.backgroundColor = colorAnimating
-		}, completion: nil)
+		else {
+			
+		}
 	}
 	
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

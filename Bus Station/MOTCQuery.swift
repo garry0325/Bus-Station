@@ -28,9 +28,16 @@ class BusQuery {
 	let queryCities = ["Taipei", "NewTaipei"]
 	let queryMetroSystems = ["TRTC", "NTDLRT", "TYMC"] // TODO: test TYMC & NTDLRT
 	
+	let metroDateFormatter: DateFormatter
+	
 	init() {
 		authorizationDateFormatter = DateFormatter()
 		authorizationDateFormatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ww zzz"
+		authorizationDateFormatter.locale = Locale(identifier: "en_US")
+		authorizationDateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+		
+		metroDateFormatter = DateFormatter()
+		metroDateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
 		authorizationDateFormatter.locale = Locale(identifier: "en_US")
 		authorizationDateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
 		
@@ -575,7 +582,10 @@ class BusQuery {
 		return newStationList
 	}
 	
-	func queryMetroArrivals() {
+	func queryMetroArrivals(metroStation: Station) -> [MetroArrival] {
+		var metroArrivals = [MetroArrival]()
+		var nulled: Bool = true
+		print("querying metro arrivals")
 		let semaphore = DispatchSemaphore(value: 0)
 		
 		let urlMetroArrivals = URL(string: String("https://api.metro.taipei/metroapi/TrackInfo.asmx").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
@@ -595,24 +605,73 @@ class BusQuery {
 			else if let response = response as? HTTPURLResponse, let data = data {
 				if(response.statusCode == 200) {
 					let rawReturned = String(data: data, encoding: .utf8)?.components(separatedBy: "<?xml")[0]
+					if(rawReturned == "null") {
+						print("nulled")
+						semaphore.signal()
+						return
+					}
+					let metroArrivalsList = try? JSONSerialization.jsonObject(with: (rawReturned!.data(using: .utf8))!, options: []) as? [[String: String]]
 					
-					let metroArrivalsList = try? JSONSerialization.jsonObject(with: (rawReturned!.data(using: .utf8))!, options: [])
+					let nowTime = Date()
 					
+					var zhongxiaofuxing = 0
+					let metroArrivalsRaw = metroArrivalsList!.filter({ $0["StationName"] ==  (metroStation.stationName + "站") })
+					for metroArrival in metroArrivalsRaw {
+						let sourceTime = self.metroDateFormatter.date(from: metroArrival["NowDateTime"]!)!
+						let elapsedTime = nowTime.timeIntervalSince(sourceTime)
+						var estimatedArrival = -1
+						
+						if(metroArrival["CountDown"]!.contains(":")) {
+							let countDownRaw = metroArrival["CountDown"]?.split(separator: ":")
+							estimatedArrival = Int(countDownRaw![0])! * 60 + Int(countDownRaw![1])! - Int(elapsedTime)
+						} else if(metroArrival["CountDown"]! == "列車進站") {
+							estimatedArrival = 0
+						} else if(metroArrival["CountDown"]! == "資料擷取中") {
+							estimatedArrival = -2
+						}
+						
+						let stationName = metroArrival["StationName"]!
+						let destination = metroArrival["DestinationName"]!
+						
+						metroArrivals.append(MetroArrival(stationName: stationName, destinationName: destination, estimatedArrival: estimatedArrival))
+						
+						if(metroStation.stationName == "忠孝復興" && destination == "南港展覽館站") {
+							metroArrivals.last?.line = MetroDestinationToLineDict[destination]![zhongxiaofuxing]
+							zhongxiaofuxing = 1
+						}
+						else {
+							metroArrivals.last!.line = MetroDestinationToLineDict[destination]![0]
+						}
+						
+						switch estimatedArrival {
+						case 0:
+							metroArrivals.last?.status = .Normal
+						case -1:
+							metroArrivals.last?.status = .ServiceOver
+						case -2:
+							metroArrivals.last?.status = .Loading
+						default:
+							metroArrivals.last?.status = .Normal
+						}
+						
+						metroArrivals.last?.trainNumber = metroArrival["TrainNumber"]!
+					}
 					
-					print(rawReturned!)
 				}
 				else {
 					self.presentErrorMessage(query: "nearby metro", description: "status code", code: response.statusCode)
 				}
 			}
+			nulled = false
 			semaphore.signal()
 		}
-		task.resume()
 		
-		semaphore.wait()
-
+		repeat {
+			task.resume()
+			semaphore.wait()
+		} while nulled
 		
-		
+		return metroArrivals
 	}
 	
 	func prepareAuthorizations() {

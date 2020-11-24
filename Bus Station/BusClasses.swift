@@ -273,3 +273,95 @@ class BusStopLiveStatus {
 		static let NoServiceToday		= "今日未營運"
 	}
 }
+
+class MetroArrival {
+	let stationName: String
+	let destinationName: String
+	let estimatedArrival: Int
+	var trainNumber: String?
+	var line: Station.Line? {
+		didSet {
+			switch line {
+			case .BR:
+				lineName = "  文湖線  "
+				lineColor = MetroLineColors.BR
+				lineLabelColor = .white
+			case .R:
+				lineName = "  淡水信義線  "
+				lineColor = MetroLineColors.R
+				lineLabelColor = .white
+			case .G:
+				lineName = "  松山新店線  "
+				lineColor = MetroLineColors.G
+				lineLabelColor = .white
+			case .O:
+				lineName = "  中和新蘆線  "
+				lineColor = MetroLineColors.O
+				lineLabelColor = .black
+			case .BL:
+				lineName = "  板南線  "
+				lineColor = MetroLineColors.BL
+				lineLabelColor = .white
+			case .Y:
+				lineName = "  環狀線  "
+				lineColor = MetroLineColors.Y
+				lineLabelColor = .black
+			case .A:
+				lineName = "  機場線  "
+				lineColor = MetroLineColors.A
+				lineLabelColor = .white
+			case .LG:
+				lineName = "  萬大-中和-樹林線  "
+				lineColor = MetroLineColors.LG
+				lineLabelColor = .black
+			case .SB:
+				lineName = "  民生汐止線  "
+				lineColor = MetroLineColors.SB
+				lineLabelColor = .white
+			default:
+				break
+			}
+		}
+	}
+	var lineName: String?
+	var lineColor: UIColor = MetroLineColors.Z
+	var lineLabelColor: UIColor = UIColor.white
+	var information: String = ""
+	var informationLabelColor: UIColor = RouteInformationLabelColors.gray
+	var status: Status? {
+		didSet {
+			switch status {
+			case .Normal:
+				if(estimatedArrival > 30) {
+					information = String(format: "%d:%02d", estimatedArrival / 60, estimatedArrival % 60)
+					informationLabelColor = RouteInformationLabelColors.green
+				}
+				else {
+					information = "到站中"
+					informationLabelColor = RouteInformationLabelColors.red
+				}
+			case .Loading:
+				information = "加載中"
+				informationLabelColor = RouteInformationLabelColors.gray
+			case .ServiceOver:
+				information = "末班車已過"
+				informationLabelColor = RouteInformationLabelColors.gray
+			default:
+				information = ""
+				informationLabelColor = RouteInformationLabelColors.gray
+			}
+		}
+	}
+	
+	init(stationName: String, destinationName: String, estimatedArrival: Int) {
+		self.stationName = stationName
+		self.destinationName = destinationName
+		self.estimatedArrival = estimatedArrival
+	}
+	
+	enum Status {
+		case Normal
+		case ServiceOver
+		case Loading
+	}
+}
