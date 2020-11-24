@@ -302,7 +302,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	
 	@objc func autoRefresh() {
 		if(ViewController.stationList.count > 0) {
-			queryBusArrivals()
+			queryArrivals()
 		}
 	}
 	
@@ -484,7 +484,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 					self.findStarredBearingStation()
 					self.updatePanel()
 					
-					self.queryBusArrivals()
+					self.queryArrivals()
 					self.stationListCollectionView.scrollToItem(at: IndexPath(item: self.currentStationNumber, section: 0), at: .centeredHorizontally, animated: true)
 					
 					self.buttonActivityIndicator.stopAnimating()
@@ -495,7 +495,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		}
 	}
 	
-	func queryBusArrivals() {	// TODO: CHANGE FUNCTION NAME
+	func queryArrivals() {
 		presentActivityIndicator()
 		//print(stationList[currentStationNumber][currentBearingNumber].stationId)
 		DispatchQueue.global(qos: .background).async {
@@ -505,7 +505,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 			else {
 				ViewController.metroRouteList = self.busQuery.queryMetroArrivals(metroStation: ViewController.stationList[self.currentStationNumber][0])
 			}
-			#warning("Add else for Metro query")
 			DispatchQueue.main.async {
 				self.updatePanel()
 			}
@@ -952,12 +951,12 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
 			currentStationNumber = indexPath.item
 			findStarredBearingStation()
 			collectionView.reloadData()
-			queryBusArrivals()
+			queryArrivals()
 		}
 		else if(collectionView == bearingListCollectionView) {
 			currentBearingNumber = indexPath.item
 			collectionView.reloadData()
-			queryBusArrivals()
+			queryArrivals()
 		}
 	}
 	
@@ -967,10 +966,9 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
 		
 		if(scrollView == routeCollectionView.self) {
 			let page = Int(x/routeCollectionView.frame.width)
-			print("\(page)")
 			currentBearingNumber = ViewController.bearingItemToIndex[page][1]
 			currentStationNumber = ViewController.bearingItemToIndex[page][0]
-			queryBusArrivals()
+			queryArrivals()
 			stationListCollectionView.reloadData()
 			bearingListCollectionView.reloadData()
 			stationListCollectionView.scrollToItem(at: IndexPath(item: currentStationNumber, section: 0), at: .centeredHorizontally, animated: true)
@@ -1027,8 +1025,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 		
 		if(ViewController.stationTypeList[stationNumber] == .Bus) {
 			let cell = tableView.dequeueReusableCell(withIdentifier: "RouteCell") as! RouteTableViewCell
-			#warning("consider removing the selection style")
-			cell.selectionStyle = .none
 			
 			if(!upSideUpLayout) {
 				cell.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi));
@@ -1042,8 +1038,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 		}
 		else {
 			let cell = tableView.dequeueReusableCell(withIdentifier: "MetroCell") as! MetroRouteTableViewCell
-			#warning("consider removing the selection style")
-			cell.selectionStyle = .none
 			
 			if(!upSideUpLayout) {
 				cell.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi));

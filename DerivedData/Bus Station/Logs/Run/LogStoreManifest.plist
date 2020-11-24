@@ -618,6 +618,40 @@
 			<key>uniqueIdentifier</key>
 			<string>5B911927-1940-4CB1-BA27-6C5269609E9B</string>
 		</dict>
+		<key>5ECDCE39-D59B-4DBC-9F7D-09CDCCD433B5</key>
+		<dict>
+			<key>className</key>
+			<string>DBGConsoleLog</string>
+			<key>documentTypeString</key>
+			<string>com.apple.dt.IDE.DebuggerLogContentType</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
+			<key>fileName</key>
+			<string>5ECDCE39-D59B-4DBC-9F7D-09CDCCD433B5.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Bus Station project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Bus Station</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Run Bus Station</string>
+			<key>timeStartedRecording</key>
+			<real>627889838.53969896</real>
+			<key>timeStoppedRecording</key>
+			<real>627889898.70182705</real>
+			<key>title</key>
+			<string>Run Bus Station</string>
+			<key>uniqueIdentifier</key>
+			<string>5ECDCE39-D59B-4DBC-9F7D-09CDCCD433B5</string>
+		</dict>
 		<key>64AE4A73-331F-42D9-AA48-BD691D330F64</key>
 		<dict>
 			<key>className</key>
@@ -821,6 +855,40 @@
 			<string>Run Bus Station</string>
 			<key>uniqueIdentifier</key>
 			<string>7F7ABEA9-8860-4893-A814-3360F1A8BCBA</string>
+		</dict>
+		<key>87BEFC8C-B96B-4675-868C-0C1685E35511</key>
+		<dict>
+			<key>className</key>
+			<string>DBGConsoleLog</string>
+			<key>documentTypeString</key>
+			<string>com.apple.dt.IDE.DebuggerLogContentType</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
+			<key>fileName</key>
+			<string>87BEFC8C-B96B-4675-868C-0C1685E35511.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Bus Station project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Bus Station</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Run Bus Station</string>
+			<key>timeStartedRecording</key>
+			<real>627890259.84852695</real>
+			<key>timeStoppedRecording</key>
+			<real>627890319.84463096</real>
+			<key>title</key>
+			<string>Run Bus Station</string>
+			<key>uniqueIdentifier</key>
+			<string>87BEFC8C-B96B-4675-868C-0C1685E35511</string>
 		</dict>
 		<key>88008E44-AB17-453D-9093-25C3E14AE836</key>
 		<dict>
@@ -1637,6 +1705,40 @@
 			<string>Run Bus Station</string>
 			<key>uniqueIdentifier</key>
 			<string>F7A2CBFF-2BD2-4F2A-B535-8BCB68096904</string>
+		</dict>
+		<key>FB600C62-D357-477D-B320-AA00AD8991BB</key>
+		<dict>
+			<key>className</key>
+			<string>DBGConsoleLog</string>
+			<key>documentTypeString</key>
+			<string>com.apple.dt.IDE.DebuggerLogContentType</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
+			<key>fileName</key>
+			<string>FB600C62-D357-477D-B320-AA00AD8991BB.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Bus Station project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Bus Station</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Run Bus Station</string>
+			<key>timeStartedRecording</key>
+			<real>627889544.32391202</real>
+			<key>timeStoppedRecording</key>
+			<real>627889809.17618203</real>
+			<key>title</key>
+			<string>Run Bus Station</string>
+			<key>uniqueIdentifier</key>
+			<string>FB600C62-D357-477D-B320-AA00AD8991BB</string>
 		</dict>
 		<key>FCB4E85F-858D-45FB-A588-9C115FA90C29</key>
 		<dict>

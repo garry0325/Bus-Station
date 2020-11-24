@@ -331,7 +331,7 @@ class MetroArrival {
 		didSet {
 			switch status {
 			case .Normal:
-				if(estimatedArrival > 90) {
+				if(estimatedArrival > 120) {
 					informationLabelColor = RouteInformationLabelColors.green
 				}
 				else if(estimatedArrival > 30) {
