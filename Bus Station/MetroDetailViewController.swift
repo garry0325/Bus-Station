@@ -93,9 +93,6 @@ class MetroDetailViewController: UIViewController {
 		DispatchQueue.global(qos: .background).async {
 			self.metroStations = self.busQuery.queryMetroStationSequence(currentStation: self.metroRouteTableViewCell!.currentStation!)
 			
-
-			
-			
 			DispatchQueue.main.async {
 				let autoscrollPosition = self.metroStations.firstIndex(where: { $0.isCurrentStation == true })
 				self.metroDetailTableView.reloadData()

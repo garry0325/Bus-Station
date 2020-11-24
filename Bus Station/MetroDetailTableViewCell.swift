@@ -34,6 +34,7 @@ class MetroDetailTableViewCell: UITableViewCell {
 		didSet {
 			routeNodeView.tintColor = lineColor
 			currentStationIndicatorView.tintColor = lineColor
+			currentStationIndicatorView.layer.borderColor = lineColor.cgColor
 			routeLineUp.backgroundColor = lineColor
 			routeLineBottom.backgroundColor = lineColor
 		}
@@ -57,6 +58,9 @@ class MetroDetailTableViewCell: UITableViewCell {
 		metroDepartStopButton.isHidden = true
 		infoAtStop.isHidden = true
 		infoDepartStop.isHidden = true
+		
+		currentStationIndicatorView.layer.cornerRadius = currentStationIndicatorView.frame.width / 2
+		currentStationIndicatorView.layer.borderWidth = 5.0
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

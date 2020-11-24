@@ -956,7 +956,6 @@
         <!--Metro Detail View Controller-->
         <scene sceneID="56M-ge-Ovq">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Mda-Ie-65E" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="MetroDetailStoryboard" id="6xv-av-JF3" customClass="MetroDetailViewController" customModule="Bus_Station" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="w0c-hG-hba">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
@@ -1262,6 +1261,7 @@
                         <outlet property="stationNameLabel" destination="cdJ-Zj-Mo0" id="6MW-mW-mFE"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Mda-Ie-65E" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1525" y="100"/>
         </scene>
