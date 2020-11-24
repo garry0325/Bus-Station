@@ -785,6 +785,35 @@ class BusQuery {
 						if(stationName == "小碧潭" || stationName == "新北投") {
 							continue
 						}
+						
+						let stationID = Int((station["StationID"] as! String).suffix(2))!
+						if(currentStation.destinationName == "往蘆洲") {
+							if(13 <= stationID && stationID <= 21) {
+								continue
+							}
+						}
+						if(currentStation.destinationName == "往迴龍") {
+							if(stationID > 30) {
+								continue
+							}
+						}
+						if(currentStation.destinationName == "往南勢角") {
+							if(HuiLongStations.contains(currentStation.stationName)) {
+								if(stationID > 30) {
+									continue
+								}
+							}
+							else if(LuzhouStations.contains(currentStation.stationName)) {
+								if(stationID >= 13 && stationID <= 21) {
+									continue
+								}
+							}
+							else {
+								if(stationID > 30) {
+									continue
+								}
+							}
+						}
 						metroStations.append(MetroStation(stationName: stationName, sequence: station["Sequence"] as! Int))
 						if(((stationName.last == "站") ? stationName:stationName + "站") == currentStation.stationName) {
 							metroStations.last?.isCurrentStation = true
