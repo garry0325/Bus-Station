@@ -52,6 +52,8 @@ class MetroRouteTableViewCell: UITableViewCell {
 	@IBOutlet var destinationLabel: UILabel!
 	@IBOutlet var informationLabel: UILabel!
 	@IBOutlet var informationBackgroundView: UIView!
+	@IBOutlet var crowdnessIndicators: [UIImageView]!
+	
 	
 	var currentStation: MetroArrival?
 	
@@ -85,6 +87,30 @@ class MetroRouteTableViewCell: UITableViewCell {
 			lineNameLabel.textColor = lineLabelColor
 		}
 	}
+	var crowdness: [Int]? {
+		didSet {
+			if(crowdness?.count == 5) {
+				for i in 0..<crowdness!.count {
+					switch crowdness![i] {
+					case 1:
+						crowdnessIndicators[i].tintColor = .systemGreen
+					case 2:
+						crowdnessIndicators[i].tintColor = .systemOrange
+					case 3:
+						crowdnessIndicators[i].tintColor = .systemRed
+					default:
+						crowdnessIndicators[i].tintColor = .systemGray
+					}
+					crowdnessIndicators[i].isHidden = false
+				}
+			}
+			else {
+				for i in 0..<crowdnessIndicators.count {
+					crowdnessIndicators[i].isHidden = true
+				}
+			}
+		}
+	}
 	
 	var estimatedArrival = 0
 	var countdownSeconds = 0
@@ -114,6 +140,10 @@ class MetroRouteTableViewCell: UITableViewCell {
 		informationLabel.layer.zPosition = 1
 		
 		informationLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 23.0, weight: .regular)
+		
+		for crowdnessIndicator in crowdnessIndicators {
+			crowdnessIndicator.isHidden = true
+		}
 		
 		timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { (timer) in
 			if(self.countdownSeconds > 10) {

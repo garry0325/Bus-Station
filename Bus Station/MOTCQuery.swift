@@ -584,7 +584,9 @@ class BusQuery {
 	
 	func queryMetroArrivals(metroStation: Station) -> [MetroArrival] {
 		var metroArrivals = [MetroArrival]()
+		var crowdnessCheck = false
 		var nulled: Bool = true
+		var trainNumberToIndexDict: [String: Int] = [:]
 		
 		let semaphore = DispatchSemaphore(value: 0)
 		
@@ -666,6 +668,11 @@ class BusQuery {
 						}
 						
 						metroArrivals.last?.trainNumber = metroArrival["TrainNumber"]!
+						
+						// check if Blue Line exists
+						if(metroArrivals.last?.line == .BL) {
+							crowdnessCheck = true
+						}
 					}
 					
 				}
@@ -684,11 +691,61 @@ class BusQuery {
 		
 		metroArrivals.sort(by: { $0.lineName! >= $1.lineName! })
 		
-		for i in 0..<metroArrivals.count {
-			print("\(metroArrivals[i].destinationName) \(metroArrivals[i].estimatedArrival)")
+		// check BanNan line crowdness
+		if(crowdnessCheck) {
+			for i in 0..<metroArrivals.count {
+				if(metroArrivals[i].line == .BL && metroArrivals[i].trainNumber != "") {
+					trainNumberToIndexDict[metroArrivals[i].trainNumber!] = i
+				}
+			}
+			let urlCrowdness = URL(string: String("https://api.metro.taipei/metroapi/CarWeight.asmx").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+			let httpBodyCrowdness = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n<soap:Body> <getCarWeightByInfo xmlns=\"http://tempuri.org/\"><userName>garry0325@gmail.com</userName>   <passWord>U66A9vG2</passWord></getCarWeightByInfo> </soap:Body></soap:Envelope>"
+
+
+			var requestCrowdness = URLRequest(url: urlCrowdness)
+			requestCrowdness.setValue("text/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
+			requestCrowdness.httpBody = Data(httpBodyCrowdness.utf8)
+			requestCrowdness.httpMethod = "POST"
+
+			let taskCrowdness = session.dataTask(with: requestCrowdness) { (data, response, error) in
+				if let error = error {
+					self.presentErrorMessage(query: "metro crowdness", description: error.localizedDescription, code: nil)
+				}
+				else if let response = response as? HTTPURLResponse, let data = data {
+					if(response.statusCode == 200) {
+						var rawReturned = String(data: data, encoding: .utf8)?.components(separatedBy: "[")[1]
+						rawReturned = "[" + (rawReturned?.components(separatedBy: "]")[0])! + "]"
+						
+						let carWeightInfo = try? JSONSerialization.jsonObject(with: (rawReturned!.data(using: .utf8))!, options: []) as? [[String: String]]
+						
+						for car in carWeightInfo! {
+							let trainNumber = car["TrainNumber"]!
+							var crowdnessArray = [Int]()
+							if let index = trainNumberToIndexDict[trainNumber] {
+								crowdnessArray.append(Int(car["Car1"]!)!)
+								crowdnessArray.append(Int(car["Car2"]!)!)
+								crowdnessArray.append(Int(car["Car3"]!)!)
+								crowdnessArray.append(Int(car["Car4"]!)!)
+								crowdnessArray.append(Int(car["Car5"]!)!)
+								
+								metroArrivals[index].crowdness = crowdnessArray
+								print("\(metroArrivals[index].destinationName) \(metroArrivals[index].crowdness)")
+							}
+						}
+						
+					}
+					else {
+						self.presentErrorMessage(query: "nearby metro", description: "status code", code: response.statusCode)
+					}
+				}
+				semaphore.signal()
+			}
+			taskCrowdness.resume()
+			semaphore.wait()
 		}
 		
 		NotificationCenter.default.post(name: NSNotification.Name("MetroArrivals"), object: metroArrivals)
+		
 		
 		return metroArrivals
 	}
@@ -714,7 +771,6 @@ class BusQuery {
 		request = URLRequest(url: urlStopOfRoute)
 		request.setValue(authTimeString, forHTTPHeaderField: "x-date")
 		request.setValue(authorization, forHTTPHeaderField: "Authorization")
-		print(urlStopOfRoute)
 		let task = session.dataTask(with: request) { (data, response, error) in
 			if let error = error {
 				self.presentErrorMessage(query: "metro station sequence", description: error.localizedDescription, code: nil)
@@ -734,6 +790,14 @@ class BusQuery {
 							metroStations.last?.isCurrentStation = true
 						}
 					}
+					
+					switch currentStation.destinationName {
+					case "往象山", "往大安", "往南勢角", "往大坪林", "往動物園", "往頂埔", "往亞東醫院", "往新店", "往台電大樓":
+						metroStations.reverse()
+					default:
+						break
+					}
+					
 					metroStations.first!.isDepartureStation = true
 					metroStations.last!.isDestinationStation = true
 				}

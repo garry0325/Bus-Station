@@ -1052,6 +1052,13 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 			cell.estimatedArrival = ViewController.metroRouteList[indexPath.row].estimatedArrival
 			cell.status = ViewController.metroRouteList[indexPath.row].status!
 			
+			if let crowdness = ViewController.metroRouteList[indexPath.row].crowdness {
+				cell.crowdness = crowdness
+			}
+			else {
+				cell.crowdness = [0]
+			}
+			
 			cell.currentStation = ViewController.metroRouteList[indexPath.row]
 			
 			return cell
@@ -1060,11 +1067,9 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		if(ViewController.stationTypeList[ViewController.stationNumberForDetailView] == .Bus) {
-			print("didselect bus")
 			NotificationCenter.default.post(name: NSNotification.Name("Detail"), object: ViewController.routeList[ViewController.stationNumberForDetailView][ViewController.bearingNumberForDetailView][indexPath.row])
 			print("sending \(Unmanaged.passUnretained(ViewController.routeList[ViewController.stationNumberForDetailView][ViewController.bearingNumberForDetailView][indexPath.row]).toOpaque())")
 		} else {
-			print("didselect metro")
 			//performSegue(withIdentifier: "MetroDetail", sender: ViewController.metroRouteList[indexPath.row])
 		}
 	}
@@ -1117,12 +1122,10 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
 		segue.destination.modalPresentationStyle = .popover
 		
 		if(segue.identifier == "RouteDetail") {
-			print("bus segue")
 			let destination = segue.destination as! RouteDetailViewController
 			destination.busStop = sender as? BusStop
 		}
 		else if(segue.identifier == "MetroDetail") {
-			print("metro segue")
 			let destination = segue.destination as! MetroDetailViewController
 			destination.metroRouteTableViewCell = sender as? MetroRouteTableViewCell
 			// unknown reason that MetroDetailViewController shows before didSelect is called

@@ -279,6 +279,7 @@ class MetroArrival {
 	let destinationName: String
 	let estimatedArrival: Int
 	var trainNumber: String?
+	var crowdness: [Int]?
 	var line: Station.Line? {
 		didSet {
 			switch line {
