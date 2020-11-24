@@ -640,7 +640,10 @@ class BusQuery {
 								metroArrivals.last?.line = MetroDestinationToLineDict[destination]![zhongxiaofuxing]
 								zhongxiaofuxing = 1
 							}
-							else if(!WenHuStations.contains(stationName)) {
+							else if(WenHuStations.contains(metroStation.stationName)) {
+								metroArrivals.last?.line = MetroDestinationToLineDict[destination]![0]
+							}
+							else {
 								metroArrivals.last?.line = MetroDestinationToLineDict[destination]![1]
 							}
 						}
@@ -675,6 +678,10 @@ class BusQuery {
 			task.resume()
 			semaphore.wait()
 		} while nulled
+		
+		for i in 0..<metroArrivals.count {
+			print("\(metroArrivals[i].destinationName) \(metroArrivals[i].estimatedArrival)")
+		}
 		
 		return metroArrivals
 	}

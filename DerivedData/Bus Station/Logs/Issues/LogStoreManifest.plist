@@ -34,7 +34,7 @@
 			<key>uniqueIdentifier</key>
 			<string>0085216E-7620-40A4-8538-6B0E2365639B</string>
 		</dict>
-		<key>4651EF2B-9179-4A9F-B287-06648F709753</key>
+		<key>36DCDD9F-D868-4E9A-AF8F-B1F986E6F9E5</key>
 		<dict>
 			<key>className</key>
 			<string>IDEActivityLogMajorGroupSection</string>
@@ -43,7 +43,7 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.target.product-type.framework</string>
 			<key>fileName</key>
-			<string>4651EF2B-9179-4A9F-B287-06648F709753.xcactivitylog</string>
+			<string>36DCDD9F-D868-4E9A-AF8F-B1F986E6F9E5.xcactivitylog</string>
 			<key>hasPrimaryLog</key>
 			<true/>
 			<key>primaryObservable</key>
@@ -54,41 +54,13 @@
 			<key>signature</key>
 			<string>GoogleUtilities-dfymwmqfktfcauctipoybrdojmgv</string>
 			<key>timeStartedRecording</key>
-			<real>627889813.69447601</real>
+			<real>627891127.326805</real>
 			<key>timeStoppedRecording</key>
-			<real>627889819.83956695</real>
+			<real>627891127.39745104</real>
 			<key>title</key>
 			<string>Build target GoogleUtilities</string>
 			<key>uniqueIdentifier</key>
-			<string>4651EF2B-9179-4A9F-B287-06648F709753</string>
-		</dict>
-		<key>5847CEE8-EEFA-4B8F-B787-B5757C3818ED</key>
-		<dict>
-			<key>className</key>
-			<string>IDEActivityLogMajorGroupSection</string>
-			<key>documentTypeString</key>
-			<string>&lt;nil&gt;</string>
-			<key>domainType</key>
-			<string>Xcode.IDEActivityLogDomainType.target.product-type.application</string>
-			<key>fileName</key>
-			<string>5847CEE8-EEFA-4B8F-B787-B5757C3818ED.xcactivitylog</string>
-			<key>hasPrimaryLog</key>
-			<true/>
-			<key>primaryObservable</key>
-			<dict>
-				<key>highLevelStatus</key>
-				<string>W</string>
-			</dict>
-			<key>signature</key>
-			<string>Bus_Station-aezfbisvhkatsrdvgflxteszofku</string>
-			<key>timeStartedRecording</key>
-			<real>627890253.25478196</real>
-			<key>timeStoppedRecording</key>
-			<real>627890259.78825605</real>
-			<key>title</key>
-			<string>Build target Bus Station</string>
-			<key>uniqueIdentifier</key>
-			<string>5847CEE8-EEFA-4B8F-B787-B5757C3818ED</string>
+			<string>36DCDD9F-D868-4E9A-AF8F-B1F986E6F9E5</string>
 		</dict>
 		<key>B89AD30C-7C4D-433C-ABEF-BF8DE7BD7AB9</key>
 		<dict>
@@ -145,6 +117,34 @@
 			<string>Build target nanopb</string>
 			<key>uniqueIdentifier</key>
 			<string>D7AFF00B-5CD4-4C64-88FE-F49C427DD3F2</string>
+		</dict>
+		<key>E9B98C9E-1CB2-48B0-BDD2-BE3D1D0F12FF</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogMajorGroupSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.target.product-type.application</string>
+			<key>fileName</key>
+			<string>E9B98C9E-1CB2-48B0-BDD2-BE3D1D0F12FF.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>W</string>
+			</dict>
+			<key>signature</key>
+			<string>Bus_Station-aezfbisvhkatsrdvgflxteszofku</string>
+			<key>timeStartedRecording</key>
+			<real>627891212.22081602</real>
+			<key>timeStoppedRecording</key>
+			<real>627891218.102229</real>
+			<key>title</key>
+			<string>Build target Bus Station</string>
+			<key>uniqueIdentifier</key>
+			<string>E9B98C9E-1CB2-48B0-BDD2-BE3D1D0F12FF</string>
 		</dict>
 	</dict>
 	<key>preserveOldLogs</key>
