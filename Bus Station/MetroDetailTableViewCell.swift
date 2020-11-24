@@ -33,7 +33,6 @@ class MetroDetailTableViewCell: UITableViewCell {
 	var lineColor: UIColor = RouteInformationLabelColors.gray {
 		didSet {
 			routeNodeView.tintColor = lineColor
-			currentStationIndicatorView.tintColor = lineColor
 			currentStationIndicatorView.layer.borderColor = lineColor.cgColor
 			routeLineUp.backgroundColor = lineColor
 			routeLineBottom.backgroundColor = lineColor
@@ -59,6 +58,7 @@ class MetroDetailTableViewCell: UITableViewCell {
 		infoAtStop.isHidden = true
 		infoDepartStop.isHidden = true
 		
+		currentStationIndicatorView.tintColor = .white
 		currentStationIndicatorView.layer.cornerRadius = currentStationIndicatorView.frame.width / 2
 		currentStationIndicatorView.layer.borderWidth = 5.0
     }

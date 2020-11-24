@@ -146,12 +146,14 @@ class MetroRouteTableViewCell: UITableViewCell {
 		}
 		
 		timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { (timer) in
-			if(self.countdownSeconds > 10) {
-				self.informationLabel.text = String(format: "%d:%02d", self.countdownSeconds / 60, self.countdownSeconds % 60)
-				self.countdownSeconds = self.countdownSeconds - 1
-			} else {
-				self.informationLabel.text = "到站中"
-				self.informationLabelColor = RouteInformationLabelColors.red
+			if(self.status == .Normal) {
+				if(self.countdownSeconds > 10) {
+					self.informationLabel.text = String(format: "%d:%02d", self.countdownSeconds / 60, self.countdownSeconds % 60)
+					self.countdownSeconds = self.countdownSeconds - 1
+				} else {
+					self.informationLabel.text = "到站中"
+					self.informationLabelColor = RouteInformationLabelColors.red
+				}
 			}
 		})
 		// Initialization code

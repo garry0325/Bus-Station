@@ -70,21 +70,31 @@ class MetroDetailViewController: UIViewController {
 		destinationLabel.text = (metroRouteTableViewCell?.currentStation!.destinationName)!
 		
 		informationLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 23.0, weight: .regular)
-		countdownSeconds = (metroRouteTableViewCell?.currentStation!.estimatedArrival)!
+		switch metroRouteTableViewCell?.currentStation?.status {
+		case .ServiceOver:
+			informationLabel.text = "末班車已過"
+		case .Loading:
+			informationLabel.text = "加載中"
+		default:
+			break
+		}
 		informationBackgroundView.backgroundColor = metroRouteTableViewCell?.currentStation?.informationLabelColor
 		
+		countdownSeconds = (metroRouteTableViewCell?.currentStation!.estimatedArrival)!
 		countdownTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { (timer) in
-			if(self.countdownSeconds > 120) {
-				self.informationLabel.text = String(format: "%d:%02d", self.countdownSeconds / 60, self.countdownSeconds % 60)
-				self.informationBackgroundView.backgroundColor = RouteInformationLabelColors.green
-				self.countdownSeconds = self.countdownSeconds - 1
-			} else if(self.countdownSeconds > 10) {
-				self.informationLabel.text = String(format: "%d:%02d", self.countdownSeconds / 60, self.countdownSeconds % 60)
-				self.informationBackgroundView.backgroundColor = RouteInformationLabelColors.orange
-				self.countdownSeconds = self.countdownSeconds - 1
-			} else {
-				self.informationLabel.text = "到站中"
-				self.informationBackgroundView.backgroundColor = RouteInformationLabelColors.red
+			if(self.metroRouteTableViewCell?.currentStation?.status == .Normal) {
+				if(self.countdownSeconds > 120) {
+					self.informationLabel.text = String(format: "%d:%02d", self.countdownSeconds / 60, self.countdownSeconds % 60)
+					self.informationBackgroundView.backgroundColor = RouteInformationLabelColors.green
+					self.countdownSeconds = self.countdownSeconds - 1
+				} else if(self.countdownSeconds > 10) {
+					self.informationLabel.text = String(format: "%d:%02d", self.countdownSeconds / 60, self.countdownSeconds % 60)
+					self.informationBackgroundView.backgroundColor = RouteInformationLabelColors.orange
+					self.countdownSeconds = self.countdownSeconds - 1
+				} else {
+					self.informationLabel.text = "到站中"
+					self.informationBackgroundView.backgroundColor = RouteInformationLabelColors.red
+				}
 			}
 		})
 	}
