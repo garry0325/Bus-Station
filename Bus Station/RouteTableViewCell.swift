@@ -90,7 +90,7 @@ class MetroRouteTableViewCell: UITableViewCell {
 		didSet {
 			switch status {
 			case .Normal:
-				if(estimatedArrival > 30) {
+				if(estimatedArrival > 10) {
 					informationLabel.text = String(format: "%d:%02d", estimatedArrival / 60, estimatedArrival % 60)
 					countdownSeconds = estimatedArrival
 				}
@@ -114,7 +114,7 @@ class MetroRouteTableViewCell: UITableViewCell {
 		informationLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 23.0, weight: .regular)
 		
 		timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { (timer) in
-			if(self.countdownSeconds > 30) {
+			if(self.countdownSeconds > 10) {
 				self.informationLabel.text = String(format: "%d:%02d", self.countdownSeconds / 60, self.countdownSeconds % 60)
 				self.countdownSeconds = self.countdownSeconds - 1
 			} else {

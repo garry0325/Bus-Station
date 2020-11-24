@@ -101,6 +101,9 @@ class Station {
 		case LG	= "LG"
 		case SB	= "SB"
 		
+		case Gb = "Gb"
+		case Rb	= "Rb"
+		
 		case Z	= "Z"	// unknown line
 	}
 }
@@ -306,6 +309,14 @@ class MetroArrival {
 				lineName = " 環狀線 "
 				lineColor = MetroLineColors.Y
 				lineLabelColor = .black
+			case .Gb:
+				lineName = " 小碧潭支線 "
+				lineColor = MetroLineColors.Gb
+				lineLabelColor = .black
+			case .Rb:
+				lineName = " 新北投支線 "
+				lineColor = MetroLineColors.Rb
+				lineLabelColor = .white
 			case .A:
 				lineName = " 機場線 "
 				lineColor = MetroLineColors.A
@@ -334,7 +345,7 @@ class MetroArrival {
 				if(estimatedArrival > 120) {
 					informationLabelColor = RouteInformationLabelColors.green
 				}
-				else if(estimatedArrival > 30) {
+				else if(estimatedArrival > 10) {
 					informationLabelColor = RouteInformationLabelColors.orange
 				}
 				else {

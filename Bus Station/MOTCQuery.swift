@@ -647,6 +647,9 @@ class BusQuery {
 								metroArrivals.last?.line = MetroDestinationToLineDict[destination]![1]
 							}
 						}
+						else if(destination == "北投" && metroStation.stationName == "新北投") {
+							metroArrivals.last?.line = MetroDestinationToLineDict[destination]![1]
+						}
 						else {
 							metroArrivals.last!.line = MetroDestinationToLineDict[destination]![0]
 						}
@@ -678,6 +681,8 @@ class BusQuery {
 			task.resume()
 			semaphore.wait()
 		} while nulled
+		
+		metroArrivals.sort(by: { $0.lineName! >= $1.lineName! })
 		
 		for i in 0..<metroArrivals.count {
 			print("\(metroArrivals[i].destinationName) \(metroArrivals[i].estimatedArrival)")
