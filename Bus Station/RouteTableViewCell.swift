@@ -52,6 +52,7 @@ class MetroRouteTableViewCell: UITableViewCell {
 	@IBOutlet var destinationLabel: UILabel!
 	@IBOutlet var informationLabel: UILabel!
 	@IBOutlet var informationBackgroundView: UIView!
+	@IBOutlet var crowdnessDirectionIndicator: UIImageView!
 	@IBOutlet var crowdnessIndicators: [UIImageView]!
 	
 	
@@ -105,11 +106,13 @@ class MetroRouteTableViewCell: UITableViewCell {
 					}
 					crowdnessIndicators[i].isHidden = false
 				}
+				crowdnessDirectionIndicator.isHidden = false
 			}
 			else {
 				for i in 0..<crowdnessIndicators.count {
 					crowdnessIndicators[i].isHidden = true
 				}
+				crowdnessDirectionIndicator.isHidden = true
 			}
 		}
 	}
@@ -147,6 +150,7 @@ class MetroRouteTableViewCell: UITableViewCell {
 		for crowdnessIndicator in crowdnessIndicators {
 			crowdnessIndicator.isHidden = true
 		}
+		crowdnessDirectionIndicator.isHidden = true
 		
 		timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { (timer) in
 			if(self.status == .Normal) {

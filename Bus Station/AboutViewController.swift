@@ -25,7 +25,7 @@ class AboutViewController: UIViewController {
 	
 	var count = 0
 	var rightCount = 0
-	let pattern = [1,1,2,1,0,1,2,2,0]
+	let pattern = [1,1,2,1,0,1,2,2,0,1,1,2,1,0,1,2,2,0]
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()

@@ -220,10 +220,19 @@
                                                                             <constraint firstAttribute="height" constant="30" id="VTp-rl-DMW"/>
                                                                         </constraints>
                                                                     </imageView>
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow.left.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="4Lf-ua-RIR">
+                                                                        <rect key="frame" x="287" y="20" width="12" height="10.666666666666668"/>
+                                                                        <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="width" constant="12" id="G80-Iv-mq4"/>
+                                                                            <constraint firstAttribute="height" constant="12" id="u15-vp-Spz"/>
+                                                                        </constraints>
+                                                                    </imageView>
                                                                 </subviews>
                                                                 <constraints>
                                                                     <constraint firstItem="iuu-vj-rHK" firstAttribute="width" secondItem="jon-GV-Cbi" secondAttribute="width" multiplier="1.07317" id="1Yi-7w-Zwr"/>
                                                                     <constraint firstItem="aEf-VH-sSc" firstAttribute="centerY" secondItem="BEo-Fi-BEF" secondAttribute="centerY" id="62Y-gv-fLE"/>
+                                                                    <constraint firstItem="U6T-1L-g6l" firstAttribute="leading" secondItem="4Lf-ua-RIR" secondAttribute="trailing" id="9Ea-PI-lbU"/>
                                                                     <constraint firstItem="U6T-1L-g6l" firstAttribute="centerY" secondItem="aEf-VH-sSc" secondAttribute="centerY" id="BvD-Fr-1a0"/>
                                                                     <constraint firstItem="RQg-Dx-JOy" firstAttribute="centerY" secondItem="BEo-Fi-BEF" secondAttribute="centerY" multiplier="0.6" id="Kk6-ok-zeT"/>
                                                                     <constraint firstItem="Mwz-zt-tQ1" firstAttribute="leading" secondItem="vRb-7G-3zk" secondAttribute="trailing" constant="-3" id="LUd-Nj-btM"/>
@@ -240,6 +249,7 @@
                                                                     <constraint firstItem="Dgf-ja-w7v" firstAttribute="centerY" secondItem="aEf-VH-sSc" secondAttribute="centerY" id="c9B-8L-LO1"/>
                                                                     <constraint firstItem="vRb-7G-3zk" firstAttribute="leading" secondItem="Dgf-ja-w7v" secondAttribute="trailing" constant="-3" id="eTK-T0-Wmp"/>
                                                                     <constraint firstAttribute="trailing" secondItem="2X5-Jl-SrP" secondAttribute="trailing" constant="10" id="fNJ-oe-yZ7"/>
+                                                                    <constraint firstItem="4Lf-ua-RIR" firstAttribute="centerY" secondItem="BEo-Fi-BEF" secondAttribute="centerY" id="gO4-JZ-Yu4"/>
                                                                     <constraint firstItem="RQg-Dx-JOy" firstAttribute="leading" secondItem="jon-GV-Cbi" secondAttribute="trailing" constant="20" id="gWj-Cw-gOG"/>
                                                                     <constraint firstItem="Mwz-zt-tQ1" firstAttribute="centerY" secondItem="aEf-VH-sSc" secondAttribute="centerY" id="hOL-eE-DB5"/>
                                                                     <constraint firstItem="iuu-vj-rHK" firstAttribute="centerY" secondItem="jon-GV-Cbi" secondAttribute="centerY" id="hVR-zj-Kr3"/>
@@ -250,6 +260,7 @@
                                                                 </constraints>
                                                             </tableViewCellContentView>
                                                             <connections>
+                                                                <outlet property="crowdnessDirectionIndicator" destination="4Lf-ua-RIR" id="IwW-9J-4XJ"/>
                                                                 <outlet property="destinationLabel" destination="2aP-Dt-kXG" id="5b6-qP-hMS"/>
                                                                 <outlet property="informationBackgroundView" destination="iuu-vj-rHK" id="6E1-CJ-XbI"/>
                                                                 <outlet property="informationLabel" destination="jon-GV-Cbi" id="uT5-3D-jrV"/>
@@ -1514,6 +1525,7 @@ Cg
     </scenes>
     <resources>
         <image name="arrow.down.circle.fill" catalog="system" width="128" height="121"/>
+        <image name="arrow.left.circle.fill" catalog="system" width="128" height="121"/>
         <image name="bus.fill" catalog="system" width="128" height="122"/>
         <image name="circle.fill" catalog="system" width="128" height="121"/>
         <image name="disabled" width="24" height="24"/>
