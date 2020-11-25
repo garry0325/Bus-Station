@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17192" systemVersion="19H2" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17511" systemVersion="20B29" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
     <entity name="Ad" representedClassName="Ad" syncable="YES" codeGenerationType="class">
         <attribute name="needAd" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
     </entity>
     <entity name="BannedStation" representedClassName="BannedStation" syncable="YES" codeGenerationType="class">
         <attribute name="stationID" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="Initial" representedClassName="Initial" syncable="YES" codeGenerationType="class">
+        <attribute name="notInitialUse" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
     </entity>
     <entity name="StarredStation" representedClassName="StarredStation" syncable="YES" codeGenerationType="class">
         <attribute name="stationID" optional="YES" attributeType="String"/>
@@ -19,7 +22,8 @@
         <element name="Ad" positionX="-45" positionY="9" width="128" height="58"/>
         <element name="BannedStation" positionX="-54" positionY="0" width="128" height="58"/>
         <element name="StarredStation" positionX="-54" positionY="-9" width="128" height="58"/>
-        <element name="UpSideUp" positionX="-36" positionY="18" width="128" height="58"/>
         <element name="StationRadius" positionX="-27" positionY="27" width="128" height="58"/>
+        <element name="UpSideUp" positionX="-36" positionY="18" width="128" height="58"/>
+        <element name="Initial" positionX="-36" positionY="27" width="128" height="44"/>
     </elements>
 </model>

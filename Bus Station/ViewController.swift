@@ -194,6 +194,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	}
 	
 	func fetchSavedSettings() {
+		if(checkInitial()) {
+			presentWelcomeWarning()
+		}
 		fetchLayoutPreference()
 		checkAdRemoval()
 		fetchStarredAndBannedStops()
@@ -548,6 +551,44 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		locationServiceAlert.addAction(cancelAction)
 		
 		present(locationServiceAlert, animated: true, completion: nil)
+	}
+	
+	func checkInitial() -> Bool {
+		var initialUse: Bool?
+		do {
+			let initial = try context.fetch(Initial.fetchRequest()) as! [Initial]
+			if(initial.count > 0 && initial[initial.count - 1].notInitialUse == true) {
+				initialUse = false
+			}
+			else {
+				initialUse = true
+			}
+		} catch {
+			print("Error fetching Initial")
+			initialUse = true
+		}
+		
+		return (initialUse ?? true) ? true:false
+	}
+	
+	func presentWelcomeWarning() {
+		DispatchQueue.main.async {
+			let welcomeAlert = UIAlertController(title: "初次使用", message: "資料更新可能延誤，請注意實際交通狀況。本 App 不負任何責任。\n\n資料來源：交通部PTX平臺、台北捷運公司", preferredStyle: .alert)
+			let okAction = UIAlertAction(title: "好的", style: .default, handler: {_ in
+				let newInitial = Initial(context: self.context)
+				newInitial.notInitialUse = true
+				do {
+					try self.context.save()
+				} catch {
+					print("Error saving Initial")
+				}
+				
+				self.dismissActivityIndicator()
+				self.locationManager.requestWhenInUseAuthorization()
+			})
+			welcomeAlert.addAction(okAction)
+			self.present(welcomeAlert, animated: true, completion: nil)
+		}
 	}
 	
 	func fetchLayoutPreference() {
