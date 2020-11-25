@@ -72,6 +72,8 @@ class MetroDetailViewController: UIViewController {
 		
 		informationLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 23.0, weight: .regular)
 		switch metroRouteTableViewCell?.currentStation?.status {
+		case .Approaching:
+			informationLabel.text = "到站中"
 		case .ServiceOver:
 			informationLabel.text = "末班車已過"
 		case .Loading:
