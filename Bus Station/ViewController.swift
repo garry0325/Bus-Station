@@ -73,8 +73,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	// TODO: combine buses from other cities
 	// TODO: make static enum +
 	// TODO: check far away location
+	
 	// TODO: connectivity issue warnings
 	// TODO: Maokong Gondola support
+	// TODO: Make direction indicator bigger
+	// TODO: Error in MetroDetailViewController at branch stations
+	// TODO: move the top station label upper when on iPhone X displays
 	
 	var busQuery = BusQuery()
 	var locationWhenPinned = CLLocation()

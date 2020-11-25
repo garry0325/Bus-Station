@@ -710,10 +710,15 @@ class BusQuery {
 				}
 				else if let response = response as? HTTPURLResponse, let data = data {
 					if(response.statusCode == 200) {
-						var rawReturned = String(data: data, encoding: .utf8)?.components(separatedBy: "[")[1]
-						rawReturned = "[" + (rawReturned?.components(separatedBy: "]")[0])! + "]"
+						let rawReturned = String(data: data, encoding: .utf8)?.components(separatedBy: "[")
+						if(rawReturned?.count == 1) {	// crowndess is unavailable, maybe service over
+							semaphore.signal()
+							return
+						}
 						
-						let carWeightInfo = try? JSONSerialization.jsonObject(with: (rawReturned!.data(using: .utf8))!, options: []) as? [[String: String]]
+						let rawCarWeight = "[" + (rawReturned?[1].components(separatedBy: "]")[0])! + "]"
+						
+						let carWeightInfo = try? JSONSerialization.jsonObject(with: (rawCarWeight.data(using: .utf8))!, options: []) as? [[String: String]]
 						
 						for car in carWeightInfo! {
 							let trainNumber = car["TrainNumber"]!
