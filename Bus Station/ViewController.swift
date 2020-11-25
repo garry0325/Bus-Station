@@ -74,6 +74,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	// TODO: make static enum +
 	// TODO: check far away location
 	// TODO: connectivity issue warnings
+	// TODO: Maokong Gondola support
 	
 	var busQuery = BusQuery()
 	var locationWhenPinned = CLLocation()
