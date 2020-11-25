@@ -165,7 +165,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		stationListCollectionView.contentInset.right = 100	// compensate for the bug that the last cell will be covered due to not enough scrollable length
 		
 		#warning("maybe load the content first")
-		#warning("get layout setting first")
 		fetchSavedSettings()
 		
 		applyAutoLayoutConstraints()
