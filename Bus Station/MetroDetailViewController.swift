@@ -49,6 +49,7 @@ class MetroDetailViewController: UIViewController {
 		
 		constructMetroStationSequence()
 		
+		autoRefreshTimer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(updateMetroArrivals), userInfo: nil, repeats: true)
 		NotificationCenter.default.addObserver(self, selector: #selector(refreshETA), name: NSNotification.Name("MetroArrivals"), object: nil)
         
     }
@@ -108,6 +109,16 @@ class MetroDetailViewController: UIViewController {
 				self.metroDetailTableView.reloadData()
 				self.metroDetailTableView.scrollToRow(at: IndexPath(row: autoscrollPosition!, section: 0), at: .middle, animated: false)
 				self.activityIndicator.stopAnimating()
+			}
+		}
+	}
+	
+	@objc func updateMetroArrivals() {
+		DispatchQueue.global(qos: .background).async {
+			
+			
+			DispatchQueue.main.async {
+				
 			}
 		}
 	}

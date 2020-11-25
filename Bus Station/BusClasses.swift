@@ -349,6 +349,8 @@ class MetroArrival {
 				else {
 					informationLabelColor = RouteInformationLabelColors.red
 				}
+			case .Approaching:
+				informationLabelColor = RouteInformationLabelColors.red
 			case .Loading:
 				informationLabelColor = RouteInformationLabelColors.gray
 			case .ServiceOver:
@@ -367,6 +369,7 @@ class MetroArrival {
 	
 	enum Status {
 		case Normal
+		case Approaching
 		case ServiceOver
 		case Loading
 	}
@@ -383,5 +386,18 @@ class MetroStation {
 	init(stationName: String, sequence: Int) {
 		self.stationName = stationName
 		self.sequence = sequence
+	}
+}
+
+class MetroLivePosition {
+	let stationName: String
+	let destinationName: String
+	let estimatedArrival: Int
+	var status: MetroArrival.Status?
+	
+	init(stationName: String, destinationName: String, estimatedArrival: Int) {
+		self.stationName = stationName
+		self.destinationName = destinationName
+		self.estimatedArrival = estimatedArrival
 	}
 }

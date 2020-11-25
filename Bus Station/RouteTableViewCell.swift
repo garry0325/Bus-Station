@@ -89,14 +89,16 @@ class MetroRouteTableViewCell: UITableViewCell {
 	}
 	var crowdness: [Int]? {
 		didSet {
-			if(crowdness?.count == 5) {
+			if(crowdness?.count == 6) {
 				for i in 0..<crowdness!.count {
 					switch crowdness![i] {
 					case 1:
 						crowdnessIndicators[i].tintColor = .systemGreen
 					case 2:
-						crowdnessIndicators[i].tintColor = .systemOrange
+						crowdnessIndicators[i].tintColor = .systemYellow
 					case 3:
+						crowdnessIndicators[i].tintColor = .systemOrange
+					case 4:
 						crowdnessIndicators[i].tintColor = .systemRed
 					default:
 						crowdnessIndicators[i].tintColor = .systemGray
@@ -125,6 +127,8 @@ class MetroRouteTableViewCell: UITableViewCell {
 				else {
 					information = "到站中"
 				}
+			case .Approaching:
+				information = "到站中"
 			case .Loading:
 				information = "加載中"
 			case .ServiceOver:
@@ -136,7 +140,6 @@ class MetroRouteTableViewCell: UITableViewCell {
 	
 	override func awakeFromNib() {
 		super.awakeFromNib()
-		
 		informationLabel.layer.zPosition = 1
 		
 		informationLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 23.0, weight: .regular)
@@ -153,8 +156,9 @@ class MetroRouteTableViewCell: UITableViewCell {
 				} else {
 					self.informationLabel.text = "到站中"
 					self.informationLabelColor = RouteInformationLabelColors.red
+					self.countdownSeconds = 0
 				}
-			}
+			} 
 		})
 		// Initialization code
 	}

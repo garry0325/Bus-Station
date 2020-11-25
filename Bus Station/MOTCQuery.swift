@@ -622,14 +622,20 @@ class BusQuery {
 						let sourceTime = self.metroDateFormatter.date(from: metroArrival["NowDateTime"]!)!
 						let elapsedTime = nowTime.timeIntervalSince(sourceTime)
 						var estimatedArrival = -1
+						var status: MetroArrival.Status = .Normal
 						
 						if(metroArrival["CountDown"]!.contains(":")) {
 							let countDownRaw = metroArrival["CountDown"]?.split(separator: ":")
 							estimatedArrival = Int(countDownRaw![0])! * 60 + Int(countDownRaw![1])! - Int(elapsedTime)
 						} else if(metroArrival["CountDown"]! == "列車進站") {
 							estimatedArrival = 0
+							status = .Approaching
 						} else if(metroArrival["CountDown"]! == "資料擷取中") {
-							estimatedArrival = -2
+							estimatedArrival = 0
+							status = .Loading
+						} else {
+							estimatedArrival = 0
+							status = .ServiceOver
 						}
 						
 						let stationName = metroArrival["StationName"]!
@@ -637,6 +643,7 @@ class BusQuery {
 						
 						metroArrivals.append(MetroArrival(stationName: stationName, destinationName: "往" + destination, estimatedArrival: estimatedArrival))
 						
+						// Resolve ZhongXiaoFuXing station's two lines but toward same destination
 						if(destination == "南港展覽館") {
 							if(metroStation.stationName == "忠孝復興") {
 								metroArrivals.last?.line = MetroDestinationToLineDict[destination]![zhongxiaofuxing]
@@ -656,17 +663,7 @@ class BusQuery {
 							metroArrivals.last!.line = MetroDestinationToLineDict[destination]![0]
 						}
 						
-						switch estimatedArrival {
-						case 0:
-							metroArrivals.last?.status = .Normal
-						case -1:
-							metroArrivals.last?.status = .ServiceOver
-						case -2:
-							metroArrivals.last?.status = .Loading
-						default:
-							metroArrivals.last?.status = .Normal
-						}
-						
+						metroArrivals.last?.status = status
 						metroArrivals.last?.trainNumber = metroArrival["TrainNumber"]!
 						
 						// check if Blue Line exists
@@ -727,9 +724,10 @@ class BusQuery {
 								crowdnessArray.append(Int(car["Car3"]!)!)
 								crowdnessArray.append(Int(car["Car4"]!)!)
 								crowdnessArray.append(Int(car["Car5"]!)!)
+								crowdnessArray.append(Int(car["Car6"]!)!)
 								
 								metroArrivals[index].crowdness = crowdnessArray
-								print("\(metroArrivals[index].destinationName) \(metroArrivals[index].crowdness)")
+								//print("\(metroArrivals[index].destinationName) \(metroArrivals[index].crowdness)")
 							}
 						}
 						
@@ -842,6 +840,114 @@ class BusQuery {
 		
 		return metroStations
 	}
+	/*
+	func queryMetroLivePositions(currentStation: MetroArrival) {
+		var metroLivePosition = [MetroLivePosition]()
+		var nulled: Bool = true
+		
+		let semaphore = DispatchSemaphore(value: 0)
+		
+		let urlMetroArrivals = URL(string: String("https://api.metro.taipei/metroapi/TrackInfo.asmx").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+		let httpBody = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\nxmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n<soap:Body><getTrackInfo xmlns=\"http://tempuri.org/\"><userName>garry0325@gmail.com</userName><passWord>U66A9vG2</passWord> </getTrackInfo>  </soap:Body></soap:Envelope>"
+
+		let session = URLSession(configuration: urlConfig)
+
+		var request = URLRequest(url: urlMetroArrivals)
+		request.setValue("text/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
+		request.httpBody = Data(httpBody.utf8)
+		request.httpMethod = "POST"
+
+		let task = session.dataTask(with: request) { (data, response, error) in
+			if let error = error {
+				self.presentErrorMessage(query: "metro arrivals", description: error.localizedDescription, code: nil)
+			}
+			else if let response = response as? HTTPURLResponse, let data = data {
+				if(response.statusCode == 200) {
+					let rawReturned = String(data: data, encoding: .utf8)?.components(separatedBy: "<?xml")[0]
+					if(rawReturned == "null") {
+						print("nulled")
+						semaphore.signal()
+						return
+					}
+					let metroArrivalsList = try? JSONSerialization.jsonObject(with: (rawReturned!.data(using: .utf8))!, options: []) as? [[String: String]]
+					
+					let nowTime = Date()
+					
+					var zhongxiaofuxing = 0
+					let metroArrivalsRaw = metroArrivalsList!.filter({ $0["StationName"] ==  ((metroStation.stationName.last == "站") ? metroStation.stationName:metroStation.stationName + "站") })
+					for metroArrival in metroArrivalsRaw {
+						let sourceTime = self.metroDateFormatter.date(from: metroArrival["NowDateTime"]!)!
+						let elapsedTime = nowTime.timeIntervalSince(sourceTime)
+						var estimatedArrival = -1
+						
+						if(metroArrival["CountDown"]!.contains(":")) {
+							let countDownRaw = metroArrival["CountDown"]?.split(separator: ":")
+							estimatedArrival = Int(countDownRaw![0])! * 60 + Int(countDownRaw![1])! - Int(elapsedTime)
+						} else if(metroArrival["CountDown"]! == "列車進站") {
+							estimatedArrival = 0
+						} else if(metroArrival["CountDown"]! == "資料擷取中") {
+							estimatedArrival = -2
+						}
+						
+						let stationName = metroArrival["StationName"]!
+						let destination = String(metroArrival["DestinationName"]!.prefix(metroArrival["DestinationName"]!.count - 1))
+						
+						metroArrivals.append(MetroArrival(stationName: stationName, destinationName: "往" + destination, estimatedArrival: estimatedArrival))
+						
+						if(destination == "南港展覽館") {
+							if(metroStation.stationName == "忠孝復興") {
+								metroArrivals.last?.line = MetroDestinationToLineDict[destination]![zhongxiaofuxing]
+								zhongxiaofuxing = 1
+							}
+							else if(WenHuStations.contains(metroStation.stationName)) {
+								metroArrivals.last?.line = MetroDestinationToLineDict[destination]![0]
+							}
+							else {
+								metroArrivals.last?.line = MetroDestinationToLineDict[destination]![1]
+							}
+						}
+						else if(destination == "北投" && metroStation.stationName == "新北投") {
+							metroArrivals.last?.line = MetroDestinationToLineDict[destination]![1]
+						}
+						else {
+							metroArrivals.last!.line = MetroDestinationToLineDict[destination]![0]
+						}
+						
+						switch estimatedArrival {
+						case 0:
+							metroArrivals.last?.status = .Normal
+						case -1:
+							metroArrivals.last?.status = .ServiceOver
+						case -2:
+							metroArrivals.last?.status = .Loading
+						default:
+							metroArrivals.last?.status = .Normal
+						}
+						
+						metroArrivals.last?.trainNumber = metroArrival["TrainNumber"]!
+						
+						// check if Blue Line exists
+						if(metroArrivals.last?.line == .BL) {
+							crowdnessCheck = true
+						}
+					}
+					
+				}
+				else {
+					self.presentErrorMessage(query: "nearby metro", description: "status code", code: response.statusCode)
+				}
+			}
+			nulled = false
+			semaphore.signal()
+		}
+		
+		repeat {
+			task.resume()
+			semaphore.wait()
+		} while nulled
+		
+		
+	}*/
 	
 	func prepareAuthorizations() {
 		self.authTimeString = authorizationDateFormatter.string(from: Date())
