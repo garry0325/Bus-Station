@@ -78,7 +78,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	// TODO: Maokong Gondola support
 	// TODO: Make direction indicator bigger
 	// TODO: Error in MetroDetailViewController at branch stations
-	// TODO: move the top station label upper when on iPhone X displays
+	// TODO: change app store screenshots
 	
 	var busQuery = BusQuery()
 	var locationWhenPinned = CLLocation()
