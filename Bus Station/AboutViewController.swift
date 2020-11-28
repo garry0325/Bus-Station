@@ -26,6 +26,9 @@ class AboutViewController: UIViewController {
 	var count = 0
 	var rightCount = 0
 	let pattern = [1,1,2,1,0,1,2,2,0,1,1,2,1,0,1,2,2,0]
+	var countForRadius = 0
+	var rightCountForRadius = 0
+	let patternForRadius = [2,1,0,1,0,1,2,1,1,2]
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -53,7 +56,6 @@ class AboutViewController: UIViewController {
 	}
 	
 	@IBAction func removeAdPressed(_ sender: UIButton) {
-		print("removeAd \(sender.tag)")
 		if(count < pattern.count) {
 			if(sender.tag == pattern[count]) {
 				rightCount = rightCount + 1
@@ -64,6 +66,18 @@ class AboutViewController: UIViewController {
 		if(rightCount == pattern.count) {
 			self.dismiss(animated: true, completion: nil)
 			NotificationCenter.default.post(name: NSNotification.Name(rawValue: "RemoveAd"), object: nil)
+		}
+		
+		
+		if(countForRadius < patternForRadius.count) {
+			if(sender.tag == patternForRadius[countForRadius]) {
+				rightCountForRadius = rightCountForRadius + 1
+			}
+		}
+		countForRadius = countForRadius + 1
+		
+		if(rightCountForRadius == patternForRadius.count) {
+			stationRadiusSlider.maximumValue = 300
 		}
 	}
 }
