@@ -1438,7 +1438,7 @@ Cg
                                     <action selector="upSideUpSwitched:" destination="8y7-MT-FrX" eventType="valueChanged" id="vxV-3z-ShV"/>
                                 </connections>
                             </switch>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="50" minValue="5" maxValue="150" translatesAutoresizingMaskIntoConstraints="NO" id="nwD-0l-9e0">
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="50" minValue="5" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="nwD-0l-9e0">
                                 <rect key="frame" x="14" y="124" width="322" height="31"/>
                                 <connections>
                                     <action selector="stationRadiusSliderChanged:" destination="8y7-MT-FrX" eventType="valueChanged" id="3AQ-UR-RCN"/>
