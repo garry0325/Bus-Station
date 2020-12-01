@@ -343,7 +343,7 @@ class MetroArrival {
 				if(estimatedArrival > 120) {
 					informationLabelColor = RouteInformationLabelColors.green
 				}
-				else if(estimatedArrival > 10) {
+				else if(estimatedArrival >= 10) {
 					informationLabelColor = RouteInformationLabelColors.orange
 				}
 				else {
