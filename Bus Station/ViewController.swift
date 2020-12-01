@@ -78,6 +78,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	// TODO: Maokong Gondola support
 	// TODO: Error in MetroDetailViewController at branch stations
 	// TODO: change app store screenshots
+	// TODO: when udpating location, it waits for autoRefresh refreshes
 	
 	var busQuery = BusQuery()
 	var locationWhenPinned = CLLocation()
@@ -336,7 +337,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 			
 			if(unorganizedStationList.count == 0) {
 				DispatchQueue.main.async {
-					self.currentStationLabel.text = "附近沒有公車站"
+					self.currentStationLabel.text = "附近沒有車站"
 					self.currentStationBearingLabel.text = ""
 					ViewController.stationList = []
 					ViewController.routeList = []
