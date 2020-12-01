@@ -76,7 +76,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	
 	// TODO: connectivity issue warnings
 	// TODO: Maokong Gondola support
-	// TODO: Make direction indicator bigger
 	// TODO: Error in MetroDetailViewController at branch stations
 	// TODO: change app store screenshots
 	

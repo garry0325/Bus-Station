@@ -965,7 +965,7 @@ class BusQuery {
 	func presentErrorMessage(query: String, description: String, code: Int?) {
 		DispatchQueue.main.async {
 			if let code = code {
-				print("Network error: \(query)")
+				print("Network error \(code): \(query)")
 				if(code != 414) {	// Response code 414 due to too many stations, url too long
 					ErrorAlert.presentErrorAlert(title: "網路錯誤 \(code)", message: "請稍後再試")
 				}
