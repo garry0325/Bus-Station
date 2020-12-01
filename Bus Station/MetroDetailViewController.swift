@@ -17,6 +17,8 @@ class MetroDetailViewController: UIViewController {
 	@IBOutlet var informationLabel: UILabel!
 	@IBOutlet var informationBackgroundView: UIView!
 	@IBOutlet var metroDetailTableView: UITableView!
+	@IBOutlet var crowdnessIndicators: [UIImageView]!
+	@IBOutlet var crowdnessDirectionIndicator: UIImageView!
 	
 	@IBOutlet var activityIndicator: UIActivityIndicatorView!
 	@IBOutlet var closeButton: UIButton!
@@ -38,6 +40,7 @@ class MetroDetailViewController: UIViewController {
 		metroDetailTableView.contentInset = UIEdgeInsets(top: 50.0, left: 0.0, bottom: 150.0, right: 0.0)
 		
 		configureInformationLabel()
+		constructCrowdnessIndicators()
 		
 		// put the close button in the center if large screen
 		if(self.view.frame.height > 750.0) {
@@ -49,7 +52,7 @@ class MetroDetailViewController: UIViewController {
 		
 		constructMetroStationSequence()
 		
-		autoRefreshTimer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(updateMetroArrivals), userInfo: nil, repeats: true)
+		//autoRefreshTimer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(updateMetroArrivals), userInfo: nil, repeats: true)
 		NotificationCenter.default.addObserver(self, selector: #selector(refreshETA), name: NSNotification.Name("MetroArrivals"), object: nil)
         
     }
@@ -70,36 +73,42 @@ class MetroDetailViewController: UIViewController {
 		
 		destinationLabel.text = (metroRouteTableViewCell?.currentStation!.destinationName)!
 		
+		countdownSeconds = (metroRouteTableViewCell?.currentStation!.estimatedArrival)!
 		informationLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 23.0, weight: .regular)
-		switch metroRouteTableViewCell?.currentStation?.status {
+		updateInformationLabel()
+		
+		countdownTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { (timer) in
+			self.updateInformationLabel()
+		})
+	}
+	
+	func updateInformationLabel() {
+		switch(self.metroRouteTableViewCell?.currentStation?.status) {
+		case .Normal:
+			if(self.countdownSeconds > 120) {
+				self.informationLabel.text = String(format: "%d:%02d", self.countdownSeconds / 60, self.countdownSeconds % 60)
+				self.informationBackgroundView.backgroundColor = RouteInformationLabelColors.green
+				self.countdownSeconds = self.countdownSeconds - 1
+			} else if(self.countdownSeconds >= 10) {
+				self.informationLabel.text = String(format: "%d:%02d", self.countdownSeconds / 60, self.countdownSeconds % 60)
+				self.informationBackgroundView.backgroundColor = RouteInformationLabelColors.orange
+				self.countdownSeconds = self.countdownSeconds - 1
+			} else {
+				self.informationLabel.text = "到站中"
+				self.informationBackgroundView.backgroundColor = RouteInformationLabelColors.red
+			}
 		case .Approaching:
-			informationLabel.text = "到站中"
+			self.informationLabel.text = "到站中"
+			self.informationBackgroundView.backgroundColor = RouteInformationLabelColors.red
 		case .ServiceOver:
-			informationLabel.text = "末班車已過"
+			self.informationLabel.text = "末班車已過"
+			self.informationBackgroundView.backgroundColor = RouteInformationLabelColors.gray
 		case .Loading:
-			informationLabel.text = "加載中"
+			self.informationLabel.text = "加載中"
+			self.informationBackgroundView.backgroundColor = RouteInformationLabelColors.gray
 		default:
 			break
 		}
-		informationBackgroundView.backgroundColor = metroRouteTableViewCell?.currentStation?.informationLabelColor
-		
-		countdownSeconds = (metroRouteTableViewCell?.currentStation!.estimatedArrival)!
-		countdownTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { (timer) in
-			if(self.metroRouteTableViewCell?.currentStation?.status == .Normal) {
-				if(self.countdownSeconds > 120) {
-					self.informationLabel.text = String(format: "%d:%02d", self.countdownSeconds / 60, self.countdownSeconds % 60)
-					self.informationBackgroundView.backgroundColor = RouteInformationLabelColors.green
-					self.countdownSeconds = self.countdownSeconds - 1
-				} else if(self.countdownSeconds > 10) {
-					self.informationLabel.text = String(format: "%d:%02d", self.countdownSeconds / 60, self.countdownSeconds % 60)
-					self.informationBackgroundView.backgroundColor = RouteInformationLabelColors.orange
-					self.countdownSeconds = self.countdownSeconds - 1
-				} else {
-					self.informationLabel.text = "到站中"
-					self.informationBackgroundView.backgroundColor = RouteInformationLabelColors.red
-				}
-			}
-		})
 	}
 	
 	func constructMetroStationSequence() {
@@ -115,6 +124,36 @@ class MetroDetailViewController: UIViewController {
 		}
 	}
 	
+	func constructCrowdnessIndicators() {
+		DispatchQueue.main.async {
+			if(self.metroRouteTableViewCell?.currentStation?.crowdness?.count == 6) {
+				for i in 0..<6 {
+					switch self.metroRouteTableViewCell?.currentStation?.crowdness![i] {
+					case 1:
+						self.crowdnessIndicators[i].tintColor = .systemGreen
+					case 2:
+						self.crowdnessIndicators[i].tintColor = .systemYellow
+					case 3:
+						self.crowdnessIndicators[i].tintColor = .systemOrange
+					case 4:
+						self.crowdnessIndicators[i].tintColor = .systemRed
+					default:
+						self.crowdnessIndicators[i].tintColor = .systemGray
+					}
+					self.crowdnessIndicators[i].isHidden = false
+				}
+				self.crowdnessDirectionIndicator.isHidden = false
+			}
+			else {
+				for i in 0..<self.crowdnessIndicators.count {
+					self.crowdnessIndicators[i].isHidden = true
+				}
+				self.crowdnessDirectionIndicator.isHidden = true
+			}
+		}
+	}
+	
+	/*
 	@objc func updateMetroArrivals() {
 		DispatchQueue.global(qos: .background).async {
 			
@@ -123,7 +162,7 @@ class MetroDetailViewController: UIViewController {
 				
 			}
 		}
-	}
+	}*/
 	
 	@objc func refreshETA(notification: Notification) {
 		let metroArrivals = notification.object as! [MetroArrival]
@@ -131,7 +170,8 @@ class MetroDetailViewController: UIViewController {
 		for metroArrival in metroArrivals {
 			if(metroArrival.destinationName == metroRouteTableViewCell?.currentStation?.destinationName) {
 				countdownSeconds = metroArrival.estimatedArrival
-				informationBackgroundView.backgroundColor = metroArrival.informationLabelColor
+				metroRouteTableViewCell?.currentStation = metroArrival
+				constructCrowdnessIndicators()
 				break
 			}
 		}
