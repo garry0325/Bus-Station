@@ -997,6 +997,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
 			currentStationNumber = indexPath.item
 			findStarredBearingStation()
 			collectionView.reloadData()
+			bearingListCollectionView.reloadData()
 			queryArrivals()
 		}
 		else if(collectionView == bearingListCollectionView) {
