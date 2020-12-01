@@ -716,7 +716,7 @@ class BusQuery {
 							return
 						}
 						
-						let rawCarWeight = "[" + (rawReturned?[1].components(separatedBy: "]")[0])! + "]"
+						let rawCarWeight = "[" + (rawReturned?[1].components(separatedBy: "]")[0])!.replacingOccurrences(of: "\\", with: "") + "]"
 						
 						let carWeightInfo = try? JSONSerialization.jsonObject(with: (rawCarWeight.data(using: .utf8))!, options: []) as? [[String: String]]
 						
