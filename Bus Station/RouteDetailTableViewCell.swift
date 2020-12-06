@@ -142,8 +142,8 @@ class RouteDetailTableViewCell: UITableViewCell {
 		infoDepartStop.layer.masksToBounds = true
 		infoAtStop.layer.backgroundColor = UIColor.lightGray.cgColor
 		infoDepartStop.layer.backgroundColor = UIColor.lightGray.cgColor
-		infoAtStop.font = UIFont.boldSystemFont(ofSize: 16.0)
-		infoDepartStop.font = UIFont.boldSystemFont(ofSize: 16.0)
+		infoAtStop.font = UIFont.monospacedDigitSystemFont(ofSize: 16.0, weight: .semibold)
+		infoDepartStop.font = UIFont.monospacedDigitSystemFont(ofSize: 16.0, weight: .semibold)
 		
 		plateAtStopLabel.layer.cornerRadius = 3.0
 		plateDepartStopLabel.layer.cornerRadius = 3.0
