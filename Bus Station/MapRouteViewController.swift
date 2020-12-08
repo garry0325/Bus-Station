@@ -16,6 +16,7 @@ class MapRouteViewController: UIViewController {
 	var currentStop: BusStop!
 	var routeSequence = [BusStopLiveStatus]()
 	
+	
 	@IBOutlet var closeButtonTrailingToSafeAreaConstraint: NSLayoutConstraint!
 	
 	override func viewDidLoad() {
@@ -37,6 +38,10 @@ class MapRouteViewController: UIViewController {
 			annotation.title = stop.stopName
 			annotation.coordinate = stop.location.coordinate
 			mapView.addAnnotation(annotation)
+			
+			if(stop.stopId == currentStop.stopId) {
+				mapView.setRegion(MKCoordinateRegion(center: stop.location.coordinate, latitudinalMeters: 500.0, longitudinalMeters: 500.0), animated: false)
+			}
 		}
 	}
 
