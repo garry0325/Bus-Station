@@ -669,6 +669,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
+                                    <action selector="closeMapRouteViewController:" destination="Vpo-1u-ZzU" eventType="touchUpInside" id="lXV-YX-fJV"/>
                                     <action selector="closeMetroDetailViewController:" destination="6xv-av-JF3" eventType="touchUpInside" id="t5P-kf-HyH"/>
                                 </connections>
                             </button>
