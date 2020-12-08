@@ -74,11 +74,9 @@ extension MapRouteViewController: MKMapViewDelegate {
 	func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
 		if let temp = annotation as? StopAnnotation {
 			var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "Stop") as? MKMarkerAnnotationView
-			if(annotationView == nil) {
-				annotationView = MKMarkerAnnotationView(annotation: temp, reuseIdentifier: "Stop")
-				annotationView?.glyphText = String(format: "%d", temp.sequence ?? 0)
-				annotationView?.titleVisibility = .visible
-			}
+			annotationView = MKMarkerAnnotationView(annotation: temp, reuseIdentifier: "Stop")
+			annotationView?.glyphText = String(format: "%d", temp.sequence ?? 0)
+			annotationView?.titleVisibility = .visible
 			return annotationView
 		} else {
 			return nil
