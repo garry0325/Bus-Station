@@ -13,6 +13,7 @@
 		C26508A9256CF32E002B0C7F /* MetroDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26508A8256CF32E002B0C7F /* MetroDetailTableViewCell.swift */; };
 		C269C466254B196300BA41B4 /* RouteDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C269C465254B196300BA41B4 /* RouteDetailViewController.swift */; };
 		C275EDF3254E965A0028ACCC /* Roadgeek2005SeriesD.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C275EDF2254E965A0028ACCC /* Roadgeek2005SeriesD.ttf */; };
+		C293373F257FC71200EF619A /* MapRouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C293373E257FC71200EF619A /* MapRouteViewController.swift */; };
 		C2B35DCB253DCA5B00108776 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B35DCA253DCA5B00108776 /* AppDelegate.swift */; };
 		C2B35DCD253DCA5B00108776 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B35DCC253DCA5B00108776 /* SceneDelegate.swift */; };
 		C2B35DCF253DCA5B00108776 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B35DCE253DCA5B00108776 /* ViewController.swift */; };
@@ -60,6 +61,7 @@
 		C26508A8256CF32E002B0C7F /* MetroDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetroDetailTableViewCell.swift; sourceTree = "<group>"; };
 		C269C465254B196300BA41B4 /* RouteDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteDetailViewController.swift; sourceTree = "<group>"; };
 		C275EDF2254E965A0028ACCC /* Roadgeek2005SeriesD.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Roadgeek2005SeriesD.ttf; sourceTree = "<group>"; };
+		C293373E257FC71200EF619A /* MapRouteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapRouteViewController.swift; sourceTree = "<group>"; };
 		C2B35DC7253DCA5B00108776 /* Bus Station.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bus Station.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2B35DCA253DCA5B00108776 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C2B35DCC253DCA5B00108776 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 				C26508A3256CEF25002B0C7F /* MetroDetailViewController.swift */,
 				C2BCFF6E254D625900EC960F /* RouteDetailTableViewCell.swift */,
 				C26508A8256CF32E002B0C7F /* MetroDetailTableViewCell.swift */,
+				C293373E257FC71200EF619A /* MapRouteViewController.swift */,
 				C2B35E15253DE85100108776 /* MOTCQuery.swift */,
 				C2B35E10253DE82000108776 /* BusClasses.swift */,
 				C265088E256C248F002B0C7F /* Metro.swift */,
@@ -401,6 +404,7 @@
 				C26508A4256CEF25002B0C7F /* MetroDetailViewController.swift in Sources */,
 				C2B35DCD253DCA5B00108776 /* SceneDelegate.swift in Sources */,
 				C23D91B92549CA950027125A /* RouteCollectionViewCell.swift in Sources */,
+				C293373F257FC71200EF619A /* MapRouteViewController.swift in Sources */,
 				C26508A9256CF32E002B0C7F /* MetroDetailTableViewCell.swift in Sources */,
 				C2BCFF6F254D625900EC960F /* RouteDetailTableViewCell.swift in Sources */,
 				C2B35DD5253DCA5B00108776 /* Bus_Station.xcdatamodeld in Sources */,

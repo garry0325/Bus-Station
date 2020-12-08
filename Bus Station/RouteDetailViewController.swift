@@ -174,6 +174,24 @@ class RouteDetailViewController: UIViewController {
 	}
 }
 
+extension RouteDetailViewController: UIPopoverPresentationControllerDelegate {
+	
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		
+		segue.destination.modalPresentationStyle = .popover
+		
+		if(segue.identifier == "MapRoute") {
+			let destination = segue.destination as! MapRouteViewController
+			destination.routeSequence = self.liveStatusStops
+			destination.currentStop = busStop
+		}
+	}
+	
+	func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+		return .none
+	}
+}
+
 extension RouteDetailViewController: UITableViewDelegate, UITableViewDataSource {
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return self.liveStatusStops.count

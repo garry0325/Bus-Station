@@ -631,6 +631,69 @@
             </objects>
             <point key="canvasLocation" x="136.80000000000001" y="101.19940029985008"/>
         </scene>
+        <!--Map Route View Controller-->
+        <scene sceneID="rdt-5H-mCX">
+            <objects>
+                <viewController id="Vpo-1u-ZzU" customClass="MapRouteViewController" customModule="Bus_Station" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="UAQ-Ef-tOz">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="fyc-RO-06T">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
+                            </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6eS-9V-WlX">
+                                <rect key="frame" x="314" y="616" width="60" height="60"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="DS6-h9-ooy"/>
+                                    <constraint firstAttribute="height" constant="60" id="KsD-D2-ckk"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <color key="tintColor" systemColor="systemGrayColor"/>
+                                <state key="normal" image="xmark" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="30"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowOpacity">
+                                        <real key="value" value="0.40000000000000002"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="size" keyPath="layer.shadowOffset">
+                                        <size key="value" width="0.0" height="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="30"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="closeMetroDetailViewController:" destination="6xv-av-JF3" eventType="touchUpInside" id="t5P-kf-HyH"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="tR9-GU-uwj"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="fyc-RO-06T" secondAttribute="trailing" id="AMF-xs-6cg"/>
+                            <constraint firstItem="fyc-RO-06T" firstAttribute="leading" secondItem="UAQ-Ef-tOz" secondAttribute="leading" id="PWm-9C-SaS"/>
+                            <constraint firstItem="tR9-GU-uwj" firstAttribute="trailing" secondItem="6eS-9V-WlX" secondAttribute="trailing" constant="40" id="V4j-fg-uXA"/>
+                            <constraint firstAttribute="bottom" secondItem="fyc-RO-06T" secondAttribute="bottom" id="g0w-BX-opD"/>
+                            <constraint firstItem="tR9-GU-uwj" firstAttribute="bottom" secondItem="6eS-9V-WlX" secondAttribute="bottom" constant="40" id="sGT-Pa-akw"/>
+                            <constraint firstItem="fyc-RO-06T" firstAttribute="top" secondItem="UAQ-Ef-tOz" secondAttribute="top" id="xnJ-LT-0sf"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="closeButton" destination="6eS-9V-WlX" id="sIQ-MW-1Qz"/>
+                        <outlet property="closeButtonTrailingToSafeAreaConstraint" destination="V4j-fg-uXA" id="0zC-TC-Eca"/>
+                        <outlet property="mapView" destination="fyc-RO-06T" id="oL8-y1-Uab"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AWp-mr-uyv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="866.66666666666674" y="-555.16304347826087"/>
+        </scene>
         <!--Route Detail View Controller-->
         <scene sceneID="Bs0-PG-6DJ">
             <objects>
@@ -925,6 +988,37 @@
                                     <action selector="updateLocationButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cOd-9w-t0Z"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aGn-EU-i8a">
+                                <rect key="frame" x="40" y="616" width="60" height="60"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="KpD-7G-lGD"/>
+                                    <constraint firstAttribute="height" constant="60" id="mrQ-tL-URX"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <color key="tintColor" systemColor="systemGrayColor"/>
+                                <state key="normal">
+                                    <imageReference key="image" image="map" catalog="system" symbolScale="default"/>
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="30"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowOpacity">
+                                        <real key="value" value="0.40000000000000002"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="size" keyPath="layer.shadowOffset">
+                                        <size key="value" width="0.0" height="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="30"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <segue destination="Vpo-1u-ZzU" kind="presentation" identifier="MapRoute" id="SnL-LR-gLy"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="T5G-pr-CuF"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -948,9 +1042,11 @@
                             <constraint firstItem="Zku-9a-DsW" firstAttribute="height" secondItem="wSP-dR-peX" secondAttribute="height" multiplier="1.37349" id="ajq-KC-D6p"/>
                             <constraint firstItem="KBo-gH-Clt" firstAttribute="bottom" secondItem="ECe-3T-bgB" secondAttribute="top" id="dc1-R7-vbs"/>
                             <constraint firstAttribute="trailing" secondItem="JF7-DS-r8A" secondAttribute="trailing" id="fFq-Vc-dhu"/>
+                            <constraint firstItem="aGn-EU-i8a" firstAttribute="leading" secondItem="T5G-pr-CuF" secondAttribute="leading" constant="40" id="fPU-6D-ScX"/>
                             <constraint firstAttribute="top" secondItem="KBo-gH-Clt" secondAttribute="top" id="h2D-LM-AXl"/>
                             <constraint firstAttribute="trailing" secondItem="ECe-3T-bgB" secondAttribute="trailing" id="iB0-kU-Kzg"/>
                             <constraint firstItem="wSP-dR-peX" firstAttribute="centerX" secondItem="Zku-9a-DsW" secondAttribute="centerX" id="jEU-93-VjR"/>
+                            <constraint firstItem="T5G-pr-CuF" firstAttribute="bottom" secondItem="aGn-EU-i8a" secondAttribute="bottom" constant="40" id="lnO-Id-Sxp"/>
                             <constraint firstItem="Zku-9a-DsW" firstAttribute="leading" secondItem="4u6-NH-Y9w" secondAttribute="trailing" constant="15" id="po6-GI-1os"/>
                             <constraint firstItem="ECe-3T-bgB" firstAttribute="top" secondItem="s4S-AW-QLa" secondAttribute="top" constant="65" id="ppq-R1-p2I"/>
                             <constraint firstAttribute="trailing" secondItem="Zku-9a-DsW" secondAttribute="trailing" constant="20" id="roP-Dm-rij"/>
@@ -1609,6 +1705,7 @@ Cg
         <image name="figure.stand" catalog="system" width="77" height="128"/>
         <image name="info.circle.fill" catalog="system" width="128" height="121"/>
         <image name="location.fill" catalog="system" width="128" height="121"/>
+        <image name="map" catalog="system" width="128" height="110"/>
         <image name="star" catalog="system" width="128" height="116"/>
         <image name="tram.fill" catalog="system" width="100" height="128"/>
         <image name="xmark" catalog="system" width="128" height="113"/>

@@ -190,6 +190,7 @@ class BusStopLiveStatus {
 	let stopId: String
 	let stopName: String
 	var stopSequence = -1
+	var location: CLLocation = CLLocation()
 	var plateNumber = ""
 	var vehicleType: VehicleType = VehicleType.General
 	var busStatus: BusStatus = BusStatus.Error

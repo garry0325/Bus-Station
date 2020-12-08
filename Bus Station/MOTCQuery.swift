@@ -292,6 +292,8 @@ class BusQuery {
 						let stopSequence = stop["StopSequence"] as! Int
 						busStopLiveStatus.append(BusStopLiveStatus(stopId: stop["StopID"] as! String, stopName: (stop["StopName"] as! [String: String])["Zh_tw"]!, sequence: stopSequence))
 						
+						busStopLiveStatus.last!.location = CLLocation(latitude: (stop["StopPosition"] as! [String: Any])["PositionLat"] as! Double, longitude: (stop["StopPosition"] as! [String: Any])["PositionLon"] as! Double)
+						
 						if(saveTime && busStopLiveStatus.last?.stopId == busStop.stopId) {
 							busStopLiveStatus.last?.isCurrentStop = true
 							currentStopSequence = busStopLiveStatus.count - 1
