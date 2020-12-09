@@ -19,6 +19,7 @@ class MapRouteViewController: UIViewController {
 	var stopAnnotations = [StopAnnotation]()
 	var busesLocation = [Bus]()
 	var busAnnotations = [BusAnnotation]()
+	var plateNumberToIndexDict = [String: Int]()
 	
 	var autoRefreshTimer = Timer()
 	@IBOutlet var closeButtonTrailingToSafeAreaConstraint: NSLayoutConstraint!
@@ -72,24 +73,24 @@ class MapRouteViewController: UIViewController {
 		DispatchQueue.global(qos: .background).async {
 			self.busesLocation = self.busQuery.queryLiveBusesPosition(busStop: self.currentStop)
 			
-			DispatchQueue.main.async {
-				self.mapView.removeAnnotations(self.busAnnotations)
-			}
-			self.busAnnotations = []
-			
 			for bus in self.busesLocation {
-				let busAnnotation = BusAnnotation(coordinate: bus.location.coordinate)
-				busAnnotation.title = bus.plateNumber
-				
-				self.busAnnotations.append(busAnnotation)
-			}
-			
-			DispatchQueue.main.async {
-				self.mapView.addAnnotations(self.busAnnotations)
+				if let index = self.plateNumberToIndexDict[bus.plateNumber] {
+					DispatchQueue.main.async {
+						self.busAnnotations[index].coordinate = bus.location.coordinate
+					}
+				} else {
+					let busAnnotation = BusAnnotation(coordinate: bus.location.coordinate)
+					busAnnotation.title = bus.plateNumber
+					self.busAnnotations.append(busAnnotation)
+					self.plateNumberToIndexDict[bus.plateNumber] = self.busAnnotations.count - 1
+					DispatchQueue.main.async {
+						self.mapView.addAnnotation(busAnnotation)
+					}
+				}
 			}
 		}
 	}
-
+	
 	@IBAction func closeMapRouteViewController(_ sender: Any) {
 		autoRefreshTimer.invalidate()
 		dismiss(animated: true, completion: nil)
@@ -117,9 +118,10 @@ extension MapRouteViewController: MKMapViewDelegate {
 			var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "Bus") as? MKMarkerAnnotationView
 			annotationView = MKMarkerAnnotationView(annotation: temp, reuseIdentifier: "Bus")
 			annotationView?.glyphImage = UIImage(systemName: "bus")
-			annotationView?.glyphTintColor = .systemBlue
-			annotationView?.markerTintColor = .clear
+			annotationView?.glyphTintColor = .white
+			annotationView?.markerTintColor = .systemBlue
 			annotationView?.titleVisibility = .visible
+			annotationView?.displayPriority = .required
 			return annotationView
 		}
 		else {
@@ -140,7 +142,7 @@ class StopAnnotation: NSObject, MKAnnotation {
 }
 
 class BusAnnotation: NSObject, MKAnnotation {
-	var coordinate: CLLocationCoordinate2D
+	dynamic var coordinate: CLLocationCoordinate2D
 	var title: String?
 	var glyphText: String?
 	var sequence: Int?
