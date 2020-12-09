@@ -642,6 +642,9 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="fyc-RO-06T">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                             </mapView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="vCl-qQ-zBb">
+                                <rect key="frame" x="188.66666666666666" y="339.66666666666669" width="37" height="37"/>
+                            </activityIndicatorView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6eS-9V-WlX">
                                 <rect key="frame" x="314" y="616" width="60" height="60"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -677,15 +680,18 @@
                         <viewLayoutGuide key="safeArea" id="tR9-GU-uwj"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="vCl-qQ-zBb" firstAttribute="centerX" secondItem="tR9-GU-uwj" secondAttribute="centerX" id="8h0-mU-eBf"/>
                             <constraint firstAttribute="trailing" secondItem="fyc-RO-06T" secondAttribute="trailing" id="AMF-xs-6cg"/>
                             <constraint firstItem="fyc-RO-06T" firstAttribute="leading" secondItem="UAQ-Ef-tOz" secondAttribute="leading" id="PWm-9C-SaS"/>
                             <constraint firstItem="tR9-GU-uwj" firstAttribute="trailing" secondItem="6eS-9V-WlX" secondAttribute="trailing" constant="40" id="V4j-fg-uXA"/>
+                            <constraint firstItem="vCl-qQ-zBb" firstAttribute="centerY" secondItem="tR9-GU-uwj" secondAttribute="centerY" id="VTm-Yq-MQf"/>
                             <constraint firstAttribute="bottom" secondItem="fyc-RO-06T" secondAttribute="bottom" id="g0w-BX-opD"/>
                             <constraint firstItem="tR9-GU-uwj" firstAttribute="bottom" secondItem="6eS-9V-WlX" secondAttribute="bottom" constant="40" id="sGT-Pa-akw"/>
                             <constraint firstItem="fyc-RO-06T" firstAttribute="top" secondItem="UAQ-Ef-tOz" secondAttribute="top" id="xnJ-LT-0sf"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="vCl-qQ-zBb" id="SJt-eP-ddj"/>
                         <outlet property="closeButton" destination="6eS-9V-WlX" id="sIQ-MW-1Qz"/>
                         <outlet property="closeButtonTrailingToSafeAreaConstraint" destination="V4j-fg-uXA" id="0zC-TC-Eca"/>
                         <outlet property="mapView" destination="fyc-RO-06T" id="oL8-y1-Uab"/>

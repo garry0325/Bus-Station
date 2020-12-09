@@ -22,6 +22,7 @@ class MapRouteViewController: UIViewController {
 	var plateNumberToIndexDict = [String: Int]()
 	
 	var autoRefreshTimer = Timer()
+	@IBOutlet var activityIndicator: UIActivityIndicatorView!
 	@IBOutlet var closeButtonTrailingToSafeAreaConstraint: NSLayoutConstraint!
 	
 	override func viewDidLoad() {
@@ -34,6 +35,8 @@ class MapRouteViewController: UIViewController {
 			closeButtonTrailingToSafeAreaConstraint.isActive = false
 			NSLayoutConstraint(item: closeButton!, attribute: .centerX, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .centerX, multiplier: 1.0, constant: 0.0).isActive = true
 		}
+		
+		activityIndicator.startAnimating()
 		
 		mapView.showsUserLocation = true
 		constructRouteSequence()
@@ -48,25 +51,34 @@ class MapRouteViewController: UIViewController {
 	}
     
 	func constructRouteSequence() {
-		var routePolyline = [CLLocationCoordinate2D]()
-		routePolyline = busQuery.queryBusRouteGeometry(busStop: currentStop)
-		stopAnnotations = []
-		
-		for stop in routeSequence {
-			let stopAnnotation = StopAnnotation(coordinate: stop.location.coordinate)
-			stopAnnotation.title = stop.stopName
-			stopAnnotation.glyphText = String(stop.stopSequence)
-			stopAnnotation.sequence = stop.stopSequence
+		DispatchQueue.global(qos: .background).async {
+			var routePolyline = [CLLocationCoordinate2D]()
+			routePolyline = self.busQuery.queryBusRouteGeometry(busStop: self.currentStop)
+			self.stopAnnotations = []
 			
-			stopAnnotations.append(stopAnnotation)
+			for stop in self.routeSequence {
+				let stopAnnotation = StopAnnotation(coordinate: stop.location.coordinate)
+				stopAnnotation.title = stop.stopName
+				stopAnnotation.glyphText = String(stop.stopSequence)
+				stopAnnotation.sequence = stop.stopSequence
+				
+				self.stopAnnotations.append(stopAnnotation)
+				
+				if(stop.stopId == self.currentStop.stopId) {
+					DispatchQueue.main.async {
+						self.mapView.setRegion(MKCoordinateRegion(center: stop.location.coordinate, latitudinalMeters: 2000.0, longitudinalMeters: 2000.0), animated: false)
+					}
+				}
+			}
 			
-			if(stop.stopId == currentStop.stopId) {
-				mapView.setRegion(MKCoordinateRegion(center: stop.location.coordinate, latitudinalMeters: 2000.0, longitudinalMeters: 2000.0), animated: false)
+			DispatchQueue.main.async {
+				self.mapView.addAnnotations(self.stopAnnotations)
+				self.mapView.addOverlay(MKPolyline(coordinates: routePolyline, count: routePolyline.count))
+				
+				self.activityIndicator.stopAnimating()
 			}
 		}
 		
-		mapView.addAnnotations(stopAnnotations)
-		mapView.addOverlay(MKPolyline(coordinates: routePolyline, count: routePolyline.count))
 	}
 	
 	@objc func autoRefresh() {
