@@ -222,17 +222,17 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 					address = address + (placemark.subAdministrativeArea ?? "")
 					address = address + (placemark.locality ?? "")
 					
-					print("\(self.locationHasUpdated)\t\(address)")
+					//print("\(self.locationHasUpdated)\t\(address)")
 					
 					if(!self.locationHasUpdated)  {
-						print("location has not updated")
+						//print("location has not updated")
 						self.locationHasUpdated = true
 						self.locationWhenPinned = userLocation
 						self.updateLocationButton.tintColor = .blue
 						self.queryNearbyStations(location: self.locationWhenPinned)
 					}
 					else {
-						print("location has updated")
+						//print("location has updated")
 						// check if current location is deviated from locationWhenPinned over 30m
 						// if so, then dim the location button
 						if(userLocation.distance(from: self.locationWhenPinned) > self.locationDeviateThreshold) {

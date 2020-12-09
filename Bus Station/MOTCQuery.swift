@@ -847,114 +847,94 @@ class BusQuery {
 		
 		return metroStations
 	}
-	/*
-	func queryMetroLivePositions(currentStation: MetroArrival) {
-		var metroLivePosition = [MetroLivePosition]()
-		var nulled: Bool = true
+	
+	func queryLiveBusesPosition(busStop: BusStop) -> [Bus] {
+		self.prepareAuthorizations()
+		var request: URLRequest
 		
 		let semaphore = DispatchSemaphore(value: 0)
+		var buses = [Bus]()
 		
-		let urlMetroArrivals = URL(string: String("https://api.metro.taipei/metroapi/TrackInfo.asmx").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
-		let httpBody = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\nxmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n<soap:Body><getTrackInfo xmlns=\"http://tempuri.org/\"><userName>garry0325@gmail.com</userName><passWord>U66A9vG2</passWord> </getTrackInfo>  </soap:Body></soap:Envelope>"
-
 		let session = URLSession(configuration: urlConfig)
-
-		var request = URLRequest(url: urlMetroArrivals)
-		request.setValue("text/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
-		request.httpBody = Data(httpBody.utf8)
-		request.httpMethod = "POST"
-
+		
+		let urlBusLocation = URL(string: String("https://ptx.transportdata.tw/MOTC/v2/Bus/RealTimeByFrequency/City/\(busStop.city)?$filter=RouteID eq '\(busStop.routeId)' and Direction eq \(busStop.direction)&$select=PlateNumb, RouteID, RouteName, Direction, BusPosition, Speed, Azimuth, BusStatus&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+		request = URLRequest(url: urlBusLocation)
+		request.setValue(authTimeString, forHTTPHeaderField: "x-date")
+		request.setValue(authorization, forHTTPHeaderField: "Authorization")
 		let task = session.dataTask(with: request) { (data, response, error) in
 			if let error = error {
-				self.presentErrorMessage(query: "metro arrivals", description: error.localizedDescription, code: nil)
+				self.presentErrorMessage(query: "Bus realtime location", description: error.localizedDescription, code: nil)
 			}
-			else if let response = response as? HTTPURLResponse, let data = data {
+			else if let response = response as? HTTPURLResponse,
+					let data = data {
 				if(response.statusCode == 200) {
-					let rawReturned = String(data: data, encoding: .utf8)?.components(separatedBy: "<?xml")[0]
-					if(rawReturned == "null") {
-						print("nulled")
-						semaphore.signal()
-						return
+					let rawReturned = try? JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]]
+					
+					for rawBus in rawReturned! {
+						let bus = Bus(routeId: busStop.routeId, routeName: busStop.routeName, plateNumber: rawBus["PlateNumb"] as! String)
+						bus.direction = rawBus["Direction"] as! Int
+						bus.location = CLLocation(latitude: (rawBus["BusPosition"] as! [String: Any])["PositionLat"] as! Double, longitude: (rawBus["BusPosition"] as! [String: Any])["PositionLon"] as! Double)
+						bus.speed = rawBus["Speed"] as! Int
+						bus.azimuth = rawBus["Azimuth"] as! Int
+						bus.busStatus = BusStopLiveStatus.BusStatus(rawValue: rawBus["BusStatus"] as! Int)!
+						
+						buses.append(bus)
 					}
-					let metroArrivalsList = try? JSONSerialization.jsonObject(with: (rawReturned!.data(using: .utf8))!, options: []) as? [[String: String]]
-					
-					let nowTime = Date()
-					
-					var zhongxiaofuxing = 0
-					let metroArrivalsRaw = metroArrivalsList!.filter({ $0["StationName"] ==  ((metroStation.stationName.last == "站") ? metroStation.stationName:metroStation.stationName + "站") })
-					for metroArrival in metroArrivalsRaw {
-						let sourceTime = self.metroDateFormatter.date(from: metroArrival["NowDateTime"]!)!
-						let elapsedTime = nowTime.timeIntervalSince(sourceTime)
-						var estimatedArrival = -1
-						
-						if(metroArrival["CountDown"]!.contains(":")) {
-							let countDownRaw = metroArrival["CountDown"]?.split(separator: ":")
-							estimatedArrival = Int(countDownRaw![0])! * 60 + Int(countDownRaw![1])! - Int(elapsedTime)
-						} else if(metroArrival["CountDown"]! == "列車進站") {
-							estimatedArrival = 0
-						} else if(metroArrival["CountDown"]! == "資料擷取中") {
-							estimatedArrival = -2
-						}
-						
-						let stationName = metroArrival["StationName"]!
-						let destination = String(metroArrival["DestinationName"]!.prefix(metroArrival["DestinationName"]!.count - 1))
-						
-						metroArrivals.append(MetroArrival(stationName: stationName, destinationName: "往" + destination, estimatedArrival: estimatedArrival))
-						
-						if(destination == "南港展覽館") {
-							if(metroStation.stationName == "忠孝復興") {
-								metroArrivals.last?.line = MetroDestinationToLineDict[destination]![zhongxiaofuxing]
-								zhongxiaofuxing = 1
-							}
-							else if(WenHuStations.contains(metroStation.stationName)) {
-								metroArrivals.last?.line = MetroDestinationToLineDict[destination]![0]
-							}
-							else {
-								metroArrivals.last?.line = MetroDestinationToLineDict[destination]![1]
-							}
-						}
-						else if(destination == "北投" && metroStation.stationName == "新北投") {
-							metroArrivals.last?.line = MetroDestinationToLineDict[destination]![1]
-						}
-						else {
-							metroArrivals.last!.line = MetroDestinationToLineDict[destination]![0]
-						}
-						
-						switch estimatedArrival {
-						case 0:
-							metroArrivals.last?.status = .Normal
-						case -1:
-							metroArrivals.last?.status = .ServiceOver
-						case -2:
-							metroArrivals.last?.status = .Loading
-						default:
-							metroArrivals.last?.status = .Normal
-						}
-						
-						metroArrivals.last?.trainNumber = metroArrival["TrainNumber"]!
-						
-						// check if Blue Line exists
-						if(metroArrivals.last?.line == .BL) {
-							crowdnessCheck = true
-						}
-					}
-					
 				}
 				else {
-					self.presentErrorMessage(query: "nearby metro", description: "status code", code: response.statusCode)
+					self.presentErrorMessage(query: "Bus real time location", description: "status code", code: response.statusCode)
 				}
 			}
-			nulled = false
 			semaphore.signal()
 		}
 		
-		repeat {
-			task.resume()
-			semaphore.wait()
-		} while nulled
+		task.resume()
+		semaphore.wait()
 		
+		return buses
+	}
+	
+	func queryBusRouteGeometry(busStop: BusStop) -> [CLLocationCoordinate2D] {
+		self.prepareAuthorizations()
+		var request: URLRequest
 		
-	}*/
+		let semaphore = DispatchSemaphore(value: 0)
+		var route = [CLLocationCoordinate2D]()
+		
+		let session = URLSession(configuration: urlConfig)
+		
+		let urlBusLocation = URL(string: String("https://ptx.transportdata.tw/MOTC/v2/Bus/Shape/City/\(busStop.city)?$select=RouteID, RouteName, Geometry&$filter=RouteID eq '\(busStop.routeId)'&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+		request = URLRequest(url: urlBusLocation)
+		request.setValue(authTimeString, forHTTPHeaderField: "x-date")
+		request.setValue(authorization, forHTTPHeaderField: "Authorization")
+		let task = session.dataTask(with: request) { (data, response, error) in
+			if let error = error {
+				self.presentErrorMessage(query: "Bus route geometry", description: error.localizedDescription, code: nil)
+			}
+			else if let response = response as? HTTPURLResponse,
+					let data = data {
+				if(response.statusCode == 200) {
+					let rawReturned = try? (JSONSerialization.jsonObject(with: data, options: []) as! [[String: Any]])[0]
+					
+					let coordinates = ((rawReturned!["Geometry"] as! String).split(separator: "("))[1].split(separator: ",")
+					for i in stride(from: 0, to: coordinates.count-1, by: 1) {
+						let coordinate = coordinates[i].split(separator: " ")
+						route.append(CLLocation(latitude: Double(coordinate[1])!, longitude: Double(coordinate[0])!).coordinate)
+					}
+				}
+				else {
+					self.presentErrorMessage(query: "Bus route geometry", description: "status code", code: response.statusCode)
+				}
+			}
+			semaphore.signal()
+		}
+		
+		task.resume()
+		semaphore.wait()
+		
+		return route
+	}
+				
 	
 	func prepareAuthorizations() {
 		self.authTimeString = authorizationDateFormatter.string(from: Date())

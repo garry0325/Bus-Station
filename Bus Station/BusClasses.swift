@@ -275,6 +275,23 @@ class BusStopLiveStatus {
 	}
 }
 
+class Bus {
+	var routeId: String
+	var routeName: String
+	var plateNumber: String
+	var direction: Int = -1
+	var location: CLLocation = CLLocation()
+	var speed: Int = 0
+	var azimuth: Int = -1
+	var busStatus: BusStopLiveStatus.BusStatus = .Unknown
+	
+	init(routeId: String, routeName: String, plateNumber: String) {
+		self.routeId = routeId
+		self.routeName = routeName
+		self.plateNumber = plateNumber
+	}
+}
+
 class MetroArrival {
 	let stationName: String
 	let destinationName: String

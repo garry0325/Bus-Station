@@ -13,10 +13,14 @@ class MapRouteViewController: UIViewController {
 	@IBOutlet var mapView: MKMapView!
 	@IBOutlet var closeButton: UIButton!
 	
+	var busQuery = BusQuery()
 	var currentStop: BusStop!
 	var routeSequence = [BusStopLiveStatus]()
-	var mapAnnotations = [StopAnnotation]()
+	var stopAnnotations = [StopAnnotation]()
+	var busesLocation = [Bus]()
+	var busAnnotations = [BusAnnotation]()
 	
+	var autoRefreshTimer = Timer()
 	@IBOutlet var closeButtonTrailingToSafeAreaConstraint: NSLayoutConstraint!
 	
 	override func viewDidLoad() {
@@ -32,12 +36,20 @@ class MapRouteViewController: UIViewController {
 		
 		mapView.showsUserLocation = true
 		constructRouteSequence()
+		
+		autoRefresh()
+		autoRefreshTimer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(autoRefresh), userInfo: nil, repeats: true)
         // Do any additional setup after loading the view.
     }
+	
+	override func viewDidDisappear(_ animated: Bool) {
+		autoRefreshTimer.invalidate()
+	}
     
 	func constructRouteSequence() {
-		var routeLocations = [CLLocationCoordinate2D]()
-		mapAnnotations = []
+		var routePolyline = [CLLocationCoordinate2D]()
+		routePolyline = busQuery.queryBusRouteGeometry(busStop: currentStop)
+		stopAnnotations = []
 		
 		for stop in routeSequence {
 			let stopAnnotation = StopAnnotation(coordinate: stop.location.coordinate)
@@ -45,19 +57,41 @@ class MapRouteViewController: UIViewController {
 			stopAnnotation.glyphText = String(stop.stopSequence)
 			stopAnnotation.sequence = stop.stopSequence
 			
-			mapAnnotations.append(stopAnnotation)
-			routeLocations.append(stop.location.coordinate)
+			stopAnnotations.append(stopAnnotation)
 			
 			if(stop.stopId == currentStop.stopId) {
 				mapView.setRegion(MKCoordinateRegion(center: stop.location.coordinate, latitudinalMeters: 2000.0, longitudinalMeters: 2000.0), animated: false)
 			}
 		}
 		
-		mapView.addAnnotations(mapAnnotations)
-		mapView.addOverlay(MKPolyline(coordinates: routeLocations, count: routeLocations.count))
+		mapView.addAnnotations(stopAnnotations)
+		mapView.addOverlay(MKPolyline(coordinates: routePolyline, count: routePolyline.count))
+	}
+	
+	@objc func autoRefresh() {
+		DispatchQueue.global(qos: .background).async {
+			self.busesLocation = self.busQuery.queryLiveBusesPosition(busStop: self.currentStop)
+			
+			DispatchQueue.main.async {
+				self.mapView.removeAnnotations(self.busAnnotations)
+			}
+			self.busAnnotations = []
+			
+			for bus in self.busesLocation {
+				let busAnnotation = BusAnnotation(coordinate: bus.location.coordinate)
+				busAnnotation.title = bus.plateNumber
+				
+				self.busAnnotations.append(busAnnotation)
+			}
+			
+			DispatchQueue.main.async {
+				self.mapView.addAnnotations(self.busAnnotations)
+			}
+		}
 	}
 
 	@IBAction func closeMapRouteViewController(_ sender: Any) {
+		autoRefreshTimer.invalidate()
 		dismiss(animated: true, completion: nil)
 	}
 }
@@ -65,7 +99,7 @@ class MapRouteViewController: UIViewController {
 extension MapRouteViewController: MKMapViewDelegate {
 	func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
 		let polylineRenderer = MKPolylineRenderer(overlay: overlay)
-		polylineRenderer.strokeColor = .systemBlue
+		polylineRenderer.strokeColor = .systemGray
 		polylineRenderer.lineWidth = 5
 		
 		return polylineRenderer
@@ -78,13 +112,34 @@ extension MapRouteViewController: MKMapViewDelegate {
 			annotationView?.glyphText = String(format: "%d", temp.sequence ?? 0)
 			annotationView?.titleVisibility = .visible
 			return annotationView
-		} else {
+		}
+		else if let temp = annotation as? BusAnnotation {
+			var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "Bus") as? MKMarkerAnnotationView
+			annotationView = MKMarkerAnnotationView(annotation: temp, reuseIdentifier: "Bus")
+			annotationView?.glyphImage = UIImage(systemName: "bus")
+			annotationView?.glyphTintColor = .systemBlue
+			annotationView?.markerTintColor = .clear
+			annotationView?.titleVisibility = .visible
+			return annotationView
+		}
+		else {
 			return nil
 		}
 	}
 }
 
 class StopAnnotation: NSObject, MKAnnotation {
+	var coordinate: CLLocationCoordinate2D
+	var title: String?
+	var glyphText: String?
+	var sequence: Int?
+	
+	init(coordinate: CLLocationCoordinate2D) {
+		self.coordinate = coordinate
+	}
+}
+
+class BusAnnotation: NSObject, MKAnnotation {
 	var coordinate: CLLocationCoordinate2D
 	var title: String?
 	var glyphText: String?

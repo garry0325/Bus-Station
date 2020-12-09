@@ -93,7 +93,7 @@ class RouteDetailViewController: UIViewController {
 	}
 	
 	@objc func autoRefresh() {
-		print("autorefreshing \(String(describing: busStop?.routeName))")
+		//print("autorefreshing \(String(describing: busStop?.routeName))")
 		DispatchQueue.global(qos: .background).async {
 			self.liveStatusStops = self.busQuery.queryRealTimeBusLocation(busStop: self.busStop!)
 			
