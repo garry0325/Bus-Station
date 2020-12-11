@@ -75,6 +75,7 @@ class MapRouteViewController: UIViewController {
 				self.mapView.addAnnotations(self.stopAnnotations)
 				self.mapView.addOverlay(MKPolyline(coordinates: routePolyline, count: routePolyline.count))
 				
+				self.mapView.isHidden = false
 				self.activityIndicator.stopAnimating()
 			}
 		}

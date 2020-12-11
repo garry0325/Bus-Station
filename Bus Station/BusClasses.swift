@@ -284,6 +284,7 @@ class Bus {
 	var speed: Int = 0
 	var azimuth: Int = -1
 	var busStatus: BusStopLiveStatus.BusStatus = .Unknown
+	var distance: Int = -1
 	
 	init(routeId: String, routeName: String, plateNumber: String) {
 		self.routeId = routeId

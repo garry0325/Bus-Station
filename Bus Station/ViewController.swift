@@ -26,6 +26,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	@IBOutlet var stationListCollectionView: UICollectionView!
 	@IBOutlet var bearingListCollectionView: UICollectionView!
 	@IBOutlet var routeCollectionView: UICollectionView!
+	@IBOutlet var nearbyBusCollectionView: UICollectionView!
 	@IBOutlet var stationTypeImage: UIImageView!
 	@IBOutlet var currentStationLabel: UILabel!
 	@IBOutlet var currentStationBearingLabel: UILabel!
@@ -84,6 +85,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	var locationWhenPinned = CLLocation()
 	var locationHasUpdated: Bool = false
 	var autoRefreshTimer = Timer()
+	var autoRefreshNearbyBusesTimer = Timer()
+	var latestLocation = CLLocation()
 	
 	var currentStationNumber = 0 {
 		didSet {
@@ -146,6 +149,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	var bearingStationsCount = 0	// for total number of cells in routeCollectionView
 	static var stationTypeList: Array<Station.StationType> = []
 	
+	var nearbyBusesList = [Bus]()
+	
 	static var bearingNumberForDetailView = 0	// static version of currentBearingNumber
 	static var stationNumberForDetailView = 0	// static version of currentStationNumber
 	
@@ -165,6 +170,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		bearingListCollectionView.dataSource = self
 		routeCollectionView.delegate = self
 		routeCollectionView.dataSource = self
+		nearbyBusCollectionView.delegate = self
+		nearbyBusCollectionView.dataSource = self
+		nearbyBusCollectionView.contentInset = UIEdgeInsets(top: 0.0, left: 15.0, bottom: 0.0, right: 15.0)
+		nearbyBusCollectionView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
 		
 		stationListCollectionView.contentInset.right = 100	// compensate for the bug that the last cell will be covered due to not enough scrollable length
 		
@@ -187,7 +196,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		NotificationCenter.default.addObserver(self, selector: #selector(saveNewStationRadiusPreference), name: NSNotification.Name("StationRadiusPreference"), object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(removeAdSuccess), name: NSNotification.Name("RemoveAd"), object: nil)
 		autoRefreshTimer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(autoRefresh), userInfo: nil, repeats: true)
-		
+		autoRefreshNearbyBuses()
+		autoRefreshNearbyBusesTimer = Timer.scheduledTimer(timeInterval: 20.0, target: self, selector: #selector(autoRefreshNearbyBuses), userInfo: nil, repeats: true)
 		if(displayAd) {
 			self.adBannerView.load(GADRequest())
 		}
@@ -239,6 +249,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 							self.updateLocationButton.tintColor = .lightGray
 						}
 					}
+					
+					self.latestLocation = userLocation
 				}
 			}
 		}
@@ -310,6 +322,18 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	@objc func autoRefresh() {
 		if(ViewController.stationList.count > 0) {
 			queryArrivals()
+		}
+	}
+	
+	@objc func autoRefreshNearbyBuses() {
+		DispatchQueue.global(qos: .background).async {
+			self.nearbyBusesList = self.busQuery.queryNearbyBuses(location: self.latestLocation)
+			
+			DispatchQueue.main.async {
+				self.nearbyBusCollectionView.isHidden = (self.nearbyBusesList.count == 0)
+				self.nearbyBusCollectionView.reloadData()
+				self.nearbyBusCollectionView.scrollToItem(at: IndexPath(item: self.nearbyBusesList.count - 1, section: 0), at: .right, animated: false)
+			}
 		}
 	}
 	
@@ -782,6 +806,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	
 	@objc func backFromBackground() {
 		autoRefresh()
+		autoRefreshNearbyBuses()
 	}
 	
 	func presentActivityIndicator() {
@@ -928,8 +953,11 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
 				return bearingListNames[currentStationNumber].count
 			}
 		}
-		else {
+		else if(collectionView == routeCollectionView) {
 			return bearingStationsCount
+		}
+		else {
+			return nearbyBusesList.count
 		}
 	}
 	
@@ -982,11 +1010,22 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
 			
 			return cell
 		}
-		else {
+		else if(collectionView == routeCollectionView) {
 			let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RouteCollectionCell", for: indexPath) as! RouteCollectionViewCell
 			
 			cell.routeListTableView.tag = indexPath.item
 			cell.routeListTableView.reloadData()
+			
+			return cell
+		}
+		else {
+			let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "NearbyBuses", for: indexPath) as! NearbyBusesCollectionViewCell
+			
+			cell.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+			
+			cell.routeName = nearbyBusesList[indexPath.row].routeName
+			cell.plateNumber = nearbyBusesList[indexPath.row].plateNumber
+			cell.distance = nearbyBusesList[indexPath.row].distance
 			
 			return cell
 		}
@@ -1037,8 +1076,11 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
 			
 			return CGSize(width: size.size.width + 20.0, height: height - 12.0)
 		}
-		else {
+		else if(collectionView == routeCollectionView) {
 			return CGSize(width: routeCollectionView.frame.width, height: routeCollectionView.frame.height)
+		}
+		else {
+			return CGSize(width: 100.0, height: 65.0)
 		}
 	}
 	

@@ -24,6 +24,8 @@ class BusQuery {
 	
 	var nearbyStationWidth = 0.005	// in degree coordinates
 	var nearbyStationHeight = 0.0035
+	let nearbyBusesWidth = Double(100.0 / 100925)
+	let nearbyBusesHeight = Double(100.0 / 110803)
 	
 	let queryCities = ["Taipei", "NewTaipei"]
 	let queryMetroSystems = ["TRTC", "NTDLRT", "TYMC"] // TODO: test TYMC & NTDLRT
@@ -594,14 +596,14 @@ class BusQuery {
 		
 		let urlMetroArrivals = URL(string: String("https://api.metro.taipei/metroapi/TrackInfo.asmx").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
 		let httpBody = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\nxmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n<soap:Body><getTrackInfo xmlns=\"http://tempuri.org/\"><userName>garry0325@gmail.com</userName><passWord>U66A9vG2</passWord> </getTrackInfo>  </soap:Body></soap:Envelope>"
-
+		
 		let session = URLSession(configuration: urlConfig)
-
+		
 		var request = URLRequest(url: urlMetroArrivals)
 		request.setValue("text/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
 		request.httpBody = Data(httpBody.utf8)
 		request.httpMethod = "POST"
-
+		
 		let task = session.dataTask(with: request) { (data, response, error) in
 			if let error = error {
 				self.presentErrorMessage(query: "metro arrivals", description: error.localizedDescription, code: nil)
@@ -699,13 +701,13 @@ class BusQuery {
 			}
 			let urlCrowdness = URL(string: String("https://api.metro.taipei/metroapi/CarWeight.asmx").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
 			let httpBodyCrowdness = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n<soap:Body> <getCarWeightByInfo xmlns=\"http://tempuri.org/\"><userName>garry0325@gmail.com</userName>   <passWord>U66A9vG2</passWord></getCarWeightByInfo> </soap:Body></soap:Envelope>"
-
-
+			
+			
 			var requestCrowdness = URLRequest(url: urlCrowdness)
 			requestCrowdness.setValue("text/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
 			requestCrowdness.httpBody = Data(httpBodyCrowdness.utf8)
 			requestCrowdness.httpMethod = "POST"
-
+			
 			let taskCrowdness = session.dataTask(with: requestCrowdness) { (data, response, error) in
 				if let error = error {
 					self.presentErrorMessage(query: "metro crowdness", description: error.localizedDescription, code: nil)
@@ -934,7 +936,58 @@ class BusQuery {
 		
 		return route
 	}
-				
+	
+	func queryNearbyBuses(location: CLLocation) -> [Bus] {
+		self.prepareAuthorizations()
+		var request: URLRequest
+		
+		let semaphore = DispatchSemaphore(value: 0)
+		var nearbyBuses = [Bus]()
+		
+		let session = URLSession(configuration: urlConfig)
+		
+		for city in queryCities {
+			let urlNearbyBuses = URL(string: String("https://ptx.transportdata.tw/MOTC/v2/Bus/RealTimeByFrequency/City/\(city)?$select=PlateNumb, RouteID, RouteName, Direction, BusPosition&$filter=BusPosition/PositionLat ge \(location.coordinate.latitude - nearbyBusesHeight) and BusPosition/PositionLat le \(location.coordinate.latitude + nearbyBusesHeight) and BusPosition/PositionLon ge \(location.coordinate.longitude - nearbyBusesWidth) and BusPosition/PositionLon le \(location.coordinate.longitude + nearbyBusesWidth)&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+			request = URLRequest(url: urlNearbyBuses)
+			request.setValue(authTimeString, forHTTPHeaderField: "x-date")
+			request.setValue(authorization, forHTTPHeaderField: "Authorization")
+			let task = session.dataTask(with: request) { (data, response, error) in
+				if let error = error {
+					self.presentErrorMessage(query: "Nearby buses", description: error.localizedDescription, code: nil)
+				}
+				else if let response = response as? HTTPURLResponse,
+						let data = data {
+					if(response.statusCode == 200) {
+						let rawReturned = try? (JSONSerialization.jsonObject(with: data, options: []) as! [[String: Any]])
+						
+						for rawBus in rawReturned! {
+							let bus = Bus(routeId: rawBus["RouteID"] as! String, routeName: (rawBus["RouteName"] as! [String: String])["Zh_tw"]!, plateNumber: rawBus["PlateNumb"] as! String)
+							bus.location = CLLocation(latitude: (rawBus["BusPosition"] as! [String: Any])["PositionLat"] as! Double, longitude: (rawBus["BusPosition"] as! [String: Any])["PositionLon"] as! Double)
+							bus.direction = rawBus["Direction"] as! Int
+							bus.distance = Int(bus.location.distance(from: location))
+							
+							nearbyBuses.append(bus)
+						}
+						
+					}
+					else {
+						self.presentErrorMessage(query: "Nearby buses", description: "status code", code: response.statusCode)
+					}
+				}
+				semaphore.signal()
+			}
+			task.resume()	// consider start simultaneously
+			semaphore.wait()
+		}
+		
+		// reversed sorting because the collectionView is reversed
+		nearbyBuses.append(Bus(routeId: "1222", routeName: "棕1", plateNumber: "abcdefg"))
+		nearbyBuses.last?.distance = 82
+		nearbyBuses.sort(by: { $0.distance >= $1.distance })
+		print("\(nearbyBuses.count) count")
+		
+		return nearbyBuses
+	}
 	
 	func prepareAuthorizations() {
 		self.authTimeString = authorizationDateFormatter.string(from: Date())
