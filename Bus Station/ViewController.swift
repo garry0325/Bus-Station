@@ -172,7 +172,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		routeCollectionView.dataSource = self
 		nearbyBusCollectionView.delegate = self
 		nearbyBusCollectionView.dataSource = self
-		nearbyBusCollectionView.contentInset = UIEdgeInsets(top: 0.0, left: 15.0, bottom: 0.0, right: 15.0)
+		nearbyBusCollectionView.contentInset = UIEdgeInsets(top: 0.0, left: 15.0, bottom: 0.0, right: view.frame.width / 2)
 		nearbyBusCollectionView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
 		
 		stationListCollectionView.contentInset.right = 100	// compensate for the bug that the last cell will be covered due to not enough scrollable length
@@ -1043,6 +1043,14 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
 			currentBearingNumber = indexPath.item
 			collectionView.reloadData()
 			queryArrivals()
+		}
+		else if(collectionView == nearbyBusCollectionView) {
+			let busForNearbyBus = nearbyBusesList[indexPath.item]
+			let busStopForNearbyBus = BusStop(stopId: "no", city: busForNearbyBus.city, routeId: busForNearbyBus.routeId, routeName: busForNearbyBus.routeName)
+			busStopForNearbyBus.plateNumber = busForNearbyBus.plateNumber
+			busStopForNearbyBus.direction = busForNearbyBus.direction
+			
+			NotificationCenter.default.post(name: NSNotification.Name("Detail"), object: busStopForNearbyBus)
 		}
 	}
 	

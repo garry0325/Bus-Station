@@ -396,54 +396,56 @@ class BusQuery {
 		}
 		
 		// calculate each bus to current station estimated arrival time
-		let currentEstimatedArrival = busStopLiveStatus[currentStopSequence!].estimatedArrival
-		var compensate = [currentEstimatedArrival]
-		var first = true
-		for i in (0...currentStopSequence!).reversed() {
-			if(i == currentStopSequence && ((busStopLiveStatus[i].eventType == BusStopLiveStatus.EventType.Departing) || (busStopLiveStatus[i].eventType == BusStopLiveStatus.EventType.Arriving && busStopLiveStatus[i].estimatedArrival > 120))) {
+		if(busStop.stopId != "no") {
+			let currentEstimatedArrival = busStopLiveStatus[currentStopSequence!].estimatedArrival
+			var compensate = [currentEstimatedArrival]
+			var first = true
+			for i in (0...currentStopSequence!).reversed() {
+				if(i == currentStopSequence && ((busStopLiveStatus[i].eventType == BusStopLiveStatus.EventType.Departing) || (busStopLiveStatus[i].eventType == BusStopLiveStatus.EventType.Arriving && busStopLiveStatus[i].estimatedArrival > 120))) {
+					busStopLiveStatus[i].estimatedArrival = -1
+					continue
+				}
+				if(busStopLiveStatus[i].plateNumber != "") {
+					// if a stop has plateNumber, then get the max of estimatedArrival of its adjacent's
+					var maxArrival = [Int]()
+					if(i == 0) {
+						if(busStopLiveStatus[i+1].plateNumber == "") {
+							maxArrival.append(busStopLiveStatus[i+1].estimatedArrival)
+						}
+						maxArrival.append(busStopLiveStatus[i].estimatedArrival)
+					} else if(i == currentStopSequence!) {
+						if(busStopLiveStatus[i-1].plateNumber == "") {
+							maxArrival.append(busStopLiveStatus[i-1].estimatedArrival)
+						}
+						maxArrival.append(busStopLiveStatus[i].estimatedArrival)
+					} else {
+						if(busStopLiveStatus[i+1].plateNumber == "") {
+							maxArrival.append(busStopLiveStatus[i+1].estimatedArrival)
+						}
+						if(busStopLiveStatus[i-1].plateNumber == "") {
+							maxArrival.append(busStopLiveStatus[i-1].estimatedArrival)
+						}
+						maxArrival.append(busStopLiveStatus[i].estimatedArrival)
+					}
+					compensate.append(maxArrival.max()!)
+					
+					if(!first) {
+						var temp = 0
+						for j in 0..<(compensate.count-1) {
+							temp = temp + compensate[j]
+						}
+						busStopLiveStatus[i].estimatedArrival = temp
+					}
+					else {
+						busStopLiveStatus[i].estimatedArrival = currentEstimatedArrival
+						first = false
+					}
+				}
+			}
+			
+			for i in (currentStopSequence!+1)..<busStopLiveStatus.count {
 				busStopLiveStatus[i].estimatedArrival = -1
-				continue
 			}
-			if(busStopLiveStatus[i].plateNumber != "") {
-				// if a stop has plateNumber, then get the max of estimatedArrival of its adjacent's
-				var maxArrival = [Int]()
-				if(i == 0) {
-					if(busStopLiveStatus[i+1].plateNumber == "") {
-						maxArrival.append(busStopLiveStatus[i+1].estimatedArrival)
-					}
-					maxArrival.append(busStopLiveStatus[i].estimatedArrival)
-				} else if(i == currentStopSequence!) {
-					if(busStopLiveStatus[i-1].plateNumber == "") {
-						maxArrival.append(busStopLiveStatus[i-1].estimatedArrival)
-					}
-					maxArrival.append(busStopLiveStatus[i].estimatedArrival)
-				} else {
-					if(busStopLiveStatus[i+1].plateNumber == "") {
-						maxArrival.append(busStopLiveStatus[i+1].estimatedArrival)
-					}
-					if(busStopLiveStatus[i-1].plateNumber == "") {
-						maxArrival.append(busStopLiveStatus[i-1].estimatedArrival)
-					}
-					maxArrival.append(busStopLiveStatus[i].estimatedArrival)
-				}
-				compensate.append(maxArrival.max()!)
-				
-				if(!first) {
-					var temp = 0
-					for j in 0..<(compensate.count-1) {
-						temp = temp + compensate[j]
-					}
-					busStopLiveStatus[i].estimatedArrival = temp
-				}
-				else {
-					busStopLiveStatus[i].estimatedArrival = currentEstimatedArrival
-					first = false
-				}
-			}
-		}
-		
-		for i in (currentStopSequence!+1)..<busStopLiveStatus.count {
-			busStopLiveStatus[i].estimatedArrival = -1
 		}
 		
 		// check vehicle type
@@ -965,6 +967,7 @@ class BusQuery {
 							bus.location = CLLocation(latitude: (rawBus["BusPosition"] as! [String: Any])["PositionLat"] as! Double, longitude: (rawBus["BusPosition"] as! [String: Any])["PositionLon"] as! Double)
 							bus.direction = rawBus["Direction"] as! Int
 							bus.distance = Int(bus.location.distance(from: location))
+							bus.city = city
 							
 							nearbyBuses.append(bus)
 						}
@@ -981,10 +984,7 @@ class BusQuery {
 		}
 		
 		// reversed sorting because the collectionView is reversed
-		nearbyBuses.append(Bus(routeId: "1222", routeName: "棕1", plateNumber: "abcdefg"))
-		nearbyBuses.last?.distance = 82
 		nearbyBuses.sort(by: { $0.distance >= $1.distance })
-		print("\(nearbyBuses.count) count")
 		
 		return nearbyBuses
 	}

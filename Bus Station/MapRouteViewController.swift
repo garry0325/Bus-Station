@@ -64,7 +64,11 @@ class MapRouteViewController: UIViewController {
 				
 				self.stopAnnotations.append(stopAnnotation)
 				
-				if(stop.stopId == self.currentStop.stopId) {
+				if(stop.stopId == self.currentStop.stopId && self.currentStop.stopId != "no") {
+					DispatchQueue.main.async {
+						self.mapView.setRegion(MKCoordinateRegion(center: stop.location.coordinate, latitudinalMeters: 2000.0, longitudinalMeters: 2000.0), animated: false)
+					}
+				} else if(stop.plateNumber == self.currentStop.plateNumber && self.currentStop.stopId == "no") {
 					DispatchQueue.main.async {
 						self.mapView.setRegion(MKCoordinateRegion(center: stop.location.coordinate, latitudinalMeters: 2000.0, longitudinalMeters: 2000.0), animated: false)
 					}

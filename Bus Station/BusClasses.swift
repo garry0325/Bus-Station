@@ -159,6 +159,8 @@ class BusStop {
 	var information: String = ""
 	var informationLabelColor: UIColor = RouteInformationLabelColors.gray
 	
+	var plateNumber: String = ""
+	
 	init(stopId: String, city: String, routeId: String, routeName: String) {
 		self.stopId = stopId
 		self.city = city
@@ -285,6 +287,7 @@ class Bus {
 	var azimuth: Int = -1
 	var busStatus: BusStopLiveStatus.BusStatus = .Unknown
 	var distance: Int = -1
+	var city: String = ""
 	
 	init(routeId: String, routeName: String, plateNumber: String) {
 		self.routeId = routeId

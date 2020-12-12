@@ -541,7 +541,7 @@
                                 </constraints>
                             </imageView>
                             <collectionView multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="On8-rb-gmu">
-                                <rect key="frame" x="0.0" y="536" width="414" height="80"/>
+                                <rect key="frame" x="0.0" y="541" width="414" height="80"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="Anf-0l-IRD"/>
@@ -637,7 +637,7 @@
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="3dA-N6-IMw">
                                 <rect key="frame" x="177" y="636" width="60" height="60"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="tintColor" name="Black"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="LIe-Ov-grZ"/>
                                     <constraint firstAttribute="width" constant="60" id="QBL-8i-646"/>
@@ -686,7 +686,7 @@
                             <constraint firstItem="wkw-Pp-9Mn" firstAttribute="centerY" secondItem="Kz4-5o-FfU" secondAttribute="centerY" constant="-6" id="Pqr-Ki-G7l"/>
                             <constraint firstItem="jvc-Vv-Whj" firstAttribute="top" secondItem="wkw-Pp-9Mn" secondAttribute="bottom" id="QPo-Yy-OBy"/>
                             <constraint firstItem="jvc-Vv-Whj" firstAttribute="trailing" secondItem="wkw-Pp-9Mn" secondAttribute="trailing" id="RCA-B1-QC3"/>
-                            <constraint firstItem="3dA-N6-IMw" firstAttribute="top" secondItem="On8-rb-gmu" secondAttribute="bottom" constant="20" id="VDY-uV-NFv"/>
+                            <constraint firstItem="3dA-N6-IMw" firstAttribute="top" secondItem="On8-rb-gmu" secondAttribute="bottom" constant="15" id="VDY-uV-NFv"/>
                             <constraint firstAttribute="trailing" secondItem="On8-rb-gmu" secondAttribute="trailing" id="VJD-wW-yCJ"/>
                             <constraint firstItem="3dA-N6-IMw" firstAttribute="centerY" secondItem="Tmq-tj-XKk" secondAttribute="centerY" id="X8J-CM-j5N"/>
                             <constraint firstItem="Kz4-5o-FfU" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="ZYz-hC-wXX"/>
@@ -1828,9 +1828,6 @@ Cg
         <image name="tram.fill" catalog="system" width="100" height="128"/>
         <image name="xmark" catalog="system" width="128" height="113"/>
         <image name="xmark.circle" catalog="system" width="128" height="121"/>
-        <namedColor name="Black">
-            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="White">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

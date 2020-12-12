@@ -36,10 +36,18 @@ class RouteDetailViewController: UIViewController {
 	var liveStatusStops = [BusStopLiveStatus]()
 	var autoScrollPosition: Int? {
 		didSet {
-			autoScrollPosition = (autoScrollPosition ?? 0) - 4
-			if(autoScrollPosition! < 0) {
-				autoScrollPosition = 0
+			if(busStop?.stopId != "no") {
+				autoScrollPosition = (autoScrollPosition ?? 0) - 4
+				if(autoScrollPosition! < 0) {
+					autoScrollPosition = 0
+				}
+			} else {
+				autoScrollPosition = (autoScrollPosition ?? 0) + 4
+				if(autoScrollPosition! >= liveStatusStops.count) {
+					autoScrollPosition = liveStatusStops.count - 1
+				}
 			}
+			
 			routeDetailTableView.scrollToRow(at: IndexPath(row: autoScrollPosition!, section: 0), at: .middle, animated: false)
 		}
 	}
@@ -50,8 +58,12 @@ class RouteDetailViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		let tap = UITapGestureRecognizer(target: self, action: #selector(switchInformationLabel))
-		routeDetailTableView.addGestureRecognizer(tap)
+		if(busStop?.stopId != "no") {
+			let tap = UITapGestureRecognizer(target: self, action: #selector(switchInformationLabel))
+			routeDetailTableView.addGestureRecognizer(tap)
+		} else {
+			contentMode = .ETAForEveryStation
+		}
 		
 		routeDetailTableView.delegate = self
 		routeDetailTableView.dataSource = self
@@ -103,23 +115,41 @@ class RouteDetailViewController: UIViewController {
 				}
 				self.routeDetailTableView.reloadData()
 				if(self.needAutoscroll) {
-					self.autoScrollPosition = self.liveStatusStops.firstIndex(where: { $0.isCurrentStop == true })
-					self.needAutoscroll = false
+					if(self.busStop?.stopId != "no") {
+						self.autoScrollPosition = self.liveStatusStops.firstIndex(where: { $0.isCurrentStop == true })
+						self.needAutoscroll = false
+					}
+					else {
+						// TODO: Destination name may not be the last stop name
+						self.routeDestinationLabel.text = "往" + self.liveStatusStops.last!.stopName
+						for i in 0..<self.liveStatusStops.count {
+							if(self.liveStatusStops[i].plateNumber == self.busStop?.plateNumber) {
+								self.autoScrollPosition = i
+								break
+							}
+						}
+						self.plateNumberForAllStation = self.busStop!.plateNumber
+						self.contentMode = .ETAForEveryStation
+						self.organizeAllStationETA()
+					}
 				}
 				self.activityIndicator.stopAnimating()
 			}
 		}
 		
 		// updating the information label
-		DispatchQueue.global(qos: .background).async {
-			if(self.busStop != nil) {
-				self.busStop = self.busQuery.querySpecificBusArrival(busStop: self.busStop!)
-			}
-			
-			DispatchQueue.main.async {
-				self.configureInformationLabel()
+		if(self.busStop?.stopId != "no") {
+			DispatchQueue.global(qos: .background).async {
+				if(self.busStop != nil) {
+					self.busStop = self.busQuery.querySpecificBusArrival(busStop: self.busStop!)
+				}
+				
+				DispatchQueue.main.async {
+					self.configureInformationLabel()
+				}
 			}
 		}
+
 	}
 	
 	@objc func showAllStationETA(notification: Notification) {
