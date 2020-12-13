@@ -335,9 +335,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 			self.nearbyBusesList = self.busQuery.queryNearbyBuses(location: self.latestLocation)
 			
 			DispatchQueue.main.async {
-				self.nearbyBusCollectionView.isHidden = (self.nearbyBusesList.count == 0 || !self.isMoving)
+				let hideNearbyBusCollectionView = (self.nearbyBusesList.count == 0 || !self.isMoving)
+				self.nearbyBusCollectionView.isHidden = hideNearbyBusCollectionView
 				self.nearbyBusCollectionView.reloadData()
-				self.nearbyBusCollectionView.scrollToItem(at: IndexPath(item: self.nearbyBusesList.count - 1, section: 0), at: .right, animated: false)
+				
+				if(!hideNearbyBusCollectionView) {
+					self.nearbyBusCollectionView.scrollToItem(at: IndexPath(item: self.nearbyBusesList.count - 1, section: 0), at: .right, animated: false)
+				}
 			}
 		}
 	}
