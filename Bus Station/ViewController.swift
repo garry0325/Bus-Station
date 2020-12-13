@@ -81,12 +81,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	// TODO: change app store screenshots
 	// TODO: when udpating location, it waits for autoRefresh refreshes
 	
+	// TODO: REMOVE UPSIDE DOWN
+	
 	var busQuery = BusQuery()
 	var locationWhenPinned = CLLocation()
 	var locationHasUpdated: Bool = false
 	var autoRefreshTimer = Timer()
 	var autoRefreshNearbyBusesTimer = Timer()
 	var latestLocation = CLLocation()
+	var isMoving: Bool = false
 	
 	var currentStationNumber = 0 {
 		didSet {
@@ -172,7 +175,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		routeCollectionView.dataSource = self
 		nearbyBusCollectionView.delegate = self
 		nearbyBusCollectionView.dataSource = self
-		nearbyBusCollectionView.contentInset = UIEdgeInsets(top: 0.0, left: 15.0, bottom: 0.0, right: view.frame.width / 2)
+		nearbyBusCollectionView.contentInset = UIEdgeInsets(top: 0.0, left: 15.0, bottom: 0.0, right: view.frame.width / 2 + 20)
 		nearbyBusCollectionView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
 		
 		stationListCollectionView.contentInset.right = 100	// compensate for the bug that the last cell will be covered due to not enough scrollable length
@@ -250,6 +253,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 						}
 					}
 					
+					// check if is moving to either show the nearbyBusesCollectionView
+					self.isMoving = (userLocation.distance(from: self.latestLocation) > 5.0)
 					self.latestLocation = userLocation
 				}
 			}
@@ -330,7 +335,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 			self.nearbyBusesList = self.busQuery.queryNearbyBuses(location: self.latestLocation)
 			
 			DispatchQueue.main.async {
-				self.nearbyBusCollectionView.isHidden = (self.nearbyBusesList.count == 0)
+				self.nearbyBusCollectionView.isHidden = (self.nearbyBusesList.count == 0 || !self.isMoving)
 				self.nearbyBusCollectionView.reloadData()
 				self.nearbyBusCollectionView.scrollToItem(at: IndexPath(item: self.nearbyBusesList.count - 1, section: 0), at: .right, animated: false)
 			}

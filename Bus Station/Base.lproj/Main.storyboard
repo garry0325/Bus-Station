@@ -642,6 +642,7 @@
                                     <constraint firstAttribute="height" constant="60" id="LIe-Ov-grZ"/>
                                     <constraint firstAttribute="width" constant="60" id="QBL-8i-646"/>
                                 </constraints>
+                                <color key="color" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowOpacity">
                                         <real key="value" value="0.40000000000000002"/>

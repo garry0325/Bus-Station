@@ -17,6 +17,7 @@ class MapRouteViewController: UIViewController {
 	var currentStop: BusStop!
 	var routeSequence = [BusStopLiveStatus]()
 	var stopAnnotations = [StopAnnotation]()
+	var routeOverlay = MKPolyline()
 	var busesLocation = [Bus]()
 	var busAnnotations = [BusAnnotation]()
 	var plateNumberToIndexDict = [String: Int]()
@@ -45,6 +46,14 @@ class MapRouteViewController: UIViewController {
 		autoRefreshTimer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(autoRefresh), userInfo: nil, repeats: true)
         // Do any additional setup after loading the view.
     }
+	deinit {
+		mapView.removeAnnotations(stopAnnotations)
+		mapView.removeAnnotations(busAnnotations)
+		mapView.removeOverlay(routeOverlay)
+		mapView.delegate = nil
+		mapView = nil
+		print("map deinited")
+	}
 	
 	override func viewDidDisappear(_ animated: Bool) {
 		autoRefreshTimer.invalidate()
@@ -77,7 +86,9 @@ class MapRouteViewController: UIViewController {
 			
 			DispatchQueue.main.async {
 				self.mapView.addAnnotations(self.stopAnnotations)
-				self.mapView.addOverlay(MKPolyline(coordinates: routePolyline, count: routePolyline.count))
+				
+				self.routeOverlay = MKPolyline(coordinates: routePolyline, count: routePolyline.count)
+				self.mapView.addOverlay(self.routeOverlay)
 				
 				self.mapView.isHidden = false
 				self.activityIndicator.stopAnimating()
