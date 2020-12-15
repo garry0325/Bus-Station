@@ -52,7 +52,6 @@ class MapRouteViewController: UIViewController {
 		mapView.removeOverlay(routeOverlay)
 		mapView.delegate = nil
 		mapView = nil
-		print("map deinited")
 	}
 	
 	override func viewDidDisappear(_ animated: Bool) {

@@ -16,9 +16,6 @@ class BusQuery {
 	private let appID = "1baabcfdb12a4d88bd4b19c7a2c3fd23"
 	private let appKey = "4hYdvDltMul8kJTyx2CbciPeM1k"
 	
-	private var authTimeString: String!
-	private var authorization: String!
-	private var key: SymmetricKey!
 	private let authorizationDateFormatter: DateFormatter
 	var urlConfig = URLSessionConfiguration.default
 	
@@ -48,7 +45,7 @@ class BusQuery {
 	}
 	
 	func queryNearbyBusStations(location: CLLocation) -> [Station] {
-		self.prepareAuthorizations()
+		let (authTimeString, authorization) = self.prepareAuthorizations()
 		self.updateStationRadius()
 		
 		let semaphore = DispatchSemaphore(value: 0)
@@ -151,7 +148,7 @@ class BusQuery {
 	}
 	
 	func queryBusArrivals(station: Station) -> [BusStop] {
-		self.prepareAuthorizations()
+		let (authTimeString, authorization) = self.prepareAuthorizations()
 		
 		let semaphore = DispatchSemaphore(value: 0)
 		var request: URLRequest
@@ -262,7 +259,7 @@ class BusQuery {
 	}
 	
 	func queryRealTimeBusLocation(busStop: BusStop) -> [BusStopLiveStatus] {
-		self.prepareAuthorizations()
+		let (authTimeString, authorization) = self.prepareAuthorizations()
 		var request: URLRequest
 		
 		let semaphore = DispatchSemaphore(value: 0)
@@ -483,7 +480,7 @@ class BusQuery {
 	}
 	
 	func querySpecificBusArrival(busStop: BusStop) -> BusStop? {
-		self.prepareAuthorizations()
+		let (authTimeString, authorization) = self.prepareAuthorizations()
 		var request: URLRequest
 		
 		let semaphore = DispatchSemaphore(value: 0)
@@ -519,7 +516,7 @@ class BusQuery {
 	}
 	
 	func queryNearbyMetroStatoins(location: CLLocation) -> [Station] {
-		self.prepareAuthorizations()
+		let (authTimeString, authorization) = self.prepareAuthorizations()
 		
 		let semaphore = DispatchSemaphore(value: 0)
 		var request: URLRequest
@@ -760,7 +757,7 @@ class BusQuery {
 	}
 	
 	func queryMetroStationSequence(currentStation: MetroArrival) -> [MetroStation] {
-		self.prepareAuthorizations()
+		let (authTimeString, authorization) = self.prepareAuthorizations()
 		let semaphore = DispatchSemaphore(value: 0)
 		
 		var metroStations = [MetroStation]()
@@ -853,7 +850,7 @@ class BusQuery {
 	}
 	
 	func queryLiveBusesPosition(busStop: BusStop) -> [Bus] {
-		self.prepareAuthorizations()
+		let (authTimeString, authorization) = self.prepareAuthorizations()
 		var request: URLRequest
 		
 		let semaphore = DispatchSemaphore(value: 0)
@@ -899,7 +896,7 @@ class BusQuery {
 	}
 	
 	func queryBusRouteGeometry(busStop: BusStop) -> [CLLocationCoordinate2D] {
-		self.prepareAuthorizations()
+		let (authTimeString, authorization) = self.prepareAuthorizations()
 		var request: URLRequest
 		
 		let semaphore = DispatchSemaphore(value: 0)
@@ -940,7 +937,7 @@ class BusQuery {
 	}
 	
 	func queryNearbyBuses(location: CLLocation) -> [Bus] {
-		self.prepareAuthorizations()
+		let (authTimeString, authorization) = self.prepareAuthorizations()
 		var request: URLRequest
 		
 		let semaphore = DispatchSemaphore(value: 0)
@@ -989,12 +986,14 @@ class BusQuery {
 		return nearbyBuses
 	}
 	
-	func prepareAuthorizations() {
-		self.authTimeString = authorizationDateFormatter.string(from: Date())
-		self.key = SymmetricKey(data: Data(self.appKey.utf8))
-		let hmac = HMAC<SHA256>.authenticationCode(for: Data(String(format: "x-date: %@", self.authTimeString).utf8), using: key)
+	func prepareAuthorizations() -> (String, String) {
+		let authTimeString = authorizationDateFormatter.string(from: Date())
+		let key = SymmetricKey(data: Data(self.appKey.utf8))
+		let hmac = HMAC<SHA256>.authenticationCode(for: Data(String(format: "x-date: %@", authTimeString).utf8), using: key)
 		let base64HmacString = Data(hmac).base64EncodedString()
-		self.authorization = "hmac username=\"\(self.appID)\", algorithm=\"hmac-sha256\", headers=\"x-date\", signature=\"\(base64HmacString)\""
+		let authorization = "hmac username=\"\(self.appID)\", algorithm=\"hmac-sha256\", headers=\"x-date\", signature=\"\(base64HmacString)\""
+		
+		return (authTimeString, authorization)
 	}
 	
 	func presentErrorMessage(query: String, description: String, code: Int?) {

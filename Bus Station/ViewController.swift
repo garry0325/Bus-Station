@@ -254,8 +254,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 					}
 					
 					// check if is moving to either show the nearbyBusesCollectionView
-					self.isMoving = (userLocation.distance(from: self.latestLocation) > 5.0)
-					self.latestLocation = userLocation
+					if(userLocation.distance(from: self.latestLocation) > 5.0 && !self.isMoving) {
+						self.isMoving = true
+						self.latestLocation = userLocation
+						self.autoRefreshNearbyBuses()
+					}
+					else {
+						self.isMoving = (userLocation.distance(from: self.latestLocation) > 5.0)
+						self.latestLocation = userLocation
+					}
 				}
 			}
 		}
