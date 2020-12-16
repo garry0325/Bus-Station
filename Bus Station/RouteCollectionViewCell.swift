@@ -18,13 +18,5 @@ class RouteCollectionViewCell: UICollectionViewCell {
 		routeListTableView.dataSource = viewController
 		
 		routeListTableView.contentInset = UIEdgeInsets(top: 7.0, left: 0.0, bottom: frame.height / 5, right: 0.0)
-		
-		
-		if(!upSideUpLayout) {
-			routeListTableView.transform = CGAffineTransform(rotationAngle: -(CGFloat)(Double.pi))
-		}
-		else {
-			routeListTableView.transform = CGAffineTransform(rotationAngle: 0.0)
-		}
 	}
 }

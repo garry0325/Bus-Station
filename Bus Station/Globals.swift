@@ -8,5 +8,4 @@
 import Foundation
 import UIKit
 
-var upSideUpLayout = false
 var stationRadius: Float = 500.0

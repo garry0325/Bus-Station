@@ -15,15 +15,11 @@
     <entity name="StationRadius" representedClassName="StationRadius" syncable="YES" codeGenerationType="class">
         <attribute name="stationRadius" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
     </entity>
-    <entity name="UpSideUp" representedClassName="UpSideUp" syncable="YES" codeGenerationType="class">
-        <attribute name="upSideUp" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-    </entity>
     <elements>
         <element name="Ad" positionX="-45" positionY="9" width="128" height="58"/>
         <element name="BannedStation" positionX="-54" positionY="0" width="128" height="58"/>
+        <element name="Initial" positionX="-36" positionY="27" width="128" height="44"/>
         <element name="StarredStation" positionX="-54" positionY="-9" width="128" height="58"/>
         <element name="StationRadius" positionX="-27" positionY="27" width="128" height="58"/>
-        <element name="UpSideUp" positionX="-36" positionY="18" width="128" height="58"/>
-        <element name="Initial" positionX="-36" positionY="27" width="128" height="44"/>
     </elements>
 </model>

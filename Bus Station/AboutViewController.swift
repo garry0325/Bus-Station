@@ -11,7 +11,6 @@ class AboutViewController: UIViewController {
 	
 	let stationRadiusSliderScale: Float = 10.0
 
-	@IBOutlet var upSideUpSwitch: UISwitch!
 	@IBOutlet var stationRadiusLabel: UILabel!
 	@IBOutlet var stationRadiusSlider: UISlider!
 	@IBOutlet var versionLabel: UILabel!
@@ -35,7 +34,6 @@ class AboutViewController: UIViewController {
 		
 		numberFormatter.numberStyle = .decimal
 		
-		upSideUpSwitch.setOn(!upSideUpLayout, animated: true)
 		stationRadiusTemporary = stationRadius
 		stationRadiusSlider.value = stationRadius / stationRadiusSliderScale
 		versionLabel.text = "版本：" + (Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String)
@@ -44,11 +42,6 @@ class AboutViewController: UIViewController {
 	override func viewDidDisappear(_ animated: Bool) {
 		stationRadius = stationRadiusTemporary
 		NotificationCenter.default.post(name: NSNotification.Name("StationRadiusPreference"), object: nil)
-	}
-	
-	@IBAction func upSideUpSwitched(_ sender: UISwitch) {
-		upSideUpLayout = !upSideUpSwitch.isOn
-		NotificationCenter.default.post(name: NSNotification.Name("LayoutPreference"), object: nil)
 	}
 	
 	@IBAction func stationRadiusSliderChanged(_ sender: UISlider) {

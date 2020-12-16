@@ -19,7 +19,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 	var starredStations: Array<StarredStation> = []
 	var bannedStations: Array<BannedStation> = []
-	var layoutPreferenceData: Array<UpSideUp> = []
 	
 	var locationManager = CLLocationManager()
 	
@@ -195,7 +194,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		// Because when app is reopen from background, the animation stops
 		NotificationCenter.default.addObserver(self, selector: #selector(backFromBackground), name: UIApplication.didBecomeActiveNotification, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(showRouteDetailVC), name: NSNotification.Name("Detail"), object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(saveNewLayoutPreference), name: NSNotification.Name("LayoutPreference"), object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(saveNewStationRadiusPreference), name: NSNotification.Name("StationRadiusPreference"), object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(removeAdSuccess), name: NSNotification.Name("RemoveAd"), object: nil)
 		autoRefreshTimer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(autoRefresh), userInfo: nil, repeats: true)
@@ -213,7 +211,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		if(checkInitial()) {
 			presentWelcomeWarning()
 		}
-		fetchLayoutPreference()
 		checkAdRemoval()
 		fetchStarredAndBannedStops()
 		fetchStationRadiusPreference()
@@ -634,24 +631,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		}
 	}
 	
-	func fetchLayoutPreference() {
-		do {
-			layoutPreferenceData = try (context.fetch(UpSideUp.fetchRequest()) as? [UpSideUp])!
-			if(layoutPreferenceData.count == 0) {
-				upSideUpLayout = true
-				let newLayoutPreference = UpSideUp(context: self.context)
-				newLayoutPreference.upSideUp = upSideUpLayout
-				try self.context.save()
-			} else {
-				upSideUpLayout = layoutPreferenceData.last!.upSideUp
-				
-				print("\(upSideUpLayout ? "UP":"DOWN") preference data count \(layoutPreferenceData.count)")
-			}
-		} catch {
-			print("Error fetching layout preference")
-		}
-	}
-	
 	func fetchStarredAndBannedStops() {
 		do {
 			starredStations = try (context.fetch(StarredStation.fetchRequest()) as? [StarredStation])!
@@ -665,17 +644,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 			print("\(bannedStations.count) banned stations")
 		} catch {
 			print("Error fetching bannedStations")
-		}
-	}
-	
-	@objc func saveNewLayoutPreference() {
-		updateLayoutConstraint()
-		do {
-			layoutPreferenceData = try context.fetch(UpSideUp.fetchRequest()) as! [UpSideUp]
-			layoutPreferenceData.last!.upSideUp = upSideUpLayout
-			try self.context.save()
-		} catch {
-			print("Error saving new layout preference")
 		}
 	}
 	
@@ -915,26 +883,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	
 	@objc func updateLayoutConstraint() {
 		
-		if(upSideUpLayout) {
-			NSLayoutConstraint.deactivate([whiteViewToBottomRouteCollectionViewConstraintB!, bearingCollectionViewToBottomSafeAreaConstraintB!, bearingCollectionViewToTopAdBannerConstraintB!, updateButtonToWhiteViewTopConstraintB!, updateButtonToTrailingConstraintB!, aboutButtonToUpdateButtonVerticalSpacingConstraintB!])
-			
-			NSLayoutConstraint.deactivate([routeCollectionViewToTopSafeAreaConstraintB!, routeCollectionViewToTopAdBannerConstraintA!, updateButtonToAdBannerConstraintA!, aboutButtonToAdBannerConstraintA!])
-			
-			NSLayoutConstraint.activate([whiteViewToTopSafeAreaConstraintA, bearingCollectionViewToRouteCollectionViewConstraintA, routeCollectionViewToBottomConstraintA, updateButtonAtCenterConstraintA, updateButtonToSafeAreaConstraintA, aboutButtonToSafeAreaConstraintA])
-
-			whiteView.clipsToBounds = true
-			bearingListCollectionView.clipsToBounds = false
-		}
-		else {
-			NSLayoutConstraint.deactivate([whiteViewToTopSafeAreaConstraintA, bearingCollectionViewToRouteCollectionViewConstraintA, routeCollectionViewToBottomConstraintA, routeCollectionViewToTopAdBannerConstraintA!, updateButtonAtCenterConstraintA, updateButtonToSafeAreaConstraintA, updateButtonToAdBannerConstraintA!, aboutButtonToSafeAreaConstraintA, aboutButtonToAdBannerConstraintA!])
-			
-			NSLayoutConstraint.deactivate([bearingCollectionViewToTopAdBannerConstraintB!])
-			
-			NSLayoutConstraint.activate([whiteViewToBottomRouteCollectionViewConstraintB!, bearingCollectionViewToBottomSafeAreaConstraintB!, routeCollectionViewToTopSafeAreaConstraintB!, updateButtonToWhiteViewTopConstraintB!, updateButtonToTrailingConstraintB!, aboutButtonToUpdateButtonVerticalSpacingConstraintB!])
-			
-			whiteView.clipsToBounds = false
-			bearingListCollectionView.clipsToBounds = true
-		}
+		NSLayoutConstraint.deactivate([whiteViewToTopSafeAreaConstraintA, bearingCollectionViewToRouteCollectionViewConstraintA, routeCollectionViewToBottomConstraintA, routeCollectionViewToTopAdBannerConstraintA!, updateButtonAtCenterConstraintA, updateButtonToSafeAreaConstraintA, updateButtonToAdBannerConstraintA!, aboutButtonToSafeAreaConstraintA, aboutButtonToAdBannerConstraintA!])
+		
+		NSLayoutConstraint.deactivate([bearingCollectionViewToTopAdBannerConstraintB!])
+		
+		NSLayoutConstraint.activate([whiteViewToBottomRouteCollectionViewConstraintB!, bearingCollectionViewToBottomSafeAreaConstraintB!, routeCollectionViewToTopSafeAreaConstraintB!, updateButtonToWhiteViewTopConstraintB!, updateButtonToTrailingConstraintB!, aboutButtonToUpdateButtonVerticalSpacingConstraintB!])
+		
+		whiteView.clipsToBounds = false
+		bearingListCollectionView.clipsToBounds = true
 		
 		updateLayoutConstraintWithAd()
 		
@@ -942,17 +898,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	}
 	
 	func updateLayoutConstraintWithAd() {
-		if(upSideUpLayout) {
-			routeCollectionViewToBottomConstraintA.isActive = !adDisplayedSuccessfully
-			routeCollectionViewToTopAdBannerConstraintA?.isActive = adDisplayedSuccessfully
-			updateButtonToSafeAreaConstraintA.isActive = !adDisplayedSuccessfully
-			updateButtonToAdBannerConstraintA?.isActive = adDisplayedSuccessfully
-			aboutButtonToSafeAreaConstraintA.isActive = !adDisplayedSuccessfully
-			aboutButtonToAdBannerConstraintA?.isActive = adDisplayedSuccessfully
-		} else {
-			bearingCollectionViewToBottomSafeAreaConstraintB?.isActive = !adDisplayedSuccessfully
-			bearingCollectionViewToTopAdBannerConstraintB?.isActive = adDisplayedSuccessfully
-		}
+		bearingCollectionViewToBottomSafeAreaConstraintB?.isActive = !adDisplayedSuccessfully
+		bearingCollectionViewToTopAdBannerConstraintB?.isActive = adDisplayedSuccessfully
 	}
 }
 
@@ -1139,9 +1086,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 		if(ViewController.stationTypeList[stationNumber] == .Bus) {
 			let cell = tableView.dequeueReusableCell(withIdentifier: "RouteCell") as! RouteTableViewCell
 			
-			if(!upSideUpLayout) {
-				cell.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi));
-			}
 			cell.routeName = ViewController.routeList[stationNumber][bearingNumber][indexPath.row].routeName
 			cell.information = ViewController.routeList[stationNumber][bearingNumber][indexPath.row].information
 			cell.destination = ViewController.routeList[stationNumber][bearingNumber][indexPath.row].destination
@@ -1151,10 +1095,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 		}
 		else {
 			let cell = tableView.dequeueReusableCell(withIdentifier: "MetroCell") as! MetroRouteTableViewCell
-			
-			if(!upSideUpLayout) {
-				cell.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi));
-			}
 			
 			cell.destination = ViewController.metroRouteList[indexPath.row].destinationName
 			cell.lineName = ViewController.metroRouteList[indexPath.row].lineName!
@@ -1244,7 +1184,7 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
 		}
 		else if(segue.identifier == "About") {
 			let destination = segue.destination as! AboutViewController
-			destination.preferredContentSize = CGSize(width: 350.0, height: 300.0)
+			destination.preferredContentSize = CGSize(width: 350.0, height: 220.0)
 			destination.popoverPresentationController?.delegate = self
 		}
 
