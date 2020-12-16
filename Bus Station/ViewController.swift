@@ -883,14 +883,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	
 	@objc func updateLayoutConstraint() {
 		
-		NSLayoutConstraint.deactivate([whiteViewToTopSafeAreaConstraintA, bearingCollectionViewToRouteCollectionViewConstraintA, routeCollectionViewToBottomConstraintA, routeCollectionViewToTopAdBannerConstraintA!, updateButtonAtCenterConstraintA, updateButtonToSafeAreaConstraintA, updateButtonToAdBannerConstraintA!, aboutButtonToSafeAreaConstraintA, aboutButtonToAdBannerConstraintA!])
+		NSLayoutConstraint.deactivate([whiteViewToBottomRouteCollectionViewConstraintB!, bearingCollectionViewToBottomSafeAreaConstraintB!, bearingCollectionViewToTopAdBannerConstraintB!, updateButtonToWhiteViewTopConstraintB!, updateButtonToTrailingConstraintB!, aboutButtonToUpdateButtonVerticalSpacingConstraintB!])
 		
-		NSLayoutConstraint.deactivate([bearingCollectionViewToTopAdBannerConstraintB!])
+		NSLayoutConstraint.deactivate([routeCollectionViewToTopSafeAreaConstraintB!, routeCollectionViewToTopAdBannerConstraintA!, updateButtonToAdBannerConstraintA!, aboutButtonToAdBannerConstraintA!])
 		
-		NSLayoutConstraint.activate([whiteViewToBottomRouteCollectionViewConstraintB!, bearingCollectionViewToBottomSafeAreaConstraintB!, routeCollectionViewToTopSafeAreaConstraintB!, updateButtonToWhiteViewTopConstraintB!, updateButtonToTrailingConstraintB!, aboutButtonToUpdateButtonVerticalSpacingConstraintB!])
+		NSLayoutConstraint.activate([whiteViewToTopSafeAreaConstraintA, bearingCollectionViewToRouteCollectionViewConstraintA, routeCollectionViewToBottomConstraintA, updateButtonAtCenterConstraintA, updateButtonToSafeAreaConstraintA, aboutButtonToSafeAreaConstraintA])
 		
-		whiteView.clipsToBounds = false
-		bearingListCollectionView.clipsToBounds = true
+		whiteView.clipsToBounds = true
+		bearingListCollectionView.clipsToBounds = false
 		
 		updateLayoutConstraintWithAd()
 		
@@ -898,8 +898,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	}
 	
 	func updateLayoutConstraintWithAd() {
-		bearingCollectionViewToBottomSafeAreaConstraintB?.isActive = !adDisplayedSuccessfully
-		bearingCollectionViewToTopAdBannerConstraintB?.isActive = adDisplayedSuccessfully
+		routeCollectionViewToBottomConstraintA.isActive = !adDisplayedSuccessfully
+		routeCollectionViewToTopAdBannerConstraintA?.isActive = adDisplayedSuccessfully
+		updateButtonToSafeAreaConstraintA.isActive = !adDisplayedSuccessfully
+		updateButtonToAdBannerConstraintA?.isActive = adDisplayedSuccessfully
+		aboutButtonToSafeAreaConstraintA.isActive = !adDisplayedSuccessfully
+		aboutButtonToAdBannerConstraintA?.isActive = adDisplayedSuccessfully
+		
 	}
 }
 
@@ -1085,7 +1090,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 		
 		if(ViewController.stationTypeList[stationNumber] == .Bus) {
 			let cell = tableView.dequeueReusableCell(withIdentifier: "RouteCell") as! RouteTableViewCell
-			
+
 			cell.routeName = ViewController.routeList[stationNumber][bearingNumber][indexPath.row].routeName
 			cell.information = ViewController.routeList[stationNumber][bearingNumber][indexPath.row].information
 			cell.destination = ViewController.routeList[stationNumber][bearingNumber][indexPath.row].destination
@@ -1095,7 +1100,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 		}
 		else {
 			let cell = tableView.dequeueReusableCell(withIdentifier: "MetroCell") as! MetroRouteTableViewCell
-			
+
 			cell.destination = ViewController.metroRouteList[indexPath.row].destinationName
 			cell.lineName = ViewController.metroRouteList[indexPath.row].lineName!
 			cell.lineColor = ViewController.metroRouteList[indexPath.row].lineColor
@@ -1120,7 +1125,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		if(ViewController.stationTypeList[ViewController.stationNumberForDetailView] == .Bus) {
 			NotificationCenter.default.post(name: NSNotification.Name("Detail"), object: ViewController.routeList[ViewController.stationNumberForDetailView][ViewController.bearingNumberForDetailView][indexPath.row])
-			print("sending \(Unmanaged.passUnretained(ViewController.routeList[ViewController.stationNumberForDetailView][ViewController.bearingNumberForDetailView][indexPath.row]).toOpaque())")
+			//print("sending \(Unmanaged.passUnretained(ViewController.routeList[ViewController.stationNumberForDetailView][ViewController.bearingNumberForDetailView][indexPath.row]).toOpaque())")
 		} else {
 			//performSegue(withIdentifier: "MetroDetail", sender: ViewController.metroRouteList[indexPath.row])
 		}
