@@ -80,8 +80,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	// TODO: change app store screenshots
 	// TODO: when udpating location, it waits for autoRefresh refreshes
 	
-	// TODO: REMOVE UPSIDE DOWN
-	
 	var busQuery = BusQuery()
 	var locationWhenPinned = CLLocation()
 	var locationHasUpdated: Bool = false
