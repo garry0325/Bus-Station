@@ -79,6 +79,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	// TODO: Error in MetroDetailViewController at branch stations
 	// TODO: change app store screenshots
 	// TODO: when udpating location, it waits for autoRefresh refreshes
+	// TODO: ad more ads
+	// TODO: Add iBeacon when gps range is too big
 	
 	var busQuery = BusQuery()
 	var locationWhenPinned = CLLocation()
