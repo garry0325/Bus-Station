@@ -13,6 +13,7 @@ class AboutViewController: UIViewController {
 
 	@IBOutlet var stationRadiusLabel: UILabel!
 	@IBOutlet var stationRadiusSlider: UISlider!
+	@IBOutlet var warningLabel: UILabel!
 	@IBOutlet var versionLabel: UILabel!
 	var stationRadiusTemporary = stationRadius {
 		didSet {
@@ -37,6 +38,10 @@ class AboutViewController: UIViewController {
 		stationRadiusTemporary = stationRadius
 		stationRadiusSlider.value = stationRadius / stationRadiusSliderScale
 		versionLabel.text = "版本：" + (Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String)
+		
+		stationRadiusLabel.textColor = labelStandardBlack
+		warningLabel.textColor = labelStandardBlack
+		versionLabel.textColor = labelStandardBlack
 	}
 	
 	override func viewDidDisappear(_ animated: Bool) {
