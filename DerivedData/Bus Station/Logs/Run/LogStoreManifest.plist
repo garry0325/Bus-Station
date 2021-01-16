@@ -6,7 +6,7 @@
 	<integer>10</integer>
 	<key>logs</key>
 	<dict>
-		<key>4F26854B-E627-4853-B19E-AB0A6BF0B206</key>
+		<key>B3F56CF6-68AD-454F-B027-8FC6AF372232</key>
 		<dict>
 			<key>className</key>
 			<string>DBGConsoleLog</string>
@@ -15,7 +15,7 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
 			<key>fileName</key>
-			<string>4F26854B-E627-4853-B19E-AB0A6BF0B206.xcactivitylog</string>
+			<string>B3F56CF6-68AD-454F-B027-8FC6AF372232.xcactivitylog</string>
 			<key>hasPrimaryLog</key>
 			<true/>
 			<key>primaryObservable</key>
@@ -32,47 +32,13 @@
 			<key>signature</key>
 			<string>Run Bus Station</string>
 			<key>timeStartedRecording</key>
-			<real>630774770.11972904</real>
+			<real>632462796.89543903</real>
 			<key>timeStoppedRecording</key>
-			<real>630774885.07482004</real>
+			<real>632462826.12093198</real>
 			<key>title</key>
 			<string>Run Bus Station</string>
 			<key>uniqueIdentifier</key>
-			<string>4F26854B-E627-4853-B19E-AB0A6BF0B206</string>
-		</dict>
-		<key>F656B253-85EB-49BF-BAA7-679107BD9F86</key>
-		<dict>
-			<key>className</key>
-			<string>DBGConsoleLog</string>
-			<key>documentTypeString</key>
-			<string>com.apple.dt.IDE.DebuggerLogContentType</string>
-			<key>domainType</key>
-			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
-			<key>fileName</key>
-			<string>F656B253-85EB-49BF-BAA7-679107BD9F86.xcactivitylog</string>
-			<key>hasPrimaryLog</key>
-			<true/>
-			<key>primaryObservable</key>
-			<dict>
-				<key>highLevelStatus</key>
-				<string>S</string>
-			</dict>
-			<key>schemeIdentifier-containerName</key>
-			<string>Bus Station project</string>
-			<key>schemeIdentifier-schemeName</key>
-			<string>Bus Station</string>
-			<key>schemeIdentifier-sharedScheme</key>
-			<integer>1</integer>
-			<key>signature</key>
-			<string>Run Bus Station</string>
-			<key>timeStartedRecording</key>
-			<real>630153043.23575997</real>
-			<key>timeStoppedRecording</key>
-			<real>630153093.71449995</real>
-			<key>title</key>
-			<string>Run Bus Station</string>
-			<key>uniqueIdentifier</key>
-			<string>F656B253-85EB-49BF-BAA7-679107BD9F86</string>
+			<string>B3F56CF6-68AD-454F-B027-8FC6AF372232</string>
 		</dict>
 	</dict>
 </dict>
