@@ -191,22 +191,25 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		
 		// my ad banner id: ca-app-pub-5814041924860954/9661829499
 		// test ad banner id: ca-app-pub-3940256099942544/2934735716
-		updateLocationAndStations()
 		
-		// Because when app is reopen from background, the animation stops
+		// Because when app is reopened from background, the animation stops
 		NotificationCenter.default.addObserver(self, selector: #selector(backFromBackground), name: UIApplication.didBecomeActiveNotification, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(showRouteDetailVC), name: NSNotification.Name("Detail"), object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(saveNewStationRadiusPreference), name: NSNotification.Name("StationRadiusPreference"), object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(removeAdSuccess), name: NSNotification.Name("RemoveAd"), object: nil)
+	}
+	deinit {
+		NotificationCenter.default.removeObserver(self)
+	}
+	
+	override func viewDidAppear(_ animated: Bool) {
+		updateLocationAndStations()
 		autoRefreshTimer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(autoRefresh), userInfo: nil, repeats: true)
 		autoRefreshNearbyBuses()
 		autoRefreshNearbyBusesTimer = Timer.scheduledTimer(timeInterval: 20.0, target: self, selector: #selector(autoRefreshNearbyBuses), userInfo: nil, repeats: true)
 		if(displayAd) {
 			self.adBannerView.load(GADRequest())
 		}
-	}
-	deinit {
-		NotificationCenter.default.removeObserver(self)
 	}
 	
 	func fetchSavedSettings() {
@@ -570,6 +573,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		else {
 			updateLocationButton.tintColor = .lightGray
 			print("Location permission not granted")
+			currentStationLabel.text = "定位服務未開啟"
+			dismissActivityIndicator()
+			buttonActivityIndicator.stopAnimating()
+			updateLocationButton.isHidden = false
 			promptLocationServicePermission()
 		}
 	}
