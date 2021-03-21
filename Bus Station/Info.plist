@@ -26,6 +26,8 @@
 	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>取得最近的公車站與捷運站</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>當進入捷運車站時將自動通知到站時間</string>
 	<key>SKAdNetworkItems</key>
 	<array>
 		<dict>

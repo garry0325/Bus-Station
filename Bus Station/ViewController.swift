@@ -193,7 +193,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		// my ad banner id: ca-app-pub-5814041924860954/9661829499
 		// test ad banner id: ca-app-pub-3940256099942544/2934735716
 		
-		requestNotification()
+		requestGeoNotifications()
 		
 		// Because when app is reopened from background, the animation stops
 		NotificationCenter.default.addObserver(self, selector: #selector(backFromBackground), name: UIApplication.didBecomeActiveNotification, object: nil)
@@ -616,49 +616,85 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		present(locationServiceAlert, animated: true, completion: nil)
 	}
 	
-	func requestNotification() {
-		let uuidString = UUID().uuidString
+	func requestGeoNotifications() {
+		locationManager.requestAlwaysAuthorization()
 		
-		let center = UNUserNotificationCenter.current()
-		center.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
-		}
+//		let uuidString = UUID().uuidString
+//
+//		let center = UNUserNotificationCenter.current()
+//		center.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
+//		}
+//
+//		for mrtLocation in MRTStationsLocationsTemp {	// TODO: change back to MRTStationsLocations
+//			let content = UNMutableNotificationContent()
+//			content.title = "捷運" + (mrtLocation[0] as! String)
+//			content.body = ""
+//
+//			let coordinates = CLLocationCoordinate2D(latitude: mrtLocation[1] as! Double, longitude: mrtLocation[2] as! Double)
+//			let region = CLCircularRegion(center: coordinates, radius: 100.0, identifier: mrtLocation[0] as! String)
+//			region.notifyOnEntry = true
+//			region.notifyOnExit = false
+//
+//			let trigger = UNLocationNotificationTrigger(region: region, repeats: true)
+//
+//			let request = UNNotificationRequest(identifier: uuidString, content: content, trigger: trigger)
+//			center.add(request) { (error) in
+//				// TODO:
+//			}
+//		}
+//
+//		// TODO:  ******************* to be deleted *************************
+//
+//		let content = UNMutableNotificationContent()
+//		content.title = "測試用"
+//		content.body = ""
+//
+//		let coordinates = CLLocationCoordinate2D(latitude: 24.984587, longitude: 121.562500)
+//		let region = CLCircularRegion(center: coordinates, radius: 60.0, identifier: "test")
+//		region.notifyOnEntry = true
+//		region.notifyOnExit = true
+//
+//		let trigger = UNLocationNotificationTrigger(region: region, repeats: true)
+//
+//		let request = UNNotificationRequest(identifier: uuidString, content: content, trigger: trigger)
+//		center.add(request) { (error) in
+//		}
+//
+//		// TODO:  ******************* to be deleted *************************
+	}
+	
+	func startGeoMonitoring() {
+		if !CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self) {
+			ErrorAlert.presentErrorAlert(title: "錯誤", message: "此裝置不支援地理柵欄功能")
+			return
+		  }
 		
 		for mrtLocation in MRTStationsLocationsTemp {	// TODO: change back to MRTStationsLocations
-			let content = UNMutableNotificationContent()
-			content.title = "捷運" + (mrtLocation[0] as! String)
-			content.body = ""
-			
 			let coordinates = CLLocationCoordinate2D(latitude: mrtLocation[1] as! Double, longitude: mrtLocation[2] as! Double)
 			let region = CLCircularRegion(center: coordinates, radius: 100.0, identifier: mrtLocation[0] as! String)
-			region.notifyOnEntry = true
-			region.notifyOnExit = false
 			
-			let trigger = UNLocationNotificationTrigger(region: region, repeats: true)
+			locationManager.startMonitoring(for: region)
+		}
+	}
+	
+	func stopGeoMonitoring() {
+		for region in locationManager.monitoredRegions {
+		  guard let circularRegion = region as? CLCircularRegion else { continue }
 			
-			let request = UNNotificationRequest(identifier: uuidString, content: content, trigger: trigger)
-			center.add(request) { (error) in
-				// TODO:
-			}
+		  locationManager.stopMonitoring(for: circularRegion)
 		}
-		
-		// TODO:  ******************* to be deleted *************************
-		
-		let content = UNMutableNotificationContent()
-		content.title = "測試用"
-		content.body = ""
-		
-		let coordinates = CLLocationCoordinate2D(latitude: 24.984587, longitude: 121.562500)
-		let region = CLCircularRegion(center: coordinates, radius: 60.0, identifier: "test")
-		region.notifyOnEntry = true
-		region.notifyOnExit = true
-		
-		let trigger = UNLocationNotificationTrigger(region: region, repeats: true)
-		
-		let request = UNNotificationRequest(identifier: uuidString, content: content, trigger: trigger)
-		center.add(request) { (error) in
+	}
+	
+	func locationManager(_ manager: CLLocationManager, monitoringDidFailFor region: CLRegion?, withError error: Error) {
+		guard let region = region else {
+			print("Monitoring failed for unknown region")
+			return
 		}
-		
-		// TODO:  ******************* to be deleted *************************
+		print("Monitoring failed for region with identifier: \(region.identifier)")
+	}
+	
+	func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+		print("Location Manager failed with the following error: \(error)")
 	}
 	
 	func checkInitial() -> Bool {
@@ -930,6 +966,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 			
 			locationManager.startUpdatingLocation()
 		}
+		// TODO: split always and when-in-use
 	}
 	
 	func applyAutoLayoutConstraints() {
