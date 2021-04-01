@@ -13,6 +13,7 @@ class AboutViewController: UIViewController {
 
 	@IBOutlet var stationRadiusLabel: UILabel!
 	@IBOutlet var stationRadiusSlider: UISlider!
+	@IBOutlet var geoNotificationSwitch: UISwitch!
 	@IBOutlet var warningLabel: UILabel!
 	@IBOutlet var versionLabel: UILabel!
 	var stationRadiusTemporary = stationRadius {
@@ -37,6 +38,9 @@ class AboutViewController: UIViewController {
 		
 		stationRadiusTemporary = stationRadius
 		stationRadiusSlider.value = stationRadius / stationRadiusSliderScale
+		
+		geoNotificationSwitch.isOn = geoNotificationCapablility
+		
 		versionLabel.text = "版本：" + (Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String)
 		
 		stationRadiusLabel.textColor = labelStandardBlack
@@ -53,6 +57,11 @@ class AboutViewController: UIViewController {
 		stationRadiusTemporary = Float(Int(sender.value)) * stationRadiusSliderScale
 	}
 	
+	@IBAction func geoNotificationSwitched(_ sender: UISwitch) {
+		print("GeoNotification Switched \(sender.isOn ? "ON":"OFF")")
+		geoNotificationCapablility = sender.isOn
+	}
+	
 	@IBAction func removeAdPressed(_ sender: UIButton) {
 		if(count < pattern.count) {
 			if(sender.tag == pattern[count]) {
@@ -65,7 +74,6 @@ class AboutViewController: UIViewController {
 			self.dismiss(animated: true, completion: nil)
 			NotificationCenter.default.post(name: NSNotification.Name(rawValue: "RemoveAd"), object: nil)
 		}
-		
 		
 		if(countForRadius < patternForRadius.count) {
 			if(sender.tag == patternForRadius[countForRadius]) {
