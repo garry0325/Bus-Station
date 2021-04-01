@@ -24,10 +24,10 @@
 	<string>ca-app-pub-5814041924860954~1974911168</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>當進入捷運車站時將自動通知到站時間</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>取得最近的公車站與捷運站</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>當進入捷運車站時將自動通知到站時間</string>
 	<key>SKAdNetworkItems</key>
 	<array>
 		<dict>
@@ -60,6 +60,11 @@
 	</dict>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>location</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
