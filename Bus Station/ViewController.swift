@@ -83,6 +83,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	// TODO: when udpating location, it waits for autoRefresh refreshes
 	// TODO: ad more ads
 	// TODO: Add iBeacon when gps range is too big
+    
+    // TODO: WENHU line crowdness
+    
+    // TODO: REMOVE PRINT STATEMENT
+    // TODO: AD app ID
 	
 	var busQuery = BusQuery()
 	var locationWhenPinned = CLLocation()
@@ -576,7 +581,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	}
 	
 	func checkLocationServicePermissionAndStartUpdating() {
-		locationManager.requestWhenInUseAuthorization()	// TODO: reset to when-in-use
+		locationManager.requestWhenInUseAuthorization()
 		
 		if(CLLocationManager.locationServicesEnabled() &&
 			(locationManager.authorizationStatus == .authorizedAlways ||
@@ -617,28 +622,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	}
 	
 	func startGeoMonitoring() {
-		let center = UNUserNotificationCenter.current()
-		center.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
-			if let error = error {
-				print("Notification Permission failed with the following error: \(error)")
-			}
-		}
-		center.getNotificationSettings { (settings) in
-			guard (settings.authorizationStatus == .authorized || settings.authorizationStatus == .provisional) else {
-				print("Notification permission is not granted")
-				geoNotificationCapablility = false
-				return
-			}
-		}
 		
-		locationManager.requestAlwaysAuthorization()
-		if(!CLLocationManager.locationServicesEnabled() || locationManager.authorizationStatus != .authorizedAlways){
-			print("Location permission not granted or authorization is not always")
-			geoNotificationCapablility = false
-			return
-		}
 		// TODO: KNOWN BUG(permission prompt doesn't wait for user response but continue executing codes)
-		
 		
 		print("start geomonitoring")
 		if !CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self) {
@@ -646,11 +631,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 			geoNotificationCapablility = false
 			return
 		  }
-		
 		for mrtLocation in MRTStationsLocationsTemp {	// TODO: change back to MRTStationsLocations
-			let coordinates = CLLocationCoordinate2D(latitude: mrtLocation[1] as! Double, longitude: mrtLocation[2] as! Double)
-			let region = CLCircularRegion(center: coordinates, radius: 100.0, identifier: mrtLocation[0] as! String)
-			
+            let stationName = (mrtLocation[0] as! Station).stationName
+            if(locationManager.monitoredRegions.contains(where: {$0.identifier == stationName})) {
+                continue
+            }
+            
+            let coordinates = mrtLocation[1] as! CLLocationCoordinate2D
+            let region = CLCircularRegion(center: coordinates, radius: 100.0, identifier: stationName)
+            
 			locationManager.startMonitoring(for: region)
 		}
 	}
@@ -707,7 +696,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 				}
 				
 				self.dismissActivityIndicator()
-				self.locationManager.requestWhenInUseAuthorization()	// TODO: reset to when-in-use
+				self.locationManager.requestWhenInUseAuthorization()
 			})
 			welcomeAlert.addAction(okAction)
 			self.present(welcomeAlert, animated: true, completion: nil)
