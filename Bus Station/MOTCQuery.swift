@@ -515,7 +515,7 @@ class BusQuery {
 		return busStop
 	}
 	
-	func queryNearbyMetroStatoins(location: CLLocation) -> [Station] {
+	func queryNearbyMetroStatoins(location: CLLocation) -> [Station] {  // TODO: 'Statoins' misspelling
 		let (authTimeString, authorization) = self.prepareAuthorizations()
 		
 		let semaphore = DispatchSemaphore(value: 0)

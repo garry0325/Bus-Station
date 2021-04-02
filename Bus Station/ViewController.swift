@@ -375,7 +375,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		routeCollectionView.reloadData()
 		dismissActivityIndicator()
 		
-		if(displayAd) {
+        if(displayAd && ViewController.stationList.count > 0) {
 			adBannerView.load(GADRequest())
 			displayAd = false
 		}
