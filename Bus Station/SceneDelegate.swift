@@ -6,16 +6,23 @@
 //
 
 import UIKit
+import CoreLocation
 
-class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelegate {
 
 	var window: UIWindow?
-
+    let locationManager = CLLocationManager()
+    
+    var busQuery = BusQuery()
 
 	func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 		// Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
 		// If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
 		// This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
+        
+        print("SceneDelegate Class scene loaded")
+        locationManager.delegate = self
+        
 		guard let _ = (scene as? UIWindowScene) else { return }
 	}
 
@@ -42,6 +49,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	}
 
 	func sceneDidEnterBackground(_ scene: UIScene) {
+        print("entered background")
 		// Called as the scene transitions from the foreground to the background.
 		// Use this method to save data, release shared resources, and store enough scene-specific state information
 		// to restore the scene back to its current state.
@@ -50,6 +58,77 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		(UIApplication.shared.delegate as? AppDelegate)?.saveContext()
 	}
 
-
+    func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
+        print("Entered region triggered.")
+        if region is CLCircularRegion {
+            handleEvent(for: region)
+        }
+    }
+    
+    // to be deleted
+    func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
+        print("Exit region triggered.")
+        if region is CLCircularRegion {
+            handleEvent(for: region)
+        }
+    }
+    // to be deleted
+    
+    func handleEvent(for region: CLRegion) {
+        // Show an alert if application is active
+        print("handle event for \(region.identifier)")
+        if UIApplication.shared.applicationState == .active {    // TODO: nothing to do when active
+            print("(Active) in GeoNotificationResponder")
+            //guard let message = region.identifier else { return }
+            //ErrorAlert.presentErrorAlert(title: "", message: message)
+        } else {
+            print("(Inactive or Background) in GeoNotificationResponder")
+            // Otherwise present a local notification
+            
+            // Query MRT arrival time
+            let queryingMrtStation = MRTStationsLocationsTemp.filter({($0[0] as! Station).stationName == region.identifier})[0][0] as! Station // TODO: change back to MRTStationsLocations
+            let mrtArrivals = busQuery.queryMetroArrivals(metroStation: queryingMrtStation)
+            
+            
+            let notificationContent = UNMutableNotificationContent()
+            notificationContent.title = queryingMrtStation.stationName
+            
+            var notificationBody = ""
+            for mrtArrival in mrtArrivals {
+                var information = ""
+                switch mrtArrival.status {
+                case .Normal:
+                    if(mrtArrival.estimatedArrival > 10) {
+                        information = String(format: "%d:%02d", mrtArrival.estimatedArrival / 60, mrtArrival.estimatedArrival % 60)
+                    }
+                    else {
+                        information = "到站中"
+                    }
+                case .Approaching:
+                    information = "到站中"
+                case .Loading:
+                    information = "加載中"
+                case .ServiceOver:
+                    information = "末班車已過"
+                default:
+                    information = "加載中"
+                }
+                
+                notificationBody = notificationBody + String(format: "%@\t\t%@\n", mrtArrival.destinationName, information)
+            }
+            notificationContent.body = notificationBody
+            notificationContent.sound = .default
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)    // TODO: nil to deliver right away
+            let request = UNNotificationRequest(
+                identifier: "GettingInMRTStation",
+                content: notificationContent,
+                trigger: trigger)
+            UNUserNotificationCenter.current().add(request) { error in
+                if let error = error {
+                    print("Error: \(error)")
+                }
+            }
+        }
+    }
 }
 
