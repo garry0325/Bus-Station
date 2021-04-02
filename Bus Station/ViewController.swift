@@ -388,7 +388,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 			let unorganizedStationList = self.busQuery.queryNearbyBusStations(location: location)
 			print("buses done")
 			print("querying mrt")
-			let metroStationList = self.busQuery.queryNearbyMetroStatoins(location: location)
+			let metroStationList = self.busQuery.queryNearbyMetroStations(location: location)
 			print("mrt done")
 			var stationTemp = [String]()
 			for station in unorganizedStationList {
@@ -622,9 +622,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	}
 	
 	func startGeoMonitoring() {
-		
-		// TODO: KNOWN BUG(permission prompt doesn't wait for user response but continue executing codes)
-		
 		print("start geomonitoring")
 		if !CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self) {
 			ErrorAlert.presentErrorAlert(title: "錯誤", message: "此裝置不支援地理柵欄功能")
@@ -642,6 +639,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             
 			locationManager.startMonitoring(for: region)
 		}
+		print("\(locationManager.monitoredRegions.count) monitoring regions")
 	}
 	
 	func stopGeoMonitoring() {
