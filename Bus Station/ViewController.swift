@@ -89,6 +89,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     // TODO: REMOVE PRINT STATEMENT
     // TODO: AD app ID
 	
+	// TODO: nearby buses show even not moving
+	
 	var busQuery = BusQuery()
 	var locationWhenPinned = CLLocation()
 	var locationHasUpdated: Bool = false
