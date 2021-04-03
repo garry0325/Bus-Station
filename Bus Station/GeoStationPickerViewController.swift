@@ -41,7 +41,24 @@ class GeoStationPickerViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+	
+	func generateGeoNotificationStations() {
+		geoNotificationStations = []
+		for line in 0..<stationRecorder.count {
+			for station in 0..<stationRecorder[line].count {
+				let stationName = (MRTStationsByLine[line][station][0] as! Station).stationName
+				if(stationRecorder[line][station] && !geoNotificationStations.contains(stationName)) {
+					geoNotificationStations.append(stationName)
+				}
+			}
+		}
+		print(geoNotificationStations)
+	}
     
+	override func viewDidDisappear(_ animated: Bool) {
+		generateGeoNotificationStations()
+	}
+	
     @IBAction func closeGeoStationPickerViewController(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
@@ -63,38 +80,75 @@ extension GeoStationPickerViewController: UITableViewDelegate, UITableViewDataSo
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "GeoStation") as! GeoStationTableViewCell
-        
-        cell.stationNameLabel.text = (MRTStationsByLine[indexPath.section][indexPath.row][0] as! Station).stationName
+        let stationName = (MRTStationsByLine[indexPath.section][indexPath.row][0] as! Station).stationName
+		
+        cell.stationNameLabel.text = stationName
+		cell.checkmarkImageView.isHidden = !stationRecorder[indexPath.section][indexPath.row]
         
         return cell
     }
     
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		let selectedStationName = (MRTStationsByLine[indexPath.section][indexPath.row][0] as! Station).stationName
+		let originallySelected = stationRecorder[indexPath.section][indexPath.row]
+		
+		if(!originallySelected && selectedCount >= maximumGeoStationCount) {
+			print("maximum stations reached")
+		}
+		else {
+			if(originallySelected) {
+				selectedCount = selectedCount - 1
+			}
+			else {
+				selectedCount = selectedCount + 1
+			}
+			
+			if(repeatedStations.contains(selectedStationName)) {
+				for index in geoStationsIndex[selectedStationName]! {
+					stationRecorder[index[0]][index[1]] = !originallySelected
+				}
+			}
+			else {
+				stationRecorder[indexPath.section][indexPath.row] = !stationRecorder[indexPath.section][indexPath.row]
+			}
+		}
+		
+		tableView.reloadData()
+	}
+	
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 40.0))
         
+		let label = UILabel()
+		label.frame = CGRect.init(x: 0, y: 0, width: headerView.frame.width, height: headerView.frame.height)
+		label.font = .boldSystemFont(ofSize: 20.0)
+		label.textAlignment = .center
+		label.text = MRTLineOrder[section]
+		
         switch section {
         case 0:
             headerView.backgroundColor = MetroLineColors.BR
+			label.textColor = .white
         case 1:
             headerView.backgroundColor = MetroLineColors.R
+			label.textColor = .white
         case 2:
             headerView.backgroundColor = MetroLineColors.G
+			label.textColor = .white
         case 3:
             headerView.backgroundColor = MetroLineColors.O
+			label.textColor = .white
         case 4:
             headerView.backgroundColor = MetroLineColors.BL
+			label.textColor = .white
         case 5:
             headerView.backgroundColor = MetroLineColors.Y
+			label.textColor = .black
         default:
             headerView.backgroundColor = MetroLineColors.Z
+			label.textColor = .white
         }
-        
-        let label = UILabel()
-        label.frame = CGRect.init(x: 0, y: 0, width: headerView.frame.width-10, height: headerView.frame.height-10)
-        label.font = .systemFont(ofSize: 20.0)
-        label.textColor = .white
-        label.text = MRTLineOrder[section]
-        
+		
         headerView.addSubview(label)
         
         return headerView
