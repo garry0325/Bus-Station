@@ -1837,11 +1837,11 @@ Cg
                                 </view>
                                 <blurEffect style="systemMaterial"/>
                             </visualEffectView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="nYx-Gb-hCx">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="nYx-Gb-hCx">
                                 <rect key="frame" x="0.0" y="65" width="414" height="651"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="GeoStation" rowHeight="35" id="bWr-ID-sXx" customClass="GeoStationTableViewCell" customModule="Bus_Station" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="GeoStation" rowHeight="35" id="bWr-ID-sXx" customClass="GeoStationTableViewCell" customModule="Bus_Station" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="35"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bWr-ID-sXx" id="pvc-r3-ost">
@@ -1920,8 +1920,8 @@ Cg
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="最多 15 站" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e1p-ig-8rh">
-                                        <rect key="frame" x="20" y="39" width="74.333333333333329" height="20"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="上限 15 站 (0/15)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e1p-ig-8rh">
+                                        <rect key="frame" x="20" y="39" width="121" height="20"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -1972,6 +1972,7 @@ Cg
                         <outlet property="closeButton" destination="uGn-OA-bRL" id="zrw-uD-Wfo"/>
                         <outlet property="closeButtonTrailingToSafeAreaConstraint" destination="i6B-Rs-Sh0" id="NG3-gM-MGP"/>
                         <outlet property="pickerTableView" destination="nYx-Gb-hCx" id="eOy-z1-87i"/>
+                        <outlet property="selectedCountLabel" destination="e1p-ig-8rh" id="TLI-t0-qfc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q0r-BZ-BlX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
