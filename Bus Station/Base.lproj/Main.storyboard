@@ -1750,6 +1750,27 @@ Cg
                                     <action selector="geoNotificationSwitched:" destination="8y7-MT-FrX" eventType="valueChanged" id="ope-3q-k5K"/>
                                 </connections>
                             </switch>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pb6-jK-jN2">
+                                <rect key="frame" x="214.66666666666666" y="126" width="69.999999999999972" height="25"/>
+                                <color key="backgroundColor" systemColor="systemBlueColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="25" id="eYK-57-m6m"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="70" id="myW-2l-icN"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <state key="normal" title="選擇車站">
+                                    <color key="titleColor" name="White"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <integer key="value" value="6"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="selectStationButtonTapped:" destination="8y7-MT-FrX" eventType="touchUpInside" id="RIn-b5-8BJ"/>
+                                    <segue destination="Hql-5S-iUQ" kind="presentation" id="6L8-iZ-2Lu"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="cCe-88-9Sa"/>
                         <constraints>
@@ -1765,6 +1786,7 @@ Cg
                             <constraint firstItem="cEB-EY-4br" firstAttribute="width" secondItem="cCe-88-9Sa" secondAttribute="width" multiplier="0.333" id="G7A-lT-PCZ"/>
                             <constraint firstItem="nwD-0l-9e0" firstAttribute="top" secondItem="LhI-vh-I2F" secondAttribute="bottom" constant="8" symbolic="YES" id="Jkt-yk-YI9"/>
                             <constraint firstItem="cCe-88-9Sa" firstAttribute="trailing" secondItem="nwD-0l-9e0" secondAttribute="trailing" constant="16" id="LaV-Yj-Cje"/>
+                            <constraint firstItem="pb6-jK-jN2" firstAttribute="centerY" secondItem="itk-Rx-kOQ" secondAttribute="centerY" id="LuY-Rr-QYd"/>
                             <constraint firstItem="LhI-vh-I2F" firstAttribute="top" secondItem="cCe-88-9Sa" secondAttribute="top" constant="20" id="OHK-kc-et6"/>
                             <constraint firstItem="U3i-z8-qh5" firstAttribute="top" secondItem="giA-zh-JQW" secondAttribute="top" id="QM0-yg-9yN"/>
                             <constraint firstItem="LhI-vh-I2F" firstAttribute="centerX" secondItem="cCe-88-9Sa" secondAttribute="centerX" id="Qij-WR-mIl"/>
@@ -1772,6 +1794,7 @@ Cg
                             <constraint firstItem="HhK-xj-lw5" firstAttribute="top" secondItem="nwD-0l-9e0" secondAttribute="bottom" constant="15" id="REV-hl-xog"/>
                             <constraint firstItem="itk-Rx-kOQ" firstAttribute="centerX" secondItem="cCe-88-9Sa" secondAttribute="centerX" id="VHV-v1-W1V"/>
                             <constraint firstItem="U3i-z8-qh5" firstAttribute="leading" secondItem="cCe-88-9Sa" secondAttribute="leading" id="X7u-QO-tdG"/>
+                            <constraint firstItem="pb6-jK-jN2" firstAttribute="leading" secondItem="itk-Rx-kOQ" secondAttribute="trailing" constant="15" id="XEs-Li-mLY"/>
                             <constraint firstItem="rLf-Vi-SR3" firstAttribute="top" secondItem="giA-zh-JQW" secondAttribute="top" id="YGl-mQ-0i3"/>
                             <constraint firstItem="cCe-88-9Sa" firstAttribute="bottom" secondItem="cEB-EY-4br" secondAttribute="bottom" id="ZQ8-yX-G3x"/>
                             <constraint firstItem="giA-zh-JQW" firstAttribute="leading" secondItem="cCe-88-9Sa" secondAttribute="leading" constant="16" id="a8d-3w-2r9"/>
@@ -1780,12 +1803,14 @@ Cg
                             <constraint firstItem="cCe-88-9Sa" firstAttribute="trailing" secondItem="cEB-EY-4br" secondAttribute="trailing" id="u0D-xB-0V0"/>
                             <constraint firstItem="cCe-88-9Sa" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="LhI-vh-I2F" secondAttribute="trailing" constant="16" id="uJC-46-L9U"/>
                             <constraint firstItem="cCe-88-9Sa" firstAttribute="bottom" secondItem="VMX-bK-VyF" secondAttribute="bottom" constant="10" id="vmU-MK-y2G"/>
+                            <constraint firstItem="cCe-88-9Sa" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="pb6-jK-jN2" secondAttribute="trailing" constant="15" id="xiB-sG-XaU"/>
                             <constraint firstItem="cCe-88-9Sa" firstAttribute="bottom" secondItem="giA-zh-JQW" secondAttribute="bottom" constant="40" id="zCq-GH-YC8"/>
                         </constraints>
                     </view>
                     <size key="freeformSize" width="350" height="280"/>
                     <connections>
                         <outlet property="geoNotificationSwitch" destination="itk-Rx-kOQ" id="oSP-5Q-DbR"/>
+                        <outlet property="selectStationButton" destination="pb6-jK-jN2" id="bHb-7Z-pFC"/>
                         <outlet property="stationRadiusLabel" destination="LhI-vh-I2F" id="QE7-c2-5Fm"/>
                         <outlet property="stationRadiusSlider" destination="nwD-0l-9e0" id="C0w-pe-YKM"/>
                         <outlet property="versionLabel" destination="VMX-bK-VyF" id="nS8-Q3-Voo"/>
@@ -1794,13 +1819,172 @@ Cg
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NUA-Km-3XV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="832" y="637"/>
+            <point key="canvasLocation" x="820" y="669"/>
+        </scene>
+        <!--Geo Station Picker View Controller-->
+        <scene sceneID="CfS-LW-1g2">
+            <objects>
+                <viewController id="Hql-5S-iUQ" customClass="GeoStationPickerViewController" customModule="Bus_Station" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Jqa-0C-yKc">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5sT-zW-QMh">
+                                <rect key="frame" x="0.0" y="65" width="414" height="651"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="KyY-bQ-3UV">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="651"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                                <blurEffect style="systemMaterial"/>
+                            </visualEffectView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="nYx-Gb-hCx">
+                                <rect key="frame" x="0.0" y="65" width="414" height="651"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="GeoStation" rowHeight="35" id="bWr-ID-sXx" customClass="GeoStationTableViewCell" customModule="Bus_Station" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="35"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bWr-ID-sXx" id="pvc-r3-ost">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="35"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="忠孝復興" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dxP-fF-lLb">
+                                                    <rect key="frame" x="167" y="5.6666666666666679" width="81.666666666666686" height="24"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="p21-R7-sZY">
+                                                    <rect key="frame" x="122" y="5.9999999999999982" width="25" height="23.666666666666664"/>
+                                                    <color key="tintColor" systemColor="systemGreenColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="25" id="3Nx-Ux-lfZ"/>
+                                                        <constraint firstAttribute="height" constant="25" id="lLA-ir-418"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstItem="dxP-fF-lLb" firstAttribute="centerY" secondItem="pvc-r3-ost" secondAttribute="centerY" id="7Wc-tQ-N32"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="dxP-fF-lLb" secondAttribute="trailing" constant="20" id="ckX-WF-OxG"/>
+                                                <constraint firstItem="dxP-fF-lLb" firstAttribute="leading" secondItem="p21-R7-sZY" secondAttribute="trailing" constant="20" id="nK7-OX-rWd"/>
+                                                <constraint firstItem="p21-R7-sZY" firstAttribute="centerX" secondItem="pvc-r3-ost" secondAttribute="centerX" multiplier="0.65" id="uai-PN-Jab"/>
+                                                <constraint firstItem="p21-R7-sZY" firstAttribute="centerY" secondItem="pvc-r3-ost" secondAttribute="centerY" id="z3B-TQ-b1r"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <connections>
+                                            <outlet property="checkmarkImageView" destination="p21-R7-sZY" id="cdo-px-3Mu"/>
+                                            <outlet property="stationNameLabel" destination="dxP-fF-lLb" id="nCj-lh-Hug"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uGn-OA-bRL">
+                                <rect key="frame" x="314" y="616" width="60" height="60"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="ahi-xs-t1i"/>
+                                    <constraint firstAttribute="width" constant="60" id="z0d-ll-rFG"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <color key="tintColor" systemColor="systemGrayColor"/>
+                                <state key="normal">
+                                    <imageReference key="image" image="checkmark" catalog="system" symbolScale="default"/>
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="30"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowOpacity">
+                                        <real key="value" value="0.40000000000000002"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="size" keyPath="layer.shadowOffset">
+                                        <size key="value" width="0.0" height="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="30"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="closeGeoStationPickerViewController:" destination="Hql-5S-iUQ" eventType="touchUpInside" id="vaz-Hg-4r4"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lab-3A-Gfd" userLabel="White View">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="65"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="選擇通知車站" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="dtn-RI-V3n">
+                                        <rect key="frame" x="20" y="8" width="146" height="29"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="24"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="最多 15 站" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e1p-ig-8rh">
+                                        <rect key="frame" x="20" y="39" width="74.333333333333329" height="20"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="e1p-ig-8rh" firstAttribute="leading" secondItem="dtn-RI-V3n" secondAttribute="leading" id="HdD-Ju-4f1"/>
+                                    <constraint firstItem="e1p-ig-8rh" firstAttribute="top" secondItem="dtn-RI-V3n" secondAttribute="bottom" constant="2" id="IVJ-BB-kqe"/>
+                                    <constraint firstItem="dtn-RI-V3n" firstAttribute="top" secondItem="lab-3A-Gfd" secondAttribute="top" constant="8" id="W27-iq-cTL"/>
+                                    <constraint firstItem="dtn-RI-V3n" firstAttribute="leading" secondItem="lab-3A-Gfd" secondAttribute="leading" constant="20" id="gbx-gO-ku9"/>
+                                    <constraint firstAttribute="height" constant="65" id="hfG-Iv-cHf"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="dtn-RI-V3n" secondAttribute="trailing" constant="20" id="k1m-gV-TTQ"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="e1p-ig-8rh" secondAttribute="trailing" constant="15" id="scj-S1-eji"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowOpacity">
+                                        <real key="value" value="0.40000000000000002"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="size" keyPath="layer.shadowOffset">
+                                        <size key="value" width="0.0" height="3"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="qhc-Ju-F2u"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="nYx-Gb-hCx" firstAttribute="top" secondItem="lab-3A-Gfd" secondAttribute="bottom" id="1Gv-Nv-ppo"/>
+                            <constraint firstAttribute="trailing" secondItem="nYx-Gb-hCx" secondAttribute="trailing" id="BRS-hR-7ik"/>
+                            <constraint firstAttribute="trailing" secondItem="5sT-zW-QMh" secondAttribute="trailing" id="Bgc-BX-vTT"/>
+                            <constraint firstAttribute="trailing" secondItem="lab-3A-Gfd" secondAttribute="trailing" id="EhT-Um-BBO"/>
+                            <constraint firstAttribute="bottom" secondItem="nYx-Gb-hCx" secondAttribute="bottom" id="Rbp-1y-eEJ"/>
+                            <constraint firstAttribute="bottom" secondItem="5sT-zW-QMh" secondAttribute="bottom" id="S1a-E3-XAj"/>
+                            <constraint firstItem="qhc-Ju-F2u" firstAttribute="bottom" secondItem="uGn-OA-bRL" secondAttribute="bottom" constant="40" id="X77-zR-7yW"/>
+                            <constraint firstItem="5sT-zW-QMh" firstAttribute="top" secondItem="lab-3A-Gfd" secondAttribute="bottom" id="ehZ-uK-wMZ"/>
+                            <constraint firstItem="lab-3A-Gfd" firstAttribute="top" secondItem="Jqa-0C-yKc" secondAttribute="top" id="fYY-Zy-MZK"/>
+                            <constraint firstItem="qhc-Ju-F2u" firstAttribute="trailing" secondItem="uGn-OA-bRL" secondAttribute="trailing" constant="40" id="i6B-Rs-Sh0"/>
+                            <constraint firstItem="nYx-Gb-hCx" firstAttribute="leading" secondItem="Jqa-0C-yKc" secondAttribute="leading" id="l1z-P8-EdT"/>
+                            <constraint firstItem="5sT-zW-QMh" firstAttribute="leading" secondItem="Jqa-0C-yKc" secondAttribute="leading" id="q72-w3-WfW"/>
+                            <constraint firstItem="lab-3A-Gfd" firstAttribute="leading" secondItem="Jqa-0C-yKc" secondAttribute="leading" id="xKc-ZQ-w1i"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="closeButton" destination="uGn-OA-bRL" id="zrw-uD-Wfo"/>
+                        <outlet property="closeButtonTrailingToSafeAreaConstraint" destination="i6B-Rs-Sh0" id="NG3-gM-MGP"/>
+                        <outlet property="pickerTableView" destination="nYx-Gb-hCx" id="eOy-z1-87i"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="q0r-BZ-BlX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1525" y="783"/>
         </scene>
     </scenes>
     <resources>
         <image name="arrow.down.circle.fill" catalog="system" width="128" height="121"/>
         <image name="arrow.left.circle.fill" catalog="system" width="128" height="121"/>
         <image name="bus.fill" catalog="system" width="128" height="122"/>
+        <image name="checkmark" catalog="system" width="128" height="114"/>
+        <image name="checkmark.circle.fill" catalog="system" width="128" height="121"/>
         <image name="circle.fill" catalog="system" width="128" height="121"/>
         <image name="disabled" width="24" height="24"/>
         <image name="figure.stand" catalog="system" width="77" height="128"/>
@@ -1822,6 +2006,9 @@ Cg
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray2Color">
             <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
