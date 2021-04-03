@@ -88,8 +88,7 @@ class AboutViewController: UIViewController, CLLocationManagerDelegate {
                     if(!CLLocationManager.locationServicesEnabled() || self.locationManager.authorizationStatus != .authorizedAlways) {
                         print("Location permission not granted or authorization is not always")
                         
-                        let locationServiceAlert = UIAlertController(title: "請開啟always定位服務", message: "設定 > 隱私 > 定位服務", preferredStyle: .alert)
-                        // TODO: CHECK the message is correct
+                        let locationServiceAlert = UIAlertController(title: "請開啟「永遠」取用位置", message: "設定 > 隱私權 > 定位服務 > 臺北即時站牌 > 永遠", preferredStyle: .alert)
                         let okAction = UIAlertAction(title: "好的", style: .default, handler: nil)
                         locationServiceAlert.addAction(okAction)
                         
@@ -104,8 +103,7 @@ class AboutViewController: UIViewController, CLLocationManagerDelegate {
                     }
                 }
                 else {
-                    let notificationServiceAlert = UIAlertController(title: "請允許傳送通知", message: "設定 > 通知 > 臺北即時站牌", preferredStyle: .alert)
-                    // TODO: CHECK the message is correct
+                    let notificationServiceAlert = UIAlertController(title: "請開啟傳送通知", message: "設定 > 通知 > 臺北即時站牌", preferredStyle: .alert)
                     let okAction = UIAlertAction(title: "好的", style: .default, handler: {_ in
                         
                     })

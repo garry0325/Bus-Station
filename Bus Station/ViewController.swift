@@ -727,7 +727,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		}
 	}
 	
-	@objc func savePreferencesFromSettings() {	// TODO: change name
+	@objc func savePreferencesFromSettings() {
 		do {
 			stationRadiusPreferenceData = try context.fetch(StationRadius.fetchRequest()) as! [StationRadius]
 			stationRadiusPreferenceData.last!.stationRadius = stationRadius
