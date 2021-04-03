@@ -205,7 +205,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		// Because when app is reopened from background, the animation stops
 		NotificationCenter.default.addObserver(self, selector: #selector(backFromBackground), name: UIApplication.didBecomeActiveNotification, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(showRouteDetailVC), name: NSNotification.Name("Detail"), object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(saveNewStationRadiusPreference), name: NSNotification.Name("StationRadiusPreference"), object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(savePreferencesFromSettings), name: NSNotification.Name("StationRadiusPreference"), object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(removeAdSuccess), name: NSNotification.Name("RemoveAd"), object: nil)
 	}
 	deinit {
@@ -727,7 +727,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		}
 	}
 	
-	@objc func saveNewStationRadiusPreference() {
+	@objc func savePreferencesFromSettings() {	// TODO: change name
 		do {
 			stationRadiusPreferenceData = try context.fetch(StationRadius.fetchRequest()) as! [StationRadius]
 			stationRadiusPreferenceData.last!.stationRadius = stationRadius
