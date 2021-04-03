@@ -17,6 +17,7 @@ class AboutViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet var stationRadiusSlider: UISlider!
     @IBOutlet var geoNotificationSwitch: UISwitch!
     var desireGeoNotificationCapability: Bool = false
+    @IBOutlet weak var selectStationButton: UIButton!
     @IBOutlet var warningLabel: UILabel!
     @IBOutlet var versionLabel: UILabel!
     var stationRadiusTemporary = stationRadius {
@@ -120,6 +121,11 @@ class AboutViewController: UIViewController, CLLocationManagerDelegate {
             }
         }
     }
+    
+    @IBAction func selectStationButtonTapped(_ sender: UIButton) {
+        
+    }
+    
     
     @IBAction func removeAdPressed(_ sender: UIButton) {
         if(count < pattern.count) {
