@@ -9,6 +9,9 @@
     <entity name="GeoNotification" representedClassName="GeoNotification" syncable="YES" codeGenerationType="class">
         <attribute name="enabled" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
     </entity>
+    <entity name="GeoStations" representedClassName="GeoStations" syncable="YES" codeGenerationType="class">
+        <attribute name="station" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="Initial" representedClassName="Initial" syncable="YES" codeGenerationType="class">
         <attribute name="notInitialUse" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
     </entity>
@@ -21,9 +24,10 @@
     <elements>
         <element name="Ad" positionX="-45" positionY="9" width="128" height="58"/>
         <element name="BannedStation" positionX="-54" positionY="0" width="128" height="58"/>
+        <element name="GeoNotification" positionX="-36" positionY="27" width="128" height="44"/>
         <element name="Initial" positionX="-36" positionY="27" width="128" height="44"/>
         <element name="StarredStation" positionX="-54" positionY="-9" width="128" height="58"/>
         <element name="StationRadius" positionX="-27" positionY="27" width="128" height="58"/>
-        <element name="GeoNotification" positionX="-36" positionY="27" width="128" height="44"/>
+        <element name="GeoStations" positionX="-36" positionY="27" width="128" height="44"/>
     </elements>
 </model>

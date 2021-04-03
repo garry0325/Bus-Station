@@ -47,6 +47,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	}
 	var stationRadiusPreferenceData: Array<StationRadius> = []
 	var geoNotificationPreferenceData: Array<GeoNotification> = []
+	var geoNotificationPreferenceStations: Array<GeoStations> = []
 	
 	@IBOutlet var aboutButton: UIButton!
 	
@@ -916,6 +917,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 				newGeoNotification.enabled = geoNotificationCapablility
 				try self.context.save()
 			}
+			
+			geoNotificationPreferenceStations = try (context.fetch(GeoStations.fetchRequest()) as? [GeoStations])!
+			print("\(geoNotificationPreferenceStations.count) geo stations")
+			
+			geoNotificationStations = []
+			for station in geoNotificationPreferenceStations {
+				geoNotificationStations.append(station.station!)
+			}
+			print(geoNotificationStations)
+			
 		} catch {
 			print("Error fetching GeoNotification preference")
 		}
