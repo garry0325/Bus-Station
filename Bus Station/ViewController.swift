@@ -631,18 +631,25 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 			geoNotificationCapablility = false
 			return
 		  }
-//		for mrtLocation in MRTStationsLocationsTemp {	// TODO: change back to MRTStationsLocations
-//            let stationName = (mrtLocation[0] as! Station).stationName
-//            if(locationManager.monitoredRegions.contains(where: {$0.identifier == stationName})) {
-//                continue
-//            }
-//
-//            let coordinates = mrtLocation[1] as! CLLocationCoordinate2D
-//            let region = CLCircularRegion(center: coordinates, radius: 100.0, identifier: stationName)
-//
-//			locationManager.startMonitoring(for: region)
-//		}
-		print("\(locationManager.monitoredRegions.count) monitoring regions")
+		
+		// disable monitoredRegions that are not in geoNotificationStations
+		for geoStation in locationManager.monitoredRegions {
+			if(!geoNotificationStations.contains(geoStation.identifier)) {
+				locationManager.stopMonitoring(for: geoStation)
+			}
+		}
+		
+		// then add regions that are not in locationManager.monitoredRegions
+		for geoStation in geoNotificationStations {
+            if(locationManager.monitoredRegions.contains(where: {$0.identifier == geoStation})) {
+                continue
+            }
+			
+			let coordinates = MRTStationsByLine[geoStationsIndex[geoStation]![0][0]][geoStationsIndex[geoStation]![0][1]][1] as! CLLocationCoordinate2D
+            let region = CLCircularRegion(center: coordinates, radius: 100.0, identifier: geoStation)
+
+			locationManager.startMonitoring(for: region)
+		}
 	}
 	
 	func stopGeoMonitoring() {
@@ -728,16 +735,26 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 			geoNotificationPreferenceData = try context.fetch(GeoNotification.fetchRequest()) as! [GeoNotification]
 			geoNotificationPreferenceData.last!.enabled = geoNotificationCapablility
 			
+			for _ in 0..<geoNotificationPreferenceStations.count {
+				self.context.delete(geoNotificationPreferenceStations[0])
+				geoNotificationPreferenceStations.remove(at: 0)
+			}
+			for station in geoNotificationStations {
+				let newStation = GeoStations(context: self.context)
+				newStation.station = station
+				geoNotificationPreferenceStations.append(newStation)
+			}
+			
 			try self.context.save()
 		} catch {
 			print("Error saving settings preference")
 		}
 		
 		if(geoNotificationCapablility) {
-			startGeoMonitoring()	// TODO: runs everytime aboutviewcontroller is dismissed
+			startGeoMonitoring()
 		}
 		else {
-			stopGeoMonitoring()	// TODO: runs everytime aboutviewcontroller is dismissed
+			stopGeoMonitoring()
 		}
 		
 		print("\(locationManager.monitoredRegions.count) monotiring regions")

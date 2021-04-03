@@ -34,6 +34,7 @@
 		C2CB97322556AAB400CAF02B /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CB97312556AAB400CAF02B /* AboutViewController.swift */; };
 		C2CB97372556B17F00CAF02B /* ErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CB97362556B17F00CAF02B /* ErrorHandling.swift */; };
 		C2DC9CF02548A8C10004860D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DC9CEF2548A8C10004860D /* Constants.swift */; };
+		C2FAC9CA2618810300FAA3FC /* GeoStationPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FAC9C92618810300FAA3FC /* GeoStationPickerViewController.swift */; };
 		CE24CDA4644C56CFD42E5B81 /* Pods_Bus_Station.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3509FC6EC6AB3C32A043664 /* Pods_Bus_Station.framework */; };
 /* End PBXBuildFile section */
 
@@ -88,6 +89,7 @@
 		C2CB97312556AAB400CAF02B /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		C2CB97362556B17F00CAF02B /* ErrorHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandling.swift; sourceTree = "<group>"; };
 		C2DC9CEF2548A8C10004860D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		C2FAC9C92618810300FAA3FC /* GeoStationPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoStationPickerViewController.swift; sourceTree = "<group>"; };
 		C3509FC6EC6AB3C32A043664 /* Pods_Bus_Station.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bus_Station.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5E9582FA05C2251D7114D96 /* Pods-Bus Station.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bus Station.release.xcconfig"; path = "Target Support Files/Pods-Bus Station/Pods-Bus Station.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -166,6 +168,7 @@
 				C2B35E10253DE82000108776 /* BusClasses.swift */,
 				C265088E256C248F002B0C7F /* Metro.swift */,
 				C2CB97312556AAB400CAF02B /* AboutViewController.swift */,
+				C2FAC9C92618810300FAA3FC /* GeoStationPickerViewController.swift */,
 				C2B35E08253DD24800108776 /* TopCollectionViewCells.swift */,
 				C2DC9CEF2548A8C10004860D /* Constants.swift */,
 				C2BD1F49255A4F7100A36418 /* Globals.swift */,
@@ -410,6 +413,7 @@
 				C293373F257FC71200EF619A /* MapRouteViewController.swift in Sources */,
 				C26508A9256CF32E002B0C7F /* MetroDetailTableViewCell.swift in Sources */,
 				C2BCFF6F254D625900EC960F /* RouteDetailTableViewCell.swift in Sources */,
+				C2FAC9CA2618810300FAA3FC /* GeoStationPickerViewController.swift in Sources */,
 				C2B35DD5253DCA5B00108776 /* Bus_Station.xcdatamodeld in Sources */,
 				C2BD1F4A255A4F7100A36418 /* Globals.swift in Sources */,
 				C23822CF2582720E00F2D25A /* NearbyBusesCollectionViewCell.swift in Sources */,

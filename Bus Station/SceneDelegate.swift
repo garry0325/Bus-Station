@@ -77,16 +77,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelega
     func handleEvent(for region: CLRegion) {
         // Show an alert if application is active
         print("handle event for \(region.identifier)")
-        if UIApplication.shared.applicationState == .active {    // TODO: nothing to do when active
+        if UIApplication.shared.applicationState == .active {
             print("(Active) in GeoNotificationResponder")
-            //guard let message = region.identifier else { return }
-            //ErrorAlert.presentErrorAlert(title: "", message: message)
         } else {
             print("(Inactive or Background) in GeoNotificationResponder")
-            // Otherwise present a local notification
             
             // Query MRT arrival time
-            let queryingMrtStation = MRTStationsLocationsTemp.filter({($0[0] as! Station).stationName == region.identifier})[0][0] as! Station // TODO: change back to MRTStationsLocations
+			let queryingMrtStation = MRTStationsByLine[geoStationsIndex[region.identifier]![0][0]][geoStationsIndex[region.identifier]![0][1]][0] as! Station
             let mrtArrivals = busQuery.queryMetroArrivals(metroStation: queryingMrtStation)
             
             
