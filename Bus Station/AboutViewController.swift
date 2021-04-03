@@ -59,6 +59,7 @@ class AboutViewController: UIViewController, CLLocationManagerDelegate {
     
     override func viewDidDisappear(_ animated: Bool) {
         stationRadius = stationRadiusTemporary
+        geoNotificationCapablility = geoNotificationSwitch.isOn
         NotificationCenter.default.post(name: NSNotification.Name("StationRadiusPreference"), object: nil)
     }
     
@@ -118,8 +119,6 @@ class AboutViewController: UIViewController, CLLocationManagerDelegate {
                 }
             }
         }
-        
-        geoNotificationCapablility = geoNotificationSwitch.isOn
     }
     
     @IBAction func removeAdPressed(_ sender: UIButton) {
