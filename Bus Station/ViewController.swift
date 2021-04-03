@@ -630,17 +630,17 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 			geoNotificationCapablility = false
 			return
 		  }
-		for mrtLocation in MRTStationsLocationsTemp {	// TODO: change back to MRTStationsLocations
-            let stationName = (mrtLocation[0] as! Station).stationName
-            if(locationManager.monitoredRegions.contains(where: {$0.identifier == stationName})) {
-                continue
-            }
-            
-            let coordinates = mrtLocation[1] as! CLLocationCoordinate2D
-            let region = CLCircularRegion(center: coordinates, radius: 100.0, identifier: stationName)
-            
-			locationManager.startMonitoring(for: region)
-		}
+//		for mrtLocation in MRTStationsLocationsTemp {	// TODO: change back to MRTStationsLocations
+//            let stationName = (mrtLocation[0] as! Station).stationName
+//            if(locationManager.monitoredRegions.contains(where: {$0.identifier == stationName})) {
+//                continue
+//            }
+//
+//            let coordinates = mrtLocation[1] as! CLLocationCoordinate2D
+//            let region = CLCircularRegion(center: coordinates, radius: 100.0, identifier: stationName)
+//
+//			locationManager.startMonitoring(for: region)
+//		}
 		print("\(locationManager.monitoredRegions.count) monitoring regions")
 	}
 	
@@ -919,6 +919,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		} catch {
 			print("Error fetching GeoNotification preference")
 		}
+        print("\(locationManager.monitoredRegions.count) monitoring regions")
 	}
 	
 	func checkAdRemoval() {
