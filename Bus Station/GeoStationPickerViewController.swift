@@ -8,11 +8,21 @@
 import UIKit
 
 class GeoStationPickerViewController: UIViewController {
+	
+	let maximumGeoStationCount = 15
 
     @IBOutlet weak var pickerTableView: UITableView!
     
-    @IBOutlet weak var closeButton: UIButton!
+	@IBOutlet var selectedCountLabel: UILabel!
+	@IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var closeButtonTrailingToSafeAreaConstraint: NSLayoutConstraint!
+	
+	var stationRecorder: Array<Array<Bool>> = []
+	var selectedCount: Int = 0 {
+		didSet {
+			selectedCountLabel.text = String(format: "上限 %d 站 (%d/%d)", maximumGeoStationCount, selectedCount, maximumGeoStationCount)
+		}
+	}
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +31,15 @@ class GeoStationPickerViewController: UIViewController {
         pickerTableView.dataSource = self
         
         pickerTableView.contentInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 150.0, right: 0.0)
+		
+		selectedCount = geoNotificationStations.count
+		for line in MRTStationsByLine {
+			var lineTemp: Array<Bool> = []
+			for station in line {
+				lineTemp.append(geoNotificationStations.contains((station[0] as! Station).stationName))
+			}
+			stationRecorder.append(lineTemp)
+		}
         
         // put the close button in the center if large screen
         if(self.view.frame.height > 750.0) {
