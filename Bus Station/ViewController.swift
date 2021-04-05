@@ -196,7 +196,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		
 		self.adBannerView.isHidden = true
 		self.adBannerView.delegate = self
-		self.adBannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+		self.adBannerView.adUnitID = "ca-app-pub-5814041924860954/9661829499"
 		self.adBannerView.rootViewController = self
 		
 		// my ad banner id: ca-app-pub-5814041924860954/9661829499

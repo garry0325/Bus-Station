@@ -83,8 +83,6 @@ class AboutViewController: UIViewController, CLLocationManagerDelegate {
                 
                 if(granted) {
                     print("Granted")
-                    
-                    print("\(self.locationManager.authorizationStatus)")
                     if(!CLLocationManager.locationServicesEnabled() || self.locationManager.authorizationStatus != .authorizedAlways) {
                         print("Location permission not granted or authorization is not always")
                         
