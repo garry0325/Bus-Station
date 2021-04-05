@@ -155,7 +155,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	static var routeList: Array<Array<Array<BusStop>>> = []
 	static var metroRouteList: Array<MetroArrival> = []
 	#warning("Consider remove the following")
-	var bearingStationDict = [Int:Int]()
+	//var bearingStationDict = [Int:Int]()
 	var bearingIndexToItem: Array<Array<Int>> = []	// an array dictionary (currentStationNumber&currentBearingNumber -> target index of routeCollectionView) to give quick access to index of routeCollectionView for autoscroll
 	static var bearingItemToIndex: Array<Array<Int>> = []	// an array dictionary (routeCollectionView item index -> currentStationNumber&currentBearingNumber) for left-right scrolling of collectionView
 	var bearingStationsCount = 0	// for total number of cells in routeCollectionView
@@ -408,7 +408,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 					self.stationListNames = []
 					self.bearingListNames = []
 					self.bearingStationsCount = 0
-					self.bearingStationDict = [Int:Int]()
+					//self.bearingStationDict = [Int:Int]()
 					self.bearingIndexToItem = []
 					ViewController.bearingItemToIndex = []
 					ViewController.stationTypeList = []
@@ -425,7 +425,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 				self.stationListNames = []
 				self.bearingListNames = []
 				self.bearingStationsCount = unorganizedStationList.count
-				self.bearingStationDict = [Int:Int]()
+				//self.bearingStationDict = [Int:Int]()
 				self.bearingIndexToItem = []
 				ViewController.bearingItemToIndex = []
 				var countForStation = 0
@@ -491,7 +491,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 						self.bearingListNames.append(bearingTemp)
 						self.stationListNames.append(unorganizedStationList[i].stationName)
 						ViewController.routeList.append(routeTemp)
-						self.bearingStationDict[countForStation] = countForBearingOfCurrentStation
+						//self.bearingStationDict[countForStation] = countForBearingOfCurrentStation
 						self.bearingIndexToItem.append(countForIndexToItemOfEachStation)
 						ViewController.stationTypeList.append(.Bus)
 						countForStation = countForStation + 1
@@ -993,7 +993,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 			
 			locationManager.startUpdatingLocation()
 		}
-		// TODO: split always and when-in-use
 	}
 	
 	func applyAutoLayoutConstraints() {
