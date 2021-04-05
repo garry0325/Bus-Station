@@ -90,7 +90,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     // TODO: REMOVE PRINT STATEMENT
     // TODO: AD app ID
 	
-	// TODO: nearby buses show even not moving
+	// TODO: nearby buses show even not moving (remove isMoving & commented codes)
 	
 	var busQuery = BusQuery()
 	var locationWhenPinned = CLLocation()
@@ -98,7 +98,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	var autoRefreshTimer = Timer()
 	var autoRefreshNearbyBusesTimer = Timer()
 	var latestLocation = CLLocation()
-	var isMoving: Bool = false
+	//var isMoving: Bool = false
 	
 	var currentStationNumber = 0 {
 		didSet {
@@ -216,7 +216,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		updateLocationAndStations()
 		autoRefreshTimer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(autoRefresh), userInfo: nil, repeats: true)
 		autoRefreshNearbyBuses()
-		autoRefreshNearbyBusesTimer = Timer.scheduledTimer(timeInterval: 20.0, target: self, selector: #selector(autoRefreshNearbyBuses), userInfo: nil, repeats: true)
+		autoRefreshNearbyBusesTimer = Timer.scheduledTimer(timeInterval: 7.0, target: self, selector: #selector(autoRefreshNearbyBuses), userInfo: nil, repeats: true)
 	}
 	
 	func fetchSavedSettings() {
@@ -273,15 +273,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 					}
 					
 					// check if is moving to either show the nearbyBusesCollectionView
-					if(userLocation.distance(from: self.latestLocation) > 5.0 && !self.isMoving) {
-						self.isMoving = true
-						self.latestLocation = userLocation
-						self.autoRefreshNearbyBuses()
-					}
-					else {
-						self.isMoving = (userLocation.distance(from: self.latestLocation) > 5.0)
-						self.latestLocation = userLocation
-					}
+					self.latestLocation = userLocation
+//					if(userLocation.distance(from: self.latestLocation) > 5.0 && !self.isMoving) {
+//						self.isMoving = true
+//						self.latestLocation = userLocation
+//						self.autoRefreshNearbyBuses()
+//					}
+//					else {
+//						self.isMoving = (userLocation.distance(from: self.latestLocation) > 5.0)
+//						self.latestLocation = userLocation
+//					}
 				}
 			}
 		}
@@ -361,7 +362,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 			self.nearbyBusesList = self.busQuery.queryNearbyBuses(location: self.latestLocation)
 			
 			DispatchQueue.main.async {
-				let hideNearbyBusCollectionView = (self.nearbyBusesList.count == 0 || !self.isMoving)
+				let hideNearbyBusCollectionView = (self.nearbyBusesList.count == 0)
 				self.nearbyBusCollectionView.isHidden = hideNearbyBusCollectionView
 				self.nearbyBusCollectionView.reloadData()
 				
