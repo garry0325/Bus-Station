@@ -116,11 +116,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelega
 			notificationBody.removeLast()
             notificationContent.body = notificationBody
             notificationContent.sound = .default
-            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)    // TODO: nil to deliver right away
             let request = UNNotificationRequest(
                 identifier: "GettingInMRTStation",
                 content: notificationContent,
-                trigger: trigger)
+                trigger: nil)
             UNUserNotificationCenter.current().add(request) { error in
                 if let error = error {
                     print("Error: \(error)")
