@@ -86,7 +86,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelega
             
             
             let notificationContent = UNMutableNotificationContent()
-            notificationContent.title = queryingMrtStation.stationName
+			notificationContent.title = "捷運" + queryingMrtStation.stationName + ((queryingMrtStation.stationName.last == "站") ? "":"站")
             
             var notificationBody = ""
             for mrtArrival in mrtArrivals {
@@ -94,7 +94,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelega
                 switch mrtArrival.status {
                 case .Normal:
                     if(mrtArrival.estimatedArrival > 10) {
-                        information = String(format: "%d:%02d", mrtArrival.estimatedArrival / 60, mrtArrival.estimatedArrival % 60)
+						information = String(format: "%2d : %02d", mrtArrival.estimatedArrival / 60, mrtArrival.estimatedArrival % 60)
                     }
                     else {
                         information = "到站中"
@@ -108,9 +108,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelega
                 default:
                     information = "加載中"
                 }
-                
-                notificationBody = notificationBody + String(format: "%@\t\t%@\n", mrtArrival.destinationName, information)
+				let padding = 7 - mrtArrival.destinationName.count
+				let spaces = String(repeating: "　", count: (padding > 0) ? padding:1)
+				
+                notificationBody = notificationBody + String(format: "→ %@%@%@\n", mrtArrival.destinationName, spaces, information)
             }
+			notificationBody.removeLast()
             notificationContent.body = notificationBody
             notificationContent.sound = .default
             let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)    // TODO: nil to deliver right away
