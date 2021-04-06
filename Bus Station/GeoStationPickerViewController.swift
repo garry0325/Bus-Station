@@ -99,9 +99,10 @@ extension GeoStationPickerViewController: UITableViewDelegate, UITableViewDataSo
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "GeoStation") as! GeoStationTableViewCell
-        let stationName = (MRTStationsByLine[indexPath.section][indexPath.row][0] as! Station).stationName
+        let station = MRTStationsByLine[indexPath.section][indexPath.row][0] as! Station
 		
-        cell.stationNameLabel.text = stationName
+		cell.stationNameLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 19.0, weight: .regular)
+		cell.stationNameLabel.text = String(format: "%@  %@", station.stationId, station.stationName)
 		cell.checkmarkImageView.isHidden = !stationRecorder[indexPath.section][indexPath.row]
         
         return cell
@@ -140,7 +141,7 @@ extension GeoStationPickerViewController: UITableViewDelegate, UITableViewDataSo
         
 		let label = UILabel()
 		label.frame = CGRect.init(x: 0, y: 0, width: headerView.frame.width, height: headerView.frame.height)
-		label.font = .boldSystemFont(ofSize: 20.0)
+		label.font = .monospacedDigitSystemFont(ofSize: 20.0, weight: .bold)
 		label.textAlignment = .center
 		label.text = MRTLineOrder[section]
 		

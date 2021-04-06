@@ -6,7 +6,7 @@
 	<integer>10</integer>
 	<key>logs</key>
 	<dict>
-		<key>1BD6127B-D393-4056-9BB8-304CA8C2BBC5</key>
+		<key>00F2AC07-331E-403F-B2AC-27F801DFCBDB</key>
 		<dict>
 			<key>className</key>
 			<string>DBGConsoleLog</string>
@@ -15,7 +15,7 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
 			<key>fileName</key>
-			<string>1BD6127B-D393-4056-9BB8-304CA8C2BBC5.xcactivitylog</string>
+			<string>00F2AC07-331E-403F-B2AC-27F801DFCBDB.xcactivitylog</string>
 			<key>hasPrimaryLog</key>
 			<true/>
 			<key>primaryObservable</key>
@@ -32,15 +32,15 @@
 			<key>signature</key>
 			<string>Run Bus Station</string>
 			<key>timeStartedRecording</key>
-			<real>639327015.11657</real>
+			<real>639409243.84030998</real>
 			<key>timeStoppedRecording</key>
-			<real>639327131.648018</real>
+			<real>639409542.62019098</real>
 			<key>title</key>
 			<string>Run Bus Station</string>
 			<key>uniqueIdentifier</key>
-			<string>1BD6127B-D393-4056-9BB8-304CA8C2BBC5</string>
+			<string>00F2AC07-331E-403F-B2AC-27F801DFCBDB</string>
 		</dict>
-		<key>22B73FA8-B722-4F13-9592-BD5A1C92292F</key>
+		<key>0D46B406-13AC-4850-998E-4D409DFC41CB</key>
 		<dict>
 			<key>className</key>
 			<string>DBGConsoleLog</string>
@@ -49,7 +49,7 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
 			<key>fileName</key>
-			<string>22B73FA8-B722-4F13-9592-BD5A1C92292F.xcactivitylog</string>
+			<string>0D46B406-13AC-4850-998E-4D409DFC41CB.xcactivitylog</string>
 			<key>hasPrimaryLog</key>
 			<true/>
 			<key>primaryObservable</key>
@@ -66,13 +66,81 @@
 			<key>signature</key>
 			<string>Run Bus Station</string>
 			<key>timeStartedRecording</key>
-			<real>639326730.59670401</real>
+			<real>639408960.93383801</real>
 			<key>timeStoppedRecording</key>
-			<real>639326931.68434203</real>
+			<real>639409123.40889204</real>
 			<key>title</key>
 			<string>Run Bus Station</string>
 			<key>uniqueIdentifier</key>
-			<string>22B73FA8-B722-4F13-9592-BD5A1C92292F</string>
+			<string>0D46B406-13AC-4850-998E-4D409DFC41CB</string>
+		</dict>
+		<key>1002A886-707A-4F65-ABA4-C196FB26157E</key>
+		<dict>
+			<key>className</key>
+			<string>DBGConsoleLog</string>
+			<key>documentTypeString</key>
+			<string>com.apple.dt.IDE.DebuggerLogContentType</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
+			<key>fileName</key>
+			<string>1002A886-707A-4F65-ABA4-C196FB26157E.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Bus Station project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Bus Station</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Run Bus Station</string>
+			<key>timeStartedRecording</key>
+			<real>639408837.35374105</real>
+			<key>timeStoppedRecording</key>
+			<real>639408894.57578397</real>
+			<key>title</key>
+			<string>Run Bus Station</string>
+			<key>uniqueIdentifier</key>
+			<string>1002A886-707A-4F65-ABA4-C196FB26157E</string>
+		</dict>
+		<key>256008C6-CDD3-48F5-81BA-6F279D02D144</key>
+		<dict>
+			<key>className</key>
+			<string>DBGConsoleLog</string>
+			<key>documentTypeString</key>
+			<string>com.apple.dt.IDE.DebuggerLogContentType</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
+			<key>fileName</key>
+			<string>256008C6-CDD3-48F5-81BA-6F279D02D144.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Bus Station project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Bus Station</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Run Bus Station</string>
+			<key>timeStartedRecording</key>
+			<real>639409130.90797901</real>
+			<key>timeStoppedRecording</key>
+			<real>639409191.17716599</real>
+			<key>title</key>
+			<string>Run Bus Station</string>
+			<key>uniqueIdentifier</key>
+			<string>256008C6-CDD3-48F5-81BA-6F279D02D144</string>
 		</dict>
 		<key>343359E5-FFEC-48E4-824D-B5BA03EA6BE4</key>
 		<dict>
@@ -108,7 +176,7 @@
 			<key>uniqueIdentifier</key>
 			<string>343359E5-FFEC-48E4-824D-B5BA03EA6BE4</string>
 		</dict>
-		<key>3DEB9858-73A8-48CC-9432-EB1A4F591246</key>
+		<key>4EBF9BCC-38C9-47EA-81F0-593D9D93D70C</key>
 		<dict>
 			<key>className</key>
 			<string>DBGConsoleLog</string>
@@ -117,7 +185,7 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
 			<key>fileName</key>
-			<string>3DEB9858-73A8-48CC-9432-EB1A4F591246.xcactivitylog</string>
+			<string>4EBF9BCC-38C9-47EA-81F0-593D9D93D70C.xcactivitylog</string>
 			<key>hasPrimaryLog</key>
 			<true/>
 			<key>primaryObservable</key>
@@ -134,15 +202,15 @@
 			<key>signature</key>
 			<string>Run Bus Station</string>
 			<key>timeStartedRecording</key>
-			<real>639328807.90177596</real>
+			<real>639409193.17239594</real>
 			<key>timeStoppedRecording</key>
-			<real>639329189.17664194</real>
+			<real>639409235.92511702</real>
 			<key>title</key>
 			<string>Run Bus Station</string>
 			<key>uniqueIdentifier</key>
-			<string>3DEB9858-73A8-48CC-9432-EB1A4F591246</string>
+			<string>4EBF9BCC-38C9-47EA-81F0-593D9D93D70C</string>
 		</dict>
-		<key>61E5B949-BCA3-4A25-9688-1A74EAAD0D92</key>
+		<key>BF78E06A-8851-406B-9C05-D303B36CE2A4</key>
 		<dict>
 			<key>className</key>
 			<string>DBGConsoleLog</string>
@@ -151,7 +219,7 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
 			<key>fileName</key>
-			<string>61E5B949-BCA3-4A25-9688-1A74EAAD0D92.xcactivitylog</string>
+			<string>BF78E06A-8851-406B-9C05-D303B36CE2A4.xcactivitylog</string>
 			<key>hasPrimaryLog</key>
 			<true/>
 			<key>primaryObservable</key>
@@ -168,15 +236,15 @@
 			<key>signature</key>
 			<string>Run Bus Station</string>
 			<key>timeStartedRecording</key>
-			<real>639330330.89066994</real>
+			<real>639408896.67996204</real>
 			<key>timeStoppedRecording</key>
-			<real>639330345.20158195</real>
+			<real>639408955.69692695</real>
 			<key>title</key>
 			<string>Run Bus Station</string>
 			<key>uniqueIdentifier</key>
-			<string>61E5B949-BCA3-4A25-9688-1A74EAAD0D92</string>
+			<string>BF78E06A-8851-406B-9C05-D303B36CE2A4</string>
 		</dict>
-		<key>ADAB46CF-4F78-449D-9242-C0917F375FF7</key>
+		<key>EC90B727-E56A-4E8B-BDF6-977B6B0C66F0</key>
 		<dict>
 			<key>className</key>
 			<string>DBGConsoleLog</string>
@@ -185,7 +253,7 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
 			<key>fileName</key>
-			<string>ADAB46CF-4F78-449D-9242-C0917F375FF7.xcactivitylog</string>
+			<string>EC90B727-E56A-4E8B-BDF6-977B6B0C66F0.xcactivitylog</string>
 			<key>hasPrimaryLog</key>
 			<true/>
 			<key>primaryObservable</key>
@@ -202,217 +270,13 @@
 			<key>signature</key>
 			<string>Run Bus Station</string>
 			<key>timeStartedRecording</key>
-			<real>639223729.02222002</real>
+			<real>639408545.13373005</real>
 			<key>timeStoppedRecording</key>
-			<real>639223773.34544897</real>
+			<real>639408829.95669305</real>
 			<key>title</key>
 			<string>Run Bus Station</string>
 			<key>uniqueIdentifier</key>
-			<string>ADAB46CF-4F78-449D-9242-C0917F375FF7</string>
-		</dict>
-		<key>D24CDFA0-2851-42F5-A3AB-5E254771AA00</key>
-		<dict>
-			<key>className</key>
-			<string>DBGConsoleLog</string>
-			<key>documentTypeString</key>
-			<string>com.apple.dt.IDE.DebuggerLogContentType</string>
-			<key>domainType</key>
-			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
-			<key>fileName</key>
-			<string>D24CDFA0-2851-42F5-A3AB-5E254771AA00.xcactivitylog</string>
-			<key>hasPrimaryLog</key>
-			<true/>
-			<key>primaryObservable</key>
-			<dict>
-				<key>highLevelStatus</key>
-				<string>S</string>
-			</dict>
-			<key>schemeIdentifier-containerName</key>
-			<string>Bus Station project</string>
-			<key>schemeIdentifier-schemeName</key>
-			<string>Bus Station</string>
-			<key>schemeIdentifier-sharedScheme</key>
-			<integer>1</integer>
-			<key>signature</key>
-			<string>Run Bus Station</string>
-			<key>timeStartedRecording</key>
-			<real>639327980.985062</real>
-			<key>timeStoppedRecording</key>
-			<real>639328049.39283097</real>
-			<key>title</key>
-			<string>Run Bus Station</string>
-			<key>uniqueIdentifier</key>
-			<string>D24CDFA0-2851-42F5-A3AB-5E254771AA00</string>
-		</dict>
-		<key>DE60C442-C37B-4130-BA36-8C4432DEC179</key>
-		<dict>
-			<key>className</key>
-			<string>DBGConsoleLog</string>
-			<key>documentTypeString</key>
-			<string>com.apple.dt.IDE.DebuggerLogContentType</string>
-			<key>domainType</key>
-			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
-			<key>fileName</key>
-			<string>DE60C442-C37B-4130-BA36-8C4432DEC179.xcactivitylog</string>
-			<key>hasPrimaryLog</key>
-			<true/>
-			<key>primaryObservable</key>
-			<dict>
-				<key>highLevelStatus</key>
-				<string>S</string>
-			</dict>
-			<key>schemeIdentifier-containerName</key>
-			<string>Bus Station project</string>
-			<key>schemeIdentifier-schemeName</key>
-			<string>Bus Station</string>
-			<key>schemeIdentifier-sharedScheme</key>
-			<integer>1</integer>
-			<key>signature</key>
-			<string>Run Bus Station</string>
-			<key>timeStartedRecording</key>
-			<real>639330454.86336303</real>
-			<key>timeStoppedRecording</key>
-			<real>639330462.77120304</real>
-			<key>title</key>
-			<string>Run Bus Station</string>
-			<key>uniqueIdentifier</key>
-			<string>DE60C442-C37B-4130-BA36-8C4432DEC179</string>
-		</dict>
-		<key>E9AC9EAD-6336-4F98-B775-442CC92CA959</key>
-		<dict>
-			<key>className</key>
-			<string>DBGConsoleLog</string>
-			<key>documentTypeString</key>
-			<string>com.apple.dt.IDE.DebuggerLogContentType</string>
-			<key>domainType</key>
-			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
-			<key>fileName</key>
-			<string>E9AC9EAD-6336-4F98-B775-442CC92CA959.xcactivitylog</string>
-			<key>hasPrimaryLog</key>
-			<true/>
-			<key>primaryObservable</key>
-			<dict>
-				<key>highLevelStatus</key>
-				<string>S</string>
-			</dict>
-			<key>schemeIdentifier-containerName</key>
-			<string>Bus Station project</string>
-			<key>schemeIdentifier-schemeName</key>
-			<string>Bus Station</string>
-			<key>schemeIdentifier-sharedScheme</key>
-			<integer>1</integer>
-			<key>signature</key>
-			<string>Run Bus Station</string>
-			<key>timeStartedRecording</key>
-			<real>639223223.49706101</real>
-			<key>timeStoppedRecording</key>
-			<real>639223231.42215502</real>
-			<key>title</key>
-			<string>Run Bus Station</string>
-			<key>uniqueIdentifier</key>
-			<string>E9AC9EAD-6336-4F98-B775-442CC92CA959</string>
-		</dict>
-		<key>EFC99B4F-C7A7-4318-9724-165FEBA0CD16</key>
-		<dict>
-			<key>className</key>
-			<string>DBGConsoleLog</string>
-			<key>documentTypeString</key>
-			<string>com.apple.dt.IDE.DebuggerLogContentType</string>
-			<key>domainType</key>
-			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
-			<key>fileName</key>
-			<string>EFC99B4F-C7A7-4318-9724-165FEBA0CD16.xcactivitylog</string>
-			<key>hasPrimaryLog</key>
-			<true/>
-			<key>primaryObservable</key>
-			<dict>
-				<key>highLevelStatus</key>
-				<string>S</string>
-			</dict>
-			<key>schemeIdentifier-containerName</key>
-			<string>Bus Station project</string>
-			<key>schemeIdentifier-schemeName</key>
-			<string>Bus Station</string>
-			<key>schemeIdentifier-sharedScheme</key>
-			<integer>1</integer>
-			<key>signature</key>
-			<string>Run Bus Station</string>
-			<key>timeStartedRecording</key>
-			<real>639327425.43803298</real>
-			<key>timeStoppedRecording</key>
-			<real>639327935.37332499</real>
-			<key>title</key>
-			<string>Run Bus Station</string>
-			<key>uniqueIdentifier</key>
-			<string>EFC99B4F-C7A7-4318-9724-165FEBA0CD16</string>
-		</dict>
-		<key>FA527E92-86CE-4C7A-B14F-DDE7887BC8F4</key>
-		<dict>
-			<key>className</key>
-			<string>DBGConsoleLog</string>
-			<key>documentTypeString</key>
-			<string>com.apple.dt.IDE.DebuggerLogContentType</string>
-			<key>domainType</key>
-			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
-			<key>fileName</key>
-			<string>FA527E92-86CE-4C7A-B14F-DDE7887BC8F4.xcactivitylog</string>
-			<key>hasPrimaryLog</key>
-			<true/>
-			<key>primaryObservable</key>
-			<dict>
-				<key>highLevelStatus</key>
-				<string>S</string>
-			</dict>
-			<key>schemeIdentifier-containerName</key>
-			<string>Bus Station project</string>
-			<key>schemeIdentifier-schemeName</key>
-			<string>Bus Station</string>
-			<key>schemeIdentifier-sharedScheme</key>
-			<integer>1</integer>
-			<key>signature</key>
-			<string>Run Bus Station</string>
-			<key>timeStartedRecording</key>
-			<real>639327960.42790902</real>
-			<key>timeStoppedRecording</key>
-			<real>639327965.034289</real>
-			<key>title</key>
-			<string>Run Bus Station</string>
-			<key>uniqueIdentifier</key>
-			<string>FA527E92-86CE-4C7A-B14F-DDE7887BC8F4</string>
-		</dict>
-		<key>FF0F332C-67B0-4E43-A8DC-6727DB1E04D8</key>
-		<dict>
-			<key>className</key>
-			<string>DBGConsoleLog</string>
-			<key>documentTypeString</key>
-			<string>com.apple.dt.IDE.DebuggerLogContentType</string>
-			<key>domainType</key>
-			<string>Xcode.IDEActivityLogDomainType.DebugLog</string>
-			<key>fileName</key>
-			<string>FF0F332C-67B0-4E43-A8DC-6727DB1E04D8.xcactivitylog</string>
-			<key>hasPrimaryLog</key>
-			<true/>
-			<key>primaryObservable</key>
-			<dict>
-				<key>highLevelStatus</key>
-				<string>S</string>
-			</dict>
-			<key>schemeIdentifier-containerName</key>
-			<string>Bus Station project</string>
-			<key>schemeIdentifier-schemeName</key>
-			<string>Bus Station</string>
-			<key>schemeIdentifier-sharedScheme</key>
-			<integer>1</integer>
-			<key>signature</key>
-			<string>Run Bus Station</string>
-			<key>timeStartedRecording</key>
-			<real>639223538.53755701</real>
-			<key>timeStoppedRecording</key>
-			<real>639223551.78883398</real>
-			<key>title</key>
-			<string>Run Bus Station</string>
-			<key>uniqueIdentifier</key>
-			<string>FF0F332C-67B0-4E43-A8DC-6727DB1E04D8</string>
+			<string>EC90B727-E56A-4E8B-BDF6-977B6B0C66F0</string>
 		</dict>
 	</dict>
 </dict>
