@@ -59,20 +59,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelega
 	}
 
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
-        print("Entered region triggered.")
         if region is CLCircularRegion {
             handleEvent(for: region)
         }
     }
-    
-    // TODO: to be deleted
-    func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
-        print("Exit region triggered.")
-        if region is CLCircularRegion {
-            handleEvent(for: region)
-        }
-    }
-    // TODO: to be deleted
     
     func handleEvent(for region: CLRegion) {
         // Show an alert if application is active
@@ -80,8 +70,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelega
         if UIApplication.shared.applicationState == .active {
             //print("(Active) in GeoNotificationResponder")
         } else {
-            //print("(Inactive or Background) in GeoNotificationResponder")
-            
             // Query MRT arrival time
             queryMRTandPushGeoNotification(stationName: region.identifier)
         }
