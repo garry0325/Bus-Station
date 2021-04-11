@@ -227,6 +227,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		fetchStarredAndBannedStops()
 		fetchStationRadiusPreference()
 		fetchGeoNotificationCapability()
+        
+        declareNotificationActions()
 	}
 	
 	@objc func showRouteDetailVC(notification: Notification) {
@@ -664,6 +666,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		  locationManager.stopMonitoring(for: circularRegion)
 		}
 	}
+    
+    func declareNotificationActions() {
+        let reloadAction = UNNotificationAction(identifier: "ReloadGeoNotification", title: "更新", options: UNNotificationActionOptions(rawValue: 0))
+        let geoNotificationCategory = UNNotificationCategory(identifier: "GeoNotificationCategory", actions: [reloadAction], intentIdentifiers: [], options: .customDismissAction)
+        
+        let notificationCenter = UNUserNotificationCenter.current()
+        notificationCenter.setNotificationCategories([geoNotificationCategory])
+    }
 	
 	func locationManager(_ manager: CLLocationManager, monitoringDidFailFor region: CLRegion?, withError error: Error) {
 		guard let region = region else {
