@@ -649,7 +649,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             }
 			
 			let coordinates = MRTStationsByLine[geoStationsIndex[geoStation]![0][0]][geoStationsIndex[geoStation]![0][1]][1] as! CLLocationCoordinate2D
-			let region = CLCircularRegion(center: coordinates, radius: 60.0, identifier: geoStation)
+            let region = CLCircularRegion(center: coordinates, radius: 40.0, identifier: geoStation)
 			
 			region.notifyOnEntry = true
 			region.notifyOnExit = false
