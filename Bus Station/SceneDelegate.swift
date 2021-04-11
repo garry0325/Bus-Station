@@ -7,8 +7,9 @@
 
 import UIKit
 import CoreLocation
+import UserNotifications
 
-class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelegate {
+class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelegate, UNUserNotificationCenterDelegate {
 
 	var window: UIWindow?
     let locationManager = CLLocationManager()
@@ -21,6 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelega
 		// This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         
         locationManager.delegate = self
+        UNUserNotificationCenter.current().delegate = self
         
 		guard let _ = (scene as? UIWindowScene) else { return }
 	}
@@ -81,51 +83,68 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelega
             //print("(Inactive or Background) in GeoNotificationResponder")
             
             // Query MRT arrival time
-			let queryingMrtStation = MRTStationsByLine[geoStationsIndex[region.identifier]![0][0]][geoStationsIndex[region.identifier]![0][1]][0] as! Station
-            let mrtArrivals = busQuery.queryMetroArrivals(metroStation: queryingMrtStation)
-            
-            
-            let notificationContent = UNMutableNotificationContent()
-			notificationContent.title = "捷運" + queryingMrtStation.stationName + ((queryingMrtStation.stationName.last == "站") ? "":"站")
-            
-            var notificationBody = ""
-            for mrtArrival in mrtArrivals {
-                var information = ""
-                switch mrtArrival.status {
-                case .Normal:
-                    if(mrtArrival.estimatedArrival > 10) {
-						information = String(format: "%2d : %02d", mrtArrival.estimatedArrival / 60, mrtArrival.estimatedArrival % 60)
-                    }
-                    else {
-                        information = "到站中"
-                    }
-                case .Approaching:
+            queryMRTandPushGeoNotification(stationName: region.identifier)
+        }
+    }
+    
+    func queryMRTandPushGeoNotification(stationName: String) {
+        let queryingMrtStation = MRTStationsByLine[geoStationsIndex[stationName]![0][0]][geoStationsIndex[stationName]![0][1]][0] as! Station
+        let mrtArrivals = busQuery.queryMetroArrivals(metroStation: queryingMrtStation)
+        
+        
+        let notificationContent = UNMutableNotificationContent()
+        notificationContent.title = "捷運" + queryingMrtStation.stationName + ((queryingMrtStation.stationName.last == "站") ? "":"站")
+        
+        var notificationBody = ""
+        for mrtArrival in mrtArrivals {
+            var information = ""
+            switch mrtArrival.status {
+            case .Normal:
+                if(mrtArrival.estimatedArrival > 10) {
+                    information = String(format: "%2d : %02d", mrtArrival.estimatedArrival / 60, mrtArrival.estimatedArrival % 60)
+                }
+                else {
                     information = "到站中"
-                case .Loading:
-                    information = "加載中"
-                case .ServiceOver:
-                    information = "末班車已過"
-                default:
-                    information = "加載中"
                 }
-				let padding = 7 - mrtArrival.destinationName.count
-				let spaces = String(repeating: "　", count: (padding > 0) ? padding:1)
-				
-                notificationBody = notificationBody + String(format: "→ %@%@%@\n", mrtArrival.destinationName, spaces, information)
+            case .Approaching:
+                information = "到站中"
+            case .Loading:
+                information = "加載中"
+            case .ServiceOver:
+                information = "末班車已過"
+            default:
+                information = "加載中"
             }
-			notificationBody.removeLast()
-            notificationContent.body = notificationBody
-            notificationContent.sound = .default
-            let request = UNNotificationRequest(
-                identifier: "GettingInMRTStation",
-                content: notificationContent,
-                trigger: nil)
-            UNUserNotificationCenter.current().add(request) { error in
-                if let error = error {
-                    print("Error: \(error)")
-                }
+            let padding = 7 - mrtArrival.destinationName.count
+            let spaces = String(repeating: "　", count: (padding > 0) ? padding:1)
+            
+            notificationBody = notificationBody + String(format: "→ %@%@%@\n", mrtArrival.destinationName, spaces, information)
+        }
+        notificationBody.removeLast()
+        notificationContent.body = notificationBody
+        notificationContent.sound = .default
+        notificationContent.userInfo = ["station": queryingMrtStation.stationName]
+        notificationContent.categoryIdentifier = "GeoNotificationCategory"
+        let request = UNNotificationRequest(
+            identifier: "GettingInMRTStation",
+            content: notificationContent,
+            trigger: UNTimeIntervalNotificationTrigger(timeInterval: 1.0, repeats: false))
+        UNUserNotificationCenter.current().add(request) { error in
+            if let error = error {
+                print("Error: \(error)")
             }
         }
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        switch response.actionIdentifier {
+        case "ReloadGeoNotification":
+            queryMRTandPushGeoNotification(stationName: response.notification.request.content.userInfo["station"] as! String)
+        default:
+            break
+        }
+        
+        completionHandler()
     }
 }
 
