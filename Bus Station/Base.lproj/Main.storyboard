@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18092"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -46,7 +46,7 @@
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                     <prototypes>
                                                         <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="RouteCell" rowHeight="50" id="Xp6-zH-SVq" customClass="RouteTableViewCell" customModule="Bus_Station" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="28" width="414" height="50"/>
+                                                            <rect key="frame" x="0.0" y="24.333333969116211" width="414" height="50"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Xp6-zH-SVq" id="sD2-I8-Ocb">
                                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
@@ -119,7 +119,7 @@
                                                             </connections>
                                                         </tableViewCell>
                                                         <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MetroCell" rowHeight="50" id="lwC-pT-mBc" customClass="MetroRouteTableViewCell" customModule="Bus_Station" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="78" width="414" height="50"/>
+                                                            <rect key="frame" x="0.0" y="74.333333969116211" width="414" height="50"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="lwC-pT-mBc" id="BEo-Fi-BEF">
                                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
@@ -470,6 +470,19 @@
                                     <action selector="updateLocationButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cDq-R6-kWR"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hat-ii-R1o">
+                                <rect key="frame" x="301" y="17.666666666666664" width="8" height="8"/>
+                                <color key="backgroundColor" systemColor="systemBlueColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="8" id="fYD-7B-KrQ"/>
+                                    <constraint firstAttribute="width" constant="8" id="fsV-vl-bvx"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="q40-ga-30g">
                                 <rect key="frame" x="321" y="12.666666666666664" width="20" height="20"/>
                                 <constraints>
@@ -680,6 +693,7 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="cAf-WX-0Ok" secondAttribute="trailing" constant="15" id="IA3-CR-kc5"/>
                             <constraint firstItem="KmK-Jy-1Yr" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="LeJ-0R-PEs"/>
                             <constraint firstItem="On8-rb-gmu" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="M67-vu-uow"/>
+                            <constraint firstItem="q40-ga-30g" firstAttribute="leading" secondItem="Hat-ii-R1o" secondAttribute="trailing" constant="10" id="OfT-0o-eEh"/>
                             <constraint firstItem="wkw-Pp-9Mn" firstAttribute="centerY" secondItem="Kz4-5o-FfU" secondAttribute="centerY" constant="-6" id="Pqr-Ki-G7l"/>
                             <constraint firstItem="jvc-Vv-Whj" firstAttribute="top" secondItem="wkw-Pp-9Mn" secondAttribute="bottom" id="QPo-Yy-OBy"/>
                             <constraint firstItem="jvc-Vv-Whj" firstAttribute="trailing" secondItem="wkw-Pp-9Mn" secondAttribute="trailing" id="RCA-B1-QC3"/>
@@ -690,6 +704,7 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="YEz-21-DiZ" secondAttribute="trailing" constant="10" id="b9b-MB-Kkp"/>
                             <constraint firstItem="YEz-21-DiZ" firstAttribute="centerY" secondItem="q40-ga-30g" secondAttribute="centerY" id="cQo-jL-omA"/>
                             <constraint firstItem="3dA-N6-IMw" firstAttribute="centerX" secondItem="Tmq-tj-XKk" secondAttribute="centerX" id="cRj-pg-uqw"/>
+                            <constraint firstItem="Hat-ii-R1o" firstAttribute="centerY" secondItem="q40-ga-30g" secondAttribute="centerY" id="dsR-fJ-BdA"/>
                             <constraint firstItem="jvc-Vv-Whj" firstAttribute="leading" secondItem="wkw-Pp-9Mn" secondAttribute="leading" id="jMh-c7-5XU"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="s4M-qc-5T1" secondAttribute="trailing" id="lAc-tq-Gxl"/>
                             <constraint firstItem="akc-z5-ytS" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="lsx-ON-gAM"/>
@@ -705,6 +720,7 @@
                         <outlet property="activityIndicator" destination="q40-ga-30g" id="Rld-vd-28b"/>
                         <outlet property="adBannerView" destination="akc-z5-ytS" id="KV7-dd-HeA"/>
                         <outlet property="banButton" destination="A7s-yq-Rio" id="pAA-GO-Ger"/>
+                        <outlet property="beaconIndicator" destination="Hat-ii-R1o" id="ehV-L0-2fH"/>
                         <outlet property="bearingCollectionViewToRouteCollectionViewConstraintA" destination="Big-XE-IMm" id="azr-sh-Vy3"/>
                         <outlet property="bearingListCollectionView" destination="s4M-qc-5T1" id="b41-zI-ewp"/>
                         <outlet property="buttonActivityIndicator" destination="3dA-N6-IMw" id="wgD-wM-dba"/>
@@ -830,7 +846,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DetailStop" rowHeight="35" id="qag-PO-YrX" customClass="RouteDetailTableViewCell" customModule="Bus_Station" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="35"/>
+                                        <rect key="frame" x="0.0" y="24.333333969116211" width="414" height="35"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qag-PO-YrX" id="vcr-nL-6oC">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="35"/>
@@ -1207,7 +1223,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DetailStation" rowHeight="35" id="Rdx-IJ-v62" customClass="MetroDetailTableViewCell" customModule="Bus_Station" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="35"/>
+                                        <rect key="frame" x="0.0" y="24.333333969116211" width="414" height="35"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Rdx-IJ-v62" id="iXR-Sy-Bhl">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="35"/>
@@ -1842,7 +1858,7 @@ Cg
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="GeoStation" rowHeight="35" id="bWr-ID-sXx" customClass="GeoStationTableViewCell" customModule="Bus_Station" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="35"/>
+                                        <rect key="frame" x="0.0" y="24.333333969116211" width="414" height="35"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bWr-ID-sXx" id="pvc-r3-ost">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="35"/>
