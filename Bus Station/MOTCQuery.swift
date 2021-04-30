@@ -986,6 +986,35 @@ class BusQuery {
 		return nearbyBuses
 	}
 	
+    func queryBeaconInformation(major: NSNumber, minor: NSNumber) -> String{
+        var mrtStationCode = "error"
+        let semaphore = DispatchSemaphore(value: 0)
+
+        let urlMetroBeacon = URL(string: String("https://ws.metro.taipei/TRTCBeaconBE/BeaconControl.asmx/GetBeaconInfo").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+        let httpBody = String(format: "{\"username\":\"garry0325@gmail.com\",\"password\":\"U66A9vG2\",\"beacon\":{\"UUID\":\"%@\",\"MAJOR\":\"%d\",\"MINOR\":\"%d\"}}", mrtBeaconUUID.uuidString, major as! Int, minor as! Int)
+
+        let session = URLSession(configuration: urlConfig)
+
+        var request = URLRequest(url: urlMetroBeacon)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = Data(httpBody.utf8)
+        request.httpMethod = "POST"
+        let task = session.dataTask(with: request) { (data, response, error) in
+            if let response = response as? HTTPURLResponse, let data = data {
+                if(response.statusCode == 200) {
+                    let rawReturned = try? (JSONSerialization.jsonObject(with: data, options: []) as! [String: Any])
+                    mrtStationCode = (rawReturned!["d"] as! [String: String])["SID"] ?? "error"
+                }
+            }
+            semaphore.signal()
+        }
+
+        task.resume()
+        semaphore.wait()
+        
+        return mrtStationCode
+    }
+    
 	func prepareAuthorizations() -> (String, String) {
 		let authTimeString = authorizationDateFormatter.string(from: Date())
 		let key = SymmetricKey(data: Data(self.appKey.utf8))
