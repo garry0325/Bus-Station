@@ -97,6 +97,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	var locationHasUpdated: Bool = false
 	var autoRefreshTimer = Timer()
 	var autoRefreshNearbyBusesTimer = Timer()
+    var locationUpdatesTimeoutTimer = Timer()
+    var locationUpdatesTimeoutRemaining = locationUpdateTimeout
+    @IBOutlet weak var beaconIndicator: UIView!
+    
+    var beaconRegion: CLBeaconRegion?
+    var beaconHasUpdated = false
+    var beaconIdentityConstraint: CLBeaconIdentityConstraint?
+    
 	var latestLocation = CLLocation()
 	
 	var currentStationNumber = 0 {
@@ -199,6 +207,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		// my ad banner id: ca-app-pub-5814041924860954/9661829499
 		// test ad banner id: ca-app-pub-3940256099942544/2934735716
 		
+        beaconRegion = CLBeaconRegion(uuid: mrtBeaconUUID, identifier: "MRTBeacon")
+        beaconIdentityConstraint = CLBeaconIdentityConstraint(uuid: mrtBeaconUUID)
+        
 		// Because when app is reopened from background, the animation stops
 		NotificationCenter.default.addObserver(self, selector: #selector(backFromBackground), name: UIApplication.didBecomeActiveNotification, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(showRouteDetailVC), name: NSNotification.Name("Detail"), object: nil)
@@ -214,6 +225,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		autoRefreshTimer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(autoRefresh), userInfo: nil, repeats: true)
 		autoRefreshNearbyBuses()
 		autoRefreshNearbyBusesTimer = Timer.scheduledTimer(timeInterval: 7.0, target: self, selector: #selector(autoRefreshNearbyBuses), userInfo: nil, repeats: true)
+        
+        
+        if CLLocationManager.isMonitoringAvailable(for: CLBeaconRegion.self) &&
+            CLLocationManager.isRangingAvailable() {
+            prepareBeaconTimer()
+        }
+        beaconIndicator.isHidden = true
 	}
 	
 	func fetchSavedSettings() {
@@ -271,6 +289,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 					
 					// check if is moving to either show the nearbyBusesCollectionView
 					self.latestLocation = userLocation
+                    
+                    self.stopBeaconScanning()
+                    
 //					if(userLocation.distance(from: self.latestLocation) > 5.0 && !self.isMoving) {
 //						self.isMoving = true
 //						self.latestLocation = userLocation
@@ -284,11 +305,75 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 			}
 		}
 	}
+    
+    func locationManager(_ manager: CLLocationManager, didRange beacons: [CLBeacon], satisfying beaconConstraint: CLBeaconIdentityConstraint) {
+        if(!beaconHasUpdated && beacons.count > 0) {
+            beaconHasUpdated = true
+            manipulateBeaconLocation(beacon: beacons[0])
+        }
+    }
 	
-	@IBAction func updateLocationButtonPressed(_ sender: Any) {
-		presentActivityIndicator()
-		updateLocationAndStations()
-	}
+    @objc func locationUpdateTimeoutRefresh() {
+        if(locationUpdatesTimeoutRemaining < 0) {
+            // Fire Beacon service
+            if locationManager.authorizationStatus == .authorizedAlways {
+                startBeaconScanning()
+            } else {
+                // TODO: add flag to show once
+                print("Always authorization not granted")
+                let locationServiceAlert = UIAlertController(title: "GPS 定位誤差過大，請開啟「永遠」取用位置，以啟用藍芽 Beacon 定位", message: "設定 > 隱私權 > 定位服務 > 臺北即時站牌 > 永遠", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "好的", style: .default, handler: nil)
+                locationServiceAlert.addAction(okAction)
+            }
+            locationUpdatesTimeoutTimer.invalidate()
+        }
+        else {
+            locationUpdatesTimeoutRemaining = locationUpdatesTimeoutRemaining - 2
+        }
+    }
+    
+    func prepareBeaconTimer() {
+        locationUpdatesTimeoutRemaining = locationUpdateTimeout
+        locationUpdatesTimeoutTimer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(locationUpdateTimeoutRefresh), userInfo: nil, repeats: true)
+    }
+    
+    func stopBeaconScanning() {
+        DispatchQueue.main.async {
+            self.beaconIndicator.isHidden = true
+        }
+        locationUpdatesTimeoutTimer.invalidate()
+        locationManager.stopRangingBeacons(satisfying: beaconIdentityConstraint!)
+    }
+    
+    func startBeaconScanning() {
+        DispatchQueue.main.async {
+            self.beaconIndicator.isHidden = false
+        }
+        beaconHasUpdated = false
+        locationManager.startRangingBeacons(satisfying: beaconIdentityConstraint!)
+    }
+    
+    func manipulateBeaconLocation(beacon: CLBeacon) {
+        let mrtStationCode = self.busQuery.queryBeaconInformation(major: beacon.major, minor: beacon.minor)
+        if let beaconLocation = mrtCodeToLocation[mrtStationCode] {
+            self.locationHasUpdated = true
+            self.locationWhenPinned = beaconLocation
+            self.updateLocationButton.tintColor = .blue
+            self.queryNearbyStations(location: self.locationWhenPinned)
+            self.latestLocation = self.locationWhenPinned
+            
+            self.stopBeaconScanning()
+        } else {
+            print("Beacon API returned station ID not in dictionary")
+            self.beaconHasUpdated = false
+        }
+    }
+    
+    @IBAction func updateLocationButtonPressed(_ sender: Any) {
+        presentActivityIndicator()
+        updateLocationAndStations()
+        prepareBeaconTimer()
+    }
 	
 	@IBAction func starButtonPressed(_ sender: Any) {
 		if(currentStationNumber < ViewController.stationList.count && currentBearingNumber < ViewController.stationList[currentStationNumber].count) {
