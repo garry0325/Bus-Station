@@ -98,7 +98,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	var autoRefreshTimer = Timer()
 	var autoRefreshNearbyBusesTimer = Timer()
 	var latestLocation = CLLocation()
-	//var isMoving: Bool = false
 	
 	var currentStationNumber = 0 {
 		didSet {
@@ -245,8 +244,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 					address = address + (placemark.subAdministrativeArea ?? "")
 					address = address + (placemark.locality ?? "")
 					
-					//print("\(self.locationHasUpdated)\t\(address)")
-					
 //					DispatchQueue.main.async {
 //						if(userLocation.horizontalAccuracy >= 0) {
 //							self.locationRangeLabel.text = String(format: "%dm", userLocation.horizontalAccuracy)
@@ -388,10 +385,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	func queryNearbyStations(location: CLLocation) {
 		presentActivityIndicator()
 		DispatchQueue.global(qos: .background).async {
-			print("querying buses")
 			let unorganizedStationList = self.busQuery.queryNearbyBusStations(location: location)
 			print("buses done")
-			print("querying mrt")
 			let metroStationList = self.busQuery.queryNearbyMetroStations(location: location)
 			print("mrt done")
 			var stationTemp = [String]()
@@ -623,7 +618,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	}
 	
 	func startGeoMonitoring() {
-		print("start geomonitoring")
 		if !CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self) {
 			ErrorAlert.presentErrorAlert(title: "錯誤", message: "此裝置不支援地理柵欄功能")
 			geoNotificationCapablility = false
@@ -654,7 +648,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	}
 	
 	func stopGeoMonitoring() {
-		print("Stop geomonitoring")
 		for region in locationManager.monitoredRegions {
 		  guard let circularRegion = region as? CLCircularRegion else { continue }
 			
