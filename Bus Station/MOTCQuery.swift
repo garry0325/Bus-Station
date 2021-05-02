@@ -1003,7 +1003,9 @@ class BusQuery {
             if let response = response as? HTTPURLResponse, let data = data {
                 if(response.statusCode == 200) {
                     let rawReturned = try? (JSONSerialization.jsonObject(with: data, options: []) as! [String: Any])
-                    mrtStationCode = (rawReturned!["d"] as! [String: String])["SID"] ?? "error"
+                    if let returnedBeaconValid = rawReturned!["d"] as? [String: String] {
+                        mrtStationCode = returnedBeaconValid["SID"] ?? "error"
+                    }
                 }
             }
             semaphore.signal()
