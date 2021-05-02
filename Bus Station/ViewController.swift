@@ -323,7 +323,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 print("Always authorization not granted")
                 let locationServiceAlert = UIAlertController(title: "GPS 定位誤差過大，請開啟「永遠」取用位置，以啟用藍芽 Beacon 定位", message: "設定 > 隱私權 > 定位服務 > 臺北即時站牌 > 永遠", preferredStyle: .alert)
                 let okAction = UIAlertAction(title: "好的", style: .default, handler: nil)
+                
                 locationServiceAlert.addAction(okAction)
+                present(locationServiceAlert, animated: true, completion: nil)
             }
             locationUpdatesTimeoutTimer.invalidate()
         }
