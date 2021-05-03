@@ -104,6 +104,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     var beaconRegion: CLBeaconRegion?
     var beaconHasUpdated = false
     var beaconIdentityConstraint: CLBeaconIdentityConstraint?
+    var invalidBeaconInfo: [(beaconMajor: NSNumber, beaconMinor: NSNumber)] = []
     
 	var latestLocation = CLLocation()
 	
@@ -308,8 +309,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didRange beacons: [CLBeacon], satisfying beaconConstraint: CLBeaconIdentityConstraint) {
         if(!beaconHasUpdated && beacons.count > 0) {
-            beaconHasUpdated = true
-            manipulateBeaconLocation(beacon: beacons[0])
+            for beacon in beacons {
+                if(!invalidBeaconInfo.contains(where: { invalidBeacon in
+                    invalidBeacon.beaconMajor == beacon.major && invalidBeacon.beaconMinor == beacon.minor
+                })) {
+                    beaconHasUpdated = true
+                    manipulateBeaconLocation(beacon: beacon)
+                    break
+                }
+            }
         }
     }
 	
@@ -340,17 +348,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func stopBeaconScanning() {
-        DispatchQueue.main.async {
-            self.beaconIndicator.isHidden = true
-        }
+        self.beaconIndicator.isHidden = true
         locationUpdatesTimeoutTimer.invalidate()
         locationManager.stopRangingBeacons(satisfying: beaconIdentityConstraint!)
     }
     
     func startBeaconScanning() {
-        DispatchQueue.main.async {
-            self.beaconIndicator.isHidden = false
-        }
+        self.beaconIndicator.isHidden = false
         beaconHasUpdated = false
         locationManager.startRangingBeacons(satisfying: beaconIdentityConstraint!)
     }
@@ -367,6 +371,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             self.stopBeaconScanning()
         } else {
             print("Beacon API returned station ID not in dictionary")
+            self.invalidBeaconInfo.append((beaconMajor: beacon.major, beaconMinor: beacon.minor))
             self.beaconHasUpdated = false
         }
     }
