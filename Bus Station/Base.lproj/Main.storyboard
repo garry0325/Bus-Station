@@ -470,7 +470,7 @@
                                     <action selector="updateLocationButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cDq-R6-kWR"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hat-ii-R1o">
+                            <view hidden="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hat-ii-R1o">
                                 <rect key="frame" x="301" y="17.666666666666664" width="8" height="8"/>
                                 <color key="backgroundColor" systemColor="systemBlueColor"/>
                                 <constraints>
@@ -1775,7 +1775,7 @@ Cg
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <state key="normal" title="選擇車站">
-                                    <color key="titleColor" name="White"/>
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
