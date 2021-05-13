@@ -83,14 +83,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	// TODO: change app store screenshots
 	// TODO: when udpating location, it waits for autoRefresh refreshes
 	// TODO: ad more ads
-	// TODO: Add iBeacon when gps range is too big
     
     // TODO: WENHU line crowdness
     
     // TODO: REMOVE PRINT STATEMENT
     // TODO: AD app ID
-	
-	// TODO: nearby buses show even not moving (remove isMoving & commented codes)
 	
 	var busQuery = BusQuery()
 	var locationWhenPinned = CLLocation()
@@ -263,15 +260,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 					address = address + (placemark.subAdministrativeArea ?? "")
 					address = address + (placemark.locality ?? "")
 					
-//					DispatchQueue.main.async {
-//						if(userLocation.horizontalAccuracy >= 0) {
-//							self.locationRangeLabel.text = String(format: "%dm", userLocation.horizontalAccuracy)
-//						}
-//						else {
-//							self.locationRangeLabel.text = ""
-//						}
-//					}
-					
 					if(!self.locationHasUpdated)  {
 						//print("location has not updated")
 						self.locationHasUpdated = true
@@ -292,16 +280,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 					self.latestLocation = userLocation
                     
                     self.stopBeaconScanning()
-                    
-//					if(userLocation.distance(from: self.latestLocation) > 5.0 && !self.isMoving) {
-//						self.isMoving = true
-//						self.latestLocation = userLocation
-//						self.autoRefreshNearbyBuses()
-//					}
-//					else {
-//						self.isMoving = (userLocation.distance(from: self.latestLocation) > 5.0)
-//						self.latestLocation = userLocation
-//					}
 				}
 			}
 		}
