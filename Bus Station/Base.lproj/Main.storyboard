@@ -713,6 +713,11 @@
                             <constraint firstItem="q40-ga-30g" firstAttribute="centerY" secondItem="wkw-Pp-9Mn" secondAttribute="centerY" id="vst-Td-eh1"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="cAf-WX-0Ok" secondAttribute="bottom" constant="15" id="ynk-Ob-Yed"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="Hat-ii-R1o"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="aboutButton" destination="cAf-WX-0Ok" id="Qgz-sA-KCF"/>
@@ -1268,7 +1273,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AAA-8888" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="CxR-3t-taa">
-                                                    <rect key="frame" x="29.333333333333336" y="2" width="68.666666666666657" height="20"/>
+                                                    <rect key="frame" x="31" y="2" width="67" height="20"/>
                                                     <color key="backgroundColor" systemColor="systemGray2Color"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="3qd-ir-zOE"/>
@@ -1283,7 +1288,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AAA-8888" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="Evy-yQ-srb">
-                                                    <rect key="frame" x="29.333333333333336" y="14" width="68.666666666666657" height="20"/>
+                                                    <rect key="frame" x="31" y="14" width="67" height="20"/>
                                                     <color key="backgroundColor" systemColor="systemGray2Color"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="jOg-kY-AUV"/>
