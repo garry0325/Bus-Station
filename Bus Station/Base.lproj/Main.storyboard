@@ -753,25 +753,25 @@
             <objects>
                 <viewController id="Vpo-1u-ZzU" customClass="MapRouteViewController" customModule="Bus_Station" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="UAQ-Ef-tOz">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uFS-9V-GzM">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="bxR-y2-vMf">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                                 <blurEffect style="systemUltraThinMaterial"/>
                             </visualEffectView>
                             <mapView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="fyc-RO-06T">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                             </mapView>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="vCl-qQ-zBb">
-                                <rect key="frame" x="188.66666666666666" y="339.66666666666669" width="37" height="37"/>
+                                <rect key="frame" x="188.66666666666666" y="349.66666666666669" width="37" height="37"/>
                             </activityIndicatorView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6eS-9V-WlX">
-                                <rect key="frame" x="314" y="616" width="60" height="60"/>
+                                <rect key="frame" x="314" y="636" width="60" height="60"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="60" id="DS6-h9-ooy"/>
@@ -1035,6 +1035,9 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <mapView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="xTx-xr-0WL">
+                                <rect key="frame" x="0.0" y="65" width="414" height="651"/>
+                            </mapView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KBo-gH-Clt" userLabel="White View">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="65"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -1124,7 +1127,7 @@
                                     <action selector="updateLocationButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cOd-9w-t0Z"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aGn-EU-i8a">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aGn-EU-i8a">
                                 <rect key="frame" x="40" y="616" width="60" height="60"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -1152,7 +1155,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="Vpo-1u-ZzU" kind="presentation" identifier="MapRoute" id="SnL-LR-gLy"/>
+                                    <action selector="mapButtonTapped:" destination="1tY-i0-3cb" eventType="touchUpInside" id="vr3-ec-UvC"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1166,6 +1169,7 @@
                             <constraint firstItem="Z0O-Em-p3z" firstAttribute="centerY" secondItem="T5G-pr-CuF" secondAttribute="centerY" id="5qu-ma-J4N"/>
                             <constraint firstItem="3tU-6y-Oeg" firstAttribute="leading" secondItem="4u6-NH-Y9w" secondAttribute="leading" id="7fr-Sn-4EN"/>
                             <constraint firstItem="wSP-dR-peX" firstAttribute="centerY" secondItem="KBo-gH-Clt" secondAttribute="centerY" id="Dj1-nU-9AI"/>
+                            <constraint firstAttribute="top" secondItem="xTx-xr-0WL" secondAttribute="top" constant="-65" id="EBm-kV-wcj"/>
                             <constraint firstItem="KBo-gH-Clt" firstAttribute="leading" secondItem="s4S-AW-QLa" secondAttribute="leading" id="EHV-IM-Ksn"/>
                             <constraint firstItem="T5G-pr-CuF" firstAttribute="bottom" secondItem="PNo-pH-WqV" secondAttribute="bottom" constant="40" id="EXm-Zw-Nus"/>
                             <constraint firstItem="3tU-6y-Oeg" firstAttribute="top" secondItem="4u6-NH-Y9w" secondAttribute="bottom" constant="2" id="HaN-vK-OrW"/>
@@ -1174,15 +1178,18 @@
                             <constraint firstItem="JF7-DS-r8A" firstAttribute="top" secondItem="KBo-gH-Clt" secondAttribute="bottom" id="QbC-T3-0UB"/>
                             <constraint firstItem="Zku-9a-DsW" firstAttribute="width" secondItem="wSP-dR-peX" secondAttribute="width" id="Uff-ku-KuB"/>
                             <constraint firstItem="Zku-9a-DsW" firstAttribute="leading" secondItem="3tU-6y-Oeg" secondAttribute="trailing" constant="15" id="Xat-AV-Tfn"/>
+                            <constraint firstItem="xTx-xr-0WL" firstAttribute="leading" secondItem="s4S-AW-QLa" secondAttribute="leading" id="Xow-cZ-5hk"/>
                             <constraint firstItem="Z0O-Em-p3z" firstAttribute="centerX" secondItem="T5G-pr-CuF" secondAttribute="centerX" id="aL0-Ww-pDx"/>
                             <constraint firstItem="Zku-9a-DsW" firstAttribute="height" secondItem="wSP-dR-peX" secondAttribute="height" multiplier="1.37349" id="ajq-KC-D6p"/>
                             <constraint firstItem="KBo-gH-Clt" firstAttribute="bottom" secondItem="ECe-3T-bgB" secondAttribute="top" id="dc1-R7-vbs"/>
                             <constraint firstAttribute="trailing" secondItem="JF7-DS-r8A" secondAttribute="trailing" id="fFq-Vc-dhu"/>
                             <constraint firstItem="aGn-EU-i8a" firstAttribute="leading" secondItem="T5G-pr-CuF" secondAttribute="leading" constant="40" id="fPU-6D-ScX"/>
                             <constraint firstAttribute="top" secondItem="KBo-gH-Clt" secondAttribute="top" id="h2D-LM-AXl"/>
+                            <constraint firstAttribute="bottom" secondItem="xTx-xr-0WL" secondAttribute="bottom" id="hkP-IP-LMc"/>
                             <constraint firstAttribute="trailing" secondItem="ECe-3T-bgB" secondAttribute="trailing" id="iB0-kU-Kzg"/>
                             <constraint firstItem="wSP-dR-peX" firstAttribute="centerX" secondItem="Zku-9a-DsW" secondAttribute="centerX" id="jEU-93-VjR"/>
                             <constraint firstItem="T5G-pr-CuF" firstAttribute="bottom" secondItem="aGn-EU-i8a" secondAttribute="bottom" constant="40" id="lnO-Id-Sxp"/>
+                            <constraint firstAttribute="trailing" secondItem="xTx-xr-0WL" secondAttribute="trailing" id="oK1-G3-64b"/>
                             <constraint firstItem="Zku-9a-DsW" firstAttribute="leading" secondItem="4u6-NH-Y9w" secondAttribute="trailing" constant="15" id="po6-GI-1os"/>
                             <constraint firstItem="ECe-3T-bgB" firstAttribute="top" secondItem="s4S-AW-QLa" secondAttribute="top" constant="65" id="ppq-R1-p2I"/>
                             <constraint firstAttribute="trailing" secondItem="Zku-9a-DsW" secondAttribute="trailing" constant="20" id="roP-Dm-rij"/>
@@ -1198,6 +1205,8 @@
                         <outlet property="closeButtonTrailingToSafeAreaConstraint" destination="wHH-pm-qcQ" id="xAc-ZJ-70Z"/>
                         <outlet property="informationBackgroundView" destination="Zku-9a-DsW" id="m3X-hc-LEy"/>
                         <outlet property="informationLabel" destination="wSP-dR-peX" id="yZ7-S9-rUb"/>
+                        <outlet property="mapButton" destination="aGn-EU-i8a" id="weR-go-aeK"/>
+                        <outlet property="mapView" destination="xTx-xr-0WL" id="xCm-NZ-aie"/>
                         <outlet property="routeDestinationLabel" destination="3tU-6y-Oeg" id="H3X-A9-aUl"/>
                         <outlet property="routeDetailTableView" destination="ECe-3T-bgB" id="n1R-ud-ZY4"/>
                         <outlet property="routeNameLabel" destination="4u6-NH-Y9w" id="t6J-wf-Cw1"/>

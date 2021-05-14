@@ -156,25 +156,3 @@ extension MapRouteViewController: MKMapViewDelegate {
 		}
 	}
 }
-
-class StopAnnotation: NSObject, MKAnnotation {
-	var coordinate: CLLocationCoordinate2D
-	var title: String?
-	var glyphText: String?
-	var sequence: Int?
-	
-	init(coordinate: CLLocationCoordinate2D) {
-		self.coordinate = coordinate
-	}
-}
-
-class BusAnnotation: NSObject, MKAnnotation {
-	dynamic var coordinate: CLLocationCoordinate2D
-	var title: String?
-	var glyphText: String?
-	var sequence: Int?
-	
-	init(coordinate: CLLocationCoordinate2D) {
-		self.coordinate = coordinate
-	}
-}

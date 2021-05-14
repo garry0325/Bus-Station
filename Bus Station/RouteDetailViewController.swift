@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import MapKit
 
 class RouteDetailViewController: UIViewController {
 
@@ -18,13 +19,36 @@ class RouteDetailViewController: UIViewController {
 	
 	@IBOutlet var routeDetailTableView: UITableView!
 	@IBOutlet var activityIndicator: UIActivityIndicatorView!
+	@IBOutlet var mapButton: UIButton!
 	@IBOutlet var closeButton: UIButton!
 	@IBOutlet var closeButtonTrailingToSafeAreaConstraint: NSLayoutConstraint!
 	
+	// Map related variables
+	@IBOutlet var mapView: MKMapView!
+	var stopAnnotations = [StopAnnotation]()
+	var routeOverlay = MKPolyline()
+	var busesLocation = [Bus]()
+	var busAnnotations = [BusAnnotation]()
+	var plateNumberToIndexDict = [String: Int]()
 	
 	var information = "" {
 		didSet {
 			informationLabel.text = " " + information + " "
+		}
+	}
+	var displayMode: DisplayMode = .Timetable {
+		didSet {
+			switch displayMode {
+			case .Timetable:
+				mapButton.setImage(UIImage(systemName: "map"), for: .normal)
+				mapView.isHidden = true
+				routeDetailTableView.isHidden = false
+				
+			case .Map:
+				mapButton.setImage(UIImage(systemName: "list.bullet"), for: .normal)
+				mapView.isHidden = false
+				routeDetailTableView.isHidden = true
+			}
 		}
 	}
 	var contentMode: ContentMode = .ETAForCurrentStation
@@ -53,16 +77,22 @@ class RouteDetailViewController: UIViewController {
 	}
 	
 	var needAutoscroll = true
-	var autoRefreshTimer: Timer?
+	var timetableAutoRefreshTimer: Timer?
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		if(busStop?.stopId != "no") {
+		if(busStop?.stopId != "no") {	// Recognize if is tapped from ordinary bus schedule or nearby bus
 			let tap = UITapGestureRecognizer(target: self, action: #selector(switchInformationLabel))
 			routeDetailTableView.addGestureRecognizer(tap)
+			
+			mapButton.isHidden = true
+			// TODO: not sure if really no need map
 		} else {
 			contentMode = .ETAForEveryStation
+			
+			mapView.delegate = self
+			mapView.showsUserLocation = true
 		}
 		
 		routeDetailTableView.delegate = self
@@ -83,8 +113,8 @@ class RouteDetailViewController: UIViewController {
 		
 		activityIndicator.startAnimating()
 		
-		autoRefresh()
-		autoRefreshTimer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(autoRefresh), userInfo: nil, repeats: true)
+		timetableAutoRefresh()
+		timetableAutoRefreshTimer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(timetableAutoRefresh), userInfo: nil, repeats: true)
 		
 		NotificationCenter.default.addObserver(self, selector: #selector(showAllStationETA), name: NSNotification.Name("AllStationETA"), object: nil)
 	}
@@ -94,7 +124,7 @@ class RouteDetailViewController: UIViewController {
 	
 	override func viewDidDisappear(_ animated: Bool) {
 		// CRUCIAL BECAUSE WHEN VIEW IS CLOSED, THE TIMER KEEPS GOING CAUSING BAD_ACCESS
-		autoRefreshTimer?.invalidate()
+		timetableAutoRefreshTimer?.invalidate()
 	}
 	
 	func configureInformationLabel() {
@@ -104,7 +134,12 @@ class RouteDetailViewController: UIViewController {
 		informationBackgroundView.backgroundColor = busStop?.informationLabelColor ?? RouteInformationLabelColors.gray
 	}
 	
-	@objc func autoRefresh() {
+	@IBAction func mapButtonTapped(_ sender: Any) {
+		displayMode = (displayMode == .Timetable) ? .Map:.Timetable
+	}
+	
+	@objc func timetableAutoRefresh() {
+		print("autorefresh timetable") // TODO: REMOVED
 		//print("autorefreshing \(String(describing: busStop?.routeName))")
 		DispatchQueue.global(qos: .background).async {
 			self.liveStatusStops = self.busQuery.queryRealTimeBusLocation(busStop: self.busStop!)
@@ -134,6 +169,7 @@ class RouteDetailViewController: UIViewController {
 					}
 				}
 				self.activityIndicator.stopAnimating()
+				self.mapButton.isHidden = false
 			}
 		}
 		
@@ -149,7 +185,6 @@ class RouteDetailViewController: UIViewController {
 				}
 			}
 		}
-
 	}
 	
 	@objc func showAllStationETA(notification: Notification) {
@@ -199,11 +234,13 @@ class RouteDetailViewController: UIViewController {
 	}
 	
 	@IBAction func closeRouteDetailViewController(_ sender: Any) {
-		autoRefreshTimer?.invalidate()
+		timetableAutoRefreshTimer?.invalidate()
 		dismiss(animated: true, completion: nil)
 	}
 }
 
+
+// TODO: TO BE DELETED
 extension RouteDetailViewController: UIPopoverPresentationControllerDelegate {
 	
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -286,10 +323,108 @@ extension RouteDetailViewController: UITableViewDelegate, UITableViewDataSource 
 	}
 }
 
+extension RouteDetailViewController: MKMapViewDelegate {
+	
+	func constructRouteSequence() {
+		DispatchQueue.global(qos: .background).async {
+			var routePolyline = [CLLocationCoordinate2D]()
+			routePolyline = self.busQuery.queryBusRouteGeometry(busStop: self.busStop!)
+			self.stopAnnotations = []
+			
+			for stop in self.liveStatusStops {
+				let stopAnnotation = StopAnnotation(coordinate: stop.location.coordinate)
+				stopAnnotation.title = stop.stopName
+				stopAnnotation.glyphText = String(stop.stopSequence)
+				stopAnnotation.sequence = stop.stopSequence
+				
+				self.stopAnnotations.append(stopAnnotation)
+				
+				if(stop.stopId == self.busStop!.stopId && self.busStop!.stopId != "no") {
+					DispatchQueue.main.async {
+						self.mapView.setRegion(MKCoordinateRegion(center: stop.location.coordinate, latitudinalMeters: 2000.0, longitudinalMeters: 2000.0), animated: false)
+					}
+				} else if(stop.plateNumber == self.busStop!.plateNumber && self.busStop!.stopId == "no") {
+					DispatchQueue.main.async {
+						self.mapView.setRegion(MKCoordinateRegion(center: stop.location.coordinate, latitudinalMeters: 2000.0, longitudinalMeters: 2000.0), animated: false)
+					}
+				}
+			}
+			
+			DispatchQueue.main.async {
+				self.mapView.addAnnotations(self.stopAnnotations)
+				
+				self.routeOverlay = MKPolyline(coordinates: routePolyline, count: routePolyline.count)
+				self.mapView.addOverlay(self.routeOverlay)
+				
+				self.mapView.isHidden = false
+				self.activityIndicator.stopAnimating()
+			}
+		}
+	}
+	
+	func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+		let polylineRenderer = MKPolylineRenderer(overlay: overlay)
+		polylineRenderer.strokeColor = .systemGray
+		polylineRenderer.lineWidth = 5
+		
+		return polylineRenderer
+	}
+	
+	func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+		if let temp = annotation as? StopAnnotation {
+			var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "Stop") as? MKMarkerAnnotationView
+			annotationView = MKMarkerAnnotationView(annotation: temp, reuseIdentifier: "Stop")
+			annotationView?.glyphText = String(format: "%d", temp.sequence ?? 0)
+			annotationView?.titleVisibility = .visible
+			return annotationView
+		}
+		else if let temp = annotation as? BusAnnotation {
+			var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "Bus") as? MKMarkerAnnotationView
+			annotationView = MKMarkerAnnotationView(annotation: temp, reuseIdentifier: "Bus")
+			annotationView?.glyphImage = UIImage(systemName: "bus")
+			annotationView?.glyphTintColor = .white
+			annotationView?.markerTintColor = .systemBlue
+			annotationView?.titleVisibility = .visible
+			annotationView?.displayPriority = .required
+			return annotationView
+		}
+		else {
+			return nil
+		}
+	}
+}
+
 extension RouteDetailViewController {
 	enum ContentMode {
 		case ETAForCurrentStation
 		case PlateNumber
 		case ETAForEveryStation
+	}
+	
+	enum DisplayMode {
+		case Timetable
+		case Map
+	}
+}
+
+class StopAnnotation: NSObject, MKAnnotation {
+	var coordinate: CLLocationCoordinate2D
+	var title: String?
+	var glyphText: String?
+	var sequence: Int?
+	
+	init(coordinate: CLLocationCoordinate2D) {
+		self.coordinate = coordinate
+	}
+}
+
+class BusAnnotation: NSObject, MKAnnotation {
+	dynamic var coordinate: CLLocationCoordinate2D
+	var title: String?
+	var glyphText: String?
+	var sequence: Int?
+	
+	init(coordinate: CLLocationCoordinate2D) {
+		self.coordinate = coordinate
 	}
 }
