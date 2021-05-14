@@ -332,6 +332,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func startBeaconScanning() {
+		
         self.beaconIndicator.isHidden = false
         beaconHasUpdated = false
         locationManager.startRangingBeacons(satisfying: beaconIdentityConstraint!)
