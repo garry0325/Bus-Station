@@ -30,6 +30,7 @@ class RouteDetailViewController: UIViewController {
 	var busesLocation = [Bus]()
 	var busAnnotations = [BusAnnotation]()
 	var plateNumberToIndexDict = [String: Int]()
+	var mapAlreadyLoaded: Bool = false
 	
 	var information = "" {
 		didSet {
@@ -43,11 +44,21 @@ class RouteDetailViewController: UIViewController {
 				mapButton.setImage(UIImage(systemName: "map"), for: .normal)
 				mapView.isHidden = true
 				routeDetailTableView.isHidden = false
+				mapAutoRefreshTimer?.invalidate()
 				
 			case .Map:
 				mapButton.setImage(UIImage(systemName: "list.bullet"), for: .normal)
-				mapView.isHidden = false
-				routeDetailTableView.isHidden = true
+				
+				if(mapAlreadyLoaded) {
+					mapView.isHidden = false
+					routeDetailTableView.isHidden = true
+				}
+				else {
+					constructRouteSequence()
+				}
+				
+				mapAutoRefresh()
+				mapAutoRefreshTimer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(mapAutoRefresh), userInfo: nil, repeats: true)
 			}
 		}
 	}
@@ -78,6 +89,7 @@ class RouteDetailViewController: UIViewController {
 	
 	var needAutoscroll = true
 	var timetableAutoRefreshTimer: Timer?
+	var mapAutoRefreshTimer: Timer?
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -85,15 +97,12 @@ class RouteDetailViewController: UIViewController {
 		if(busStop?.stopId != "no") {	// Recognize if is tapped from ordinary bus schedule or nearby bus
 			let tap = UITapGestureRecognizer(target: self, action: #selector(switchInformationLabel))
 			routeDetailTableView.addGestureRecognizer(tap)
-			
-			mapButton.isHidden = true
-			// TODO: not sure if really no need map
 		} else {
 			contentMode = .ETAForEveryStation
-			
-			mapView.delegate = self
-			mapView.showsUserLocation = true
 		}
+		
+		mapView.delegate = self
+		mapView.showsUserLocation = true
 		
 		routeDetailTableView.delegate = self
 		routeDetailTableView.dataSource = self
@@ -120,11 +129,19 @@ class RouteDetailViewController: UIViewController {
 	}
 	deinit {
 		NotificationCenter.default.removeObserver(self)
+		
+		mapView.removeAnnotations(stopAnnotations)
+		mapView.removeAnnotations(busAnnotations)
+		mapView.removeOverlay(routeOverlay)
+		mapView.delegate = nil
+		mapView = nil
+		
 	}
 	
 	override func viewDidDisappear(_ animated: Bool) {
 		// CRUCIAL BECAUSE WHEN VIEW IS CLOSED, THE TIMER KEEPS GOING CAUSING BAD_ACCESS
 		timetableAutoRefreshTimer?.invalidate()
+		mapAutoRefreshTimer?.invalidate()
 	}
 	
 	func configureInformationLabel() {
@@ -235,6 +252,7 @@ class RouteDetailViewController: UIViewController {
 	
 	@IBAction func closeRouteDetailViewController(_ sender: Any) {
 		timetableAutoRefreshTimer?.invalidate()
+		mapAutoRefreshTimer?.invalidate()
 		dismiss(animated: true, completion: nil)
 	}
 }
@@ -326,6 +344,8 @@ extension RouteDetailViewController: UITableViewDelegate, UITableViewDataSource 
 extension RouteDetailViewController: MKMapViewDelegate {
 	
 	func constructRouteSequence() {
+		print("constructing route sequence")
+		activityIndicator.startAnimating()
 		DispatchQueue.global(qos: .background).async {
 			var routePolyline = [CLLocationCoordinate2D]()
 			routePolyline = self.busQuery.queryBusRouteGeometry(busStop: self.busStop!)
@@ -357,12 +377,38 @@ extension RouteDetailViewController: MKMapViewDelegate {
 				self.mapView.addOverlay(self.routeOverlay)
 				
 				self.mapView.isHidden = false
+				self.routeDetailTableView.isHidden = true
 				self.activityIndicator.stopAnimating()
+				self.mapAlreadyLoaded = true
+			}
+		}
+	}
+	
+	@objc func mapAutoRefresh() {
+		print("autorefresh map") // TODO: REMOVED
+		DispatchQueue.global(qos: .background).async {
+			self.busesLocation = self.busQuery.queryLiveBusesPosition(busStop: self.busStop!)
+			
+			for bus in self.busesLocation {
+				if let index = self.plateNumberToIndexDict[bus.plateNumber] {
+					DispatchQueue.main.async {
+						self.busAnnotations[index].coordinate = bus.location.coordinate
+					}
+				} else {
+					let busAnnotation = BusAnnotation(coordinate: bus.location.coordinate)
+					busAnnotation.title = bus.plateNumber
+					self.busAnnotations.append(busAnnotation)
+					self.plateNumberToIndexDict[bus.plateNumber] = self.busAnnotations.count - 1
+					DispatchQueue.main.async {
+						self.mapView.addAnnotation(busAnnotation)
+					}
+				}
 			}
 		}
 	}
 	
 	func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+		print("polyline")
 		let polylineRenderer = MKPolylineRenderer(overlay: overlay)
 		polylineRenderer.strokeColor = .systemGray
 		polylineRenderer.lineWidth = 5
