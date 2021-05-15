@@ -190,9 +190,16 @@ class RouteDetailViewController: UIViewController {
 				self.mapButton.isHidden = false
 			}
 			
+			self.plateNumberToETADict = [:]
 			for i in 0..<self.liveStatusStops.count {
 				if(self.liveStatusStops[i].plateNumber != "") {
 					self.plateNumberToETADict[self.liveStatusStops[i].plateNumber] = [self.liveStatusStops[i].information, self.liveStatusStops[i].informationLabelColor]
+				}
+			}
+			if(self.mapAlreadyLoaded) {
+				DispatchQueue.main.async {
+					self.mapView.removeAnnotations(self.busAnnotations)
+					self.mapView.addAnnotations(self.busAnnotations)
 				}
 			}
 		}

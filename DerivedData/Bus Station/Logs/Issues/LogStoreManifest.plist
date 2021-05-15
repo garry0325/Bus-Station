@@ -90,34 +90,6 @@
 			<key>uniqueIdentifier</key>
 			<string>4CAC18DC-4460-44C0-AFBB-597B526535C0</string>
 		</dict>
-		<key>7368DBCA-DCEB-4F1B-9656-0BACA9667BFC</key>
-		<dict>
-			<key>className</key>
-			<string>IDEActivityLogMajorGroupSection</string>
-			<key>documentTypeString</key>
-			<string>&lt;nil&gt;</string>
-			<key>domainType</key>
-			<string>Xcode.IDEActivityLogDomainType.target.product-type.application</string>
-			<key>fileName</key>
-			<string>7368DBCA-DCEB-4F1B-9656-0BACA9667BFC.xcactivitylog</string>
-			<key>hasPrimaryLog</key>
-			<true/>
-			<key>primaryObservable</key>
-			<dict>
-				<key>highLevelStatus</key>
-				<string>W</string>
-			</dict>
-			<key>signature</key>
-			<string>Bus_Station-aezfbisvhkatsrdvgflxteszofku</string>
-			<key>timeStartedRecording</key>
-			<real>642778912.27493405</real>
-			<key>timeStoppedRecording</key>
-			<real>642778914.99781001</real>
-			<key>title</key>
-			<string>Build target Bus Station</string>
-			<key>uniqueIdentifier</key>
-			<string>7368DBCA-DCEB-4F1B-9656-0BACA9667BFC</string>
-		</dict>
 		<key>AEFE3B9D-2630-44ED-AF13-6DD4B2264C7A</key>
 		<dict>
 			<key>className</key>
@@ -145,6 +117,34 @@
 			<string>Build target GoogleUtilities</string>
 			<key>uniqueIdentifier</key>
 			<string>AEFE3B9D-2630-44ED-AF13-6DD4B2264C7A</string>
+		</dict>
+		<key>D32678A3-CC42-416C-9A95-AD1B0E8FC492</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogMajorGroupSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.target.product-type.application</string>
+			<key>fileName</key>
+			<string>D32678A3-CC42-416C-9A95-AD1B0E8FC492.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>W</string>
+			</dict>
+			<key>signature</key>
+			<string>Bus_Station-aezfbisvhkatsrdvgflxteszofku</string>
+			<key>timeStartedRecording</key>
+			<real>642779354.61708403</real>
+			<key>timeStoppedRecording</key>
+			<real>642779358.90116596</real>
+			<key>title</key>
+			<string>Build target Bus Station</string>
+			<key>uniqueIdentifier</key>
+			<string>D32678A3-CC42-416C-9A95-AD1B0E8FC492</string>
 		</dict>
 	</dict>
 	<key>preserveOldLogs</key>
