@@ -30,6 +30,7 @@ class RouteDetailViewController: UIViewController {
 	var busesLocation = [Bus]()
 	var busAnnotations = [BusAnnotation]()
 	var plateNumberToIndexDict = [String: Int]()
+	var plateNumberToETADict = [String: [Any]]()
 	var mapAlreadyLoaded: Bool = false
 	
 	var information = "" {
@@ -187,6 +188,12 @@ class RouteDetailViewController: UIViewController {
 				}
 				self.activityIndicator.stopAnimating()
 				self.mapButton.isHidden = false
+			}
+			
+			for i in 0..<self.liveStatusStops.count {
+				if(self.liveStatusStops[i].plateNumber != "") {
+					self.plateNumberToETADict[self.liveStatusStops[i].plateNumber] = [self.liveStatusStops[i].information, self.liveStatusStops[i].informationLabelColor]
+				}
 			}
 		}
 		
@@ -385,7 +392,7 @@ extension RouteDetailViewController: MKMapViewDelegate {
 	}
 	
 	@objc func mapAutoRefresh() {
-		print("autorefresh map") // TODO: REMOVED
+		print("autorefresh map") // TODO: REMOVE
 		DispatchQueue.global(qos: .background).async {
 			self.busesLocation = self.busQuery.queryLiveBusesPosition(busStop: self.busStop!)
 			
@@ -399,6 +406,7 @@ extension RouteDetailViewController: MKMapViewDelegate {
 					busAnnotation.title = bus.plateNumber
 					self.busAnnotations.append(busAnnotation)
 					self.plateNumberToIndexDict[bus.plateNumber] = self.busAnnotations.count - 1
+					
 					DispatchQueue.main.async {
 						self.mapView.addAnnotation(busAnnotation)
 					}
@@ -422,6 +430,7 @@ extension RouteDetailViewController: MKMapViewDelegate {
 			annotationView = MKMarkerAnnotationView(annotation: temp, reuseIdentifier: "Stop")
 			annotationView?.glyphText = String(format: "%d", temp.sequence ?? 0)
 			annotationView?.titleVisibility = .visible
+			
 			return annotationView
 		}
 		else if let temp = annotation as? BusAnnotation {
@@ -432,6 +441,24 @@ extension RouteDetailViewController: MKMapViewDelegate {
 			annotationView?.markerTintColor = .systemBlue
 			annotationView?.titleVisibility = .visible
 			annotationView?.displayPriority = .required
+			
+			if let informationAndItsColor = plateNumberToETADict[temp.title!] {
+				let etaLabel = UILabel(frame: CGRect(x: 0, y: 0.0, width: 36.0, height: 20.0))
+				etaLabel.text = String(format: " %@ ", informationAndItsColor[0] as! CVarArg)
+				etaLabel.textAlignment = .center
+				etaLabel.backgroundColor = informationAndItsColor[1] as? UIColor
+				etaLabel.textColor = .white
+				etaLabel.layer.cornerRadius = 3.0
+				etaLabel.layer.masksToBounds = true
+				etaLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 16.0, weight: .semibold)
+				etaLabel.sizeToFit()
+				
+				etaLabel.frame = CGRect(x: 13 - etaLabel.frame.size.width / 2, y: -28.0, width: etaLabel.frame.size.width, height: 20.0)
+				
+				annotationView?.addSubview(etaLabel)
+				annotationView?.canShowCallout = false // TODO: FALSE
+			}
+			
 			return annotationView
 		}
 		else {
