@@ -6,7 +6,7 @@
 	<integer>10</integer>
 	<key>logs</key>
 	<dict>
-		<key>6F3F4D6B-C5E1-472D-BE95-1292F4C8CD03</key>
+		<key>26052B0B-0E3C-4E5A-9EA3-517A91E685BB</key>
 		<dict>
 			<key>className</key>
 			<string>IDEActivityLogSection</string>
@@ -15,7 +15,7 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.ProvisioningLog</string>
 			<key>fileName</key>
-			<string>6F3F4D6B-C5E1-472D-BE95-1292F4C8CD03.xcactivitylog</string>
+			<string>26052B0B-0E3C-4E5A-9EA3-517A91E685BB.xcactivitylog</string>
 			<key>hasPrimaryLog</key>
 			<true/>
 			<key>primaryObservable</key>
@@ -26,15 +26,15 @@
 			<key>signature</key>
 			<string>Update Signing</string>
 			<key>timeStartedRecording</key>
-			<real>642675726.90487897</real>
+			<real>642785762.45473003</real>
 			<key>timeStoppedRecording</key>
-			<real>642675728.25278103</real>
+			<real>642785763.85712194</real>
 			<key>title</key>
 			<string>Update Signing</string>
 			<key>uniqueIdentifier</key>
-			<string>6F3F4D6B-C5E1-472D-BE95-1292F4C8CD03</string>
+			<string>26052B0B-0E3C-4E5A-9EA3-517A91E685BB</string>
 		</dict>
-		<key>836FDF75-27EA-4296-AC2B-CDBA22583BE6</key>
+		<key>939CBE8C-9A83-453E-B980-EBB8C982D4C3</key>
 		<dict>
 			<key>className</key>
 			<string>IDEActivityLogSection</string>
@@ -43,24 +43,24 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.ProvisioningLog</string>
 			<key>fileName</key>
-			<string>836FDF75-27EA-4296-AC2B-CDBA22583BE6.xcactivitylog</string>
+			<string>939CBE8C-9A83-453E-B980-EBB8C982D4C3.xcactivitylog</string>
 			<key>hasPrimaryLog</key>
 			<true/>
 			<key>primaryObservable</key>
 			<dict>
 				<key>highLevelStatus</key>
-				<string>S</string>
+				<string>E</string>
 			</dict>
 			<key>signature</key>
 			<string>Update Signing</string>
 			<key>timeStartedRecording</key>
-			<real>639160112.16893101</real>
+			<real>642854367.385746</real>
 			<key>timeStoppedRecording</key>
-			<real>639160115.75783098</real>
+			<real>642854368.62398195</real>
 			<key>title</key>
 			<string>Update Signing</string>
 			<key>uniqueIdentifier</key>
-			<string>836FDF75-27EA-4296-AC2B-CDBA22583BE6</string>
+			<string>939CBE8C-9A83-453E-B980-EBB8C982D4C3</string>
 		</dict>
 	</dict>
 </dict>

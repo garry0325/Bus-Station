@@ -157,8 +157,6 @@ class RouteDetailViewController: UIViewController {
 	}
 	
 	@objc func timetableAutoRefresh() {
-		print("autorefresh timetable") // TODO: REMOVED
-		//print("autorefreshing \(String(describing: busStop?.routeName))")
 		DispatchQueue.global(qos: .background).async {
 			self.liveStatusStops = self.busQuery.queryRealTimeBusLocation(busStop: self.busStop!)
 			
@@ -271,26 +269,6 @@ class RouteDetailViewController: UIViewController {
 	}
 }
 
-
-// TODO: TO BE DELETED
-extension RouteDetailViewController: UIPopoverPresentationControllerDelegate {
-	
-	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		
-		segue.destination.modalPresentationStyle = .popover
-		
-		if(segue.identifier == "MapRoute") {
-			let destination = segue.destination as! MapRouteViewController
-			destination.routeSequence = self.liveStatusStops
-			destination.currentStop = busStop
-		}
-	}
-	
-	func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
-		return .none
-	}
-}
-
 extension RouteDetailViewController: UITableViewDelegate, UITableViewDataSource {
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return self.liveStatusStops.count
@@ -399,7 +377,6 @@ extension RouteDetailViewController: MKMapViewDelegate {
 	}
 	
 	@objc func mapAutoRefresh() {
-		print("autorefresh map") // TODO: REMOVE
 		DispatchQueue.global(qos: .background).async {
 			self.busesLocation = self.busQuery.queryLiveBusesPosition(busStop: self.busStop!)
 			
@@ -423,7 +400,6 @@ extension RouteDetailViewController: MKMapViewDelegate {
 	}
 	
 	func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-		print("polyline")
 		let polylineRenderer = MKPolylineRenderer(overlay: overlay)
 		polylineRenderer.strokeColor = .systemGray
 		polylineRenderer.lineWidth = 5
