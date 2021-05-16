@@ -426,20 +426,32 @@ extension RouteDetailViewController: MKMapViewDelegate {
 			annotationView?.displayPriority = .required
 			
 			if let informationAndItsColor = plateNumberToETADict[temp.title!] {
-				let etaLabel = UILabel(frame: CGRect(x: 0, y: 0.0, width: 36.0, height: 20.0))
-				etaLabel.text = String(format: " %@ ", informationAndItsColor[0] as! CVarArg)
-				etaLabel.textAlignment = .center
-				etaLabel.backgroundColor = informationAndItsColor[1] as? UIColor
-				etaLabel.textColor = .white
-				etaLabel.layer.cornerRadius = 3.0
-				etaLabel.layer.masksToBounds = true
-				etaLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 16.0, weight: .semibold)
-				etaLabel.sizeToFit()
-				
-				etaLabel.frame = CGRect(x: 13 - etaLabel.frame.size.width / 2, y: -28.0, width: etaLabel.frame.size.width, height: 20.0)
-				
-				annotationView?.addSubview(etaLabel)
-				annotationView?.canShowCallout = false // TODO: FALSE
+				if(informationAndItsColor[0] as? String != "") {
+					let etaLabel = UILabel(frame: CGRect(x: 0, y: 0.0, width: 50.0, height: 20.0))
+					etaLabel.text = String(format: " %@ ", informationAndItsColor[0] as! CVarArg)
+					etaLabel.textAlignment = .center
+					etaLabel.backgroundColor = informationAndItsColor[1] as? UIColor
+					etaLabel.textColor = .white
+					etaLabel.layer.cornerRadius = 3.0
+					etaLabel.layer.masksToBounds = true
+					etaLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 16.0, weight: .semibold)
+					etaLabel.sizeToFit()
+					
+					etaLabel.frame = CGRect(x: 13 - etaLabel.frame.size.width / 2, y: -28.0, width: etaLabel.frame.size.width, height: 20.0)
+					
+					let shadowView = UIView(frame: etaLabel.frame)
+					shadowView.backgroundColor = informationAndItsColor[1] as? UIColor
+					shadowView.layer.cornerRadius = 3.0
+					shadowView.layer.shadowRadius = 3.0
+					shadowView.layer.shadowOpacity = 0.4
+					shadowView.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
+					
+					shadowView.clipsToBounds = false
+					
+					annotationView?.addSubview(shadowView)
+					annotationView?.addSubview(etaLabel)
+					annotationView?.canShowCallout = false
+				}
 			}
 			
 			return annotationView
@@ -482,5 +494,14 @@ class BusAnnotation: NSObject, MKAnnotation {
 	
 	init(coordinate: CLLocationCoordinate2D) {
 		self.coordinate = coordinate
+	}
+}
+
+class UIEdgeInsetLabel: UILabel {
+	
+	override func drawText(in rect: CGRect) {
+		let edgeInset = UIEdgeInsets(top: 0.0, left: 2.0, bottom: 0.0, right: 2.0)
+		
+		super.drawText(in: rect.inset(by: edgeInset))
 	}
 }
