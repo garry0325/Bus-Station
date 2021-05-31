@@ -154,6 +154,7 @@ class RouteDetailViewController: UIViewController {
 	
 	@IBAction func mapButtonTapped(_ sender: Any) {
 		displayMode = (displayMode == .Timetable) ? .Map:.Timetable
+        reloadMap()
 	}
 	
 	@objc func timetableAutoRefresh() {
@@ -195,10 +196,7 @@ class RouteDetailViewController: UIViewController {
 				}
 			}
 			if(self.mapAlreadyLoaded) {
-				DispatchQueue.main.async {
-					self.mapView.removeAnnotations(self.busAnnotations)
-					self.mapView.addAnnotations(self.busAnnotations)
-				}
+                self.reloadMap()
 			}
 		}
 		
@@ -267,6 +265,13 @@ class RouteDetailViewController: UIViewController {
 		mapAutoRefreshTimer?.invalidate()
 		dismiss(animated: true, completion: nil)
 	}
+    
+    func reloadMap() {
+        DispatchQueue.main.async {
+            self.mapView.removeAnnotations(self.busAnnotations)
+            self.mapView.addAnnotations(self.busAnnotations)
+        }
+    }
 }
 
 extension RouteDetailViewController: UITableViewDelegate, UITableViewDataSource {
@@ -412,10 +417,44 @@ extension RouteDetailViewController: MKMapViewDelegate {
 			var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "Stop") as? MKMarkerAnnotationView
 			annotationView = MKMarkerAnnotationView(annotation: temp, reuseIdentifier: "Stop")
 			annotationView?.glyphText = String(format: "%d", temp.sequence ?? 0)
-			annotationView?.titleVisibility = .visible
-			
-			return annotationView
-		}
+            annotationView?.titleVisibility = .visible
+            
+            if(contentMode == .ETAForEveryStation && listForETAForAllStation[(temp.sequence ?? 1) - 1] != ""){
+                let etaLabel = UILabel(frame: CGRect(x: 0, y: 0.0, width: 50.0, height: 20.0))
+                etaLabel.text = listForETAForAllStation[(temp.sequence ?? 1) - 1]
+                etaLabel.textAlignment = .center
+                etaLabel.backgroundColor = UIColor(red: 0.30, green: 0.67, blue: 0.97, alpha: 1.0)
+                etaLabel.textColor = .white
+                etaLabel.layer.cornerRadius = 3.0
+                etaLabel.layer.masksToBounds = true
+                etaLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 16.0, weight: .semibold)
+                etaLabel.sizeToFit()
+                
+                etaLabel.frame = CGRect(x: 13 - etaLabel.frame.size.width / 2, y: -28.0, width: etaLabel.frame.size.width, height: 20.0)
+                
+                let shadowView = UIView(frame: etaLabel.frame)
+                shadowView.backgroundColor = UIColor(red: 0.30, green: 0.67, blue: 0.97, alpha: 1.0)
+                shadowView.layer.cornerRadius = 3.0
+                shadowView.layer.shadowRadius = 3.0
+                shadowView.layer.shadowOpacity = 0.4
+                shadowView.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
+                
+                shadowView.clipsToBounds = false
+                
+                annotationView?.addSubview(shadowView)
+                annotationView?.addSubview(etaLabel)
+                annotationView?.canShowCallout = false
+            } else {
+                if(annotationView != nil) {
+                    for view in annotationView!.subviews {
+                        view.removeFromSuperview()
+                    }
+                }
+            }
+            
+            
+            return annotationView
+        }
 		else if let temp = annotation as? BusAnnotation {
 			var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "Bus") as? MKMarkerAnnotationView
 			annotationView = MKMarkerAnnotationView(annotation: temp, reuseIdentifier: "Bus")
@@ -425,8 +464,8 @@ extension RouteDetailViewController: MKMapViewDelegate {
 			annotationView?.titleVisibility = .visible
 			annotationView?.displayPriority = .required
 			
-			if let informationAndItsColor = plateNumberToETADict[temp.title!] {
-				if(informationAndItsColor[0] as? String != "") {
+            if let informationAndItsColor = plateNumberToETADict[temp.title!] {
+				if(informationAndItsColor[0] as? String != "" && contentMode != .ETAForEveryStation) {
 					let etaLabel = UILabel(frame: CGRect(x: 0, y: 0.0, width: 50.0, height: 20.0))
 					etaLabel.text = String(format: " %@ ", informationAndItsColor[0] as! CVarArg)
 					etaLabel.textAlignment = .center
