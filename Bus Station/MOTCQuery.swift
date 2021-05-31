@@ -221,7 +221,11 @@ class BusQuery {
 						let rawReturned = try? (JSONSerialization.jsonObject(with: data, options: []) as! [[String: Any]])
 						for destination in rawReturned! {
 							let routeId = destination["RouteID"] as! String
-							routeDict[routeId]!.destination = "往" + (routeDict[routeId]!.direction == 0 ? destination["DestinationStopNameZh"] as! String : destination["DepartureStopNameZh"] as! String)
+                            
+                            if let des = routeDict[routeId] {
+                                des.destination = "往" + (routeDict[routeId]!.direction == 0 ? destination["DestinationStopNameZh"] as! String : destination["DepartureStopNameZh"] as! String)
+                            }
+							//routeDict[routeId]!.destination = "往" + (routeDict[routeId]!.direction == 0 ? destination["DestinationStopNameZh"] as! String : destination["DepartureStopNameZh"] as! String)
 						}
 					}
 					else {
@@ -253,7 +257,7 @@ class BusQuery {
 		for stop in stopsList {
 		print("\(stop.routeId)\t\(stop.routeName)\t\(stop.information)")
 		}*/
-		
+        
 		return stopsList
 		// list of [[BusStop], [BusStop]...] ordered by estimatedArrival
 	}
