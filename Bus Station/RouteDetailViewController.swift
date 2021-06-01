@@ -268,7 +268,9 @@ class RouteDetailViewController: UIViewController {
     
     func reloadMap() {
         DispatchQueue.main.async {
+            self.mapView.removeAnnotations(self.stopAnnotations)
             self.mapView.removeAnnotations(self.busAnnotations)
+            self.mapView.addAnnotations(self.stopAnnotations)
             self.mapView.addAnnotations(self.busAnnotations)
         }
     }
@@ -490,8 +492,20 @@ extension RouteDetailViewController: MKMapViewDelegate {
 					annotationView?.addSubview(shadowView)
 					annotationView?.addSubview(etaLabel)
 					annotationView?.canShowCallout = false
-				}
-			}
+                } else {
+                    if(annotationView != nil) {
+                        for view in annotationView!.subviews {
+                            view.removeFromSuperview()
+                        }
+                    }
+                }
+            } else {
+                if(annotationView != nil) {
+                    for view in annotationView!.subviews {
+                        view.removeFromSuperview()
+                    }
+                }
+            }
 			
 			return annotationView
 		}
