@@ -1046,12 +1046,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	}
 	
 	@objc func removeAdSuccess() {
-		let msg = displayAd ? "移除廣告":"復原廣告"
+		let msg = needAdData[needAdData.count - 1].needAd ? "移除廣告":"復原廣告"
 		ErrorAlert.presentErrorAlert(title: msg, message: "")
 		
 		do {
 			needAdData = try context.fetch(Ad.fetchRequest()) as! [Ad]
-			needAdData[needAdData.count - 1].needAd = !displayAd
+			needAdData[needAdData.count - 1].needAd = !needAdData[needAdData.count - 1].needAd
 			try self.context.save()
 		}
 		catch {
