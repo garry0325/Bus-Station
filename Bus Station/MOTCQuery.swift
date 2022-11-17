@@ -32,15 +32,8 @@ class BusQuery {
 	let metroDateFormatter: DateFormatter
 	
 	init() {
-		authorizationDateFormatter = DateFormatter()
-		authorizationDateFormatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ww zzz"
-		authorizationDateFormatter.locale = Locale(identifier: "en_US")
-		authorizationDateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-		
 		metroDateFormatter = DateFormatter()
 		metroDateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-		authorizationDateFormatter.locale = Locale(identifier: "en_US")
-		authorizationDateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
 		
 		urlConfig.timeoutIntervalForRequest = timeoutForRequest
 		urlConfig.timeoutIntervalForResource = timeoutForResource
@@ -94,7 +87,6 @@ class BusQuery {
     }
 	
 	func queryNearbyBusStations(location: CLLocation) -> [Station] {
-		let (authTimeString, authorization) = self.prepareAuthorizations()
 		self.updateStationRadius()
 		
 		let semaphore = DispatchSemaphore(value: 0)
@@ -199,8 +191,6 @@ class BusQuery {
 	}
 	
 	func queryBusArrivals(station: Station) -> [BusStop] {
-		let (authTimeString, authorization) = self.prepareAuthorizations()
-		
 		let semaphore = DispatchSemaphore(value: 0)
 		var request: URLRequest
 		
@@ -316,7 +306,6 @@ class BusQuery {
 	}
 	
 	func queryRealTimeBusLocation(busStop: BusStop) -> [BusStopLiveStatus] {
-		let (authTimeString, authorization) = self.prepareAuthorizations()
 		var request: URLRequest
 		
 		let semaphore = DispatchSemaphore(value: 0)
@@ -541,7 +530,6 @@ class BusQuery {
 	}
 	
 	func querySpecificBusArrival(busStop: BusStop) -> BusStop? {
-		let (authTimeString, authorization) = self.prepareAuthorizations()
 		var request: URLRequest
 		
 		let semaphore = DispatchSemaphore(value: 0)
@@ -578,8 +566,6 @@ class BusQuery {
 	}
 	
 	func queryNearbyMetroStations(location: CLLocation) -> [Station] {
-		let (authTimeString, authorization) = self.prepareAuthorizations()
-		
 		let semaphore = DispatchSemaphore(value: 0)
 		var request: URLRequest
 		
@@ -820,7 +806,6 @@ class BusQuery {
 	}
 	
 	func queryMetroStationSequence(currentStation: MetroArrival) -> [MetroStation] {
-		let (authTimeString, authorization) = self.prepareAuthorizations()
 		let semaphore = DispatchSemaphore(value: 0)
 		
 		var metroStations = [MetroStation]()
@@ -914,7 +899,6 @@ class BusQuery {
 	}
 	
 	func queryLiveBusesPosition(busStop: BusStop) -> [Bus] {
-		let (authTimeString, authorization) = self.prepareAuthorizations()
 		var request: URLRequest
 		
 		let semaphore = DispatchSemaphore(value: 0)
@@ -961,7 +945,6 @@ class BusQuery {
 	}
 	
 	func queryBusRouteGeometry(busStop: BusStop) -> [CLLocationCoordinate2D] {
-		let (authTimeString, authorization) = self.prepareAuthorizations()
 		var request: URLRequest
 		
 		let semaphore = DispatchSemaphore(value: 0)
@@ -1003,7 +986,6 @@ class BusQuery {
 	}
 	
 	func queryNearbyBuses(location: CLLocation) -> [Bus] {
-		let (authTimeString, authorization) = self.prepareAuthorizations()
 		var request: URLRequest
 		
 		let semaphore = DispatchSemaphore(value: 0)
@@ -1083,16 +1065,6 @@ class BusQuery {
         
         return mrtStationCode
     }
-    
-	func prepareAuthorizations() -> (String, String) {
-		let authTimeString = authorizationDateFormatter.string(from: Date())
-		let key = SymmetricKey(data: Data(self.appKey.utf8))
-		let hmac = HMAC<SHA256>.authenticationCode(for: Data(String(format: "x-date: %@", authTimeString).utf8), using: key)
-		let base64HmacString = Data(hmac).base64EncodedString()
-		let authorization = "hmac username=\"\(self.appID)\", algorithm=\"hmac-sha256\", headers=\"x-date\", signature=\"\(base64HmacString)\""
-		
-		return (authTimeString, authorization)
-	}
 	
 	func presentErrorMessage(query: String, description: String, code: Int?) {
 		DispatchQueue.main.async {
