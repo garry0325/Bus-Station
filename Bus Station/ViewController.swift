@@ -764,7 +764,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	
 	func presentWelcomeWarning() {
 		DispatchQueue.main.async {
-			let welcomeAlert = UIAlertController(title: "初次使用", message: "資料更新可能延誤，請注意實際交通狀況。本 App 不負任何責任。\n\n資料來源：交通部PTX平臺、台北捷運公司", preferredStyle: .alert)
+			let welcomeAlert = UIAlertController(title: "初次使用", message: "資料更新可能延誤，請注意實際交通狀況。本 App 不負任何責任。\n\n資料來源：交通部 TDX 平臺、台北捷運公司", preferredStyle: .alert)
 			let okAction = UIAlertAction(title: "好的", style: .default, handler: {_ in
 				let newInitial = Initial(context: context)
 				newInitial.notInitialUse = true
