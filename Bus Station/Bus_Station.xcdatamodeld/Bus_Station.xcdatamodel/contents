@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="20C69" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21512" systemVersion="22A380" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
     <entity name="Ad" representedClassName="Ad" syncable="YES" codeGenerationType="class">
         <attribute name="needAd" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="API" representedClassName="API" syncable="YES" codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="token" optional="YES" attributeType="String"/>
     </entity>
     <entity name="BannedStation" representedClassName="BannedStation" syncable="YES" codeGenerationType="class">
         <attribute name="stationID" optional="YES" attributeType="String"/>
@@ -21,13 +25,4 @@
     <entity name="StationRadius" representedClassName="StationRadius" syncable="YES" codeGenerationType="class">
         <attribute name="stationRadius" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
     </entity>
-    <elements>
-        <element name="Ad" positionX="-45" positionY="9" width="128" height="58"/>
-        <element name="BannedStation" positionX="-54" positionY="0" width="128" height="58"/>
-        <element name="GeoNotification" positionX="-36" positionY="27" width="128" height="44"/>
-        <element name="Initial" positionX="-36" positionY="27" width="128" height="44"/>
-        <element name="StarredStation" positionX="-54" positionY="-9" width="128" height="58"/>
-        <element name="StationRadius" positionX="-27" positionY="27" width="128" height="58"/>
-        <element name="GeoStations" positionX="-36" positionY="27" width="128" height="44"/>
-    </elements>
 </model>

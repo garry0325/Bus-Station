@@ -236,6 +236,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 			presentWelcomeWarning()
 		}
 		checkAdRemoval()
+        checkAPI()
 		fetchStarredAndBannedStops()
 		fetchStationRadiusPreference()
 		fetchGeoNotificationCapability()
@@ -1057,6 +1058,40 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 			print("Error saving context remove ad")
 		}
 	}
+    
+    func checkAPI() {
+        do {
+            let APIs = try context.fetch(API.fetchRequest()) as! [API]
+            var refreshTokenRequired = true
+            
+            if APIs.count > 0, let savedDate = APIs[APIs.count - 1].date {
+                print("\(APIs.count) token saved")
+                
+                let tokenElapsedTime = Date().timeIntervalSince(savedDate)
+                if(tokenElapsedTime < 60 * 60 * 12) { // token not over 12 hours
+                    BusQuery.shared.token = APIs[0].token ?? ""
+                    
+                    print("Retrieved token: \(BusQuery.shared.token)")
+                    print("Saved date: \(savedDate)")
+                    print("bus.token: \(BusQuery.shared.token)")
+                    refreshTokenRequired = false
+                }
+            } else if(APIs.count == 0) {
+                let newAPI = API(context: context)
+                newAPI.token = ""
+                newAPI.date = Date()
+                try context.save()
+            }
+            
+            if(refreshTokenRequired) {
+                BusQuery.shared.refreshToken()
+                
+                print("New token: \(BusQuery.shared.token)")
+            }
+        } catch {
+            print("Error fetching or storing API")
+        }
+    }
 	
 	func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
 		if(CLLocationManager.locationServicesEnabled() &&
