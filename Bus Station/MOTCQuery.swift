@@ -108,10 +108,11 @@ class BusQuery {
 		let session = URLSession(configuration: urlConfig)
 		
 		for city in queryCities {
-			let urlStation = URL(string: "https://ptx.transportdata.tw/MOTC/v2/Bus/Station/City/\(city)?$select=StationID%2C%20StationName%2C%20StationPosition%2C%20Stops&$filter=StationPosition%2FPositionLat%20ge%20\(currentLatitude - nearbyStationHeight)%20and%20StationPosition%2FPositionLat%20le%20\(currentLatitude + nearbyStationHeight)%20and%20StationPosition%2FPositionLon%20ge%20\(currentLongitude - nearbyStationWidth)%20and%20StationPosition%2FPositionLon%20le%20\(currentLongitude + nearbyStationWidth)&$format=JSON")!
+			let urlStation = URL(string: "https://tdx.transportdata.tw/api/basic/v2/Bus/Station/City/\(city)?$select=StationID%2C%20StationName%2C%20StationPosition%2C%20Stops&$filter=StationPosition%2FPositionLat%20ge%20\(currentLatitude - nearbyStationHeight)%20and%20StationPosition%2FPositionLat%20le%20\(currentLatitude + nearbyStationHeight)%20and%20StationPosition%2FPositionLon%20ge%20\(currentLongitude - nearbyStationWidth)%20and%20StationPosition%2FPositionLon%20le%20\(currentLongitude + nearbyStationWidth)&$format=JSON")!
 			request = URLRequest(url: urlStation)
-			request.setValue(authTimeString, forHTTPHeaderField: "x-date")
-			request.setValue(authorization, forHTTPHeaderField: "Authorization")
+            request.httpMethod = "GET"
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.setValue("Bearer \(self.token)", forHTTPHeaderField: "Authorization")
 			let task = session.dataTask(with: request) { (data, response, error) in
 				if let error = error {
 					self.presentErrorMessage(query: "station query", description: error.localizedDescription, code: nil)
@@ -162,10 +163,11 @@ class BusQuery {
 		
 		for city in queryCities {
 			let stationIDQuery = "StationID eq '" + (stationIDs.joined(separator: "' or StationID eq '")) + "'"
-			let urlStop = URL(string: String("https://ptx.transportdata.tw/MOTC/v2/Bus/Stop/City/\(city)?$select=StationID, Bearing&$filter=\(stationIDQuery)&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+			let urlStop = URL(string: String("https://tdx.transportdata.tw/api/basic/v2/Bus/Stop/City/\(city)?$select=StationID, Bearing&$filter=\(stationIDQuery)&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
 			request = URLRequest(url: urlStop)
-			request.setValue(authTimeString, forHTTPHeaderField: "x-date")
-			request.setValue(authorization, forHTTPHeaderField: "Authorization")
+            request.httpMethod = "GET"
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.setValue("Bearer \(self.token)", forHTTPHeaderField: "Authorization")
 			let task = session.dataTask(with: request) { (data, response, error) in
 				if let error = error {
 					self.presentErrorMessage(query: "bearing query", description: error.localizedDescription, code: nil)
@@ -213,10 +215,11 @@ class BusQuery {
 				stopIDs.append(stop.stopId)
 			}
 			let stopIDQuery = "StopID eq '" + stopIDs.joined(separator: "' or StopID eq '") + "'"
-			let urlEstimatedTimeOfArrival = URL(string: String("https://ptx.transportdata.tw/MOTC/v2/Bus/EstimatedTimeOfArrival/City/\(city)?$select=StopID, RouteID, RouteName, Direction, EstimateTime, StopStatus&$filter=\(stopIDQuery)&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+			let urlEstimatedTimeOfArrival = URL(string: String("https://tdx.transportdata.tw/api/basic/v2/Bus/EstimatedTimeOfArrival/City/\(city)?$select=StopID, RouteID, RouteName, Direction, EstimateTime, StopStatus&$filter=\(stopIDQuery)&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
 			request = URLRequest(url: urlEstimatedTimeOfArrival)
-			request.setValue(authTimeString, forHTTPHeaderField: "x-date")
-			request.setValue(authorization, forHTTPHeaderField: "Authorization")
+            request.httpMethod = "GET"
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.setValue("Bearer \(self.token)", forHTTPHeaderField: "Authorization")
 			let task = session.dataTask(with: request) { (data, response, error) in
 				if let error = error {
 					self.presentErrorMessage(query: "N1 for main", description: error.localizedDescription, code: nil)
@@ -256,10 +259,11 @@ class BusQuery {
 				routeIDs.append(stop.routeId)
 			}
 			let destinationQuery = "RouteID eq '" + routeIDs.joined(separator: "' or RouteID eq '") + "'"
-			let urlRoute = URL(string: String("https://ptx.transportdata.tw/MOTC/v2/Bus/Route/City/\(city)?$select=RouteID, DepartureStopNameZh, DestinationStopNameZh, TicketPriceDescriptionZh&$filter=\(destinationQuery)&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+			let urlRoute = URL(string: String("https://tdx.transportdata.tw/api/basic/v2/Bus/Route/City/\(city)?$select=RouteID, DepartureStopNameZh, DestinationStopNameZh, TicketPriceDescriptionZh&$filter=\(destinationQuery)&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
 			request = URLRequest(url: urlRoute)
-			request.setValue(authTimeString, forHTTPHeaderField: "x-date")
-			request.setValue(authorization, forHTTPHeaderField: "Authorization")
+            request.httpMethod = "GET"
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.setValue("Bearer \(self.token)", forHTTPHeaderField: "Authorization")
 			let task = session.dataTask(with: request) { (data, response, error) in
 				if let error = error {
 					self.presentErrorMessage(query: "destination", description: error.localizedDescription, code: nil)
@@ -327,10 +331,11 @@ class BusQuery {
 		let session = URLSession(configuration: urlConfig)
 		
 		// get the stop sequence of a route first
-		let urlStopOfRoute = URL(string: String("https://ptx.transportdata.tw/MOTC/v2/Bus/DisplayStopOfRoute/City/\(busStop.city)?$filter=RouteID eq '\(busStop.routeId)' and Direction eq \(busStop.direction)&$select=RouteID, Direction, Stops&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+		let urlStopOfRoute = URL(string: String("https://tdx.transportdata.tw/api/basic/v2/Bus/DisplayStopOfRoute/City/\(busStop.city)?$filter=RouteID eq '\(busStop.routeId)' and Direction eq \(busStop.direction)&$select=RouteID, Direction, Stops&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
 		request = URLRequest(url: urlStopOfRoute)
-		request.setValue(authTimeString, forHTTPHeaderField: "x-date")
-		request.setValue(authorization, forHTTPHeaderField: "Authorization")
+        request.httpMethod = "GET"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(self.token)", forHTTPHeaderField: "Authorization")
 		let task = session.dataTask(with: request) { (data, response, error) in
 			if let error = error {
 				self.presentErrorMessage(query: "All bus stops time", description: error.localizedDescription, code: nil)
@@ -370,10 +375,11 @@ class BusQuery {
 		semaphore.wait()
 		
 		// then get RealTimeNearStop api (A2)
-		let urlRealTimeNearStop = URL(string: String("https://ptx.transportdata.tw/MOTC/v2/Bus/RealTimeNearStop/City/\(busStop.city)?$filter=RouteID eq '\(busStop.routeId)' and Direction eq \(busStop.direction)&$select=PlateNumb, StopID, StopSequence, BusStatus, A2EventType&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+		let urlRealTimeNearStop = URL(string: String("https://tdx.transportdata.tw/api/basic/v2/Bus/RealTimeNearStop/City/\(busStop.city)?$filter=RouteID eq '\(busStop.routeId)' and Direction eq \(busStop.direction)&$select=PlateNumb, StopID, StopSequence, BusStatus, A2EventType&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
 		request = URLRequest(url: urlRealTimeNearStop)
-		request.setValue(authTimeString, forHTTPHeaderField: "x-date")
-		request.setValue(authorization, forHTTPHeaderField: "Authorization")
+        request.httpMethod = "GET"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(self.token)", forHTTPHeaderField: "Authorization")
 		let task2 = session.dataTask(with: request) { (data, response, error) in
 			if let error = error {
 				self.presentErrorMessage(query: "A2", description: error.localizedDescription, code: nil)
@@ -406,10 +412,11 @@ class BusQuery {
 		semaphore.wait()
 		
 		// then get estimated arrival of those buses
-		let urlEstimateTimeForAllStops = URL(string: String("https://ptx.transportdata.tw/MOTC/v2/Bus/EstimatedTimeOfArrival/City/\(busStop.city)?$filter=RouteID eq '\(busStop.routeId)' and Direction eq \(busStop.direction)&$select=StopID, RouteID, EstimateTime, StopStatus&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+		let urlEstimateTimeForAllStops = URL(string: String("https://tdx.transportdata.tw/api/basic/v2/Bus/EstimatedTimeOfArrival/City/\(busStop.city)?$filter=RouteID eq '\(busStop.routeId)' and Direction eq \(busStop.direction)&$select=StopID, RouteID, EstimateTime, StopStatus&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
 		request = URLRequest(url: urlEstimateTimeForAllStops)
-		request.setValue(authTimeString, forHTTPHeaderField: "x-date")
-		request.setValue(authorization, forHTTPHeaderField: "Authorization")
+        request.httpMethod = "GET"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(self.token)", forHTTPHeaderField: "Authorization")
 		let task3 = session.dataTask(with: request) { (data, response, error) in
 			if let error = error {
 				self.presentErrorMessage(query: "N1 for detail", description: error.localizedDescription, code: nil)
@@ -501,10 +508,11 @@ class BusQuery {
 		// check vehicle type
 		let plateNumbersArray = Array(plateNumbertoIndexDict.keys)
 		let plateNumbersQuery = "PlateNumb eq '" + plateNumbersArray.joined(separator: "' or PlateNumb eq '") + "'"
-		let urlVehicleType = URL(string: String("https://ptx.transportdata.tw/MOTC/v2/Bus/Vehicle/City/\(busStop.city)?$filter=\(plateNumbersQuery)&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+		let urlVehicleType = URL(string: String("https://tdx.transportdata.tw/api/basic/v2/Bus/Vehicle/City/\(busStop.city)?$filter=\(plateNumbersQuery)&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
 		request = URLRequest(url: urlVehicleType)
-		request.setValue(authTimeString, forHTTPHeaderField: "x-date")
-		request.setValue(authorization, forHTTPHeaderField: "Authorization")
+        request.httpMethod = "GET"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(self.token)", forHTTPHeaderField: "Authorization")
 		let task4 = session.dataTask(with: request) { (data, response, error) in
 			if let error = error {
 				self.presentErrorMessage(query: "vehicle type", description: error.localizedDescription, code: nil)
@@ -540,10 +548,11 @@ class BusQuery {
 		
 		let session = URLSession(configuration: urlConfig)
 		
-		let urlStopOfRoute = URL(string: String("https://ptx.transportdata.tw/MOTC/v2/Bus/EstimatedTimeOfArrival/City/\(busStop.city)?$filter=RouteID eq '\(busStop.routeId)' and StopID eq '\(busStop.stopId)' and Direction eq \(busStop.direction)&$select=RouteID, Direction, StopStatus, EstimateTime&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+		let urlStopOfRoute = URL(string: String("https://tdx.transportdata.tw/api/basic/v2/Bus/EstimatedTimeOfArrival/City/\(busStop.city)?$filter=RouteID eq '\(busStop.routeId)' and StopID eq '\(busStop.stopId)' and Direction eq \(busStop.direction)&$select=RouteID, Direction, StopStatus, EstimateTime&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
 		request = URLRequest(url: urlStopOfRoute)
-		request.setValue(authTimeString, forHTTPHeaderField: "x-date")
-		request.setValue(authorization, forHTTPHeaderField: "Authorization")
+        request.httpMethod = "GET"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(self.token)", forHTTPHeaderField: "Authorization")
 		let task = session.dataTask(with: request) { (data, response, error) in
 			if let error = error {
 				self.presentErrorMessage(query: "specific bus arrival", description: error.localizedDescription, code: nil)
@@ -582,10 +591,11 @@ class BusQuery {
 		let session = URLSession(configuration: urlConfig)
 		
 		for system in queryMetroSystems {
-			let urlStation = URL(string: "https://ptx.transportdata.tw/MOTC/v2/Rail/Metro/Station/\(system)?$filter=StationPosition%2FPositionLat%20ge%20\(currentLatitude - nearbyStationHeight)%20and%20StationPosition%2FPositionLat%20le%20\(currentLatitude + nearbyStationHeight)%20and%20StationPosition%2FPositionLon%20ge%20\(currentLongitude - nearbyStationWidth)%20and%20StationPosition%2FPositionLon%20le%20\(currentLongitude + nearbyStationWidth)&$format=JSON")!
+			let urlStation = URL(string: "https://tdx.transportdata.tw/api/basic/v2/Rail/Metro/Station/\(system)?$filter=StationPosition%2FPositionLat%20ge%20\(currentLatitude - nearbyStationHeight)%20and%20StationPosition%2FPositionLat%20le%20\(currentLatitude + nearbyStationHeight)%20and%20StationPosition%2FPositionLon%20ge%20\(currentLongitude - nearbyStationWidth)%20and%20StationPosition%2FPositionLon%20le%20\(currentLongitude + nearbyStationWidth)&$format=JSON")!
 			request = URLRequest(url: urlStation)
-			request.setValue(authTimeString, forHTTPHeaderField: "x-date")
-			request.setValue(authorization, forHTTPHeaderField: "Authorization")
+            request.httpMethod = "GET"
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.setValue("Bearer \(self.token)", forHTTPHeaderField: "Authorization")
 			let task = session.dataTask(with: request) { (data, response, error) in
 				if let error = error {
 					self.presentErrorMessage(query: "nearby metro", description: error.localizedDescription, code: nil)
@@ -826,10 +836,11 @@ class BusQuery {
 			metroLine = .R
 		}
 		
-		let urlStopOfRoute = URL(string: String("https://ptx.transportdata.tw/MOTC/v2/Rail/Metro/StationOfLine/TRTC?$filter=LineNo eq '\(metroLine!.rawValue)'").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+		let urlStopOfRoute = URL(string: String("https://tdx.transportdata.tw/api/basic/v2/Rail/Metro/StationOfLine/TRTC?$filter=LineNo eq '\(metroLine!.rawValue)'").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
 		request = URLRequest(url: urlStopOfRoute)
-		request.setValue(authTimeString, forHTTPHeaderField: "x-date")
-		request.setValue(authorization, forHTTPHeaderField: "Authorization")
+        request.httpMethod = "GET"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(self.token)", forHTTPHeaderField: "Authorization")
 		let task = session.dataTask(with: request) { (data, response, error) in
 			if let error = error {
 				self.presentErrorMessage(query: "metro station sequence", description: error.localizedDescription, code: nil)
@@ -911,10 +922,11 @@ class BusQuery {
 		
 		let session = URLSession(configuration: urlConfig)
 		
-		let urlBusLocation = URL(string: String("https://ptx.transportdata.tw/MOTC/v2/Bus/RealTimeByFrequency/City/\(busStop.city)?$filter=RouteID eq '\(busStop.routeId)' and Direction eq \(busStop.direction)&$select=PlateNumb, RouteID, RouteName, Direction, BusPosition, Speed, Azimuth, BusStatus&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+		let urlBusLocation = URL(string: String("https://tdx.transportdata.tw/api/basic/v2/Bus/RealTimeByFrequency/City/\(busStop.city)?$filter=RouteID eq '\(busStop.routeId)' and Direction eq \(busStop.direction)&$select=PlateNumb, RouteID, RouteName, Direction, BusPosition, Speed, Azimuth, BusStatus&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
 		request = URLRequest(url: urlBusLocation)
-		request.setValue(authTimeString, forHTTPHeaderField: "x-date")
-		request.setValue(authorization, forHTTPHeaderField: "Authorization")
+        request.httpMethod = "GET"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(self.token)", forHTTPHeaderField: "Authorization")
 		let task = session.dataTask(with: request) { (data, response, error) in
 			if let error = error {
 				self.presentErrorMessage(query: "Bus realtime location", description: error.localizedDescription, code: nil)
@@ -957,10 +969,11 @@ class BusQuery {
 		
 		let session = URLSession(configuration: urlConfig)
 		
-		let urlBusLocation = URL(string: String("https://ptx.transportdata.tw/MOTC/v2/Bus/Shape/City/\(busStop.city)?$select=RouteID, RouteName, Geometry&$filter=RouteID eq '\(busStop.routeId)'&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+		let urlBusLocation = URL(string: String("https://tdx.transportdata.tw/api/basic/v2/Bus/Shape/City/\(busStop.city)?$select=RouteID, RouteName, Geometry&$filter=RouteID eq '\(busStop.routeId)'&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
 		request = URLRequest(url: urlBusLocation)
-		request.setValue(authTimeString, forHTTPHeaderField: "x-date")
-		request.setValue(authorization, forHTTPHeaderField: "Authorization")
+        request.httpMethod = "GET"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(self.token)", forHTTPHeaderField: "Authorization")
 		let task = session.dataTask(with: request) { (data, response, error) in
 			if let error = error {
 				self.presentErrorMessage(query: "Bus route geometry", description: error.localizedDescription, code: nil)
@@ -999,10 +1012,11 @@ class BusQuery {
 		let session = URLSession(configuration: urlConfig)
 		
 		for city in queryCities {
-			let urlNearbyBuses = URL(string: String("https://ptx.transportdata.tw/MOTC/v2/Bus/RealTimeByFrequency/City/\(city)?$select=PlateNumb, RouteID, RouteName, Direction, BusPosition&$filter=BusPosition/PositionLat ge \(location.coordinate.latitude - nearbyBusesHeight) and BusPosition/PositionLat le \(location.coordinate.latitude + nearbyBusesHeight) and BusPosition/PositionLon ge \(location.coordinate.longitude - nearbyBusesWidth) and BusPosition/PositionLon le \(location.coordinate.longitude + nearbyBusesWidth)&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
+			let urlNearbyBuses = URL(string: String("https://tdx.transportdata.tw/api/basic/v2/Bus/RealTimeByFrequency/City/\(city)?$select=PlateNumb, RouteID, RouteName, Direction, BusPosition&$filter=BusPosition/PositionLat ge \(location.coordinate.latitude - nearbyBusesHeight) and BusPosition/PositionLat le \(location.coordinate.latitude + nearbyBusesHeight) and BusPosition/PositionLon ge \(location.coordinate.longitude - nearbyBusesWidth) and BusPosition/PositionLon le \(location.coordinate.longitude + nearbyBusesWidth)&$format=JSON").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)!
 			request = URLRequest(url: urlNearbyBuses)
-			request.setValue(authTimeString, forHTTPHeaderField: "x-date")
-			request.setValue(authorization, forHTTPHeaderField: "Authorization")
+            request.httpMethod = "GET"
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.setValue("Bearer \(self.token)", forHTTPHeaderField: "Authorization")
 			let task = session.dataTask(with: request) { (data, response, error) in
 				if let error = error {
 					self.presentErrorMessage(query: "Nearby buses", description: error.localizedDescription, code: nil)
