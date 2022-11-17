@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 
+let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+
 enum RouteInformationLabelColors {
 	static let red =	UIColor(red: 255/255, green: 96/255, blue: 96/255, alpha: 1.0)
 	static let orange =	UIColor(red: 255/255, green: 164/255, blue: 89/255, alpha: 1.0)

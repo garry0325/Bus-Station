@@ -17,7 +17,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	
 	let locationDeviateThreshold = 40.0	// in meters
 	
-	let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 	var starredStations: Array<StarredStation> = []
 	var bannedStations: Array<BannedStation> = []
 	
@@ -768,10 +767,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		DispatchQueue.main.async {
 			let welcomeAlert = UIAlertController(title: "初次使用", message: "資料更新可能延誤，請注意實際交通狀況。本 App 不負任何責任。\n\n資料來源：交通部PTX平臺、台北捷運公司", preferredStyle: .alert)
 			let okAction = UIAlertAction(title: "好的", style: .default, handler: {_ in
-				let newInitial = Initial(context: self.context)
+				let newInitial = Initial(context: context)
 				newInitial.notInitialUse = true
 				do {
-					try self.context.save()
+					try context.save()
 				} catch {
 					print("Error saving Initial")
 				}
@@ -809,16 +808,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 			geoNotificationPreferenceData.last!.enabled = geoNotificationCapablility
 			
 			for _ in 0..<geoNotificationPreferenceStations.count {
-				self.context.delete(geoNotificationPreferenceStations[0])
+				context.delete(geoNotificationPreferenceStations[0])
 				geoNotificationPreferenceStations.remove(at: 0)
 			}
 			for station in geoNotificationStations {
-				let newStation = GeoStations(context: self.context)
+				let newStation = GeoStations(context: context)
 				newStation.station = station
 				geoNotificationPreferenceStations.append(newStation)
 			}
 			
-			try self.context.save()
+			try context.save()
 		} catch {
 			print("Error saving settings preference")
 		}
@@ -838,21 +837,21 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		
 		if(addOrRemove == 0) {
 			if(starOrBan == 0) {
-				let starred = StarredStation(context: self.context)
+				let starred = StarredStation(context: context)
 				starred.stationID = stationID
 				starredStations.append(starred)
 				do {
-					try self.context.save()
+					try context.save()
 				} catch {
 					print("Error saving starred station")
 				}
 			}
 			else if(starOrBan == 1) {
-				let banned = BannedStation(context: self.context)
+				let banned = BannedStation(context: context)
 				banned.stationID = stationID
 				bannedStations.append(banned)
 				do {
-					try self.context.save()
+					try context.save()
 				} catch {
 					print("Error saving banned station")
 				}
@@ -862,9 +861,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 			if(starOrBan == 0) {
 				for i in 0..<starredStations.count {
 					if(starredStations[i].stationID == stationID) {
-						self.context.delete(starredStations[i])
+						context.delete(starredStations[i])
 						do {
-							try self.context.save()
+							try context.save()
 						} catch {
 							print("Error deleting starred station")
 						}
@@ -876,9 +875,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 			else if(starOrBan == 1) {
 				for i in 0..<bannedStations.count {
 					if(bannedStations[i].stationID == stationID) {
-						self.context.delete(bannedStations[i])
+						context.delete(bannedStations[i])
 						do {
-							try self.context.save()
+							try context.save()
 						} catch {
 							print("Error deleting banned station")
 						}
@@ -986,9 +985,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 				print("Station Radius \(stationRadius)m")
 			}
 			else {
-				let newStationRadius = StationRadius(context: self.context)
+				let newStationRadius = StationRadius(context: context)
 				newStationRadius.stationRadius = stationRadius
-				try self.context.save()
+				try context.save()
 			}
 		} catch {
 			print("Error fetching station radius preference")
@@ -1003,9 +1002,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 				print(geoNotificationCapablility ? "Enabled GeoNotification":"Disabled GeoNotification")
 			}
 			else {
-				let newGeoNotification = GeoNotification(context: self.context)
+				let newGeoNotification = GeoNotification(context: context)
 				newGeoNotification.enabled = geoNotificationCapablility
-				try self.context.save()
+				try context.save()
 			}
 			
 			geoNotificationPreferenceStations = try (context.fetch(GeoStations.fetchRequest()) as? [GeoStations])!
@@ -1032,9 +1031,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 			}
 			else {
 				if(needAdData.count == 0) {
-					let ad = Ad(context: self.context)
+					let ad = Ad(context: context)
 					ad.needAd = true
-					try self.context.save()
+					try context.save()
 				}
 				print("Need Ad")
 				displayAd = true
@@ -1052,7 +1051,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		do {
 			needAdData = try context.fetch(Ad.fetchRequest()) as! [Ad]
 			needAdData[needAdData.count - 1].needAd = !needAdData[needAdData.count - 1].needAd
-			try self.context.save()
+			try context.save()
 		}
 		catch {
 			print("Error saving context remove ad")
