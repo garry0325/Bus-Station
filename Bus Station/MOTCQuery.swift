@@ -12,11 +12,13 @@ import CryptoKit
 class BusQuery {
 	let timeoutForRequest = 10.0
 	let timeoutForResource = 15.0
+    
+    static let shared = BusQuery()
+    
+    let clientID = "garry0325-75250675-1b48-4617"
+    let clientSecret = "c368a2ed-9b1f-4f3d-9df9-43d0511d0d7b"
+    var token = ""
 	
-	private let appID = "1baabcfdb12a4d88bd4b19c7a2c3fd23"
-	private let appKey = "4hYdvDltMul8kJTyx2CbciPeM1k"
-	
-	private let authorizationDateFormatter: DateFormatter
 	var urlConfig = URLSessionConfiguration.default
 	
 	var nearbyStationWidth = 0.005	// in degree coordinates
@@ -43,6 +45,53 @@ class BusQuery {
 		urlConfig.timeoutIntervalForRequest = timeoutForRequest
 		urlConfig.timeoutIntervalForResource = timeoutForResource
 	}
+    
+    func refreshToken() {
+        let semaphore = DispatchSemaphore(value: 0)
+        
+        let tokenUrl = URL(string: "https://tdx.transportdata.tw/auth/realms/TDXConnect/protocol/openid-connect/token")!
+        let data: Data = "grant_type=client_credentials&client_id=\(clientID)&client_secret=\(clientSecret)".data(using: .utf8)!
+        
+        var request = URLRequest(url: tokenUrl)
+        request.httpMethod = "POST"
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.httpBody = data
+        
+        let session = URLSession(configuration: urlConfig)
+        let task = session.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print("Error: \(error.localizedDescription)")
+                
+                DispatchQueue.main.async {
+                    ErrorAlert.presentErrorAlert(title: "Token錯誤", message: "取得Token時發生錯誤A")
+                }
+            }
+            
+            if let data = data, let response = response as? HTTPURLResponse {
+                print("Token response \(response.statusCode)")
+                do {
+                    let tokenResponse = try JSONSerialization.jsonObject(with: data) as! [String: Any]
+                    self.token = tokenResponse["access_token"] as! String
+                    
+                    // save token
+                    let savedAPI = try context.fetch(API.fetchRequest()) as! [API]
+                    savedAPI[savedAPI.count - 1].token = self.token
+                    savedAPI[savedAPI.count - 1].date = Date()
+                    try context.save()
+                } catch {
+                    print("Error: \(error.localizedDescription)")
+                    
+                    DispatchQueue.main.async {
+                        ErrorAlert.presentErrorAlert(title: "Token錯誤", message: "取得Token時發生錯誤\(response.statusCode)")
+                    }
+                }
+            }
+            
+            semaphore.signal()
+        }
+        task.resume()
+        semaphore.wait()
+    }
 	
 	func queryNearbyBusStations(location: CLLocation) -> [Station] {
 		let (authTimeString, authorization) = self.prepareAuthorizations()
