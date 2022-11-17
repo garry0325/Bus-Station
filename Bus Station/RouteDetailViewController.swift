@@ -68,7 +68,6 @@ class RouteDetailViewController: UIViewController {
 	var plateNumberForAllStation: String = ""
 	var listForETAForAllStation: Array<String> = []
 	
-	var busQuery = BusQuery()
 	var liveStatusStops = [BusStopLiveStatus]()
 	var autoScrollPosition: Int? {
 		didSet {
@@ -159,7 +158,7 @@ class RouteDetailViewController: UIViewController {
 	
 	@objc func timetableAutoRefresh() {
 		DispatchQueue.global(qos: .background).async {
-			self.liveStatusStops = self.busQuery.queryRealTimeBusLocation(busStop: self.busStop!)
+			self.liveStatusStops = BusQuery.shared.queryRealTimeBusLocation(busStop: self.busStop!)
 			
 			DispatchQueue.main.async {
 				if(self.contentMode == .ETAForEveryStation) {
@@ -204,7 +203,7 @@ class RouteDetailViewController: UIViewController {
 		if(self.busStop?.stopId != "no") {
 			DispatchQueue.global(qos: .background).async {
 				if(self.busStop != nil) {
-					self.busStop = self.busQuery.querySpecificBusArrival(busStop: self.busStop!)
+					self.busStop = BusQuery.shared.querySpecificBusArrival(busStop: self.busStop!)
 				}
 				
 				DispatchQueue.main.async {
@@ -347,7 +346,7 @@ extension RouteDetailViewController: MKMapViewDelegate {
 		activityIndicator.startAnimating()
 		DispatchQueue.global(qos: .background).async {
 			var routePolyline = [CLLocationCoordinate2D]()
-			routePolyline = self.busQuery.queryBusRouteGeometry(busStop: self.busStop!)
+			routePolyline = BusQuery.shared.queryBusRouteGeometry(busStop: self.busStop!)
 			self.stopAnnotations = []
 			
 			for stop in self.liveStatusStops {
@@ -385,7 +384,7 @@ extension RouteDetailViewController: MKMapViewDelegate {
 	
 	@objc func mapAutoRefresh() {
 		DispatchQueue.global(qos: .background).async {
-			self.busesLocation = self.busQuery.queryLiveBusesPosition(busStop: self.busStop!)
+			self.busesLocation = BusQuery.shared.queryLiveBusesPosition(busStop: self.busStop!)
 			
 			for bus in self.busesLocation {
 				if let index = self.plateNumberToIndexDict[bus.plateNumber] {

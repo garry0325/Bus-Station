@@ -13,7 +13,6 @@ class MapRouteViewController: UIViewController {
 	@IBOutlet var mapView: MKMapView!
 	@IBOutlet var closeButton: UIButton!
 	
-	var busQuery = BusQuery()
 	var currentStop: BusStop!
 	var routeSequence = [BusStopLiveStatus]()
 	var stopAnnotations = [StopAnnotation]()
@@ -61,7 +60,7 @@ class MapRouteViewController: UIViewController {
 	func constructRouteSequence() {
 		DispatchQueue.global(qos: .background).async {
 			var routePolyline = [CLLocationCoordinate2D]()
-			routePolyline = self.busQuery.queryBusRouteGeometry(busStop: self.currentStop)
+			routePolyline = BusQuery.shared.queryBusRouteGeometry(busStop: self.currentStop)
 			self.stopAnnotations = []
 			
 			for stop in self.routeSequence {
@@ -98,7 +97,7 @@ class MapRouteViewController: UIViewController {
 	
 	@objc func autoRefresh() {
 		DispatchQueue.global(qos: .background).async {
-			self.busesLocation = self.busQuery.queryLiveBusesPosition(busStop: self.currentStop)
+			self.busesLocation = BusQuery.shared.queryLiveBusesPosition(busStop: self.currentStop)
 			
 			for bus in self.busesLocation {
 				if let index = self.plateNumberToIndexDict[bus.plateNumber] {

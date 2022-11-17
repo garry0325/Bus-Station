@@ -14,7 +14,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelega
 	var window: UIWindow?
     let locationManager = CLLocationManager()
     
-    var busQuery = BusQuery()
 
 	func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 		// Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -77,7 +76,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, CLLocationManagerDelega
     
     func queryMRTandPushGeoNotification(stationName: String) {
         let queryingMrtStation = MRTStationsByLine[geoStationsIndex[stationName]![0][0]][geoStationsIndex[stationName]![0][1]][0] as! Station
-        let mrtArrivals = busQuery.queryMetroArrivals(metroStation: queryingMrtStation)
+        let mrtArrivals = BusQuery.shared.queryMetroArrivals(metroStation: queryingMrtStation)
         
         
         let notificationContent = UNMutableNotificationContent()

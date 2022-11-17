@@ -87,7 +87,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     // TODO: REMOVE PRINT STATEMENT
     // TODO: AD app ID
 	
-	var busQuery = BusQuery()
 	var locationWhenPinned = CLLocation()
 	var locationHasUpdated: Bool = false
 	var autoRefreshTimer = Timer()
@@ -338,7 +337,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func manipulateBeaconLocation(beacon: CLBeacon) {
-        let mrtStationCode = self.busQuery.queryBeaconInformation(major: beacon.major, minor: beacon.minor)
+        let mrtStationCode = BusQuery.shared.queryBeaconInformation(major: beacon.major, minor: beacon.minor)
         if let beaconLocation = mrtCodeToLocation[mrtStationCode] {
             self.locationHasUpdated = true
             self.locationWhenPinned = beaconLocation
@@ -426,7 +425,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	
 	@objc func autoRefreshNearbyBuses() {
 		DispatchQueue.global(qos: .background).async {
-			self.nearbyBusesList = self.busQuery.queryNearbyBuses(location: self.latestLocation)
+            self.nearbyBusesList = BusQuery.shared.queryNearbyBuses(location: self.latestLocation)
 			
 			DispatchQueue.main.async {
 				let hideNearbyBusCollectionView = (self.nearbyBusesList.count == 0)
@@ -455,9 +454,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 	func queryNearbyStations(location: CLLocation) {
 		presentActivityIndicator()
 		DispatchQueue.global(qos: .background).async {
-			let unorganizedStationList = self.busQuery.queryNearbyBusStations(location: location)
+			let unorganizedStationList = BusQuery.shared.queryNearbyBusStations(location: location)
 			print("buses done")
-			let metroStationList = self.busQuery.queryNearbyMetroStations(location: location)
+			let metroStationList = BusQuery.shared.queryNearbyMetroStations(location: location)
 			print("mrt done")
 			var stationTemp = [String]()
 			for station in unorganizedStationList {
@@ -634,10 +633,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 		//print(stationList[currentStationNumber][currentBearingNumber].stationId)
 		DispatchQueue.global(qos: .background).async {
 			if(ViewController.stationTypeList[self.currentStationNumber] == .Bus) {
-				ViewController.routeList[self.currentStationNumber][self.currentBearingNumber] = self.busQuery.queryBusArrivals(station: ViewController.stationList[self.currentStationNumber][self.currentBearingNumber])
+				ViewController.routeList[self.currentStationNumber][self.currentBearingNumber] = BusQuery.shared.queryBusArrivals(station: ViewController.stationList[self.currentStationNumber][self.currentBearingNumber])
 			}
 			else {
-				ViewController.metroRouteList = self.busQuery.queryMetroArrivals(metroStation: ViewController.stationList[self.currentStationNumber][0])
+				ViewController.metroRouteList = BusQuery.shared.queryMetroArrivals(metroStation: ViewController.stationList[self.currentStationNumber][0])
 			}
 
 			DispatchQueue.main.async {

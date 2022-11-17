@@ -26,7 +26,6 @@ class MetroDetailViewController: UIViewController {
 	
 	var metroStations = [MetroStation]()
 	
-	var busQuery = BusQuery()
 	var autoRefreshTimer: Timer?
 	var countdownTimer: Timer?
 	var countdownSeconds = 0
@@ -113,7 +112,7 @@ class MetroDetailViewController: UIViewController {
 	
 	func constructMetroStationSequence() {
 		DispatchQueue.global(qos: .background).async {
-			self.metroStations = self.busQuery.queryMetroStationSequence(currentStation: self.metroRouteTableViewCell!.currentStation!)
+			self.metroStations = BusQuery.shared.queryMetroStationSequence(currentStation: self.metroRouteTableViewCell!.currentStation!)
 			
 			DispatchQueue.main.async {
 				let autoscrollPosition = self.metroStations.firstIndex(where: { $0.isCurrentStation == true })
