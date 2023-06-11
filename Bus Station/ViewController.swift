@@ -1438,11 +1438,11 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
 
 extension ViewController: GADBannerViewDelegate {
 	
-	func adViewWillPresentScreen(_ bannerView: GADBannerView) {
+    private func adViewWillPresentScreen(_ bannerView: GADBannerView) {
 		print("Ad will present")
 	}
 	
-	func adViewDidRecordImpression(_ bannerView: GADBannerView) {
+    private func adViewDidRecordImpression(_ bannerView: GADBannerView) {
 		print("Ad impression recorded")
 	}
 	
@@ -1452,7 +1452,7 @@ extension ViewController: GADBannerViewDelegate {
 		adDisplayedSuccessfully = true
 	}
 	
-	func adView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: GADRequestError) {
+    private func adView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: NSError) {
 		print("Ad failed to load. \(error.localizedDescription) code: \(error.code)")
 		adDisplayedSuccessfully = false
 	}

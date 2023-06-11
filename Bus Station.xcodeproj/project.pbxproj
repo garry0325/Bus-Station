@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		037A1FEF2A2AFE8100E662B9 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 037A1FEE2A2AFE8100E662B9 /* GoogleMobileAds */; };
 		C23822CF2582720E00F2D25A /* NearbyBusesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23822CE2582720E00F2D25A /* NearbyBusesCollectionViewCell.swift */; };
 		C23D91B92549CA950027125A /* RouteCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23D91B82549CA950027125A /* RouteCollectionViewCell.swift */; };
 		C265088F256C248F002B0C7F /* Metro.swift in Sources */ = {isa = PBXBuildFile; fileRef = C265088E256C248F002B0C7F /* Metro.swift */; };
@@ -35,7 +36,6 @@
 		C2CB97372556B17F00CAF02B /* ErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CB97362556B17F00CAF02B /* ErrorHandling.swift */; };
 		C2DC9CF02548A8C10004860D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DC9CEF2548A8C10004860D /* Constants.swift */; };
 		C2FAC9CA2618810300FAA3FC /* GeoStationPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FAC9C92618810300FAA3FC /* GeoStationPickerViewController.swift */; };
-		CE24CDA4644C56CFD42E5B81 /* Pods_Bus_Station.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3509FC6EC6AB3C32A043664 /* Pods_Bus_Station.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,7 +56,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		27471A3335CDBB69B3D431B5 /* Pods-Bus Station.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bus Station.debug.xcconfig"; path = "Target Support Files/Pods-Bus Station/Pods-Bus Station.debug.xcconfig"; sourceTree = "<group>"; };
 		C23822CE2582720E00F2D25A /* NearbyBusesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearbyBusesCollectionViewCell.swift; sourceTree = "<group>"; };
 		C23D91B82549CA950027125A /* RouteCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteCollectionViewCell.swift; sourceTree = "<group>"; };
 		C265088E256C248F002B0C7F /* Metro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metro.swift; sourceTree = "<group>"; };
@@ -90,8 +89,6 @@
 		C2CB97362556B17F00CAF02B /* ErrorHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandling.swift; sourceTree = "<group>"; };
 		C2DC9CEF2548A8C10004860D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C2FAC9C92618810300FAA3FC /* GeoStationPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoStationPickerViewController.swift; sourceTree = "<group>"; };
-		C3509FC6EC6AB3C32A043664 /* Pods_Bus_Station.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bus_Station.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C5E9582FA05C2251D7114D96 /* Pods-Bus Station.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bus Station.release.xcconfig"; path = "Target Support Files/Pods-Bus Station/Pods-Bus Station.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,7 +96,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE24CDA4644C56CFD42E5B81 /* Pods_Bus_Station.framework in Frameworks */,
+				037A1FEF2A2AFE8100E662B9 /* GoogleMobileAds in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,14 +117,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A5DECA97C44D17CF943CC26F /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				C3509FC6EC6AB3C32A043664 /* Pods_Bus_Station.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		C2B35DBE253DCA5B00108776 = {
 			isa = PBXGroup;
 			children = (
@@ -136,7 +125,6 @@
 				C2B35DEE253DCA5F00108776 /* Bus StationUITests */,
 				C2B35DC8253DCA5B00108776 /* Products */,
 				D57846ED5227D69F7834B28A /* Pods */,
-				A5DECA97C44D17CF943CC26F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -204,8 +192,6 @@
 		D57846ED5227D69F7834B28A /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				27471A3335CDBB69B3D431B5 /* Pods-Bus Station.debug.xcconfig */,
-				C5E9582FA05C2251D7114D96 /* Pods-Bus Station.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -217,17 +203,18 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C2B35DF4253DCA5F00108776 /* Build configuration list for PBXNativeTarget "Bus Station" */;
 			buildPhases = (
-				B156EC4BD91BB28F90FBC497 /* [CP] Check Pods Manifest.lock */,
 				C2B35DC3253DCA5B00108776 /* Sources */,
 				C2B35DC4253DCA5B00108776 /* Frameworks */,
 				C2B35DC5253DCA5B00108776 /* Resources */,
-				8A58F355645C57F17A8B7130 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = "Bus Station";
+			packageProductDependencies = (
+				037A1FEE2A2AFE8100E662B9 /* GoogleMobileAds */,
+			);
 			productName = "Bus Station";
 			productReference = C2B35DC7253DCA5B00108776 /* Bus Station.app */;
 			productType = "com.apple.product-type.application";
@@ -299,6 +286,9 @@
 				Base,
 			);
 			mainGroup = C2B35DBE253DCA5B00108776;
+			packageReferences = (
+				037A1FED2A2AFE8100E662B9 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
+			);
 			productRefGroup = C2B35DC8253DCA5B00108776 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -337,48 +327,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		8A58F355645C57F17A8B7130 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Bus Station/Pods-Bus Station-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Bus Station/Pods-Bus Station-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Bus Station/Pods-Bus Station-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B156EC4BD91BB28F90FBC497 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Bus Station-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		C2B35DC3253DCA5B00108776 /* Sources */ = {
@@ -579,7 +527,6 @@
 		};
 		C2B35DF5253DCA5F00108776 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 27471A3335CDBB69B3D431B5 /* Pods-Bus Station.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -592,6 +539,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 2.3;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = "Garry.Bus-Station";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -601,7 +549,6 @@
 		};
 		C2B35DF6253DCA5F00108776 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C5E9582FA05C2251D7114D96 /* Pods-Bus Station.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -614,6 +561,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 2.3;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = "Garry.Bus-Station";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -745,6 +693,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		037A1FED2A2AFE8100E662B9 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		037A1FEE2A2AFE8100E662B9 /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 037A1FED2A2AFE8100E662B9 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
+			productName = GoogleMobileAds;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		C2B35DD3253DCA5B00108776 /* Bus_Station.xcdatamodeld */ = {
